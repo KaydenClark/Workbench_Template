@@ -29,7 +29,7 @@ before changing anything:
 
 - [`AGENTS.md`](AGENTS.md) - how agents behave here: authority order, read/edit
   scope, the task-selection loop, documentation ownership, and proof rules.
-- [`BLUEPRINT.md`](BLUEPRINT.md) - desired product destination, integrated design, constraints and lifecycle. The
+- [`BLUEPRINT.md`](BLUEPRINT.md) - short direction summary: what it is, who it serves, promised outcomes and non-goals. The
   complete capability catalog is linked from the Lexicon.
 - [`LEXICON.md`](LEXICON.md) - accepted project-wide terms and definitions;
   consult it when shared language could be ambiguous.

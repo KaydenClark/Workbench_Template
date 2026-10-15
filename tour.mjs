@@ -29,7 +29,7 @@ export const PLACES = [
   {
     zone: 'Root controls',
     path: 'BLUEPRINT.md',
-    owns: 'The desired finished product: destination, people, outcomes, experience, design, constraints, lifecycle and non-goals.',
+    owns: 'The short direction summary: what it is, who it serves, promised outcomes and non-goals.',
     why: 'Product direction changes far more slowly than task state. Keeping it separate means a spec can complete, or a ticket be abandoned, without editing the description of the product.',
   },
   {

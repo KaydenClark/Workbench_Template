@@ -166,7 +166,7 @@ test('the reference presents a destination-only copyable Template and current ow
   const readme=fs.readFileSync(path.join(root,'README.md'),'utf8');
   assert.match(readme,/^# Workbench Template/m);
   assert.match(blueprint,/copyable reference installation/i);
-  assert.deepEqual([...blueprint.matchAll(/^## (.+)$/gm)].map(x=>x[1]),['Product Destination','People And Problems Served','Promised Outcomes','Desired Experience And Behavior','Integrated System Design','Cross-Cutting Qualities And Constraints','Desired Lifecycle','Non-Goals']);
+  assert.deepEqual([...blueprint.matchAll(/^## (.+)$/gm)].map(x=>x[1]),['What it is','Who it serves','Promised outcomes','Non-goals']);
   assert.doesNotMatch(blueprint,/spec-catalog|Last reviewed|Harness version|Not a template/);
   assert.doesNotMatch(PLACES.find(p=>p.path==='BLUEPRINT.md').owns,/catalog/);
   assert.match(PLACES.find(p=>p.collection==='handoffs').owns,/Markdown/);
