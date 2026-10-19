@@ -64,7 +64,13 @@ the Adoption protocol.
    preserves existing local or remote refs. Pass `--default-branch NAME` and
    `--integration-branch NAME` for other project names. Missing default refs or
    identical branch names block before layout migration. It writes the recovery record
-   `workbench/sessions/recovery/adoption-recovery.json`, renders the
+   `workbench/sessions/recovery/adoption-recovery.json`, appends the
+   Workbench line-ending block to `.gitattributes` after the project's own
+   rules (Workbench-owned paths only; commit it so a Windows
+   `core.autocrlf=true` clone keeps the receipt hashes, staging with
+   `git add --renormalize -- workbench` and the seven controls after
+   `git add -A` so a control already committed with CRLF is stored as LF, and
+   enable `core.symlinks` there for the skill adapters), renders the
    projections, and runs doctor. An existing support root (including a room
    already adopted), path collision, or missing or bracketed root control is a
    blocker to reconcile before retrying; never overwrite it,

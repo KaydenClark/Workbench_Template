@@ -7,6 +7,7 @@
 import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
+import { spawnSync } from 'node:child_process';
 import { finding } from './diagnostics.mjs';
 
 // One hash over a skill directory's ordinary files, in stable order. The
@@ -41,6 +42,14 @@ function lstatOrNull(target) {
 
 function realpathOrNull(target) {
   try { return fs.realpathSync(target); } catch { return null; }
+}
+
+// Git records a symlink with mode 120000. Only then does a plain file holding
+// the link target mean the checkout wrote it as text; an untracked or regular
+// tracked file keeps the ordinary install remedy.
+function indexedAsSymlink(root, relative) {
+  const result = spawnSync('git', ['-C', root, 'ls-files', '-s', '--', relative], { encoding: 'utf8' });
+  return result.status === 0 && result.stdout.startsWith('120000 ');
 }
 
 // The declared discovery roots are the only ones a Codex or Claude host reads
@@ -88,7 +97,15 @@ export function inspectSkills(manifest, project) {
     }
     const resolved = realpathOrNull(adapter);
     if (!resolved || !fs.statSync(resolved).isDirectory()) {
-      findings.push(finding('skill-adapter-broken', `${discoveryRoot} does not resolve to a directory`, { root: discoveryRoot }));
+      // S-005U: with core.symlinks=false Git checks the adapter symlink out as
+      // a plain file holding its link target; name that cause and the restore.
+      let checkedOutAsText = false;
+      try { checkedOutAsText = entry.isFile() && entry.size < 256 && fs.readFileSync(adapter, 'utf8').trim() === path.relative(path.dirname(adapter), lane).split(path.sep).join('/') && indexedAsSymlink(root, discoveryRoot); }
+      catch { /* an unreadable adapter keeps the ordinary finding */ }
+      const message = checkedOutAsText
+        ? `${discoveryRoot} is a plain file holding its link target, so Git checked the symlink out as text because core.symlinks is false on this host; enable symlinks (on Windows, Developer Mode or an elevated shell), run \`git config core.symlinks true\`, then restore it with \`git checkout -- ${discoveryRoot}\``
+        : `${discoveryRoot} does not resolve to a directory`;
+      findings.push(finding('skill-adapter-broken', message, { root: discoveryRoot }));
       adapters[discoveryRoot] = null;
       continue;
     }

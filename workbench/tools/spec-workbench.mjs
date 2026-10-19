@@ -1394,6 +1394,21 @@ function remoteIdCollisionFindings(root, specs, retired, landmarks) {
   const fresh = local.filter((item) => !atIntegration.some((held) => sameRecord(item, held)));
   if (fresh.length === 0) return [];
   const atTips = remoteRecordIdentities(root, [...tips.keys()]);
+  // ADR-0041 preserves existing decimal Tasks under their Spec-qualified
+  // identity. The evidence is the canonical slice table of that parent Spec on
+  // the integration ref: a numeric label the table already names is being
+  // converted to a record, not newly allocated. A tip's position, ancestry or
+  // name cannot supply it (the candidate's own pushed tip, a copy of it, or an
+  // earlier push all hold the record), and numeric spelling alone does not.
+  const legacyRows = new Map();
+  const legacyRowsOf = (item) => {
+    if (!legacyRows.has(item.record)) {
+      const parents = atIntegration.filter((held) => held.kind === 'spec' && visibleIdKey(held.id) === item.record);
+      legacyRows.set(item.record, new Set(parents.flatMap((parent) => [...integrationSliceRows(root, integrationSha, parent.path)])));
+    }
+    return legacyRows.get(item.record);
+  };
+  const legacyTask = item => item.kind === 'task' && /^TK-[0-9]+$/.test(item.id) && legacyRowsOf(item).has(visibleIdKey(item.id));
   for (const item of local) {
     if (item.kind !== 'task' || !item.filePath || !fs.existsSync(item.filePath)) continue;
     const recovery = /^\*\*Collision recovery:\*\*\s*([^/\s]+)\/([^@\s]+)@/m.exec(fs.readFileSync(item.filePath, 'utf8'));
@@ -1401,6 +1416,7 @@ function remoteIdCollisionFindings(root, specs, retired, landmarks) {
   }
   const findings = [];
   for (const item of fresh) {
+    if (legacyTask(item)) continue;
     const refs = [];
     const others = new Set();
     for (const [sha, names] of tips) {
@@ -1419,6 +1435,22 @@ function remoteIdCollisionFindings(root, specs, retired, landmarks) {
     }));
   }
   return findings;
+}
+
+// The Task labels a Spec's `## Vertical Implementation Slices` table names at
+// a commit (visible-ID keys); an unreadable or absent Spec names none.
+function integrationSliceRows(root, sha, specPath) {
+  const shown = spawnSync('git', ['-C', root, 'show', `${sha}:${specPath}`], { encoding: 'utf8', maxBuffer: REF_READ_MAX_BUFFER });
+  if (shown.error || shown.status !== 0) throw new Error(`remote-id-collision cannot read ${specPath} at ${sha}: ${shown.error?.message ?? shown.stderr.trim()}`);
+  const heading = '## Vertical Implementation Slices';
+  const start = shown.stdout.indexOf(heading);
+  if (start < 0) return new Set();
+  const end = shown.stdout.indexOf('\n## ', start + heading.length);
+  const body = shown.stdout.slice(start + heading.length, end < 0 ? undefined : end);
+  return new Set(body.split('\n').flatMap((line) => {
+    const row = /^\|\s*(TK-[0-9]+)\s*\|/.exec(line);
+    return row ? [visibleIdKey(row[1])] : [];
+  }));
 }
 
 // The Spec and Task record identities at each commit, read with one `git
