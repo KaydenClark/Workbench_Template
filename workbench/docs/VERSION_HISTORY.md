@@ -336,3 +336,16 @@ ancestor of LLM Workbench `integration` at
 skills payload is unchanged at that integration tip. The receipts continue to
 pin the selected source commit so installed bytes remain identifiable; this
 containment does not stamp a release or establish Template integration delivery.
+
+### Template integration delivery (2026-10-19)
+
+Workbench_Template PR11 merged reviewed candidate
+`cd68ea759b100b94e423051a69da2264267cbaf5` into Template `integration`
+as `f3d34a0f7d2bbb60b2a087afa18079aa09cf3bb8` at
+`2026-10-19T05:42:21Z`. The merge and candidate share tree
+`d62319c0d44f1510aed06e07b1473cf84f763d47`. This records the completed
+upgrade integration.
+The managed receipts still pin selected source
+`0ce1750750f80767536f4d4c0bc44bf5ccabe730`, unchanged in producer
+`integration` at `c581d7510f398ef7675f7adc51a57d4c8309147b`. The build
+remains unreleased, and Template `main` was not promoted by this merge.
