@@ -12,6 +12,13 @@ continue authorized work. Use the existing topic Wiki page when
 suitable; a new topic uses a flat `context-TOPIC.md` page. A final
 completeness check complements capture while the context is fresh.
 
+Before the first dependent output, jot a source-backed discovery that could
+change its answer or next action; a report or synthesis is a dependent output.
+When the owner corrects a claim, append a linked correction before revising the
+output. Label intent `confirmed` only after explicit owner confirmation. A cold
+reader carries the latest confirmed state with its source and keeps superseded
+history; ask the owner again only when evidence conflicts or remains unresolved.
+
 ## Capture
 
 Resolve the Wiki lane through `workbench/manifest.json`. Choose the smallest

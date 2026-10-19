@@ -8,6 +8,11 @@ and the Lexicon's routing section, then only the owners relevant to the assigned
 task. The assigned `workbench/specs/S-###-slug/SPEC.md` is mandatory after selection. `BLUEPRINT.md` loads
 for architecture or cross-cutting product direction, not default orientation.
 
+Before the first dependent output, including a handoff or report, use the
+[Jot skill](workbench/skills/jot/SKILL.md) to preserve a sourced owner decision
+or correction with its actual speaker and linked history. Resume from the
+latest confirmed state; a prior claim remains visible when corrected.
+
 ## Authority Order
 
 ### Instruction Authority
@@ -230,12 +235,13 @@ removed only with owner approval.
 
 ## Session Records And Checkpoints
 
-Create or resume a local JSON notepad when meaningful objective work produces
-context whose loss would impair continuation or a focused handoff. Trivial
-conversation needs none. Preserve source fidelity, uncertainty, and corrections;
-maintain a compact current view and an append-oriented work record. Templates
-are examples, not a universal checklist. Notes neither authorize work nor prove
-claims. On resume obey the current Contract and verify relevant live state.
+Use the topic Wiki through [Jot](workbench/skills/jot/SKILL.md) for new meaningful
+project context, especially owner intent and corrections. Capture before the
+first output that depends on it; verify the shared write and its source before
+authoring a handoff. Trivial conversation needs no record. A record neither
+authorizes work nor proves implementation. On resume verify relevant live state.
+Existing JSON notepads remain readable for private and structured legacy work;
+do not move their contents into shared Wiki without specific authorization.
 Save important context promptly as work proceeds, before token exhaustion or
 an owner pressing Stop can interrupt the conversation. Do not defer capture to
 closeout or rely on a final write after Stop. This obligation covers saved local
@@ -246,10 +252,11 @@ Notepads, including grilling records, use JSON, including when older workflow
 examples say Markdown. Handoffs are separate human-readable Markdown (`.md`)
 files: they give a receiving agent or a new chat plain-language instructions
 for continuing one objective. Do not serialize a handoff as a JSON notepad.
-The shared runtime is `workbench/tools/notepads.mjs`; its interchange schema
+The legacy runtime is `workbench/tools/notepads.mjs`; its interchange schema
 and reusable examples live in the manifest-declared `notepad-templates`
-collection. The `notepad` skill owns judgment. New live records use typed
-folders in the `notepads` collection; Markdown handoffs use `handoffs`.
+collection. The `notepad` skill owns judgment when a JSON note is needed. Such
+records use typed folders in the `notepads` collection; Markdown handoffs use
+`handoffs`.
 Preserve legacy Markdown and JSON paths, but create no new JSON handoffs. Live
 notes and handoffs stay untracked in project Git; explicitly configured private
 synchronization may transport selected live collections under the accepted

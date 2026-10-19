@@ -3,7 +3,7 @@
   "source": {
     "repository": "https://github.com/KaydenClark/LLM_Workbench.git",
     "release": "v3.2.1",
-    "commit": "6cddd3a6b816e947554f9287172cb21fc90fcaea",
+    "commit": "05a4ccecb449d71767a2e05ff128b55e54877ab6",
     "dirty": false
   },
   "installedAt": "2026-10-19",
@@ -22,7 +22,7 @@
     "update-harness": "b213616e6a147d6f10ae64a9e87c7225d60999ca57144bdbd09833fbbdf885f6",
     "carry": "795cebda85509e66d350a39b2c712e41f2836f5471c8d4f5b415972a09b6a6d6",
     "notepad": "698f5c1ac67aa3d5153f76db39a5c437bfcbff598e9f171e400eb5e84848dcdc",
-    "jot": "dc19ba67605cf648270f1324842c768f87c92ef952324fd77a8e49c8bffd51a9",
+    "jot": "46c53c0545c8c9a14d025b2700ea001fb5ae06c4726167df96c6e0280402ef0a",
     "save": "d015fd71386def14965b47a033d90c45dab7071b951ebc9988d93ff62dc8fe06",
     "promote": "5a1074cc07fa157019cd4717218d56d32e3ef5647a3e96d49b97a7b3754f7b6a",
     "handoff": "22d123e791890d1812c6f5aab13af7dd24c2768016060695ba3b0f465d1d772f",
@@ -46,5 +46,12 @@
     ".agents/skills",
     ".claude/skills"
   ],
-  "backups": []
+  "backups": [
+    {
+      "skills": [
+        "jot"
+      ]
+    }
+  ],
+  "updatedAt": "2026-10-19"
 }

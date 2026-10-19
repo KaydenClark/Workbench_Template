@@ -36,7 +36,7 @@ authorized by ordinary language; do not wait for a second skill invocation.
 | User intent | Behavior and endpoint |
 |---|---|
 | Decide or stress-test an idea | `grilling` with `notepad`; save answers/corrections before continuing |
-| Preserve or resume meaningful work | `notepad`; verify live state and returned revision |
+| Preserve or resume meaningful project context | `jot` in the topic Wiki; verify source, correction history and live state. Read legacy private `notepad` records when relevant. |
 | Reconcile agreed claims | `promote` with `to-docs` and `save`; no implied implementation |
 | Write specifications only | `to-spec` and needed `to-tickets`; stop at the specified endpoint |
 | Deliver assigned work | `carry` with `implement`, verification, independent integration review and `save` |
@@ -45,12 +45,12 @@ authorized by ordinary language; do not wait for a second skill invocation.
 
 Every helper inherits the caller's narrower endpoint. Mention is not invocation
 and invocation is not new authority. Optional routers and historical extension
-skills are not prerequisites. For meaningful work, create/resume a JSON note,
-read its revision, verify Actuality and correct stale state before dependent
-work. Confirm successful append/current results after material changes and
-validate/read back before voluntary pause or handoff. Runtime revision, privacy
-and dependency checks enforce those operations; host-native interception of
-arbitrary agent actions is not claimed.
+skills are not prerequisites. For new project context, use the installed `jot`
+skill before the first dependent output. Its shared Wiki claim carries source,
+speaker and linked correction history. Read relevant legacy JSON notes within
+their existing access; validate/read back before voluntary pause or handoff.
+Runtime revision, privacy and dependency checks enforce those operations;
+host-native interception of arbitrary agent actions is not claimed.
 
 ## Prerequisites
 
