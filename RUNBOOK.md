@@ -9,7 +9,7 @@ Start with [STARTUP](STARTUP.md), then assigned Spec/Task. New project: [Genesis
 
 ## Find, claim and resume
 
-For assigned work, follow [Implement](workbench/skills/implement/SKILL.md#work-selection-and-lifecycle). Check current ownership and corrections; return to the same Task on failure.
+To select or resume assigned work, start with [Situate the slice](workbench/skills/implement/SKILL.md#1-situate-the-slice). Execution follows [selection and lifecycle](workbench/skills/implement/SKILL.md#work-selection-and-lifecycle), including claim/resume gates. Check current ownership and corrections; return to the same Task on failure.
 
 ## Direct and dispatch
 
