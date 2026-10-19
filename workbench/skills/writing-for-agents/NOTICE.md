@@ -1,8 +1,9 @@
 # Upstream source
 
 Matt Pocock, mattpocock/skills, skills/productivity/writing-for-agents, revision d81f3a183412e71a5b1e84ca21bc1a35eea03a60.
-The entrypoint and supporting mechanics retain the upstream text unchanged.
-The room's existing controls govern authority, composition and artifact ownership.
+REFERENCE.md preserves the pinned upstream entry; SKILL-MECHANICS.md preserves
+its companion. SKILL.md is a local compact adaptation. The room's existing
+controls govern authority, composition and artifact ownership.
 
 MIT License
 

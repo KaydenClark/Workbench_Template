@@ -9,7 +9,7 @@ explicit copy of the Workbench Template into a fresh target is still greenfield:
 it starts a new project with its own identity and evidence, rather than
 inheriting the Template's room state.
 
-1. Locate the checked-out LLM Workbench repository and read
+1. [Recover the release source](#recover-the-release-source), then read
    `templates/GENESIS.md` completely. Treat it as the bootstrap procedure;
    this skill is only its conversational entrypoint.
 2. Preserve the founding prompt verbatim, verify the target path is inside the
@@ -74,3 +74,26 @@ inheriting the Template's room state.
    (it fails closed on a missing skills lane, tools receipt, filled control or
    actionable first spec), and report the remote recovery ref plus the
    under-one-minute demo.
+
+## Recover the release source
+
+Setup protocols and classification are release-side, not installed runtime
+commands. Resolve the room's skills lane through its manifest, then inspect
+its `.workbench-skills.json` receipt's `source.repository` and `source.commit`.
+These identify the source of this installed setup procedure. The manifest's
+`provenance.source` can be older formation history; do not silently substitute
+it for an updated skills receipt. Runtime tools have their own source receipt.
+If required components name different sources, verify the requested setup
+candidate and compatibility before mutation; do not assume newest wins.
+
+Locate a clean checkout of that repository at that exact commit, or fetch an
+isolated checkout within the authorized workspace. Verify remote, full HEAD
+and clean source paths. With no receipt (a fresh target or producer checkout),
+use the explicitly selected verified release; if none is recoverable, request
+that missing source once and hold only setup. No private machine path is needed.
+
+From that checkout read `templates/GENESIS.md` (or `templates/ADOPTION.md` for
+Adoption), including `Configure project authority` in Genesis. Run classification
+there with `node tools/workbench-classify.mjs classify --project ABSOLUTE_TARGET`.
+Do not run a nonexistent room-local `tools/` command, install producer tooling
+into the runtime lane, or treat missing release files as a successful setup.

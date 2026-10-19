@@ -11,8 +11,7 @@ could be ambiguous.
 
 ## Task Routing
 
-The ordinary entry route is `AGENTS.md` -> `RUNBOOK.md` -> `LEXICON.md`.
-Continue to the assigned `SPEC.md` resolved through `workbench/manifest.json`.
+The ordinary entry route is `AGENTS.md` -> [STARTUP](STARTUP.md#resume) -> the assigned Spec and Task resolved through `workbench/manifest.json`. Use [Runbook orientation](RUNBOOK.md#orientation) for an unfamiliar operation. Current owners and source fingerprints outrank a stale STARTUP view.
 Use `BLUEPRINT.md` for architecture and cross-cutting direction; use the
 manifest-declared Wiki `MEMORY.md` for task-relevant durable knowledge and the
 ADR `REGISTER.md` for decision rationale. Read only the relevant linked owners.
@@ -27,7 +26,7 @@ These are the Context Map's entry routes. Follow the smallest applicable route:
 | Complete capability inventory | [Spec catalog](workbench/specs/CATALOG.md) -> stable spec; includes completed history |
 | Durable knowledge and design concepts | [Wiki router](workbench/wiki/MEMORY.md) -> relevant note -> its governing sources |
 | Decision rationale | [ADR register](workbench/docs/adr/REGISTER.md) -> active decision -> its operational owners; [history](workbench/docs/adr/HISTORY.md) remains explicit |
-| Commands and recovery | [Runbook](RUNBOOK.md) -> relevant procedure -> named tool |
+| Commands and recovery | [Runbook](RUNBOOK.md) -> relevant workflow -> named skill or tool |
 
 The Wiki retains its single `MEMORY.md` router. This table connects existing
 owners; it does not add a second Wiki index or copy their contents.

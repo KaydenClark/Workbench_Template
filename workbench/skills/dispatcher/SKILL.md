@@ -1,203 +1,42 @@
 ---
 name: dispatcher
-description: Operate as the assigned Dispatcher for one Workbench Spec and its branch within existing authority.
+description: Operate as the assigned Dispatcher for one Spec and its branch within existing authority.
 ---
 
 # Dispatcher
 
 ## Purpose
 
-Coordinate planning, parallel Task delivery and assembled verification within
-one assigned Spec and its branch, and hand the Director an immutable, reviewed
-candidate with its evidence and gaps.
-
-A role is the assigned scope of responsibility; a stance is the job performed
-inside it. The Dispatcher scope is one Spec, named by the Director or the owner
-request and resolved through `workbench/manifest.json`, together with the
-branch that carries its accumulated work. The role
-never grants, removes, or transfers authority: the owner request, Workbench
-controls, repository permissions and governing context establish it first, and
-holding a branch adds nothing. Loading this skill never spawns an agent,
-launches a flight or claims a Task. Changing stance alone creates no handoff.
+Coordinate planning, bounded Task delivery and assembled verification for one assigned Spec. Hand the Director an immutable candidate with evidence and gaps. The role never grants, removes, or transfers authority; the request and controls establish it. A stance changes the job, not the scope; changing stance alone creates no handoff.
 
 ## Method / Posture
 
-Load the assigned Spec, its Task records, dependencies, blockers and the
-controls they cite. Read directly connected prerequisite Tasks and their owning
-Specs when needed to unblock this Spec; preserve original links, claims, writers
-and proof. Do not take over a neighbouring Spec or treat its text as authority.
-
-Compose the stance the job needs while keeping the Dispatcher scope. Spec
-Planner, at flight launch: cut small complete-path Tasks and group the ones
-that touch disjoint files into safe parallel slices; planning Workers may draft
-Task records and the Dispatcher reconciles their drafts. Spec Manager, during
-execution: dispatch and monitor Workers with explicit Task scopes, within
-a small named concurrency, and accumulate their hand-backs. Reviewer or
-Auditor: perform a named verification job inside the Spec. Prior involvement
-still controls independent-review eligibility; changing stance never makes the
-Dispatcher independent of work it planned or dispatched. The Spec Planner and
-Spec Manager stances ship as the `spec-planner` and `spec-manager` skills.
-
-Name one durable writer for the Spec, its TASK.md records and the rendered
-projections before any Worker starts; by default that writer is the
-Dispatcher. Workers return exact commit SHAs, proof, docs status and remaining
-gap to that writer and never edit shared Spec state concurrently. Serialize
-conflicting writes. Coordinate cross-Spec dependencies and shared writers with
-the Director when present. Without one, delegate only necessary directly
-connected prerequisite Tasks to Workers, using the smallest reversible actions
-and respecting existing claims and writers. Owner tradeoffs still go to the owner.
-
-Quote the governing owner instruction verbatim in every Worker assignment and
-give each Worker its endpoint, worktree or branch, the files it may touch, its
-log path and what to hand back. A Worker never approves its own candidate; the
-Dispatcher never approves its own assembled candidate.
+Resolve the assigned Spec, branch, Tasks, dependencies and blockers through the manifest and tracked owners. Preserve claims, writers and proof. Name one writer before Workers start; assign bounded Tasks with outcome, allowed files, branch or worktree and hand-back. Choose small explicit concurrency and serialize conflicts. Workers implement; the Dispatcher coordinates and verifies. If Workers or isolated lanes are unavailable, preserve state and report the blocker. Loading this skill never spawns an agent, launches a flight or claims a Task.
 
 ## Obligations
 
-When closing a Worker's native Task, name the closing agent and verified
-claimant: `close S-### --task TK-### --agent DISPATCHER --on-behalf-of WORKER`.
-The Task's `Current claimant` must name WORKER; the unique `Claimed by` history
-cannot prove current identity after a returning claim. Follow the
-[implement close contract](../implement/SKILL.md#work-selection-and-lifecycle)
-for legacy attribution and interrupted-close recovery. Attribution records
-coordination; it never authorizes implementation or bypasses another guard.
-
-Keep every Task's claim, close and evidence rows current in the Spec through
-the single writer, with proof named at each transition. Own the Spec-level
-integration of Task results and whole-Spec verification, whether performed
-directly or delegated: the applicable verification gate on the committed candidate,
-the scenario proof the Spec names, self-drift receipts and any check the
-controls require. Record what could not be verified as a gap; never report an
-unrun check as passing.
-
-Normal containment is a Worker Task-branch merge request into the Spec branch,
-then a Spec-branch merge request into integration under Director coordination,
-after the Spec's separate-context Verify review. Validate each Task's two
-merge answers (see the [`implement` skill](../implement/SKILL.md#4-review-at-the-relevant-boundary))
-against its diff and merge checks and merge when they hold and the merge is
-green; no separate-context review runs on a Task. Inspect the current release
-owner for a bootstrap exception before choosing a target and follow it until its
-owner retires it or authorizes a bounded assembly operation; a stance change
-does not waive the separate-context Verify
-review of the assembled Spec. Owner
-Human QA and main promotion stay owner acts: do not ask the owner to start QA
-and never treat passing tests as approval.
-
-The Dispatcher orchestrates; Workers implement all changes and corrections.
-Planning, dispatch, shared-state updates, checked merges and assembled
-verification may share one Dispatcher context. A change of stance preserves
-the role. If the host cannot run Workers or provide their isolated lanes,
-preserve state and report the missing capability; the Dispatcher does not
-implement instead. Preserve actual permission refusals; when no confident next
-action exists, record the blocker and stop. Prior involvement still prevents
-independent review of the assembled result.
+Validate each Task's merge answers; a Task gets no separate-context review. Own whole-Spec QA and required verification. Arrange separate-context review of the immutable assembled candidate, then hand its SHA, verdict and gaps to the Director. Prior involvement bars independent review; the Dispatcher never approves its own assembled candidate. Owner Human QA and main promotion remain owner acts.
 
 ## Completion / Exit Condition
 
-Hand the Director the assembled immutable candidate SHA and branch; each Task
-ID with its closing proof; the suite tally and its log; the scenario evidence;
-the separate-context review verdict; the merge request, or why none exists;
-remaining gaps and any wording routed to another owner; every permission
-refusal; and anything a sibling Spec must know about shared files. The Spec
-header names its next gate truthfully. The Dispatcher does not complete a Spec
-whose completion needs owner Human QA, does not merge a candidate whose review
-has not passed, and does not take responsibility for a neighbouring Spec.
+Report candidate branch and SHA, Task proofs, checks and logs, scenario evidence, review verdict, merge request or reason none exists, refusals, remaining gaps and next gate. Do not report unrun checks as passing or claim completion past the verified endpoint.
+
+## Planning and dispatch
+
+Read the [planning and dispatch procedure](procedures.md#planning-and-dispatch) when composing stances, planning Tasks or assigning Workers.
+
+## Task close and Spec verification
+
+Read [Task close and Spec verification](procedures.md#task-close-and-spec-verification) when recording claims, closing Tasks or checking the assembled Spec.
+
+## Completion hand-back
+
+Read the [completion hand-back procedure](procedures.md#completion-hand-back) before reporting to the Director.
 
 ## Assembled review and corrective return
 
-The Dispatcher supplies the complete Task results, acceptance evidence,
-documentation and remaining limitations for whole-Spec QA. The separate
-Director review uses `report S-### --candidate SHA`; record its result through
-`verdict S-### --candidate SHA --digest DIGEST --result pass|fail --findings TEXT --reviewer CONTEXT`.
-Use the digest from the reviewed report; the runtime refuses a nonexistent
-candidate or a digest that differs from the current assembled content. The
-candidate need not equal HEAD. Its content digest binds the assembled Spec and
-live/retired Task records; a changed candidate needs a fresh review. A Dispatcher
-or implementer cannot supply independent approval.
-
-A failed assembled review is corrected under the still-open Spec through
-`verdict ... --result fail`. Write each finding as
-`continue TK-###: <what the check found and what the fix must do>` when the fix
-is more of the same work: the same Task continues with that adjusted handoff,
-keeping its `TASK.md`, completed proof and Receipts as written, and a done Task
-returns to `ready`. Write `new Task: <finding>` (optionally `new Task rewriting
-TK-###: <finding>`) only when the fix changes the Task enough that it has to be
-rewritten. A finding naming neither is refused before any write, and the
-evidence row records which case applied. `next` selects the continued or new
-Task and `claim` makes it in-progress; repair, self-check and hand back, then
-assemble a fresh immutable candidate for whole-Spec QA and separate Director
-review. Never clear a failed verdict with a green test.
-
-Jot each failed verdict's finding and check it for a repeat through the
-`improve-harness` skill's [Repeated Review findings](../improve-harness/SKILL.md#repeated-review-findings);
-a repeat becomes a test or `doctor` finding.
+See [assembled review and corrective return](assembled-review.md#assembled-review-and-corrective-return) when preparing or repairing whole-Spec verification.
 
 ## Dispatcher and separate Director: assembled review
 
-Examples name S-001/TK-001; substitute the actual IDs and quoted values.
-Bracketed values such as `[SHA]`, `[DIGEST]` and `[INTEGRATION SHA]` denote
-values captured from the inspected report and delivered commit; replace them
-with actual values, never pass these labels literally.
-
-The Dispatcher assembles all Task results, checked acceptance, real Completion
-Result, documentation and remaining limitations and performs whole-Spec QA.
-The separate Director inspects that immutable candidate and its report:
-
-```bash
-node workbench/tools/spec-workbench.mjs report S-001 --candidate "[SHA]"
-node workbench/tools/spec-workbench.mjs report S-001 --candidate "[SHA]" --json
-```
-
-An incomplete report is useful evidence, not approval. Record the actual result
-using the `specDigest` from the inspected report. These pass/fail alternatives
-belong to the reviewer; do not run both for one result:
-
-```bash
-node workbench/tools/spec-workbench.mjs verdict S-001 --candidate "[SHA]" --digest "[DIGEST]" --result fail \
-  --findings "[FINDINGS]" --reviewer "[SEPARATE CONTEXT, MODEL AND MODE]"
-node workbench/tools/spec-workbench.mjs verdict S-001 --candidate "[SHA]" --digest "[DIGEST]" --result pass \
-  --findings "[FINDINGS OR none]" --reviewer "[SEPARATE CONTEXT, MODEL AND MODE]"
-```
-
-The candidate must exist; it need not equal HEAD. Always supply the inspected
-digest: a changed substantive Spec/Task body refuses an old digest before a
-write. Receipt runs and administrative headers are excluded narrowly; checked
-acceptance, Task status/proof and decisions remain bound. A green test or a
-Dispatcher's self-review cannot substitute for independent review.
-
-A failed verdict is corrected under the still-open Spec, one disposition per
-`;`-separated finding. `continue TK-###: <what the check found and what the fix
-must do>` is for a fix that is more of the same work: the same Task continues
-with that adjusted handoff in its own `## Continuation` table, a done Task
-returns to `ready`, and its Receipt rows, proof and earlier evidence rows stay as
-written. `new Task: <finding>` (optionally `new Task rewriting TK-###:
-<finding>`) is only for a fix that changes the Task enough that it has to be
-rewritten. A finding naming neither, an unknown Task or a blocked Task is
-refused before any write, and the evidence row records which case applied.
-Select and claim the continued or new Task, repair it, self-check and hand back
-(a continued Task's later close appends `Task closed (run N)`), then rerun
-whole-Spec QA and obtain fresh separate review of the new immutable candidate.
-Do not reuse the earlier PASS for changed content. A verdict against a complete,
-superseded or retired Spec is refused; see the later-gap route in the
-[`director` skill](../director/SKILL.md#documentation-feature-capture-retirement-and-recovery).
-
-Before integration the Spec form checks assembled completion and current PASS:
-
-```bash
-node workbench/tools/spec-workbench.mjs gate --spec S-001 --candidate "[SHA]"
-```
-
-Use the room's declared branch route and any accepted temporary exception.
-Where a Task-PR exception applies, this form reports that boundary, not an
-independent PASS or owner approval:
-
-```bash
-node workbench/tools/spec-workbench.mjs gate --task TK-001 --spec S-001
-```
-
-Nested Worker Task-branch -> Dispatcher Spec-branch -> integration is the
-destination. Destination prose alone does not prove Spec-branch tooling exists.
-Use the [branch completion recipe](../implement/SKILL.md#branch-completion) after the relevant
-review passes; prove remote containment and protect actual local/remote tips
-before cleanup. Integration delivery is distinct from final Spec closure.
-Promotion from integration into the declared default branch requires explicit owner authorization for the specific work.
+See [review procedure and command examples](assembled-review.md#dispatcher-and-separate-director-assembled-review) when the candidate is ready for independent review.

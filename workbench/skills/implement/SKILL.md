@@ -16,7 +16,7 @@ Authorized room-local extensions follow the
 ## 1. Situate the slice
 
 Verify the repository root, branch, remote, upstream, and dirty state. Read the
-nearest `AGENTS.md`, then run:
+nearest `AGENTS.md` and [STARTUP resume](../../../STARTUP.md#resume), then run:
 
 ```bash
 node workbench/tools/spec-workbench.mjs doctor
@@ -61,6 +61,12 @@ Use red/green/refactor at the agreed seam:
 Run focused project-owned verification during the loop. Select the final gate through
 [Engineering and verification](#engineering-and-verification). The behavior is
 driven when expected red and green results and the applicable gate are proven.
+
+At checkpoint, handoff or yield, update existing source owners first and follow
+[STARTUP reconciliation](../../../STARTUP.md#reconcile). Only its named writer
+updates the shared view; other lanes submit source changes and proposed summaries.
+Verify source freshness on resume and distinguish local, pushed and fetched
+integration state. An unreconciled scaffold grants no authority.
 
 ## 3. Document and checkpoint
 
@@ -271,8 +277,9 @@ and `unknown-blocker-qualifier` rather than bypassing selection or claim.
 
 Examples name S-001/TK-001; substitute the actual IDs and quoted values.
 
-Ordinary entry is AGENTS -> Lexicon Task Routing -> the assigned
-Spec and Task. Verify root, branch, remote, upstream and dirty state first.
+Ordinary entry is AGENTS -> STARTUP -> the assigned Spec and Task;
+use the Lexicon Task Routing definitions when needed. Verify root, branch, remote,
+upstream and dirty state first.
 Preserve unrelated work and obey the assigned stance/file lane.
 
 For a setup-only Round One assignment, a fresh agent follows that route, checks

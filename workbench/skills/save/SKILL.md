@@ -55,6 +55,12 @@ checkpoints and unresolved/correction/handoff dependencies; cleanup composes
 `notepad` only for legacy cleanup after verified reconciliation; keep Wiki
 claim history and correct it through `jot`.
 
+At checkpoint, handoff or yield, update existing source owners first and follow
+[STARTUP reconciliation](../../../STARTUP.md#reconcile). Only its named writer
+updates the shared view; other lanes submit source changes and proposed summaries.
+Verify source freshness on resume and distinguish local, pushed and fetched
+integration state. An unreconciled scaffold grants no authority.
+
 ## Publication
 
 Publication is a shared workflow requirement, not another planning stage.

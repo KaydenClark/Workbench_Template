@@ -11,6 +11,10 @@ v3 support root through `/update-harness`, which runs
 `adoption` record contradicts its first. A routine harness update also uses
 `/update-harness`.
 
+First [recover the release source](../genesis/SKILL.md#recover-the-release-source)
+for the installed setup procedure; its source checkout owns classification and
+the Adoption protocol.
+
 1. Verify the canonical checkout, branch, dirty/ahead/diverged state, remote,
    and nearest controls. Dirty state routes recovery: commit owned work on a
    prefixed task branch or isolate the migration in a clean worktree; never

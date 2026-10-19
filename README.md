@@ -24,8 +24,7 @@ workbench/tools and changes only through an explicit managed update.
 
 ## How This Project Is Run
 
-This repository is governed by a small set of control documents. Read them
-before changing anything:
+Start with [AGENTS](AGENTS.md) -> [STARTUP](STARTUP.md) -> the assigned Spec and Task. Use [Runbook orientation](RUNBOOK.md#orientation) for an unfamiliar operation. Read other owners when the operation needs them:
 
 - [`AGENTS.md`](AGENTS.md) - how agents behave here: authority order, read/edit
   scope, the task-selection loop, documentation ownership, and proof rules.
@@ -35,10 +34,9 @@ before changing anything:
   consult it when shared language could be ambiguous.
 - [`TASKBOARD.md`](TASKBOARD.md) - active spec projection: current slice, owner,
   blocker, latest event, and next gate.
-- [`workbench/specs/S-###-slug/SPEC.md`](workbench/specs/S-###-slug/SPEC.md) - on-demand capability truth,
+- [assigned `SPEC.md`](workbench/specs/CATALOG.md) - on-demand capability truth,
   acceptance, decisions, verification, append-only evidence, and completion.
-- [`RUNBOOK.md`](RUNBOOK.md) - how to set up, run, test, build, and recover this
-  project, plus the verification commands that gate "done".
+- [`RUNBOOK.md`](RUNBOOK.md) - the short workflow manual; [Template operations](workbench/docs/TEMPLATE_OPERATIONS.md) keeps this room's exact setup, recovery and upgrade commands.
 - [`workbench/wiki/MEMORY.md`](workbench/wiki/MEMORY.md) - the room brain:
   canonical, human-editable durable memory for this project. It routes to the
   live controls above, to flat memory notes, and to the owner-directed
@@ -55,11 +53,7 @@ before changing anything:
   three-file GAME_PLAN room through the v3.1.2 baseline, so any generation can be
   checked out, run, and diffed against its neighbours.
 
-If this project was bootstrapped from a single founding prompt, the one-time
-protocol that produced these docs is preserved in [`GENESIS.md`](GENESIS.md).
-If instead the harness was adopted into an existing project, that one-time
-migration protocol is [`ADOPTION.md`](ADOPTION.md). Either runs once at start;
-after handoff, AGENTS plus the progressive spec flow above govern.
+For a new project, follow the installed [Genesis skill](workbench/skills/genesis/SKILL.md). For a repository with code, follow [Adoption](workbench/skills/adoption/SKILL.md). Both recover verified release source before their release-side setup procedure. Solo or team scopes remain in the room's own authority records.
 
 ## Getting Started
 
@@ -84,6 +78,8 @@ For **Claude Code**, keep the one-line `CLAUDE.md` containing exactly
 generated `/init` file. Other agents should be pointed at `AGENTS.md` as their
 entry point.
 
+Ordinary continuation follows AGENTS -> STARTUP -> assigned Spec and Task; consult only the needed Runbook operation.
+
 Every completed ticket must leave proof in its final response and owning spec's
 append-only evidence log. Milestone specs additionally require a short demo
 artifact (screenshot, recording, preview URL, or one-command demo) so work is
@@ -107,6 +103,6 @@ Historical replay branches retain their original versions.
 
 
 The installed harness is v3.2.1. This repository is the reference used to test
-Workbench updates; [upgrade acceptance](RUNBOOK.md#reference-upgrade-acceptance)
+Workbench updates; [upgrade acceptance](workbench/docs/TEMPLATE_OPERATIONS.md#reference-upgrade-acceptance)
 is required for each new version. [S-00B](workbench/specs/S-00B-v3-2-1-harness-upgrade/SPEC.md)
 records this update's source, preservation and verification.

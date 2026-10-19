@@ -66,6 +66,12 @@ Return the Markdown path and the authorized next step. File existence alone
 is insufficient. A handoff request
 authorizes authorship, not implementation, promotion, sending it to others or creating a new task.
 
+At checkpoint, handoff or yield, update existing source owners first and follow
+[STARTUP reconciliation](../../../STARTUP.md#reconcile). Only its named writer
+updates the shared view; other lanes submit source changes and proposed summaries.
+Verify source freshness on resume and distinguish local, pushed and fetched
+integration state. An unreconciled scaffold grants no authority.
+
 ## Author, recipient and shared context
 
 Distinguish author from recipient, and assigner from assignee. A request to

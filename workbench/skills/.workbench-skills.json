@@ -3,17 +3,17 @@
   "source": {
     "repository": "https://github.com/KaydenClark/LLM_Workbench.git",
     "release": "v3.2.1",
-    "commit": "05a4ccecb449d71767a2e05ff128b55e54877ab6",
+    "commit": "5cc71a48facfe214e66bb917d46b667513fa5bc2",
     "dirty": false
   },
   "installedAt": "2026-10-19",
   "skills": {
-    "adoption": "1d34d57967a00820260618fa5046ae1dc77a119140e3ec099c0df11e064e18b4",
+    "adoption": "7d42fb60235fdb940ad661f734890aa122dcf083b9760b85a27f2c9fb6dd9a6a",
     "checkpoint": "f5828d913183d334430a851cde978c2ec0140727eb4f6b4cb84f08a190a2dc09",
     "code-review": "402d14d1538475edb633b4c13808cbb5290963869251c7e452830cfb882e6006",
-    "genesis": "8ce957d60e4b83bae08a4669e50f840b03646d6fec853eb24d361f060f166841",
+    "genesis": "11eb3bb2ad528d1b73b182550145202ec1bf4e5b0dfdb2c538808589d32638f3",
     "grilling": "ed6d63588df34cfd5d67828b0c4fc8722486e9f93499e4c78a6844abfef2ff5c",
-    "implement": "6b8c1c25063c6913c14c50b5283c53588a14a956c0cfd062557fb41cd66a0278",
+    "implement": "bcedf49d84bedfd69c91411820be6046d60fadbc72ce808ef599909b6262ca24",
     "make-it-so": "f42fc01a0a29ef0857d865369a7bdad89e6e8bd5598e2df5e7ea8d19736f9b08",
     "to-docs": "a8c3939d88bcfe2ec45bef20eab4ff8afc341240cb24b873e4fe7c47c9f93669",
     "to-spec": "8805154cfa3ad43d08ac53b94f20be3294fbb41ca330cf27302241828ade1f54",
@@ -23,18 +23,18 @@
     "carry": "795cebda85509e66d350a39b2c712e41f2836f5471c8d4f5b415972a09b6a6d6",
     "notepad": "698f5c1ac67aa3d5153f76db39a5c437bfcbff598e9f171e400eb5e84848dcdc",
     "jot": "46c53c0545c8c9a14d025b2700ea001fb5ae06c4726167df96c6e0280402ef0a",
-    "save": "d015fd71386def14965b47a033d90c45dab7071b951ebc9988d93ff62dc8fe06",
+    "save": "61224dc76134d49aa9011605da904c55e5d6c9ff22a0a48f7351038be64ab79e",
     "promote": "5a1074cc07fa157019cd4717218d56d32e3ef5647a3e96d49b97a7b3754f7b6a",
-    "handoff": "22d123e791890d1812c6f5aab13af7dd24c2768016060695ba3b0f465d1d772f",
+    "handoff": "6069511ed14f9f2d36b7508f7f5aaaca538251f316f18a6ae9ac33dc3cccbd81",
     "grill-me": "975a7f2079c5961146ca0268652e8b20a8e04d2eb1aa34fe54c77a1b47eb3639",
     "workbench-runtime": "862c1033d667b0f4a50ec24af55f46f91b4bd668942d22ef4f3e43e9e6469664",
     "improve-harness": "7fb99502fb51224bf4abab73de6b307915c2232899f065026ccac5541311fd79",
     "domain-modeling": "189773da65fd7fa427234f09a25b91f5389138110d52e9f6a04ab32bcf517b15",
     "pr": "102fefd93cdf36ee98a19ae8ab27a29d4d8b40436299fa721866153199453917",
-    "writing-for-agents": "1cfedcbbd051970dd5064e59373a093b576a2f2e1b552889bcc81d0399a35003",
+    "writing-for-agents": "cd1398a37e1aef7f693f31b16cfee5111109f06b498ee94e681e50e775cdd2d7",
     "retro": "1483530a7617d403e128e93d4e320b43ef3150a3bf52d445bbe92b8c271d532a",
-    "director": "b7f994ceb6b184e3d5a23d888e1f9540f3ed390b60e5c9cf63bd3b4cf44a8494",
-    "dispatcher": "5d9a704be670d99ff51fbdfd2073b3e4ba9673d5e42394176a3df5dadc48d0dc",
+    "director": "a60b786e2bf336bdbdc9c1f6c35fe6af6103d41d953104efa6a631ba7cfb8ac6",
+    "dispatcher": "2a639a47974fee5092c97529156e8f2268bca5e827cf14da52f89b236bb25f8e",
     "spec-planner": "b86f197afc79508ef878900c76050b7b1a1ab08460798cd3f20be04000129bd2",
     "spec-manager": "434a67104fe6779a4f5d57abf33c280f47d554e3ee79591e69b5ce2f78e17566",
     "builder": "cd0da68c899e6c176b5e9f114d8b73fc9a88ba487843427e680017e0b8e1d53d",
@@ -50,6 +50,18 @@
     {
       "skills": [
         "jot"
+      ]
+    },
+    {
+      "skills": [
+        "adoption",
+        "genesis",
+        "implement",
+        "save",
+        "handoff",
+        "writing-for-agents",
+        "director",
+        "dispatcher"
       ]
     }
   ],
