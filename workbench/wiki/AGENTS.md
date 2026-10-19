@@ -7,7 +7,7 @@ provenance:
   - LLM Workbench template wiki
 source_paths:
   - workbench/wiki
-last_verified: 2026-09-08
+last_verified: 2026-10-18
 ---
 
 # Example Workbench Wiki Agent Instructions
@@ -23,7 +23,12 @@ maintenance.
 1. Read `MEMORY.md`.
 2. Follow one directly relevant link.
 3. For current project state, leave the wiki and read the root controls.
-4. Search only when the router is incomplete or during explicit maintenance.
+4. If the topic route lacks continuation context, use bounded
+   `jot search --query TOPIC` and read relevant entries with sources and
+   corrections. Private jots require an explicit `--include-private` opt-in
+   within unchanged local access; keep their filenames out of shared routes.
+5. Search the wider Wiki only when its route is incomplete or during explicit
+   maintenance.
 
 ## Authority And Scope
 
@@ -40,9 +45,20 @@ maintenance.
 - Follow `SCHEMA.md` for properties, provenance, sensitivity, and freshness.
 - Update an existing owning note before creating another.
 - Keep collections flat; never copy live task state.
-- Design Concept articles: suggest, repair from direct proof, or mark stale.
-  Never create one without the owner's direction.
-- Run `node workbench/tools/wiki.mjs validate` after maintained-note changes.
+- Jot useful discoveries and actual owner confirmations, approvals and
+  corrections before the next dependent action. Keep speaker, source, scope,
+  state and correction history; approval and confirmation are distinct from
+  implementation proof.
+- Share new project context by default through the owning topic and router.
+  Explicit private jots stay ignored and untracked; private-to-tracked transfer
+  requires specific exposure approval. Preserve originals.
+- Create or update a Design Concept article touched by an authorized
+  operation, naming it in `authorized_by` and `History`. Repair from direct
+  proof or mark stale; see [Schema Create](SCHEMA.md#create).
+- Capture a completed capability in [features](features/README.md) at its
+  Spec's closure point; a Task record is not a substitute for that article.
+- Lint touched pages and affected routes against their sources and run
+  `node workbench/tools/wiki.mjs validate` after maintained-note changes.
 
 ## Documentation
 

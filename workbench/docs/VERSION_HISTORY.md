@@ -303,3 +303,26 @@ private transport runtime. The tour and filled controls explain these changes.
 verification, fresh-project proof and the separate Example integration result.
 Original genesis provenance remains v3.1.2; installed component receipts name
 v3.2.0. This update does not rewrite the historical replay branches.
+
+## Unreleased Template upgrade candidate (2026-10-18)
+
+The historical generations and `v3.2.1` manifest label above remain the
+released baseline. The current Template branch installs a later, **unreleased**
+Workbench candidate without assigning it a new version or adding a replay
+branch. Its managed runtime receipt pins producer commit
+`6cddd3a6b816e947554f9287172cb21fc90fcaea` (31 files); its managed
+skills receipt pins producer candidate
+`5cc71a48facfe214e66bb917d46b667513fa5bc2` (33 skills, 53 files).
+These identify installed bytes, not a final producer integration pin or a
+published release. The Template also carries two generic startup-route sections
+from producer candidate `aebfb970fa7f84032f0df52a6c61c5d9432b7cb3` and
+reconciles room-owned controls, Wiki pages, tour and tests for this room.
+
+The room deliberately retains its name, genesis and historical upgrade proof,
+version replay table, manifest identity, and `v3.2.1` release labels in
+receipts. Those facts describe the room's lineage and released baseline; they
+do not override the pinned candidate source commits. The installed Wiki and
+Lexicon follow current feature, Jot, privacy and Task routes while keeping this
+room's existing tour, historical Spec links and standalone Wiki profile. A
+final integration identity and upgrade acceptance are recorded only after the
+applicable review, verification and integration steps succeed.

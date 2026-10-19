@@ -7,7 +7,7 @@ provenance:
   - Genesis or Adoption of this room
 source_paths:
   - workbench/wiki
-last_verified: 2026-09-08
+last_verified: 2026-10-18
 ---
 
 # Example Workbench Memory
@@ -18,7 +18,8 @@ last_verified: 2026-09-08
 > link instead of browsing folders or searching.
 
 This router holds durable room memory only: context, decision-history
-pointers, and routing. It never duplicates live task state; it routes to it.
+pointers, source-linked Jot context and routing. It never duplicates live Task
+state; it routes to it. Private jots remain outside shared routes.
 
 ## Source Precedence
 
@@ -43,7 +44,8 @@ nothing.
 | `workbench/specs/` | Stable capability records, acceptance, evidence, and proof |
 | [RUNBOOK.md](../../RUNBOOK.md) | Exact operating and verification commands |
 | [SCHEMA.md](SCHEMA.md) | Wiki CRUD, metadata, sensitivity, and freshness rules |
-| [design-concepts/](design-concepts/README.md) | Owner-directed articles explaining durable design models |
+| [design-concepts/](design-concepts/README.md) | Articles explaining durable design models and any landmark synthesis supported by this room |
+| [features/](features/README.md) | Readable capability articles captured when Specs complete |
 | [guidebooks/](guidebooks/) | Ordered procedures that outgrew the Runbook |
 
 ## Routing
@@ -54,10 +56,13 @@ nothing.
 | Where did this room come from? | `provenance` in [manifest.json](../manifest.json) - genesis from LLM Workbench v3.1.2 at `18ffc0d` |
 | How do I know the explanation is still true? | `node tests/tour.test.mjs` - drift is a test failure, not a backlog item |
 | How did the harness get here, and how do I stand in an earlier generation? | [VERSION_HISTORY.md](../docs/VERSION_HISTORY.md), then `git checkout version/NN-...`; recorded by [S-002](../specs/S-002-version-history-replay/SPEC.md) |
+| Where is a delivered capability explained? | [features/](features/README.md) for captured articles; [Spec catalog](../specs/CATALOG.md) for retained records and dated proof |
+| Where did an owner correction or useful finding go? | The relevant shared topic page recorded through [Jot](../skills/jot/SKILL.md); follow its source and correction links |
 
-This room is young and deliberately small; it has no flat notes yet. The rows
-above route to live controls and to the room's own executable description,
-which is where its durable knowledge actually lives.
+This reference room has no general flat topic notes yet. The rows above route
+to live controls, captured capability articles when present, and the room's
+executable description. Add a topic route when a durable shared jot or note
+actually exists; never route ignored private pages.
 
 Add a row only when a durable note exists to route to. A young room may have an
 empty table; that is fine. Grow flat notes beside this router and inside the
