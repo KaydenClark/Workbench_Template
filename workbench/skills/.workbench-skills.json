@@ -3,15 +3,15 @@
   "source": {
     "repository": "https://github.com/KaydenClark/LLM_Workbench.git",
     "release": "v3.2.1",
-    "commit": "0ce1750750f80767536f4d4c0bc44bf5ccabe730",
+    "commit": "9734078399efb2b49b9fbca195d2c8f3c68b9722",
     "dirty": false
   },
   "installedAt": "2026-10-19",
   "skills": {
-    "adoption": "7d42fb60235fdb940ad661f734890aa122dcf083b9760b85a27f2c9fb6dd9a6a",
+    "adoption": "bafaf054a352df416d38bfc2f3573c511d8ac7e2b9365a4c8b962d67cb3c9eed",
     "checkpoint": "f5828d913183d334430a851cde978c2ec0140727eb4f6b4cb84f08a190a2dc09",
     "code-review": "402d14d1538475edb633b4c13808cbb5290963869251c7e452830cfb882e6006",
-    "genesis": "11eb3bb2ad528d1b73b182550145202ec1bf4e5b0dfdb2c538808589d32638f3",
+    "genesis": "334397d67217d6f4526330b7ea04ec3bd488f113bc0c65e8bd143cbfd464f97c",
     "grilling": "ed6d63588df34cfd5d67828b0c4fc8722486e9f93499e4c78a6844abfef2ff5c",
     "implement": "bcedf49d84bedfd69c91411820be6046d60fadbc72ce808ef599909b6262ca24",
     "make-it-so": "f42fc01a0a29ef0857d865369a7bdad89e6e8bd5598e2df5e7ea8d19736f9b08",
@@ -19,7 +19,7 @@
     "to-spec": "8805154cfa3ad43d08ac53b94f20be3294fbb41ca330cf27302241828ade1f54",
     "to-tasks": "11322d4ca0f264bf39a24fde691d548aca809978bd56ac21ccf057facfa8ce42",
     "tracer-bullet": "0cfb7123b781a75f2297f5a638a1d6652c0caea1bd2dfb42d27ed4b547e957d3",
-    "update-harness": "b213616e6a147d6f10ae64a9e87c7225d60999ca57144bdbd09833fbbdf885f6",
+    "update-harness": "a6c1c7713039cd9d6b636aa9a3950669cd8a8d593fce05ab265ba36142ca6ae9",
     "carry": "795cebda85509e66d350a39b2c712e41f2836f5471c8d4f5b415972a09b6a6d6",
     "notepad": "358dc9b963d533c48c8302ea8dcbfa29ce798eb16f7ef8791e65ac97a80f8466",
     "jot": "46c53c0545c8c9a14d025b2700ea001fb5ae06c4726167df96c6e0280402ef0a",
@@ -69,6 +69,13 @@
         "tracer-bullet",
         "notepad",
         "workbench-runtime"
+      ]
+    },
+    {
+      "skills": [
+        "adoption",
+        "genesis",
+        "update-harness"
       ]
     }
   ],

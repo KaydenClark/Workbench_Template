@@ -3,7 +3,7 @@
   "source": {
     "repository": "https://github.com/KaydenClark/LLM_Workbench.git",
     "release": "v3.2.1",
-    "commit": "0ce1750750f80767536f4d4c0bc44bf5ccabe730",
+    "commit": "9734078399efb2b49b9fbca195d2c8f3c68b9722",
     "dirty": false
   },
   "installedAt": "2026-09-06",
@@ -14,15 +14,15 @@
     "privacy.mjs": "8731047bc626b7b7a539b04c674aac2ac19452e7103cebd53ccf336c32a3ad8b",
     "sessions.mjs": "cc5b75c5b1ea83d0f08201eeb005af97640049a974bd90ea580a14439e7f4c38",
     "spec-packet.mjs": "8fe47ec5dda6e237a6005b99e6679c7588fd19d15eba31cc2378f0c8f4e5f132",
-    "spec-workbench.mjs": "907a9a092766700e34dc1ce530549ba847c47a20b526a05ce4d43608fb408250",
+    "spec-workbench.mjs": "8909773e6538971da4140d3c5284a65d98ccf21fd82c86ab9039f8a9d5833f57",
     "template-placeholders.mjs": "29ab00b3d116b62828a7c60be7296a58f4e4e12fb0fc8b2054ad4f136afd6236",
     "wiki.mjs": "9f515c3d609da5903cfbf49c625451cb9f60c67134e5c4858670f2fec86a03d6",
-    "workbench-layout.mjs": "5d0d98d317effa11b07d4b61e17116f6b949f8fe0ce55ed77b55bd732c26f6b1",
+    "workbench-layout.mjs": "8cf06a576c57276a0cd01b92bbac1e635fa46122a64de002698451d263aa5e61",
     "workbench-paths.mjs": "f0a3068f1b30f9f08dc0ed9f0bc890ff8e74e6133a1892cc4de263c5ee981bba",
     "notepads.mjs": "157bb7c93f0b7914414ba2a2b9b47c631cfbf3b85d48f8efc79d572934febc4b",
     "session-transport.mjs": "17172dcb489a2fa571551a605f3130fd20d6bc2a17d8cba8811ef39a8c2c5416",
     "visible-ids.mjs": "587b737001ec95a5bbee2f4f9b3920bacdb5b7e540f01da87ea8fe0b0ee4796f",
-    "skill-inspection.mjs": "21daab3c33ee9682ed8fdf53495a8d25136e2da82ac5ab00fbb13a6695cae927",
+    "skill-inspection.mjs": "ccaf53a43091e2ecb693b4f866387ba87dbd6f9971500c7f88f57c4bc9e14a1b",
     "project-evidence.mjs": "5fdfdce8f57b749b3be995a1f31ff9bf69ce4b6c6cf8690df9719661813eeca3",
     "claim-coordination.mjs": "7f4755d3f0b2f42510aff122ab65aed812c4e2c73cb1988bb50a777cfa373560",
     "github-coordination.mjs": "1d4c120ab8442e12c0a0186e7cdb0bfd7e6d8079682c96fc49b8025febf5a720",
@@ -123,6 +123,19 @@
       "absent": [],
       "hashes": {
         "workbench-layout.mjs": "0b7a3f3289e80ea23dec6fe27fc4e4b2b98c5ab0c77e739a5f42c1ad1180b635"
+      }
+    },
+    {
+      "files": [
+        "spec-workbench.mjs",
+        "skill-inspection.mjs",
+        "workbench-layout.mjs"
+      ],
+      "absent": [],
+      "hashes": {
+        "spec-workbench.mjs": "907a9a092766700e34dc1ce530549ba847c47a20b526a05ce4d43608fb408250",
+        "skill-inspection.mjs": "21daab3c33ee9682ed8fdf53495a8d25136e2da82ac5ab00fbb13a6695cae927",
+        "workbench-layout.mjs": "5d0d98d317effa11b07d4b61e17116f6b949f8fe0ce55ed77b55bd732c26f6b1"
       }
     }
   ],
