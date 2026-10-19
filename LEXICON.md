@@ -159,7 +159,7 @@ binding behavior lives in `AGENTS.md`, cross-cutting architecture in
 | **Design Concept article** | An encyclopedic wiki article in `wiki/design-concepts/` explaining a durable cross-cutting model or supported landmark synthesis, with sources and `History`. | It is not the Blueprint, an ADR, procedure or Task state. An agent may create or update one during an authorized operation that touched it, recording that operation. |
 | **Wiki profile** | The manifest's declared wiki shape: `project` (one room's memory router and collections) or `deployment` (adds owner, machine, and project pointer collections). | A profile declares routing shape; it grants no authority and copies no live task state. |
 | **Managed runtime tool** | A file in `workbench/tools/` installed from the Workbench release and listed in the tools receipt with its source release, commit, and hash. | It is updated only by explicit update with backup and rollback; an application's root `tools/` is application-owned. |
-| **Declared integration branch** | The branch, named by exact case in `workbench/manifest.json` `git.integrationBranch`, into which the independent review gate merges task branches; `git.defaultBranch` names the branch it is created from. | A declaration, not a prose convention: controls resolve it from the manifest, `doctor` reports it undeclared or missing without blocking selection, and only generation, adoption, and upgrade completion fail closed on it. |
+| **Declared integration branch** | The branch, named by exact case in `workbench/manifest.json` `git.integrationBranch`, that stages approved assembled Spec work after the [independent review boundary](workbench/skills/implement/SKILL.md#4-review-at-the-relevant-boundary); `git.defaultBranch` names the branch it is created from. | A declaration, not a prose convention: controls resolve it from the manifest, `doctor` reports it undeclared or missing without blocking selection, and only generation, adoption, and upgrade completion fail closed on it. A Task receives Worker self-check, not a separate-context review. |
 
 ## Project Terms
 
@@ -183,6 +183,8 @@ binding behavior lives in `AGENTS.md`, cross-cutting architecture in
   before scoped source cleanup. It is not merely a copy or commit.
 - **Configured-host capability:** an operation exercised in the actual host and
   configuration. It does not establish machine enforcement or model reliability.
-- **Core compatibility:** the explicit supported range between one selected
-  installed global core release and room versions; a version difference alone
-  is not proof of incompatibility.
+- **Core compatibility:** the supported room-version range, when declared for a
+  selected managed core generation in the tracked `workbench/skills/` lane.
+  Compare the declared range and installed receipt with this room's version;
+  version difference alone is not proof of incompatibility. Host invocation
+  remains a separate check, without an assumed provider-home installation.

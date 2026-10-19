@@ -127,7 +127,7 @@ node workbench/tools/spec-workbench.mjs doctor
 
 Expected result:
 
-- `tests/tour.test.mjs` passes with zero failures, `validate` reports `current`,
+- `tests/tour.test.mjs` passes with zero failures, `validate` reports `valid`,
   and `doctor` exits 0.
 
 ### Test Coverage Policy
@@ -807,9 +807,9 @@ its sources and freshness limits; no cached observer service is implied.
 
 The claim-age diagnostic compares UTC calendar date stamps and reports a claim
 older than one calendar day (strictly greater than 86,400,000 milliseconds).
-The old prose saying working day was inaccurate. Historical GPT_OS local-day
-Preflight and ref-deduplication rules remain scoped historical requirements,
-not an automatically imported Workbench algorithm.
+The old prose saying working day was inaccurate. Historical project-local
+day-boundary and reference-deduplication rules remain scoped to their original
+projects, not an automatically imported Workbench algorithm.
 
 Author small ADRs for independently changing consequential decisions with real
 alternatives or reversal cost. Binding rules stay in current owners. A semantic
