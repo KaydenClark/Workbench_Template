@@ -54,6 +54,7 @@ nothing.
 | Where did this room come from? | `provenance` in [manifest.json](../manifest.json) - genesis from LLM Workbench v3.1.2 at `18ffc0d` |
 | How do I know the explanation is still true? | `node tests/tour.test.mjs` - drift is a test failure, not a backlog item |
 | How did the harness get here, and how do I stand in an earlier generation? | [VERSION_HISTORY.md](../docs/VERSION_HISTORY.md), then `git checkout version/NN-...`; recorded by [S-002](../specs/S-002-version-history-replay/SPEC.md) |
+| What is the synthetic continuation pilot correction? | [Fixture continuity context](context-fixture-continuity.md) |
 
 This room is young and deliberately small; it has no flat notes yet. The rows
 above route to live controls and to the room's own executable description,
