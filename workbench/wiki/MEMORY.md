@@ -55,13 +55,16 @@ nothing.
 | How do I know the explanation is still true? | `node tests/tour.test.mjs` - drift is a test failure, not a backlog item |
 | How did the harness get here, and how do I stand in an earlier generation? | [VERSION_HISTORY.md](../docs/VERSION_HISTORY.md), then `git checkout version/NN-...`; recorded by [S-002](../specs/S-002-version-history-replay/SPEC.md) |
 
-This room is young and deliberately small; it has no flat notes yet. The rows
-above route to live controls and to the room's own executable description,
-which is where its durable knowledge actually lives.
+The rows above route to live controls and the room's executable description.
+Scoped continuation context is linked below.
 
 Add a row only when a durable note exists to route to. A young room may have an
 empty table; that is fine. Grow flat notes beside this router and inside the
 declared collections; only `archive/` may nest.
+
+| Continuation context | Read first |
+|---|---|
+| Synthetic continuation pilot: proposal attribution and practical handoff | [Continuation pilot](context-continuation-pilot.md) |
 
 ## Up-Link
 
