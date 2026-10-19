@@ -100,11 +100,12 @@ The manifest and managed receipts retain the **v3.2.1 release label** as the
 released baseline. Template `integration` contains the reviewed, unreleased
 upgrade delivered by merge `f3d34a0f7d2bbb60b2a087afa18079aa09cf3bb8`
 from candidate `cd68ea759b100b94e423051a69da2264267cbaf5`; their trees
-match. The managed runtime and skills receipts pin LLM Workbench source
-`0ce1750750f80767536f4d4c0bc44bf5ccabe730`, contained in producer
-`integration` at `c581d7510f398ef7675f7adc51a57d4c8309147b` with the
-managed generation unchanged. This integration delivery did not stamp a new
-release or promote Template `main`. See
+match. A later carry re-pinned the managed runtime and skills receipts to
+LLM Workbench source `9734078399efb2b49b9fbca195d2c8f3c68b9722`, the producer
+`integration` tip it was cut from (the earlier pin was
+`0ce1750750f80767536f4d4c0bc44bf5ccabe730`), and added the Workbench
+line-endings block to `.gitattributes`. Neither delivery stamped a new
+release or promoted Template `main`. See
 [Version History](workbench/docs/VERSION_HISTORY.md#unreleased-template-upgrade-candidate-2026-10-18)
 for the installation boundary and retained history. Run `node tour.mjs` for
 this room's current map.

@@ -349,3 +349,33 @@ The managed receipts still pin selected source
 `0ce1750750f80767536f4d4c0bc44bf5ccabe730`, unchanged in producer
 `integration` at `c581d7510f398ef7675f7adc51a57d4c8309147b`. The build
 remains unreleased, and Template `main` was not promoted by this merge.
+
+### Producer integration re-pin (2026-10-19)
+
+A second unreleased carry re-pinned the managed runtime and skills receipts
+from `0ce1750750f80767536f4d4c0bc44bf5ccabe730` to LLM Workbench source
+`9734078399efb2b49b9fbca195d2c8f3c68b9722`, the producer `integration` tip when
+the carry started. The `v3.2.1` release label stays on the manifest and
+receipts because the source manifest still declares it; this stamps no release
+and does not promote Template `main`. The carry ran the source's additive
+layout migration (status `current`, no change) and the explicit native updates
+of runtime tools and core skills, and every installed managed file matches the
+pinned source.
+
+Managed files that changed: runtime tools `spec-workbench.mjs` (legacy numeric
+Task rows exempt from the remote-identity collision check),
+`skill-inspection.mjs` and `workbench-layout.mjs` (room line-ending policy and
+its `line-endings` doctor state); core skills `adoption`, `genesis` and
+`update-harness`. The other 28 runtime files and 30 skills are unchanged. The
+Glossary retirement (producer PR 431) was not landed at the pin and is not
+carried: this room's controls are unchanged and `LEXICON.md` is still the
+vocabulary control.
+
+Room-owned change: the Template had no `.gitattributes`; it now ends with the
+Workbench line-endings block (`/workbench/**` and each root control as
+`text=auto eol=lf`) so a Windows checkout with `core.autocrlf=true` keeps LF and
+the receipt hashes hold. The two `backups[].path` fields the updates appended
+were removed from the receipts before commit because they name a local
+temporary home, as the previous carry did. Component rollback from the receipt
+backups is therefore not established; whole-room Git recovery to the Template
+`integration` commit before this carry is the recovery route.
