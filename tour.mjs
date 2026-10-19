@@ -115,8 +115,8 @@ export const PLACES = [
     zone: 'The support root',
     collection: 'design-concepts',
     path: 'workbench/wiki/design-concepts',
-    owns: 'Owner-directed articles about how a design is meant to work.',
-    why: 'Design intent is the first thing lost when only the implementation is written down. These are commissioned deliberately, not accumulated.',
+    owns: 'Source-backed articles about durable design models and supported landmark synthesis.',
+    why: 'Design intent is lost when only implementation is written down. An authorized operation creates or maintains an article it touches, recording that operation and its sources.',
   },
   {
     zone: 'The support root',
@@ -130,7 +130,7 @@ export const PLACES = [
     collection: 'guidebooks',
     path: 'workbench/wiki/guidebooks',
     owns: 'How-to knowledge that outlives any one task.',
-    why: 'A procedure that is useful twice belongs somewhere findable. It is not the Runbook, which is reserved for this project’s own verified commands.',
+    why: 'A reusable long procedure belongs somewhere findable. The Runbook routes workflows; the installed skills own methods, and Template operations holds this room’s detailed commands.',
   },
   {
     zone: 'The support root',

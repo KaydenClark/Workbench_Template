@@ -80,6 +80,23 @@ standalone Wiki, tour, historical Spec IDs and version replay; the generic
 source's additional project or deployment examples are not copied as room
 facts.
 
+## Artifact Boundaries
+
+The [ownership schema](#artifact-ownership-schema) routes a question. These
+limits keep a supporting artifact from taking another owner's job:
+
+| Artifact | Job and limit |
+|---|---|
+| Root controls | [AGENTS](AGENTS.md) governs agent behavior; [Blueprint](BLUEPRINT.md) describes destination; this Lexicon defines and routes; [Runbook](RUNBOOK.md) routes operations; [README](README.md) orients people. [Taskboard](TASKBOARD.md) projects Spec state, and [CLAUDE](CLAUDE.md) adapts entry for its host. Being a root file does not give each claim equal instruction authority. |
+| Spec and Task | The Spec owns scoped capability requirements, acceptance and evidence; each `TASK.md` owns a bounded execution slice. A dashboard or handoff cannot replace either source record. |
+| Decision record | An accepted ADR owns an architectural decision and names its operational owners. Historical rationale and superseded choices remain distinguishable. This room has no installed DDR register; use actual records when present. |
+| Wiki and feature article | [Wiki MEMORY](workbench/wiki/MEMORY.md) routes source-backed explanations and Jot context. A [features article](workbench/wiki/features/README.md) explains a completed capability without copying live Task state or accepting its own delivery. Wiki pages authorize nothing. |
+| Jot, legacy note and handoff | [Jot](workbench/skills/jot/SKILL.md) captures source-linked topic context; legacy JSON notes remain readable; a [handoff](workbench/skills/handoff/SKILL.md#transfer-procedure) selects accessible context for a specified recipient. Their access and retention differ; none grants the recipient new authority. |
+| Manifest, receipt and adapter | The [manifest](workbench/manifest.json) declares paths and policy; component receipts record installed source and hashes. Discovery adapters expose the tracked skill lane. Valid shape or byte equality does not prove host invocation, rollback or release. |
+| Skill, source, tool and test | A pointed installed skill supplies reusable method for an operation within existing scope. Source implements, tools execute and tests exercise named seams; an observation proves only its exercised environment. |
+| Evidence and projection | Spec evidence records candidate, method, observer, result and limits. Taskboard, catalog and registers derive views from owning records; correct the source and regenerate the view. |
+| Template | A reusable starting shape; the filled room owns its local truth, historical evidence and deliberate differences. Copying a template does not make its examples a project decision. |
+
 ## Workbench Terms
 
 | Term | Definition | Distinction |
@@ -100,8 +117,8 @@ facts.
 |---|---|---|
 | **Notepad** | A local, objective-scoped JSON working record with a compact editable current view and an append-oriented work record. Grilling records are notepads and therefore JSON. | It is not Canon or permanent history; preserve important material until reconciled. One objective may use several linked notes. |
 | **Jot** | A small source-linked Wiki capture of knowledge, owner intent, observations, proposals or unresolved questions, including correction history. | Shared topic context is recoverable from the Wiki; explicit private jots stay ignored and require local opt-in. A confirmed intention is not a verified result or instruction authority. Old JSON notepads remain readable. |
-| **Scoped handoff** | A separate local Markdown (`.md`) compaction authored from the relevant notepad material with plain-language, destination-specific continuation instructions. | A receiving agent can read the file or the owner can paste it into a new chat. It is requested or initiated by the owner; a pointer requires accessible, retained source data. Preservation does not grant authority. |
-| **WBID** | The visible identifier comprising an artifact's type prefix and a base-62 value replacing the numeric portion. | Unique within the type and Workbench, not globally; no parallel secondary ID. Existing numeric labels and stable paths remain readable; historical numeric tickets remain spec-qualified, while new letter-bearing tickets reserve the whole Workbench inventory. |
+| **Scoped handoff** | A separate local Markdown (`.md`) brief for a specified recipient, purpose, job and endpoint, selecting relevant Wiki context, legacy notes and source links. | The owner or an agent within its assigned role may initiate one. A pointer requires accessible, retained source data; preparation does not authorize the recipient's work. The [handoff procedure](workbench/skills/handoff/SKILL.md#transfer-procedure) owns transfer. |
+| **WBID** | A visible artifact identifier with a type prefix and value replacing a numeric portion. New Spec, Task, ADR and notepad values use uppercase `0-9A-Z`, minimum width four, and at least one letter. | Unique within type and Workbench, not globally. Short, widened or case variants of one collision key resolve to one record; existing numeric, short and mixed-case labels remain readable. Open Spec/Task widening uses explicit `widen-id`; historical numeric Tasks remain Spec-qualified. The `WB-` connection identity retains a separate base-62 format. |
 
 ## Stance Terms
 
@@ -129,7 +146,7 @@ binding behavior lives in `AGENTS.md`, cross-cutting architecture in
 | Term | Definition | Distinction |
 |---|---|---|
 | **Governance Plane** | The role one claim plays in one operation: **Intent** (the request), **Canon** (the binding current-state rule), **Grounding** (evidence about intended truth or whether work was done correctly), **Enduring Context** (durable reference consulted), **Actuality** (the target being changed, including files, source, runtime, and verified state), and **Projection** (a source-derived report). | Planes classify claims and their use, never whole files, directories, or artifact types. One assigned spec carries Canon, Projection, Grounding, and Enduring Context claims at once. |
-| **Workbench Contract** | The logical set of current claims owned by the seven root controls plus the explicitly assigned spec. | It is not a file; no `CONTRACT.md` or other coequal root control exists. |
+| **Workbench Contract** | The binding claim set named by AGENTS Instruction Authority: `AGENTS.md`, the explicitly assigned Spec's bounded capability requirements and, for an operation, the binding requirements of the lane skill the Contract points to. | It is not a file. Other root artifacts route by job; no `CONTRACT.md` or other coequal root file exists. |
 | **Instruction authority** | What an agent may do: the current owner request, then `AGENTS.md` with platform safety, then the explicitly assigned spec as a bounded capability delegate, then the procedural controls. | An assigned spec cannot enlarge the request, platform safety, or `AGENTS.md` scope; an unassigned spec is evidence. |
 | **State resolution** | How a Canon claim and verified Actuality are reconciled: newer Canon is an implementation gap, newer verified Actuality is documentation drift, unclear ordering is an ambiguity to investigate. | Neither "code always wins" nor "Canon proves implementation"; the touched owner is repaired rather than a universal precedence applied. |
 | **No-governance-tax rule** | Ordinary owner-directed project work requires only the Workbench Contract and its verification; no coordination system, order form, flight, or external mechanism is a prerequisite. | Available mechanisms a change genuinely needs still apply; the line is availability, not ceremony. |

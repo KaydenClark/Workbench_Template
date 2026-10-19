@@ -27,9 +27,11 @@ differences while exposing compatibility and unresolved acceptance honestly.
 
 One local command explains the room. The tour is an orientation aid checked
 against the manifest, not a second authority or an application to impose on every
-future project. Agents enter through the Runbook and Lexicon, preserve the scope
-of ordinary requests and keep significant working context in JSON while they work.
-A requested handoff is readable Markdown; decisions and corrections survive it.
+future project. Agents enter through AGENTS and STARTUP, then the assigned Spec
+and Task; the Runbook and Lexicon route needed procedures and meanings. They
+preserve the scope of ordinary requests and capture significant fresh context,
+decisions and corrections as source-linked Wiki jots before dependent output.
+Legacy JSON notes remain readable; a recipient-specific handoff is Markdown.
 A specification-only request produces specification work only.
 
 ## Integrated System Design
@@ -39,8 +41,11 @@ projection and human orientation. The manifest declares installed support paths.
 Stable specs retain scoped requirements and evidence; accepted active ADRs retain
 architectural decisions, with explicit history views for retired decisions. The
 Lexicon routes to the complete spec catalog and the room Wiki. The installed
-runtime operates locally, while global core skills share one upstream-owned
-implementation through provider discovery adapters.
+runtime operates locally. Managed core skills are tracked in this room's
+`workbench/skills/` lane with a source receipt; `.agents/skills` and
+`.claude/skills` are discovery adapters into that lane. A fresh clone can
+recover those files without a provider-home installation, while actual host
+invocation remains separately verifiable.
 
 [Template ownership and continuity](workbench/docs/adr/0001-template-ownership-and-continuity.md)
 preserves the cross-cutting decisions behind these boundaries.
@@ -51,8 +56,10 @@ check those names and ownership descriptions. Node.js 20 or newer and built-in
 
 ## Cross-Cutting Qualities And Constraints
 
-The template carries no application data or secrets. It does have tracked and ignored support state: generic schema examples and durable records are tracked;
-live notes, handoffs and recovery material remain ignored. Supported lifecycle
+The template carries no application data or secrets. It has tracked and ignored support state:
+generic schema examples, durable records and authorized shared
+Wiki jots are tracked; explicit private jots, legacy local notes, handoffs and
+recovery material remain ignored. Supported lifecycle
 operations may seed, migrate, back up or privately synchronize only authorized
 state. No secret or personal content belongs in a copyable starter.
 
