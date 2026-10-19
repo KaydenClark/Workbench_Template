@@ -3,7 +3,7 @@
   "source": {
     "repository": "https://github.com/KaydenClark/LLM_Workbench.git",
     "release": "v3.2.1",
-    "commit": "6cddd3a6b816e947554f9287172cb21fc90fcaea",
+    "commit": "0ce1750750f80767536f4d4c0bc44bf5ccabe730",
     "dirty": false
   },
   "installedAt": "2026-09-06",
@@ -17,7 +17,7 @@
     "spec-workbench.mjs": "907a9a092766700e34dc1ce530549ba847c47a20b526a05ce4d43608fb408250",
     "template-placeholders.mjs": "29ab00b3d116b62828a7c60be7296a58f4e4e12fb0fc8b2054ad4f136afd6236",
     "wiki.mjs": "9f515c3d609da5903cfbf49c625451cb9f60c67134e5c4858670f2fec86a03d6",
-    "workbench-layout.mjs": "0b7a3f3289e80ea23dec6fe27fc4e4b2b98c5ab0c77e739a5f42c1ad1180b635",
+    "workbench-layout.mjs": "5d0d98d317effa11b07d4b61e17116f6b949f8fe0ce55ed77b55bd732c26f6b1",
     "workbench-paths.mjs": "f0a3068f1b30f9f08dc0ed9f0bc890ff8e74e6133a1892cc4de263c5ee981bba",
     "notepads.mjs": "157bb7c93f0b7914414ba2a2b9b47c631cfbf3b85d48f8efc79d572934febc4b",
     "session-transport.mjs": "17172dcb489a2fa571551a605f3130fd20d6bc2a17d8cba8811ef39a8c2c5416",
@@ -114,6 +114,15 @@
         "wiki.mjs": "8c3b62b2a70315df49c3cd43dcbf760a81374cba42414a935b666460be157fa0",
         "workbench-layout.mjs": "8f0ace0d0218ce9e4b1aeb47dc1b4b91ad0873f0a26105250b4553062696958a",
         "workbench-paths.mjs": "993d921998dfb9daf58adbefe0240038969e8224a735ba9eced6faa993a26b53"
+      }
+    },
+    {
+      "files": [
+        "workbench-layout.mjs"
+      ],
+      "absent": [],
+      "hashes": {
+        "workbench-layout.mjs": "0b7a3f3289e80ea23dec6fe27fc4e4b2b98c5ab0c77e739a5f42c1ad1180b635"
       }
     }
   ],

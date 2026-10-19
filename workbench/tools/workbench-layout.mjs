@@ -40,6 +40,14 @@ const currentCoreSkills = legacyCoreSkills.map((name) => (name === 'to-tickets' 
 // entry composing grilling with notepad, ahead of the stances so every
 // `slice(-4)` stance read stays exact.
 const handoffCoreSkills = [...currentCoreSkills, 'carry', 'notepad', 'save', 'promote', 'handoff', ...stanceSkills];
+// The row v3.2.1 actually released, before S-00H TK-004 renamed `to-tickets`
+// in the live list `handoffCoreSkills` derives from. A literal, so no later
+// rename redefines what a room stamped v3.2.1 carries (S-006F route defect 1).
+const releasedV321CoreSkills = [
+  'adoption', 'checkpoint', 'code-review', 'genesis', 'grilling', 'implement',
+  'make-it-so', 'to-docs', 'to-spec', 'to-tickets', 'tracer-bullet', 'update-harness',
+  'carry', 'notepad', 'save', 'promote', 'handoff', 'builder', 'auditor', 'reviewer', 'reconciler'
+];
 // Role and coordination-stance entries sit between the workflow skills and
 // the four portable stances; each is a required core entry delivered by its
 // own Spec. S-002C adds `director`, which leads the group as the top role;
@@ -637,7 +645,11 @@ export function validateManifest(project) {
   // Transition cohorts are accepted only at their stamped version and only at
   // the lane-install policy their rooms actually carry.
   const transitionPolicies = manifest.workbenchVersion === 'v3.2.1'
-    ? v321TransitionCoreSkills.map((required) => ({ ...skillPolicy, required }))
+    ? [
+      ...v321TransitionCoreSkills.map((required) => ({ ...skillPolicy, required })),
+      { ...skillPolicy, required: releasedV321CoreSkills },
+      { ...providerHomeSkillPolicy, required: releasedV321CoreSkills }
+    ]
     : [];
   const accepted = [skillPolicy, ...transitionPolicies, ...(legacyRequired ? [{ ...skillPolicy, required: legacyRequired }, { ...providerHomeSkillPolicy, required: legacyRequired }] : [])].map((policy) => JSON.stringify(policy));
   if (!accepted.includes(JSON.stringify(manifest.skillPolicy))) {

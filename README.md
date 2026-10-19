@@ -99,11 +99,10 @@ meant to be copied, read, and discarded.
 The manifest and managed receipts retain the **v3.2.1 release label**. This
 branch is an **unreleased Template upgrade candidate** built on that baseline;
 the label alone does not identify all of its installed content. The managed
-runtime receipt pins LLM Workbench source
-`6cddd3a6b816e947554f9287172cb21fc90fcaea`; the managed skills receipt
-pins `5cc71a48facfe214e66bb917d46b667513fa5bc2`. The latter is a
-producer candidate, not a claim that it has landed on producer integration or
-that a new release has been stamped. See
+runtime and skills receipts both pin LLM Workbench source
+`0ce1750750f80767536f4d4c0bc44bf5ccabe730`. This is a producer candidate,
+not a claim that it has landed on producer integration or that a new release
+has been stamped. See
 [Version History](workbench/docs/VERSION_HISTORY.md#unreleased-template-upgrade-candidate-2026-10-18)
 for the installation boundary and retained history. Run `node tour.mjs` for
 this room's current map.

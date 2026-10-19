@@ -309,10 +309,11 @@ v3.2.0. This update does not rewrite the historical replay branches.
 The historical generations and `v3.2.1` manifest label above remain the
 released baseline. The current Template branch installs a later, **unreleased**
 Workbench candidate without assigning it a new version or adding a replay
-branch. Its managed runtime receipt pins producer commit
-`6cddd3a6b816e947554f9287172cb21fc90fcaea` (31 files); its managed
-skills receipt pins producer candidate
-`5cc71a48facfe214e66bb917d46b667513fa5bc2` (33 skills, 53 files).
+branch. Its managed runtime and skills receipts pin producer candidate
+`0ce1750750f80767536f4d4c0bc44bf5ccabe730` (31 runtime files and 33 skills
+containing 53 managed files). The native update changed one runtime file and
+three skill files from the earlier installed generations; other managed payload
+bytes remain as installed.
 These identify installed bytes, not a final producer integration pin or a
 published release. The Template also carries two generic startup-route sections
 from producer candidate `aebfb970fa7f84032f0df52a6c61c5d9432b7cb3` and

@@ -40,7 +40,7 @@ node workbench/tools/notepads.mjs read --note NOTE --view current
 `--view current` returns the compact resumption view and the revision to write
 against, without putting the entry history into your response. Start there.
 A note belongs to its objective, not to the chat, model or host that created
-it ([ADR-000L](../../docs/adr/000L-a-notepad-belongs-to-its-objective-and-every-chat-working-that-objective-writes-to-it.md)):
+it:
 resume the objective's note even when another context created it, and expect
 entries you did not write. Create only when no reachable note already serves
 this purpose for the objective; a purpose-distinct note, such as a grilling
