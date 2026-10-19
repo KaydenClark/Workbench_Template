@@ -139,6 +139,22 @@ export const controls = ['AGENTS.md', 'BLUEPRINT.md', 'LEXICON.md', 'RUNBOOK.md'
 // may still write; denying it keeps a live notepad untrackable before the
 // checkpoint privacy scan runs. `validate` does not require the line.
 export const SESSIONS_IGNORE = `# Live session records stay local; checkpoint history is frozen.\ngrilling/*\n!grilling/.gitkeep\nhandoffs/*\n!handoffs/.gitkeep\n# Local typed notepads; reusable schema/examples remain tracked.\nnotepads/*\n!notepads/templates/\n!notepads/.gitkeep\n# Legacy notepad path a stale installed skill may still write; never tracked.\ngrilling diary/\n# Operational rollback material is local, not session history.\nrecovery/*\n!recovery/.gitkeep\n`;
+// S-005U: Git for Windows defaults core.autocrlf=true, so a clone of a room
+// rewrites its managed tools as CRLF and their receipt hashes stop matching.
+// Init appends this block to the room's .gitattributes. It names only
+// Workbench-owned paths, so an adopted project's own rules keep governing its
+// own files; appended last, it wins for the paths it names.
+export const ATTRIBUTES_FILE = '.gitattributes';
+export const LINE_ENDING_BLOCK_START = '# >>> LLM Workbench line endings (managed by workbench-layout.mjs init)';
+export const LINE_ENDING_POLICY = [
+  LINE_ENDING_BLOCK_START,
+  '# Workbench records, runtime tools and controls check out as LF on every',
+  '# host, so receipt hashes and record parsing hold under core.autocrlf=true.',
+  '/workbench/** text=auto eol=lf',
+  ...controls.map((control) => `/${control} text=auto eol=lf`),
+  '# <<< LLM Workbench line endings',
+  ''
+].join('\n');
 // The managed skill marker every installed core skill carries; one reader for
 // the installer, the explicit upgrade, and doctor. Schema 1 (source only) and
 // schema 2 (source, release, commit, contentHash) both record management.
@@ -751,6 +767,232 @@ export function ensurePrivateWikiIgnore(project) {
   return true;
 }
 
+// An ignored, untracked .gitattributes would never be committed, so the next
+// autocrlf clone would drift again. `check-ignore` reports a tracked file as
+// not ignored, so only a policy Git would actually leave out is refused. The
+// one check serves `initialize` (which refuses before writing) and
+// `ensureLineEndingPolicy` (which the doctor remedy's printed append step runs
+// from the room root), so neither path can bypass it. Outside a Git work tree
+// there is nothing to commit and so nothing to refuse.
+function ignoredAttributesMessage(project) {
+  if (!insideWorkTree(project) || spawnSync('git', ['-C', project, 'check-ignore', '-q', ATTRIBUTES_FILE]).status !== 0) return null;
+  return `${ATTRIBUTES_FILE} is ignored by this repository's ignore rules (.gitignore, .git/info/exclude or core.excludesFile), so the Workbench line-ending block would never be committed; remove that ignore rule or force-add an existing ${ATTRIBUTES_FILE} with \`git add -f ${ATTRIBUTES_FILE}\`, then retry.`;
+}
+
+// A tracked `.gitattributes` marked skip-worktree or assume-unchanged hides a
+// write from Git: the block would land in the working tree, `git status` would
+// stay clean, and the instructed commit would leave the policy out (`git add`
+// refuses an `S` entry; with `h` it succeeds without updating the index). A
+// sparse checkout that leaves the file out sets skip-worktree too. An unmerged
+// file holds conflict markers the block would be appended after. `git ls-files
+// -v` tags a plain tracked entry `H`, so only that state may be written to;
+// an untracked file lists nothing and is the ignore check's concern. Like the
+// ignore check, one function serves `initialize` and `ensureLineEndingPolicy`.
+function flaggedAttributesMessage(project) {
+  if (!insideWorkTree(project)) return null;
+  const listed = spawnSync('git', ['-C', project, 'ls-files', '-v', '--', ATTRIBUTES_FILE], { encoding: 'utf8' });
+  const tag = listed.status === 0 ? listed.stdout.split('\n')[0].slice(0, 1) : '';
+  if (!tag || tag === 'H') return null;
+  if (tag === 'M') return `${ATTRIBUTES_FILE} is unmerged, so the Workbench line-ending block cannot be appended safely; finish the merge and commit it, then retry. Nothing was written.`;
+  return `${ATTRIBUTES_FILE} is tracked but marked skip-worktree or assume-unchanged (a sparse checkout that leaves it out marks it skip-worktree), so Git would not see the Workbench line-ending block as a change and the commit would leave it out; back up any local edit, then clear the flags with \`git update-index --no-skip-worktree ${ATTRIBUTES_FILE}\` and \`git update-index --no-assume-unchanged ${ATTRIBUTES_FILE}\` (a sparse checkout: \`git sparse-checkout disable\`), and retry. Nothing was written.`;
+}
+
+// Append the line-ending block unless the room already carries it; the
+// project's existing bytes are kept as they are.
+export function ensureLineEndingPolicy(project) {
+  const destination = path.join(project, ATTRIBUTES_FILE);
+  assertSafeWritePath(project, destination);
+  const ignored = ignoredAttributesMessage(project);
+  if (ignored) throw Object.assign(new Error(ignored), { code: 'attributes-ignored' });
+  const flagged = flaggedAttributesMessage(project);
+  if (flagged) throw Object.assign(new Error(flagged), { code: 'attributes-flagged' });
+  // Bytes, not text: a project rule may name a path in a non-UTF-8 encoding.
+  const current = lstatOrNull(destination) ? fs.readFileSync(destination) : Buffer.alloc(0);
+  // The block counts only whole and last, since the last matching rule wins: a
+  // stray marker, a partial copy or a later override gets a fresh block after it.
+  if (current.toString('latin1').replaceAll('\r\n', '\n').trimEnd().endsWith(LINE_ENDING_POLICY.trimEnd())) return false;
+  const separator = current.length && current[current.length - 1] !== 0x0a ? '\n' : '';
+  const mode = lstatOrNull(destination)?.mode;
+  writeSafeFile(project, destination, Buffer.concat([current, Buffer.from(separator + LINE_ENDING_POLICY)]));
+  // writeSafeFile publishes a new 0644 file; an existing file keeps the
+  // permission bits its owner chose (a 0600 file must not widen to 0644).
+  if (mode !== undefined) fs.chmodSync(destination, mode & 0o7777);
+  return true;
+}
+
+// Both printed `line-endings` steps write only into a Workbench room root, so
+// they need the same footing `init` has for its project directory: the
+// directory holding `workbench/manifest.json`. `ensureLineEndingPolicy` itself
+// stays unchanged because `init` calls it before the manifest exists.
+function requireRoomRoot(project, action) {
+  const manifest = lstatOrNull(path.join(project, 'workbench', 'manifest.json'));
+  if (!manifest?.isFile()) {
+    throw Object.assign(new Error(`refused: ${project} is not a Workbench room root (workbench/manifest.json not found); run this step from the room root. ${action}`), { code: 'not-a-room' });
+  }
+}
+
+export function ensureRoomLineEndingPolicy(project) {
+  requireRoomRoot(project, 'Nothing was written.');
+  return ensureLineEndingPolicy(project);
+}
+
+// The printed rewrite step. A checkout made before the policy was committed
+// holds CRLF bytes in the tracked files under `workbench/`; the policy only
+// takes effect when Git writes those files again. This regenerates each tracked
+// file from the index the way a fresh checkout would, so the lane is the same
+// as a clone made now. Doctor still only diagnoses (S-005U "Diagnosis, not
+// repair"): the operator runs this step explicitly, and every check happens
+// before the first byte changes.
+//
+// Earlier rounds did this in shell (`rm -f` every tracked path, then `git
+// checkout`), and each review found another way for the deletion to succeed
+// and the restoration not to run: a gitlink (`rm -f` refuses a directory, xargs
+// exits 123 and the `&&` skips the checkout), a flagged file (`git checkout`
+// does not restore skip-worktree), an unstaged edit. The design that ends the
+// class is to delete nothing. `git checkout-index --prefix` writes the files
+// Git would check out now into a scratch directory without touching the
+// working tree; each file whose bytes differ is then copied next to its target
+// and renamed over it, which is atomic, so at every moment each tracked path
+// holds either its original or its rewritten content. A failure partway leaves
+// the rest as they were, and running the step again finishes the job.
+//
+// Refused, with the reason and nothing changed: a directory that is not a room
+// root, not a Git work tree, a tracked gitlink or any entry that is not a plain
+// file or symlink, a skip-worktree (sparse checkout) or assume-unchanged file,
+// an unmerged file, a path that is not valid UTF-8, an unstaged change under
+// `workbench/` (the rewrite would discard it; staged changes are fine because
+// the index holds them), and a repository in which the line-endings policy is
+// not in force (the rewrite would write the same CRLF back). Untracked and
+// ignored files are never touched. Attributes decide the bytes, as for any
+// checkout: a nested `.gitattributes` or `core.autocrlf` is honoured.
+const REWRITE_LIST_LIMIT = 5;
+const listPaths = (paths) => paths.slice(0, REWRITE_LIST_LIMIT).join(', ') + (paths.length > REWRITE_LIST_LIMIT ? ` and ${paths.length - REWRITE_LIST_LIMIT} more` : '');
+
+function rewriteError(code, message) {
+  return Object.assign(new Error(message), { code });
+}
+
+function runGit(project, args, input) {
+  const result = spawnSync('git', ['-C', project, ...args], { input, maxBuffer: 1 << 30 });
+  if (result.error) throw rewriteError('git-unavailable', `refused: git could not be run (${result.error.message}). Nothing was changed.`);
+  return result;
+}
+
+// `git ls-files -z -v -s` prints `TAG MODE SHA STAGE<TAB>PATH` per entry; read
+// as bytes so a path that is not valid UTF-8 is detected instead of mangled.
+function laneEntries(project) {
+  const listed = runGit(project, ['ls-files', '-z', '-v', '-s', '--', ':(literal)workbench']);
+  if (listed.status !== 0) throw rewriteError('git-failed', `refused: git ls-files failed: ${listed.stderr.toString().trim()}. Nothing was changed.`);
+  const entries = [];
+  let start = 0;
+  const bytes = listed.stdout;
+  while (start < bytes.length) {
+    let end = bytes.indexOf(0, start);
+    if (end < 0) end = bytes.length;
+    const record = bytes.subarray(start, end);
+    start = end + 1;
+    const tab = record.indexOf(9);
+    const [tag, mode, , stage] = record.subarray(0, tab).toString('latin1').split(' ');
+    const pathBytes = record.subarray(tab + 1);
+    const relative = pathBytes.toString('utf8');
+    entries.push({ tag, mode, stage, relative, utf8: Buffer.from(relative, 'utf8').equals(pathBytes) });
+  }
+  return entries;
+}
+
+export function rewriteRoomLaneCheckout(project) {
+  requireRoomRoot(project, 'Nothing was changed.');
+  if (!insideWorkTree(project)) throw rewriteError('not-a-work-tree', `refused: ${project} is not inside a Git work tree, so there is no index to rewrite the files from. Nothing was changed.`);
+  const entries = laneEntries(project);
+  const found = (select) => [...new Set(entries.filter(select).map((entry) => entry.relative))];
+  const problems = [];
+  const gitlinks = found((entry) => entry.mode === '160000');
+  if (gitlinks.length) problems.push(`a tracked gitlink (submodule) cannot be rewritten from the index: ${listPaths(gitlinks)}`);
+  const unmerged = found((entry) => entry.stage !== '0');
+  if (unmerged.length) problems.push(`an unmerged file; finish the merge first: ${listPaths(unmerged)}`);
+  const flagged = found((entry) => entry.stage === '0' && entry.tag !== 'H');
+  if (flagged.length) problems.push(`a file is marked skip-worktree or assume-unchanged (a sparse checkout marks files skip-worktree), which hides local edits and is not restored; back up its content and clear the flag with \`git update-index --no-skip-worktree\` and \`--no-assume-unchanged\`, or \`git sparse-checkout disable\`, first: ${listPaths(flagged)}`);
+  const unusual = found((entry) => entry.stage === '0' && entry.mode !== '160000' && !['100644', '100755', '120000'].includes(entry.mode));
+  if (unusual.length) problems.push(`an entry is neither a plain file nor a symlink: ${listPaths(unusual)}`);
+  const encoded = found((entry) => !entry.utf8);
+  if (encoded.length) problems.push(`a path is not valid UTF-8: ${listPaths(encoded)}`);
+  if (problems.length) throw rewriteError('rewrite-refused', `refused: ${problems.join('; ')}. Nothing was changed.`);
+  const unstaged = runGit(project, ['diff', '--name-only', '-z', '--', ':(literal)workbench']);
+  if (unstaged.status !== 0) throw rewriteError('git-failed', `refused: git diff failed: ${unstaged.stderr.toString().trim()}. Nothing was changed.`);
+  const edited = unstaged.stdout.toString('utf8').split('\0').filter(Boolean);
+  if (edited.length) throw rewriteError('rewrite-refused', `refused: a tracked file under workbench/ has an unstaged change that the rewrite would discard (${listPaths(edited)}); commit, stage or back it up first. Nothing was changed.`);
+  const attribute = runGit(project, ['check-attr', '-z', 'eol', '--', 'workbench/manifest.json']).stdout.toString('utf8').split('\0')[2];
+  if (attribute !== 'lf') {
+    throw rewriteError('policy-not-in-force', `refused: the Workbench line-endings policy is not in force for workbench/ (eol is "${attribute ?? 'unknown'}" for workbench/manifest.json), so a rewrite would write the same line endings back; append the block to .gitattributes with the first step, then run this one. Nothing was changed.`);
+  }
+  const relatives = entries.map((entry) => entry.relative);
+  const result = { total: relatives.length, rewritten: 0, unchanged: 0 };
+  if (!relatives.length) return result;
+  const prefix = runGit(project, ['rev-parse', '--show-prefix']).stdout.toString('utf8').trim();
+  const stage = fs.mkdtempSync(path.join(os.tmpdir(), 'workbench-rewrite-'));
+  try {
+    const written = runGit(project, ['checkout-index', `--prefix=${stage.replaceAll('\\', '/')}/`, '-z', '--stdin'], Buffer.from(relatives.map((relative) => `${relative}\0`).join('')));
+    if (written.status !== 0) throw rewriteError('git-failed', `refused: git checkout-index could not stage the files: ${written.stderr.toString().trim()}. Nothing was changed.`);
+    const failures = [];
+    const replaced = [];
+    for (const relative of relatives) {
+      try {
+        if (replaceFromStage(path.join(stage, prefix, relative), path.join(project, relative))) replaced.push(relative);
+        else result.unchanged += 1;
+      } catch (error) {
+        failures.push(`${relative} (${error.code ?? error.message})`);
+      }
+    }
+    result.rewritten = replaced.length;
+    // A replaced file has a new size, and Git trusts a size that differs from
+    // the one the index recorded without comparing content, so `git status`
+    // would list every rewritten file as modified (and `update-index --refresh`
+    // cannot clear it). `git checkout` records the new stat as it writes; this
+    // does the same for the files written here. Each file holds exactly what
+    // the index does, so the entry's content is unchanged.
+    if (replaced.length) {
+      const refreshed = runGit(project, ['update-index', '-z', '--stdin'], Buffer.from(replaced.map((relative) => `${relative}\0`).join('')));
+      if (refreshed.status !== 0) throw rewriteError('index-refresh-failed', `rewrote ${replaced.length} of ${result.total} tracked files under workbench/ but git update-index could not record them: ${refreshed.stderr.toString().trim()}; the files are correct, and \`git update-index -- <path>\` for each, or \`git add -u workbench\`, refreshes the index.`);
+    }
+    if (failures.length) {
+      throw Object.assign(rewriteError('rewrite-incomplete', `rewrote ${result.rewritten} of ${result.total} tracked files under workbench/ but could not replace ${failures.length}: ${listPaths(failures)}; no tracked file was deleted and every file holds either its original or its rewritten content. Fix the cause (for example a read-only directory) and run this step again; it rewrites only the files that still differ.`), { result, failures });
+    }
+  } finally {
+    fs.rmSync(stage, { recursive: true, force: true });
+  }
+  return result;
+}
+
+// Replace one tracked file with the copy Git staged, atomically. Returns false
+// when the working-tree file already holds those bytes (or that link target).
+// The copy is made beside the target so the rename never crosses a filesystem,
+// keeps the permission bits the file already has, and is removed again if any
+// step fails, so a failure leaves the original in place and no stray file.
+function replaceFromStage(source, target) {
+  const wanted = lstatOrNull(source);
+  if (!wanted || !(wanted.isFile() || wanted.isSymbolicLink())) throw Object.assign(new Error('Git did not stage a file'), { code: 'not-staged' });
+  const current = lstatOrNull(target);
+  if (wanted.isSymbolicLink()) {
+    if (current?.isSymbolicLink() && fs.readlinkSync(source) === fs.readlinkSync(target)) return false;
+  } else if (current?.isFile() && fs.readFileSync(source).equals(fs.readFileSync(target))) {
+    return false;
+  }
+  const temporary = path.join(path.dirname(target), `.workbench-rewrite-${process.pid}`);
+  try {
+    if (wanted.isSymbolicLink()) {
+      fs.symlinkSync(fs.readlinkSync(source), temporary);
+    } else {
+      fs.copyFileSync(source, temporary, fs.constants.COPYFILE_EXCL);
+      fs.chmodSync(temporary, (current?.isFile() ? current : wanted).mode & 0o7777);
+    }
+    fs.renameSync(temporary, target);
+  } catch (error) {
+    fs.rmSync(temporary, { force: true });
+    throw error;
+  }
+  return true;
+}
+
 export function initialize(options) {
   const project = path.resolve(options['--project']);
   const manifestPath = path.join(project, 'workbench', 'manifest.json');
@@ -761,6 +1003,12 @@ export function initialize(options) {
   }
   const unsafe = preflightLayout(project);
   if (unsafe) return unsafe;
+  try { assertSafeWritePath(project, path.join(project, ATTRIBUTES_FILE)); }
+  catch (error) { return fail('lane-collision', `${ATTRIBUTES_FILE} must be an ordinary, unshared file: ${error.message}`); }
+  const ignored = ignoredAttributesMessage(project);
+  if (ignored) return fail('attributes-ignored', ignored);
+  const flagged = flaggedAttributesMessage(project);
+  if (flagged) return fail('attributes-flagged', flagged);
   const shape = validateManifestShape({ workbenchVersion: options['--version'], provenance: { lifecycle: options['--provenance'] }, wiki: { profile: options['--wiki-profile'] ?? 'project' } });
   if (shape) return shape;
   const declaration = gitDeclaration(project, options);
@@ -795,10 +1043,11 @@ export function initialize(options) {
     }
     writeSessionsIgnore(project);
     if (!options.deferWikiSeed) ensurePrivateWikiIgnore(project);
+    const attributes = { path: ATTRIBUTES_FILE, written: ensureLineEndingPolicy(project) };
     const seeded = options.deferWikiSeed ? { wiki: false, reason: 'legacy wiki move pending' } : seedWiki(project, options);
     fs.writeFileSync(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`);
     const documents = writeSeedDocuments(project, { ...options, notepadOnly: true });
-    return report('initialized', { manifestPath, manifest, seeded, documents });
+    return report('initialized', { manifestPath, manifest, seeded, documents, attributes });
   }, { initialize: true });
 }
 
@@ -1505,12 +1754,57 @@ function validateGenesisRuntime(project, expectedVersion) {
 // nothing about what is actually installed. A room carries no release
 // checkout, so there the comparison is reported as unavailable rather than
 // guessed at.
+// The line-endings repair is printed text, not executed code, and it is two
+// steps, each a call into a tested function of the Workbench release checkout
+// (/path/to/release) run from the room root, so the guards live in code with
+// tests rather than in pasted shell. An older room already has a manifest and
+// cannot run `init` again, so the append step calls `ensureRoomLineEndingPolicy`
+// and the rewrite step calls `rewriteRoomLaneCheckout`; each prints what it did,
+// or its reason and exit 1 when it refuses, and refuses before it changes
+// anything. The placeholder is single-quoted so a release path with spaces
+// survives. Doctor itself still only diagnoses: the operator runs the steps.
+// Append: requires `workbench/manifest.json`, refuses a symlinked or multiply
+// linked `.gitattributes` (as `init` does), an ignored untracked one (the block
+// could never be committed) and a tracked one marked skip-worktree or
+// assume-unchanged (the index hides the change, so the commit would omit it).
+// Rewrite: atomic per-file replacement from the index that deletes nothing,
+// refusing a gitlink, a flagged or unmerged file and an unstaged edit; see
+// `rewriteRoomLaneCheckout` for the design and the S-005U Evidence rows for the
+// review history that produced it.
+const LINE_ENDINGS_STEP_HEAD = "RELEASE='/path/to/release' node -e \"import(require('url').pathToFileURL(process.env.RELEASE+'/workbench/tools/workbench-layout.mjs')).then(";
+const LINE_ENDINGS_STEP_TAIL = ").catch(e=>{console.error(e.message);process.exitCode=1})\"";
+const LINE_ENDINGS_APPEND = LINE_ENDINGS_STEP_HEAD
+  + "m=>console.log(m.ensureRoomLineEndingPolicy(process.cwd())?'appended the Workbench line-endings block to .gitattributes':'.gitattributes already ends with the Workbench line-endings block')"
+  + LINE_ENDINGS_STEP_TAIL;
+const LINE_ENDINGS_REWRITE = LINE_ENDINGS_STEP_HEAD
+  + "m=>{const r=m.rewriteRoomLaneCheckout(process.cwd());console.log('rewrote '+r.rewritten+' of '+r.total+' tracked files under workbench/ from the Git index ('+r.unchanged+' already matched)')}"
+  + LINE_ENDINGS_STEP_TAIL;
+const LINE_ENDINGS_REMEDY = 'the installed bytes differ from the receipt only by CRLF line endings, which a checkout with core.autocrlf=true writes; '
+  + 'commit the Workbench line-endings block as the last lines of .gitattributes, then rewrite the lane from Git. '
+  + 'Run both steps from the room root with the Workbench release checkout (replace /path/to/release with its path, keeping the quotes); each refuses with its reason and changes nothing it cannot finish safely. '
+  + 'A room that already has a manifest cannot run `workbench-layout.mjs init` again, so append the block with `' + LINE_ENDINGS_APPEND + '` '
+  + '(it refuses a directory without workbench/manifest.json, a symlinked, multiply linked, skip-worktree or assume-unchanged .gitattributes, and refuses an ignored, untracked .gitattributes: resolve that with `git add --force .gitattributes`), '
+  + 'or copy the block from the .gitattributes that `init` writes in a fresh scratch project, and commit it. '
+  + 'Then, with no unstaged change under workbench/, rewrite its tracked files from the Git index with `' + LINE_ENDINGS_REWRITE + '`, '
+  + 'which replaces each file in place, deletes none, and refuses a gitlink, a skip-worktree, assume-unchanged or unmerged file, or an unstaged edit; or make a fresh clone';
+
 export const DRIFT_STATES = Object.freeze({
   'receipt-stale': 'the installed bytes are the release source\'s, so the receipt hash is the stale fact; refresh it with `workbench-tools.mjs update --project PATH --explicit-update`, which backs the replaced files up under the user home and records the backup path in the receipt',
   'runtime-modified': 'the installed bytes match neither the receipt nor the release source; restore them with `workbench-tools.mjs rollback --project PATH --backup PATH` from a backup the receipt records, or replace them with `workbench-tools.mjs update --project PATH --explicit-update` once the difference is reviewed',
   'runtime-authentic': 'the installed bytes match both the receipt and the release source, so only the file mode drifted; restore mode 0644 on the managed file',
-  'source-unavailable': 'no release source was available to compare the installed bytes against; run `node tools/workbench-tools.mjs verify --project PATH` from a release checkout to classify this drift'
+  'source-unavailable': 'no release source was available to compare the installed bytes against; run `node tools/workbench-tools.mjs verify --project PATH` from a release checkout to classify this drift',
+  'line-endings': LINE_ENDINGS_REMEDY
 });
+
+// The receipt hashes the LF bytes the release installed. A file whose CRLF
+// line endings, turned back into LF, give that hash was rewritten by the
+// checkout rather than edited, so the cause is line endings, not content.
+function lineEndingsOnly(file, expected) {
+  const bytes = fs.readFileSync(file);
+  if (!bytes.includes(13)) return false;
+  const normalized = Buffer.from(bytes.toString('latin1').replaceAll('\r\n', '\n'), 'latin1');
+  return crypto.createHash('sha256').update(normalized).digest('hex') === expected;
+}
 
 function driftState(laneDir, tool, installed, matchesReceipt, sourceLane) {
   if (!sourceLane) return 'source-unavailable';
@@ -1608,7 +1902,11 @@ export function receiptDrift(laneDir, receipt, options = {}) {
     if (!entry?.isFile() || entry.isSymbolicLink()) { drift.push(entryFor(tool, 'missing-or-not-a-file', null, false)); continue; }
     const installed = sha256(file);
     if ((entry.mode & 0o111) !== 0) drift.push(entryFor(tool, 'executable-bit', installed, installed === expected));
-    if (installed !== expected) drift.push(entryFor(tool, 'hash', installed, false));
+    if (installed !== expected) {
+      drift.push(lineEndingsOnly(file, expected)
+        ? { tool, reason: 'hash', state: 'line-endings', remedy: DRIFT_STATES['line-endings'] }
+        : entryFor(tool, 'hash', installed, false));
+    }
   }
   return drift;
 }

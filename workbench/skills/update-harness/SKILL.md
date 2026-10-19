@@ -381,7 +381,35 @@ refuses a lane that already carries a receipt.
 Without a release checkout `doctor` cannot say whether the receipt went stale
 or the bytes were changed - it reports every drifted file as
 `source-unavailable` - so run `verify` from the release checkout to classify
-it. A deleted receipt is the readiness gate's finding, not this check's. A
+it. The exception is a file that differs only by CRLF line endings: doctor
+reports it `line-endings` in the room itself. The doctor remedy prints two
+steps, each a call into the release checkout's own tested function, run from
+the room root (keep the quotes around `/path/to/release`); each refuses with its
+reason and changes nothing it cannot finish safely, and doctor itself only
+diagnoses. First commit the Workbench block as the last lines of `.gitattributes`:
+a room that already has a manifest cannot run `workbench-layout.mjs init` again,
+so append it with the `ensureRoomLineEndingPolicy` step, which refuses a
+directory that is not a Workbench room root (no `workbench/manifest.json`), a
+symlinked or multiply linked `.gitattributes`, one marked skip-worktree or
+assume-unchanged (a sparse checkout that leaves it out sets skip-worktree; the
+index would hide the change, so the commit would omit the policy), and one that
+Git ignores while untracked (remove the ignore rule, or `git add --force
+.gitattributes` once you have decided to track it), and prints what it did; or
+copy the block from the `.gitattributes` that `init` writes in a fresh scratch
+project. Then, with no unstaged change under `workbench/`, rewrite the tracked
+files with the `rewriteRoomLaneCheckout` step (or make a fresh clone). It
+regenerates each file from the Git index the way a fresh checkout would and
+deletes nothing: the files are staged by `git checkout-index` into a scratch
+directory and renamed over their targets one at a time, so a failure partway
+leaves every tracked file either as it was or rewritten, and running the step
+again finishes the job. It prints how many files it rewrote, and refuses before
+changing anything for a directory that is not a room root or Git work tree, a
+tracked gitlink (submodule) or any entry that is not a plain file or symlink, a
+file marked skip-worktree or assume-unchanged (`git ls-files -v -- workbench`
+lists those as `S`, `h`, or `s` for both; sparse-checkout sets `S`), an
+unmerged file, an unstaged edit (staged changes survive), and a repository where
+the line-endings policy is not in force (the rewrite would write CRLF back).
+Untracked and ignored files are never touched. A deleted receipt is the readiness gate's finding, not this check's. A
 deleted managed tool that another managed tool imports stops `doctor` from
 loading at all, so what appears is a loader stack trace rather than a finding.
 

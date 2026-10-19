@@ -36,9 +36,12 @@ inheriting the Template's room state.
    It forms the room from reviewed drafts and recorded decisions; implementation
    and remote recovery still follow. Otherwise create the seven filled root controls, run
    the release checkout's `node workbench/tools/workbench-layout.mjs init` for
-   the schema 2 support root (it seeds the wiki contract and declares
+   the schema 2 support root (it seeds the wiki contract, declares
    `git.defaultBranch` and `git.integrationBranch` from `--default-branch` and
-   `--integration-branch`) and
+   `--integration-branch`, and appends the Workbench line-ending block to
+   `.gitattributes`, which is committed with the room so a Windows
+   `core.autocrlf=true` clone keeps the receipt hashes; a Windows clone also
+   needs `core.symlinks=true` for the skill adapters) and
    `node tools/workbench-tools.mjs install` for the receipt-backed runtime
    tools and `node tools/workbench-skills.mjs install --project PATH` for the
    receipt-backed skills lane and its discovery links, copy and fill the wiki router, create one stable spec under the
