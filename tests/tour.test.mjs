@@ -143,9 +143,11 @@ test('the Blueprint distinguishes product data from Workbench support state', ()
 
 test('configured-host guidance pins the expected producer identity before execution', () => {
   const runbook = fs.readFileSync(path.join(root, 'RUNBOOK.md'), 'utf8');
-  assert.match(runbook, /`sourceCommit` \(the expected full 40-character producer commit\)/);
-  assert.match(runbook, /`sourceRepository` \(the expected producer `origin` URL\)/);
-  assert.match(runbook, /clean manifest, managed-tool, and ADR inputs/);
+  const operations = fs.readFileSync(path.join(root, 'workbench/docs/TEMPLATE_OPERATIONS.md'), 'utf8');
+  assert.match(runbook, /workbench\/docs\/TEMPLATE_OPERATIONS\.md/);
+  assert.match(operations, /`sourceCommit` \(the expected full 40-character producer commit\)/);
+  assert.match(operations, /`sourceRepository` \(the expected producer `origin` URL\)/);
+  assert.match(operations, /clean manifest, managed-tool, and ADR inputs/);
 });
 
 test('the v3.2 room has a stable identity distinct from its artifact identifiers', () => {
@@ -182,9 +184,9 @@ test('the Blueprint disposition preserves its exact source and relocated decisio
     assert.ok(fs.existsSync(path.join(root,claim.owner)),claim.id);
     if(claim.disposition==='relocate-accepted-decision') assert.ok(fs.readFileSync(path.join(root,claim.owner),'utf8').includes(claim.text),claim.id);
   }
-  const runbook=fs.readFileSync(path.join(root,'RUNBOOK.md'),'utf8');
-  assert.match(runbook,/Workbench support state has declared seeding/);
-  assert.match(runbook,/## Independent Review Boundaries/);
+  const operations=fs.readFileSync(path.join(root,'workbench/docs/TEMPLATE_OPERATIONS.md'),'utf8');
+  assert.match(operations,/Workbench support state has declared seeding/);
+  assert.match(operations,/## Independent Review Boundaries/);
 });
 
 

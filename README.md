@@ -24,8 +24,7 @@ workbench/tools and changes only through an explicit managed update.
 
 ## How This Project Is Run
 
-This repository is governed by a small set of control documents. Read them
-before changing anything:
+Start with [AGENTS](AGENTS.md) -> [STARTUP](STARTUP.md) -> the assigned Spec and Task. Use [Runbook orientation](RUNBOOK.md#orientation) for an unfamiliar operation. Read other owners when the operation needs them:
 
 - [`AGENTS.md`](AGENTS.md) - how agents behave here: authority order, read/edit
   scope, the task-selection loop, documentation ownership, and proof rules.
@@ -35,14 +34,14 @@ before changing anything:
   consult it when shared language could be ambiguous.
 - [`TASKBOARD.md`](TASKBOARD.md) - active spec projection: current slice, owner,
   blocker, latest event, and next gate.
-- [`workbench/specs/S-###-slug/SPEC.md`](workbench/specs/S-###-slug/SPEC.md) - on-demand capability truth,
+- [assigned `SPEC.md`](workbench/specs/CATALOG.md) - on-demand capability truth,
   acceptance, decisions, verification, append-only evidence, and completion.
-- [`RUNBOOK.md`](RUNBOOK.md) - how to set up, run, test, build, and recover this
-  project, plus the verification commands that gate "done".
+- [`RUNBOOK.md`](RUNBOOK.md) - the short workflow manual; [Template operations](workbench/docs/TEMPLATE_OPERATIONS.md) keeps this room's exact setup, recovery and upgrade commands.
 - [`workbench/wiki/MEMORY.md`](workbench/wiki/MEMORY.md) - the room brain:
   canonical, human-editable durable memory for this project. It routes to the
-  live controls above, to flat memory notes, and to the owner-directed
-  `design-concepts/` collection; it never duplicates live task state.
+  live controls above, to flat memory notes and to the maintained
+  `design-concepts/` and `features/` collections; it never duplicates live
+  Task state.
 
 - [`workbench/feedback/WORKBENCH_FEEDBACK.md`](workbench/feedback/WORKBENCH_FEEDBACK.md) -
   Workbench Feedback, the return channel to the reusable harness these docs
@@ -55,11 +54,7 @@ before changing anything:
   three-file GAME_PLAN room through the v3.1.2 baseline, so any generation can be
   checked out, run, and diffed against its neighbours.
 
-If this project was bootstrapped from a single founding prompt, the one-time
-protocol that produced these docs is preserved in [`GENESIS.md`](GENESIS.md).
-If instead the harness was adopted into an existing project, that one-time
-migration protocol is [`ADOPTION.md`](ADOPTION.md). Either runs once at start;
-after handoff, AGENTS plus the progressive spec flow above govern.
+For a new project, follow the installed [Genesis skill](workbench/skills/genesis/SKILL.md). For a repository with code, follow [Adoption](workbench/skills/adoption/SKILL.md). Both recover verified release source before their release-side setup procedure. Solo or team scopes remain in the room's own authority records.
 
 ## Getting Started
 
@@ -84,7 +79,9 @@ For **Claude Code**, keep the one-line `CLAUDE.md` containing exactly
 generated `/init` file. Other agents should be pointed at `AGENTS.md` as their
 entry point.
 
-Every completed ticket must leave proof in its final response and owning spec's
+Ordinary continuation follows AGENTS -> STARTUP -> assigned Spec and Task; consult only the needed Runbook operation.
+
+Every completed Task must leave proof in its final response and owning Spec's
 append-only evidence log. Milestone specs additionally require a short demo
 artifact (screenshot, recording, preview URL, or one-command demo) so work is
 accepted on product truth, not passing tests alone.
@@ -99,14 +96,21 @@ See [`TASKBOARD.md`](TASKBOARD.md) for active execution state and
 Same license as the LLM Workbench harness it was generated from. This room is
 meant to be copied, read, and discarded.
 
-The current room runs Workbench **v3.2.1**. Run `node tour.mjs` for the
-updated notepad, recovery and frozen-history map. Its verified upgrade and
-independent project-generation evidence belong to
-[S-003](workbench/specs/S-003-v3-2-0-upgrade-and-project-validation/SPEC.md).
-Historical replay branches retain their original versions.
+The manifest and managed receipts retain the **v3.2.1 release label**. This
+branch is an **unreleased Template upgrade candidate** built on that baseline;
+the label alone does not identify all of its installed content. The managed
+runtime and skills receipts both pin LLM Workbench source
+`0ce1750750f80767536f4d4c0bc44bf5ccabe730`. That selected commit is
+contained in producer `integration` at
+`c581d7510f398ef7675f7adc51a57d4c8309147b` with the selected managed
+generation unchanged. It remains unreleased; no new version has been stamped
+or Template integration claimed. See
+[Version History](workbench/docs/VERSION_HISTORY.md#unreleased-template-upgrade-candidate-2026-10-18)
+for the installation boundary and retained history. Run `node tour.mjs` for
+this room's current map.
 
-
-The installed harness is v3.2.1. This repository is the reference used to test
-Workbench updates; [upgrade acceptance](RUNBOOK.md#reference-upgrade-acceptance)
-is required for each new version. [S-00B](workbench/specs/S-00B-v3-2-1-harness-upgrade/SPEC.md)
-records this update's source, preservation and verification.
+Earlier verified upgrades remain in their original owners:
+[S-003](workbench/specs/S-003-v3-2-0-upgrade-and-project-validation/SPEC.md)
+and [S-00B](workbench/specs/S-00B-v3-2-1-harness-upgrade/SPEC.md). Historical
+replay branches retain their original versions. Every new upgrade still follows
+[reference upgrade acceptance](workbench/docs/TEMPLATE_OPERATIONS.md#reference-upgrade-acceptance).

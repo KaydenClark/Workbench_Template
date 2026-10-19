@@ -2,8 +2,8 @@
 
 > Generated from LLM Workbench v3.2.1.
 
-**Last reviewed:** 2026-09-08
-**Status:** [active / partial / stale]
+**Last reviewed:** 2026-10-18
+**Status:** active for installed routes; historical terms remain identified below
 
 This is the canonical lookup table for terms whose meaning is shared across the
 project. Read it when a request, spec, test, or skill uses project language that
@@ -11,8 +11,7 @@ could be ambiguous.
 
 ## Task Routing
 
-The ordinary entry route is `AGENTS.md` -> `RUNBOOK.md` -> `LEXICON.md`.
-Continue to the assigned `SPEC.md` resolved through `workbench/manifest.json`.
+The ordinary entry route is `AGENTS.md` -> [STARTUP](STARTUP.md#resume) -> the assigned Spec and Task resolved through `workbench/manifest.json`. Use [Runbook orientation](RUNBOOK.md#orientation) for an unfamiliar operation. Current owners and source fingerprints outrank a stale STARTUP view.
 Use `BLUEPRINT.md` for architecture and cross-cutting direction; use the
 manifest-declared Wiki `MEMORY.md` for task-relevant durable knowledge and the
 ADR `REGISTER.md` for decision rationale. Read only the relevant linked owners.
@@ -22,12 +21,13 @@ These are the Context Map's entry routes. Follow the smallest applicable route:
 
 | Need | Route to the owner |
 |---|---|
+| Artifact jobs, information ownership, and where to ask a question | [Artifact Ownership Schema](#artifact-ownership-schema) |
 | Accepted terminology and product direction | This Lexicon -> [Blueprint](BLUEPRINT.md) |
 | Assigned work, evidence, and implementation | [Manifest](workbench/manifest.json) -> assigned stable spec -> its referenced source/tests |
-| Complete capability inventory | [Spec catalog](workbench/specs/CATALOG.md) -> stable spec; includes completed history |
+| Completed capability knowledge and retained proof | [Wiki features](workbench/wiki/features/README.md) when captured; [Spec catalog](workbench/specs/CATALOG.md) -> retained stable spec and dated evidence |
 | Durable knowledge and design concepts | [Wiki router](workbench/wiki/MEMORY.md) -> relevant note -> its governing sources |
 | Decision rationale | [ADR register](workbench/docs/adr/REGISTER.md) -> active decision -> its operational owners; [history](workbench/docs/adr/HISTORY.md) remains explicit |
-| Commands and recovery | [Runbook](RUNBOOK.md) -> relevant procedure -> named tool |
+| Commands and recovery | [Runbook](RUNBOOK.md) -> relevant workflow -> named skill or tool |
 
 The Wiki retains its single `MEMORY.md` router. This table connects existing
 owners; it does not add a second Wiki index or copy their contents.
@@ -42,6 +42,61 @@ owners; it does not add a second Wiki index or copy their contents.
 - Surface conflicts before changing an established definition.
 - Link to detailed sources instead of copying them here.
 
+## Artifact Ownership Schema
+
+An artifact is an identifiable document, record, source file or output. Its
+information owner is the maintained place for a particular kind of truth; its
+maintainer is the person or assigned agent responsible for keeping that place
+current. Information ownership does not grant permission to change it. Follow
+the question's job to the smallest current owner, then use the manifest to
+resolve installed paths. One file may serve several jobs without becoming a
+new authority.
+
+| Job or question | Maintained owner and route |
+|---|---|
+| Authority and boundaries: who may do what? | Current user request and [AGENTS](AGENTS.md); the assigned Spec narrows the capability. |
+| Destination: what should this product become? | [Blueprint](BLUEPRINT.md). |
+| Requirements and acceptance: what must this capability do, and what counts as done? | Assigned `SPEC.md` and its acceptance and verification sections. |
+| Decisions and rationale: what was chosen, and why? | [ADR register](workbench/docs/adr/REGISTER.md) for architectural choices; manifest-declared `workbench/docs/ddr/` records for destination choices when present (no DDR register is installed in this room); capability-local choices remain in the Spec. |
+| Language: what does a shared term mean? | This Lexicon; capability-local meanings remain in the Spec until shared. |
+| Knowledge: what context explains a topic? | [Wiki MEMORY](workbench/wiki/MEMORY.md) -> relevant note and its governing sources. |
+| Navigation: where should I look? | This routing table, Wiki MEMORY for Wiki pages, and the manifest for installed paths. |
+| Work state: what is assigned or blocked? | Owning `SPEC.md` and its `TASK.md` records; [Taskboard](TASKBOARD.md) is their projection. |
+| Evidence: what was actually checked? | Spec evidence log -> named result, observer, candidate and limits; a result does not accept itself. |
+| Operations and procedures: how is work performed here? | [Runbook](RUNBOOK.md) -> relevant workflow, installed skill section and tool. |
+| Reusable behavior: which method applies? | Installed `workbench/skills/` skill named by the operation; a skill inherits the request's scope. |
+| Execution and capability: what ran, and can this host do it? | Actual source/tool, host configuration and observed check; configuration alone is not proof. |
+| Configuration and provenance: what is installed, and from where? | [Manifest](workbench/manifest.json), component receipts and Git history; see [Version History](workbench/docs/VERSION_HISTORY.md). |
+| Working context and recovery: what must survive interruption? | Source-linked [Jot](workbench/skills/jot/SKILL.md) in the relevant Wiki topic, then [implement recovery](workbench/skills/implement/SKILL.md#recovery-and-rollback) with verified live state. Legacy JSON notes remain readable. |
+| Human orientation: how does someone start? | [README](README.md), linking to the Runbook for operations. |
+
+The Spec's `TASK.md` records are temporary execution structure; they are real
+files created and updated by the installed Spec tool. A features article may
+preserve a completed capability explanation, but never copies live Task state
+or replaces the retained Spec's dated proof. The Wiki explains; a receipt
+records an installation; a test exercises a seam; none independently grants
+authority or establishes release. This room deliberately retains its
+standalone Wiki, tour, historical Spec IDs and version replay; the generic
+source's additional project or deployment examples are not copied as room
+facts.
+
+## Artifact Boundaries
+
+The [ownership schema](#artifact-ownership-schema) routes a question. These
+limits keep a supporting artifact from taking another owner's job:
+
+| Artifact | Job and limit |
+|---|---|
+| Root controls | [AGENTS](AGENTS.md) governs agent behavior; [Blueprint](BLUEPRINT.md) describes destination; this Lexicon defines and routes; [Runbook](RUNBOOK.md) routes operations; [README](README.md) orients people. [Taskboard](TASKBOARD.md) projects Spec state, and [CLAUDE](CLAUDE.md) adapts entry for its host. Being a root file does not give each claim equal instruction authority. |
+| Spec and Task | The Spec owns scoped capability requirements, acceptance and evidence; each `TASK.md` owns a bounded execution slice. A dashboard or handoff cannot replace either source record. |
+| Decision record | An accepted ADR owns an architectural decision and names its operational owners. Historical rationale and superseded choices remain distinguishable. This room has no installed DDR register; use actual records when present. |
+| Wiki and feature article | [Wiki MEMORY](workbench/wiki/MEMORY.md) routes source-backed explanations and Jot context. A [features article](workbench/wiki/features/README.md) explains a completed capability without copying live Task state or accepting its own delivery. Wiki pages authorize nothing. |
+| Jot, legacy note and handoff | [Jot](workbench/skills/jot/SKILL.md) captures source-linked topic context; legacy JSON notes remain readable; a [handoff](workbench/skills/handoff/SKILL.md#transfer-procedure) selects accessible context for a specified recipient. Their access and retention differ; none grants the recipient new authority. |
+| Manifest, receipt and adapter | The [manifest](workbench/manifest.json) declares paths and policy; component receipts record installed source and hashes. Discovery adapters expose the tracked skill lane. Valid shape or byte equality does not prove host invocation, rollback or release. |
+| Skill, source, tool and test | A pointed installed skill supplies reusable method for an operation within existing scope. Source implements, tools execute and tests exercise named seams; an observation proves only its exercised environment. |
+| Evidence and projection | Spec evidence records candidate, method, observer, result and limits. Taskboard, catalog and registers derive views from owning records; correct the source and regenerate the view. |
+| Template | A reusable starting shape; the filled room owns its local truth, historical evidence and deliberate differences. Copying a template does not make its examples a project decision. |
+
 ## Workbench Terms
 
 | Term | Definition | Distinction |
@@ -52,7 +107,8 @@ owners; it does not add a second Wiki index or copy their contents.
 | **Blueprint** | The adaptable narrative of the desired finished product: destination, people, outcomes, experience, integrated design, cross-cutting qualities, lifecycle and non-goals. | It supports the design concept; it is not current status, an ADR inventory, a work queue, a glossary, or a proof archive. |
 | **Lexicon** | The canonical lookup table for definitions shared across the project. | It owns meanings, not requirements, implementation decisions, or work status. |
 | **Spec** | A stable capability record containing scoped intent, requirements, decisions, implementation slices, acceptance, verification, evidence, and completion. | It combines the useful product and engineering roles often split between a PRD and technical spec. |
-| **Ticket** | A temporary, one-context tracer-bullet slice inside a spec that produces independently verifiable progress. | It is execution structure, not durable capability history. |
+| **Task** | A bounded executable slice within a Spec, recorded in its own `TASK.md` with state, proof, blockers and assigned stance. | It is temporary execution structure, not durable capability history. The older name **Ticket** and historical `TK-` IDs remain readable in retained records. |
+| **Feature article** | A readable Wiki explanation of a completed Spec's delivered capability, captured at closure. | [Features](workbench/wiki/features/README.md) holds this knowledge; it does not replace the Spec's evidence or Task records. |
 | **Coordination hand-back** | A point during an assigned run where the owner had to supply something that was not a preference, tradeoff, authorization, or unavailable resource under `AGENTS.md`'s governing gate: a settled decision repeated, evidence already in the project located for the agent, a routine technical finding reconciled, or an already-authorized step prompted. | It is a defect in a record, route, skill, or tool, recorded per occurrence with its cause and smallest correction in the assigned spec's evidence log by the `carry` skill. Answering a genuine owner decision is not one, and neither is a new framework built in response to one. `AGENTS.md` Safety And Change Control owns when an owner is asked; these four reasons restate that gate and never widen it. |
 
 ## Continuity Terms
@@ -60,8 +116,9 @@ owners; it does not add a second Wiki index or copy their contents.
 | Term | Definition | Distinction |
 |---|---|---|
 | **Notepad** | A local, objective-scoped JSON working record with a compact editable current view and an append-oriented work record. Grilling records are notepads and therefore JSON. | It is not Canon or permanent history; preserve important material until reconciled. One objective may use several linked notes. |
-| **Scoped handoff** | A separate local Markdown (`.md`) compaction authored from the relevant notepad material with plain-language, destination-specific continuation instructions. | A receiving agent can read the file or the owner can paste it into a new chat. It is requested or initiated by the owner; a pointer requires accessible, retained source data. Preservation does not grant authority. |
-| **WBID** | The visible identifier comprising an artifact's type prefix and a base-62 value replacing the numeric portion. | Unique within the type and Workbench, not globally; no parallel secondary ID. Existing numeric labels and stable paths remain readable; historical numeric tickets remain spec-qualified, while new letter-bearing tickets reserve the whole Workbench inventory. |
+| **Jot** | A small source-linked Wiki capture of knowledge, owner intent, observations, proposals or unresolved questions, including correction history. | Shared topic context is recoverable from the Wiki; explicit private jots stay ignored and require local opt-in. A confirmed intention is not a verified result or instruction authority. Old JSON notepads remain readable. |
+| **Scoped handoff** | A separate local Markdown (`.md`) brief for a specified recipient, purpose, job and endpoint, selecting relevant Wiki context, legacy notes and source links. | The owner or an agent within its assigned role may initiate one. A pointer requires accessible, retained source data; preparation does not authorize the recipient's work. The [handoff procedure](workbench/skills/handoff/SKILL.md#transfer-procedure) owns transfer. |
+| **WBID** | A visible artifact identifier with a type prefix and value replacing a numeric portion. New Spec, Task, ADR and notepad values use uppercase `0-9A-Z`, minimum width four, and at least one letter. | Unique within type and Workbench, not globally. Short, widened or case variants of one collision key resolve to one record; existing numeric, short and mixed-case labels remain readable. Open Spec/Task widening uses explicit `widen-id`; historical numeric Tasks remain Spec-qualified. The `WB-` connection identity retains a separate base-62 format. |
 
 ## Stance Terms
 
@@ -72,13 +129,14 @@ owners; it does not add a second Wiki index or copy their contents.
 | **Auditor** | The stance that checks claims against named evidence and reports a bounded verdict. | An audit does not authorize repairs or release. |
 | **Reviewer** | The stance that challenges a candidate's correctness, impact and evidence. | At integration it runs in a separate context; it does not quietly repair the candidate. |
 | **Reconciler** | The stance that reconciles achieved work with the state and owners needed for continuation. | It neither manufactures completion nor duplicates truth in a universal handoff. |
-| **TASK** | The assigned ticket within a stable SPEC, carrying its normal stance assignment. | No additional task file or queue is introduced. |
+| **TASK** | The assigned Task within a stable SPEC, carrying its normal stance assignment in `TASK.md`. | The installed Spec tool writes Task records; Taskboard displays their derived state. Historical ticket wording remains readable. |
 
 ## Governance Core
 
 Design-concept routing: a question about what a product, subsystem, or
-relationship *is* starts here, then follows the term to the owner-directed
-articles in `workbench/wiki/design-concepts/`; the Blueprint and the assigned
+relationship *is* starts here, then follows the term to the maintained
+articles in `workbench/wiki/design-concepts/`; an authorized operation may
+create or update one with its provenance. The Blueprint and the assigned
 spec still decide when a requirement or verified Actuality matters.
 
 Shared by every Workbench. These rows describe roles and boundaries; the
@@ -88,20 +146,20 @@ binding behavior lives in `AGENTS.md`, cross-cutting architecture in
 | Term | Definition | Distinction |
 |---|---|---|
 | **Governance Plane** | The role one claim plays in one operation: **Intent** (the request), **Canon** (the binding current-state rule), **Grounding** (evidence about intended truth or whether work was done correctly), **Enduring Context** (durable reference consulted), **Actuality** (the target being changed, including files, source, runtime, and verified state), and **Projection** (a source-derived report). | Planes classify claims and their use, never whole files, directories, or artifact types. One assigned spec carries Canon, Projection, Grounding, and Enduring Context claims at once. |
-| **Workbench Contract** | The logical set of current claims owned by the seven root controls plus the explicitly assigned spec. | It is not a file; no `CONTRACT.md` or other coequal root control exists. |
+| **Workbench Contract** | The binding claim set named by AGENTS Instruction Authority: `AGENTS.md`, the explicitly assigned Spec's bounded capability requirements and, for an operation, the binding requirements of the lane skill the Contract points to. | It is not a file. Other root artifacts route by job; no `CONTRACT.md` or other coequal root file exists. |
 | **Instruction authority** | What an agent may do: the current owner request, then `AGENTS.md` with platform safety, then the explicitly assigned spec as a bounded capability delegate, then the procedural controls. | An assigned spec cannot enlarge the request, platform safety, or `AGENTS.md` scope; an unassigned spec is evidence. |
 | **State resolution** | How a Canon claim and verified Actuality are reconciled: newer Canon is an implementation gap, newer verified Actuality is documentation drift, unclear ordering is an ambiguity to investigate. | Neither "code always wins" nor "Canon proves implementation"; the touched owner is repaired rather than a universal precedence applied. |
 | **No-governance-tax rule** | Ordinary owner-directed project work requires only the Workbench Contract and its verification; no coordination system, order form, flight, or external mechanism is a prerequisite. | Available mechanisms a change genuinely needs still apply; the line is availability, not ceremony. |
 | **Diagnostic** | A registered finding a Workbench tool emits with a stable code, a severity of `error` or `attention`, a scope, and a blocking effect of `all`, `selection`, `selected-slice`, or `none`. | The consuming command enforces the effect; no artifact chooses whether its own finding blocks. |
-| **Support lane** | One of the six manifest-declared slots under lowercase `workbench/`: `docs`, `specs`, `wiki`, `sessions`, `feedback`, `tools`. | A lane is a structural slot, not a plane; the count coincides with the six planes by accident. |
-| **Collection** | A manifest-declared, machine-used directory inside a lane: `docs/adr`, `wiki/design-concepts`, `wiki/guidebooks`, `wiki/archive`, `sessions/grilling`, `sessions/handoffs`, `sessions/checkpoints`, `sessions/notepads`, `sessions/notepads/templates`, `sessions/recovery`. | Collection names are lowercase; local notepads may use nested type folders; a collection is never promoted to a lane because its contents differ in kind. |
+| **Support lane** | One of the seven manifest-declared slots under lowercase `workbench/`: `docs`, `specs`, `wiki`, `sessions`, `feedback`, `tools`, `skills`. | A lane is a structural slot, not a Governance Plane; the installed skills lane holds tracked reusable behavior. |
+| **Collection** | A manifest-declared, machine-used directory inside a lane, including `docs/adr`, `docs/ddr`, `wiki/design-concepts`, `wiki/features`, `wiki/guidebooks`, `wiki/archive`, the declared sessions collections and `workbench/landmarks`. | Read the actual manifest for the complete room list. Collection names are lowercase; a collection is not promoted to a lane because its contents differ. |
 | **ADR** | An architecture decision record in `workbench/docs/adr/`: title, decision, considered alternatives, consequences, provenance, and frontmatter naming its operational owners. | Active accepted ADR decision claims are architectural Canon; rationale and history remain distinct; `canonicalized_in` names operational owners. |
 | **Checkpoint** | A retained historical tracked copy in `sessions/checkpoints/`; new copy creation is retired. | Preserve existing bytes and citations. New claims reconcile into their durable owners; operational recovery is separate. |
 | **Operational recovery** | Local rollback receipts and backups in the ignored `sessions/recovery/` collection. | Excluded from notepad discovery and durable provenance; existing historical recovery references remain valid. |
-| **Design Concept article** | An owner-authorized, encyclopedic wiki article in `wiki/design-concepts/` explaining one durable cross-cutting design model, ending with `Evidence and Sources` and carrying `History`. | It documents a design concept; it is not the Blueprint, an ADR, a procedure, or task state, and agents suggest or repair it but do not create it. |
+| **Design Concept article** | An encyclopedic wiki article in `wiki/design-concepts/` explaining a durable cross-cutting model or supported landmark synthesis, with sources and `History`. | It is not the Blueprint, an ADR, procedure or Task state. An agent may create or update one during an authorized operation that touched it, recording that operation. |
 | **Wiki profile** | The manifest's declared wiki shape: `project` (one room's memory router and collections) or `deployment` (adds owner, machine, and project pointer collections). | A profile declares routing shape; it grants no authority and copies no live task state. |
 | **Managed runtime tool** | A file in `workbench/tools/` installed from the Workbench release and listed in the tools receipt with its source release, commit, and hash. | It is updated only by explicit update with backup and rollback; an application's root `tools/` is application-owned. |
-| **Declared integration branch** | The branch, named by exact case in `workbench/manifest.json` `git.integrationBranch`, into which the independent review gate merges task branches; `git.defaultBranch` names the branch it is created from. | A declaration, not a prose convention: controls resolve it from the manifest, `doctor` reports it undeclared or missing without blocking selection, and only generation, adoption, and upgrade completion fail closed on it. |
+| **Declared integration branch** | The branch, named by exact case in `workbench/manifest.json` `git.integrationBranch`, that stages approved assembled Spec work after the [independent review boundary](workbench/skills/implement/SKILL.md#4-review-at-the-relevant-boundary); `git.defaultBranch` names the branch it is created from. | A declaration, not a prose convention: controls resolve it from the manifest, `doctor` reports it undeclared or missing without blocking selection, and only generation, adoption, and upgrade completion fail closed on it. A Task receives Worker self-check, not a separate-context review. |
 
 ## Project Terms
 
@@ -125,6 +183,8 @@ binding behavior lives in `AGENTS.md`, cross-cutting architecture in
   before scoped source cleanup. It is not merely a copy or commit.
 - **Configured-host capability:** an operation exercised in the actual host and
   configuration. It does not establish machine enforcement or model reliability.
-- **Core compatibility:** the explicit supported range between one selected
-  installed global core release and room versions; a version difference alone
-  is not proof of incompatibility.
+- **Core compatibility:** the supported room-version range, when declared for a
+  selected managed core generation in the tracked `workbench/skills/` lane.
+  Compare the declared range and installed receipt with this room's version;
+  version difference alone is not proof of incompatibility. Host invocation
+  remains a separate check, without an assumed provider-home installation.

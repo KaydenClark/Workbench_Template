@@ -92,6 +92,20 @@ export const PLACES = [
   },
   {
     zone: 'The support root',
+    collection: 'ddr',
+    path: 'workbench/docs/ddr',
+    owns: 'Destination Decision Records: what the finished product must be or do, and why that choice beat the alternatives, with `proposed/` and `archive/` beside the accepted records.',
+    why: 'An ADR records how the room is built; a DDR records where it is going. Keeping them apart stops a product direction from being argued as an implementation detail, while sharing the ADR layout and tooling.',
+  },
+  {
+    zone: 'The support root',
+    collection: 'landmarks',
+    path: 'workbench/landmarks',
+    owns: 'Landmark artifacts (`LANDMARK.md`): directions toward the destination one size above a Spec, each saying where the work goes and what success looks like.',
+    why: 'Some goals are too big for one Spec and too specific for the Blueprint. A landmark groups the Specs and decisions that serve one direction, and retires once it is reached, so the map keeps a middle scale. The collection may be empty.',
+  },
+  {
+    zone: 'The support root',
     lane: 'wiki',
     path: 'workbench/wiki',
     owns: 'The room brain: durable knowledge routed by `MEMORY.md` under the rules in `SCHEMA.md`.',
@@ -101,15 +115,22 @@ export const PLACES = [
     zone: 'The support root',
     collection: 'design-concepts',
     path: 'workbench/wiki/design-concepts',
-    owns: 'Owner-directed articles about how a design is meant to work.',
-    why: 'Design intent is the first thing lost when only the implementation is written down. These are commissioned deliberately, not accumulated.',
+    owns: 'Source-backed articles about durable design models and supported landmark synthesis.',
+    why: 'Design intent is lost when only implementation is written down. An authorized operation creates or maintains an article it touches, recording that operation and its sources.',
+  },
+  {
+    zone: 'The support root',
+    collection: 'features',
+    path: 'workbench/wiki/features',
+    owns: 'One readable article per completed Spec, written when it closes: what the delivered capability does, why it matters, its limits and its evidence.',
+    why: 'A Spec is written for the people building the capability; a feature article is written for the people using it. Keeping the article in the Wiki lets a reader learn what the room can do without reading its build records.',
   },
   {
     zone: 'The support root',
     collection: 'guidebooks',
     path: 'workbench/wiki/guidebooks',
     owns: 'How-to knowledge that outlives any one task.',
-    why: 'A procedure that is useful twice belongs somewhere findable. It is not the Runbook, which is reserved for this project’s own verified commands.',
+    why: 'A reusable long procedure belongs somewhere findable. The Runbook routes workflows; the installed skills own methods, and Template operations holds this room’s detailed commands.',
   },
   {
     zone: 'The support root',
@@ -180,6 +201,13 @@ export const PLACES = [
     path: 'workbench/tools',
     owns: 'The harness runtime, installed as copies with a receipt (`.workbench-tools.json`) recording the source release, commit, and a hash per file.',
     why: 'The room runs its own copies, so it is not coupled to a checkout of the harness sitting elsewhere on disk. The receipt is what makes an upgrade checkable instead of hopeful — and it is why the lane changes only through an explicit update. A stray file here stops work selection until it is moved.',
+  },
+  {
+    zone: 'The support root',
+    lane: 'skills',
+    path: 'workbench/skills',
+    owns: 'The core Workbench skills, installed as copies with a receipt (`.workbench-skills.json`) that records the source release, commit and a hash per skill. `.agents/skills` and `.claude/skills` are the adapters agents discover them through.',
+    why: 'The room carries the skills its controls name, so a fresh clone works without a provider-home install. Like the tools lane, it changes only through an explicit update, and skills the room adds itself are left alone.',
   },
 
   {

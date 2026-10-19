@@ -26,7 +26,8 @@
     "wiki": "workbench/wiki",
     "sessions": "workbench/sessions",
     "feedback": "workbench/feedback",
-    "tools": "workbench/tools"
+    "tools": "workbench/tools",
+    "skills": "workbench/skills"
   },
   "collections": {
     "adr": "workbench/docs/adr",
@@ -38,7 +39,10 @@
     "checkpoints": "workbench/sessions/checkpoints",
     "notepads": "workbench/sessions/notepads",
     "notepad-templates": "workbench/sessions/notepads/templates",
-    "recovery": "workbench/sessions/recovery"
+    "recovery": "workbench/sessions/recovery",
+    "features": "workbench/wiki/features",
+    "ddr": "workbench/docs/ddr",
+    "landmarks": "workbench/landmarks"
   },
   "wiki": {
     "profile": "project"
@@ -54,7 +58,7 @@
       "make-it-so",
       "to-docs",
       "to-spec",
-      "to-tickets",
+      "to-tasks",
       "tracer-bullet",
       "update-harness",
       "carry",
@@ -71,8 +75,8 @@
       ".agents/skills",
       ".claude/skills"
     ],
-    "normalSetup": "presence-only",
-    "updates": "explicit-only"
+    "normalSetup": "lane-install",
+    "updates": "workbench-update"
   },
   "workbenchId": "WB-1RX8E0KgeMDxKV6Z3l9AEC",
   "name": "Workbench Template"

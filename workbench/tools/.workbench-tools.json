@@ -3,31 +3,45 @@
   "source": {
     "repository": "https://github.com/KaydenClark/LLM_Workbench.git",
     "release": "v3.2.1",
-    "commit": "385218a85a32588a8893be3885ae3bfe5218df69",
+    "commit": "0ce1750750f80767536f4d4c0bc44bf5ccabe730",
     "dirty": false
   },
   "installedAt": "2026-09-06",
   "files": {
-    "adr.mjs": "80e7e3dc7c84098dedd910125eed8d346afdbf1c8aa7dd886647eec70e47fe77",
-    "diagnostics.mjs": "2cdc651b7f0d3efd6f5854a4c9e37a572f6d5e286d9b89cac8a2898285626d2d",
+    "adr.mjs": "ea2cb9c87b3bf2bb379c588907c51b657fb9fe41930ea21ad0c8c72ed0891645",
+    "diagnostics.mjs": "4ce85cc3332e78f1530f45738fd9bf6b11e663793bcba574f70b76c704a71b23",
     "markdown-table.mjs": "acca5cb04cecb0044c74aaa38f42d6f0e4e6addb26b45a744d14ca0b74487e6b",
     "privacy.mjs": "8731047bc626b7b7a539b04c674aac2ac19452e7103cebd53ccf336c32a3ad8b",
-    "sessions.mjs": "5c772381d16cd94aee41ab855e54261761d6d6d3200dc9fb064325e2aaea6e45",
-    "spec-packet.mjs": "5d2295418a25fcd0c739942404cd804d197f8ef0c9d238522757ea4bb62f97be",
-    "spec-workbench.mjs": "ad91569d8f09a663e2a638bb72aede437b6a5febfed8beb2d866af68f40dcf41",
-    "template-placeholders.mjs": "a36e3b6eaae84df9705b518ace10ec34111aadbe5ed5015de458cbfceb592050",
-    "wiki.mjs": "8c3b62b2a70315df49c3cd43dcbf760a81374cba42414a935b666460be157fa0",
-    "workbench-layout.mjs": "8f0ace0d0218ce9e4b1aeb47dc1b4b91ad0873f0a26105250b4553062696958a",
-    "workbench-paths.mjs": "993d921998dfb9daf58adbefe0240038969e8224a735ba9eced6faa993a26b53",
-    "notepads.mjs": "92d63ee0d2a6a76edb01de6c72abd851224e6b0ac2e69fb0048b7ff59be34877",
+    "sessions.mjs": "cc5b75c5b1ea83d0f08201eeb005af97640049a974bd90ea580a14439e7f4c38",
+    "spec-packet.mjs": "8fe47ec5dda6e237a6005b99e6679c7588fd19d15eba31cc2378f0c8f4e5f132",
+    "spec-workbench.mjs": "907a9a092766700e34dc1ce530549ba847c47a20b526a05ce4d43608fb408250",
+    "template-placeholders.mjs": "29ab00b3d116b62828a7c60be7296a58f4e4e12fb0fc8b2054ad4f136afd6236",
+    "wiki.mjs": "9f515c3d609da5903cfbf49c625451cb9f60c67134e5c4858670f2fec86a03d6",
+    "workbench-layout.mjs": "5d0d98d317effa11b07d4b61e17116f6b949f8fe0ce55ed77b55bd732c26f6b1",
+    "workbench-paths.mjs": "f0a3068f1b30f9f08dc0ed9f0bc890ff8e74e6133a1892cc4de263c5ee981bba",
+    "notepads.mjs": "157bb7c93f0b7914414ba2a2b9b47c631cfbf3b85d48f8efc79d572934febc4b",
     "session-transport.mjs": "17172dcb489a2fa571551a605f3130fd20d6bc2a17d8cba8811ef39a8c2c5416",
-    "visible-ids.mjs": "b07501e993bd49572b233947cb5f8a606b21c343a986ce1bab1480237b08db42",
-    "skill-inspection.mjs": "8c7638c23cfb06d611ede31fc84d4da3ef6965c83bf7c663c3f1b3a612ea6bfc",
-    "project-evidence.mjs": "a9f8270816b23c4c1ae41e991963b05855fa9d231d0c98d57ea8da542d2b746b"
+    "visible-ids.mjs": "587b737001ec95a5bbee2f4f9b3920bacdb5b7e540f01da87ea8fe0b0ee4796f",
+    "skill-inspection.mjs": "21daab3c33ee9682ed8fdf53495a8d25136e2da82ac5ab00fbb13a6695cae927",
+    "project-evidence.mjs": "5fdfdce8f57b749b3be995a1f31ff9bf69ce4b6c6cf8690df9719661813eeca3",
+    "claim-coordination.mjs": "7f4755d3f0b2f42510aff122ab65aed812c4e2c73cb1988bb50a777cfa373560",
+    "github-coordination.mjs": "1d4c120ab8442e12c0a0186e7cdb0bfd7e6d8079682c96fc49b8025febf5a720",
+    "host-floor.mjs": "db5bfeb569af46f0df464d5e614bd5fd25e9297f1aaf7a4a3dc7eecda6c7a193",
+    "landmark-artifact.mjs": "2c3b46907d16097ca4d45c1ead05f8f6d11ddb9753210065c7b2e5ec5bcb1c11",
+    "landmark-tracker.mjs": "f196b51e693d0cffc75928abeed2e99765624ec16ad436e020f59dff27a7e0cd",
+    "landmark-wiki.mjs": "dd5eee302f9cb8afb1db7949461554bc7471a575425cc920aa0b04a6b1322d52",
+    "lane-sweep.mjs": "b4143a27b5b99de9e1d705144493766869818c744d00a57312413376b691eacf",
+    "jot.mjs": "eaf7f48b693cfb39a9dd82ae79515f15ef70d73e43364a5264a9da73e92f106d",
+    "optional-capabilities.mjs": "430df9d08ba18e4af2a389019b3b591f23ad9ae390801b2a39273878d05490be",
+    "self-drift.mjs": "65b0480c6cdd0f0d372f6f38c0f8b3d665597d03dc74f770d6a53aaaf4e986d2",
+    "spec-report.mjs": "cccc26ec4b4aba5676148a39b36ae85b3285d0b5f750171ea21dd1ebe5ccb762",
+    "task-packet.mjs": "688e46ff537561dec55f557bfc3a408f82c8bacbbd456729883fcbf042329c5a",
+    "task-receipt.mjs": "aaefb6321bdd4568f1e850f885b0b8aaf56a2e4c383f8786c3df79b3a0ebb7c5",
+    "task-record.mjs": "f146d93b3351952bb5c4c02d6676157271690c4f64f2ea979e36da5786970dd2",
+    "taskboard.mjs": "e2cebd88f301182109347a191c6647295609a0283a84f69e27ef5096e4cd7e75"
   },
   "backups": [
     {
-      "path": "/private/tmp/v32-example-home/.workbench-tools-backup-P1WP0q",
       "files": [
         "adr.mjs",
         "diagnostics.mjs",
@@ -40,7 +54,6 @@
       ]
     },
     {
-      "path": "/private/tmp/v32-template-runtime-recovery/.workbench-tools-backup-qMy6Cv",
       "files": [
         "adr.mjs",
         "notepads.mjs",
@@ -50,11 +63,68 @@
       ]
     },
     {
-      "path": "/private/tmp/workbench-template-v321-recovery/.workbench-tools-backup-7EODiu",
       "files": [
         "workbench-layout.mjs"
       ]
+    },
+    {
+      "files": [
+        "adr.mjs",
+        "diagnostics.mjs",
+        "notepads.mjs",
+        "project-evidence.mjs",
+        "sessions.mjs",
+        "spec-packet.mjs",
+        "spec-workbench.mjs",
+        "template-placeholders.mjs",
+        "visible-ids.mjs",
+        "skill-inspection.mjs",
+        "wiki.mjs",
+        "workbench-layout.mjs",
+        "workbench-paths.mjs"
+      ],
+      "absent": [
+        "claim-coordination.mjs",
+        "github-coordination.mjs",
+        "host-floor.mjs",
+        "landmark-artifact.mjs",
+        "landmark-tracker.mjs",
+        "landmark-wiki.mjs",
+        "lane-sweep.mjs",
+        "jot.mjs",
+        "optional-capabilities.mjs",
+        "self-drift.mjs",
+        "spec-report.mjs",
+        "task-packet.mjs",
+        "task-receipt.mjs",
+        "task-record.mjs",
+        "taskboard.mjs"
+      ],
+      "hashes": {
+        "adr.mjs": "80e7e3dc7c84098dedd910125eed8d346afdbf1c8aa7dd886647eec70e47fe77",
+        "diagnostics.mjs": "2cdc651b7f0d3efd6f5854a4c9e37a572f6d5e286d9b89cac8a2898285626d2d",
+        "notepads.mjs": "92d63ee0d2a6a76edb01de6c72abd851224e6b0ac2e69fb0048b7ff59be34877",
+        "project-evidence.mjs": "a9f8270816b23c4c1ae41e991963b05855fa9d231d0c98d57ea8da542d2b746b",
+        "sessions.mjs": "5c772381d16cd94aee41ab855e54261761d6d6d3200dc9fb064325e2aaea6e45",
+        "spec-packet.mjs": "5d2295418a25fcd0c739942404cd804d197f8ef0c9d238522757ea4bb62f97be",
+        "spec-workbench.mjs": "ad91569d8f09a663e2a638bb72aede437b6a5febfed8beb2d866af68f40dcf41",
+        "template-placeholders.mjs": "a36e3b6eaae84df9705b518ace10ec34111aadbe5ed5015de458cbfceb592050",
+        "visible-ids.mjs": "b07501e993bd49572b233947cb5f8a606b21c343a986ce1bab1480237b08db42",
+        "skill-inspection.mjs": "8c7638c23cfb06d611ede31fc84d4da3ef6965c83bf7c663c3f1b3a612ea6bfc",
+        "wiki.mjs": "8c3b62b2a70315df49c3cd43dcbf760a81374cba42414a935b666460be157fa0",
+        "workbench-layout.mjs": "8f0ace0d0218ce9e4b1aeb47dc1b4b91ad0873f0a26105250b4553062696958a",
+        "workbench-paths.mjs": "993d921998dfb9daf58adbefe0240038969e8224a735ba9eced6faa993a26b53"
+      }
+    },
+    {
+      "files": [
+        "workbench-layout.mjs"
+      ],
+      "absent": [],
+      "hashes": {
+        "workbench-layout.mjs": "0b7a3f3289e80ea23dec6fe27fc4e4b2b98c5ab0c77e739a5f42c1ad1180b635"
+      }
     }
   ],
-  "updatedAt": "2026-09-10"
+  "updatedAt": "2026-10-19"
 }
