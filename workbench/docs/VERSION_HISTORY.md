@@ -327,3 +327,12 @@ Lexicon follow current feature, Jot, privacy and Task routes while keeping this
 room's existing tour, historical Spec links and standalone Wiki profile. A
 final integration identity and upgrade acceptance are recorded only after the
 applicable review, verification and integration steps succeed.
+
+### Producer integration containment (2026-10-19)
+
+The selected source `0ce1750750f80767536f4d4c0bc44bf5ccabe730` is now an
+ancestor of LLM Workbench `integration` at
+`c581d7510f398ef7675f7adc51a57d4c8309147b`. Its managed runtime and
+skills payload is unchanged at that integration tip. The receipts continue to
+pin the selected source commit so installed bytes remain identifiable; this
+containment does not stamp a release or establish Template integration delivery.

@@ -100,9 +100,11 @@ The manifest and managed receipts retain the **v3.2.1 release label**. This
 branch is an **unreleased Template upgrade candidate** built on that baseline;
 the label alone does not identify all of its installed content. The managed
 runtime and skills receipts both pin LLM Workbench source
-`0ce1750750f80767536f4d4c0bc44bf5ccabe730`. This is a producer candidate,
-not a claim that it has landed on producer integration or that a new release
-has been stamped. See
+`0ce1750750f80767536f4d4c0bc44bf5ccabe730`. That selected commit is
+contained in producer `integration` at
+`c581d7510f398ef7675f7adc51a57d4c8309147b` with the selected managed
+generation unchanged. It remains unreleased; no new version has been stamped
+or Template integration claimed. See
 [Version History](workbench/docs/VERSION_HISTORY.md#unreleased-template-upgrade-candidate-2026-10-18)
 for the installation boundary and retained history. Run `node tour.mjs` for
 this room's current map.
