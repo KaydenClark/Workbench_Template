@@ -13,9 +13,13 @@ import { finding } from './diagnostics.mjs';
 import { parseSpecPacket } from './spec-packet.mjs';
 import { allocateWorkbenchId, isWorkbenchId } from './visible-ids.mjs';
 import { templatePlaceholders } from './template-placeholders.mjs';
-import { COLLECTIONS, LANES, SCHEMA_VERSION, IGNORED_COLLECTIONS, WIKI_PROFILES, declaredGit, assertSafeReadPath, assertSafeWritePath, writeSafeFile, isBranchName, isMainModule, isSafeRelative } from './workbench-paths.mjs';
+import { ADDITIVE_COLLECTIONS, COLLECTIONS, LANES, PRE_DDR_COLLECTIONS, PRE_FEATURE_COLLECTIONS, PRE_LANDMARK_COLLECTIONS, SIX_LANES, SCHEMA_VERSION, IGNORED_COLLECTIONS, WIKI_PROFILES, collectionRelative, declaredGit, laneRelative, assertSafeReadPath, assertSafeWritePath, writeSafeFile, isBranchName, isMainModule, isSafeRelative, trackerDeclaration } from './workbench-paths.mjs';
 
-const legacyCoreSkills = [
+// Exported (not just used locally) so a test can build the exact historical
+// v3.0.0-v3.2.0 fixture rows from this frozen array directly, rather than
+// slicing the live `coreSkills` and assuming its first twelve names never
+// diverge from this one - an assumption S-00H TK-004's rename broke once.
+export const legacyCoreSkills = [
   'adoption', 'checkpoint', 'code-review', 'genesis', 'grilling', 'implement',
   'make-it-so', 'to-docs', 'to-spec', 'to-tickets', 'tracer-bullet', 'update-harness'
 ];
@@ -25,7 +29,101 @@ const stanceSkills = ['builder', 'auditor', 'reviewer', 'reconciler'];
 // exact.
 const notepadCoreSkills = [...legacyCoreSkills, 'carry', 'notepad', ...stanceSkills];
 const initialV32CoreSkills = [...legacyCoreSkills, 'carry', 'notepad', 'save', 'promote', ...stanceSkills];
-export const coreSkills = [...legacyCoreSkills, 'carry', 'notepad', 'save', 'promote', 'handoff', ...stanceSkills];
+// S-00H TK-004: `to-tickets` renames to `to-tasks` in the live bundle only.
+// `legacyCoreSkills` (and the frozen rows derived from it above) stays byte-
+// identical, because it is what a real v3.0.0-v3.2.0 manifest's declared
+// `skillPolicy.required` actually held; `validateManifest` below still needs
+// to recognize that historical shape exactly as released.
+const currentCoreSkills = legacyCoreSkills.map((name) => (name === 'to-tickets' ? 'to-tasks' : name));
+// v3.2.1 stamped the twenty-one-skill bundle with `handoff`; it is frozen
+// below. S-00Z grows the live bundle with `grill-me`, the repository-owned
+// entry composing grilling with notepad, ahead of the stances so every
+// `slice(-4)` stance read stays exact.
+const handoffCoreSkills = [...currentCoreSkills, 'carry', 'notepad', 'save', 'promote', 'handoff', ...stanceSkills];
+// Role and coordination-stance entries sit between the workflow skills and
+// the four portable stances; each is a required core entry delivered by its
+// own Spec. S-002C adds `director`, which leads the group as the top role;
+// S-002D adds `dispatcher`; S-002F adds `spec-planner`, the stance a
+// Dispatcher adopts at flight launch; S-002G adds `spec-manager`, the stance
+// it adopts during Task execution. Exported so the tests derive the frozen
+// v3.2.1 row by excluding this group rather than by naming each entry.
+export const coordinationSkills = ['director', 'dispatcher', 'spec-planner', 'spec-manager'];
+// S-004C TK-005J adds `workbench-runtime`, the workflow entry that carries the
+// operations every room runs on its installed runtime tools (diagnostics, Wiki
+// validation, installed state, visible identifiers, connection identity,
+// configured-host checks, room-local skills), after `grill-me` and ahead of
+// the coordination entries, so every coordination and stance slice stays exact.
+// S-004L TK-008L adds `improve-harness`, the one workflow entry that carries
+// harness improvement for one observed job (baseline, earliest gap, smallest
+// owning intervention, native verification, fresh rerun, then retain, revise
+// or remove), after `workbench-runtime` and ahead of the coordination entries.
+// S-004J TK-00JA adds `domain-modeling`, the Align companion that challenges
+// and sharpens vocabulary and traces an upstream choice to the owners it would
+// reach before it settles, after `improve-harness` and ahead of the
+// coordination entries, so every coordination and stance slice stays exact.
+// S-002U TK-007V adds `pr`, the owner-required PR body-authoring entry, after
+// `improve-harness` and ahead of the coordination entries.
+export const coreSkills = [...currentCoreSkills, 'carry', 'notepad', 'jot', 'save', 'promote', 'handoff', 'grill-me', 'workbench-runtime', 'improve-harness', 'domain-modeling', 'pr', 'writing-for-agents', 'retro', ...coordinationSkills, ...stanceSkills];
+// The prior28 cohort: rooms built from integration before `pr` joined the
+// required Core carry this exact lane policy under v3.2.1. Keep it readable so
+// layout migration reaches the explicit skills update instead of rejecting its
+// own starting room. A literal, not a derivation, so later Core growth never
+// changes what it accepts. Each v3.2.1 transition cohort is one entry below.
+const prior28CoreSkills = [
+  'adoption', 'checkpoint', 'code-review', 'genesis', 'grilling', 'implement',
+  'make-it-so', 'to-docs', 'to-spec', 'to-tasks', 'tracer-bullet', 'update-harness',
+  'carry', 'notepad', 'save', 'promote', 'handoff', 'grill-me', 'workbench-runtime',
+  'improve-harness', 'director', 'dispatcher', 'spec-planner', 'spec-manager',
+  'builder', 'auditor', 'reviewer', 'reconciler'
+];
+// Exact 29-skill cohorts from the two parents of the combined bundle.
+const prior29PrCoreSkills = [
+  'adoption', 'checkpoint', 'code-review', 'genesis', 'grilling', 'implement',
+  'make-it-so', 'to-docs', 'to-spec', 'to-tasks', 'tracer-bullet', 'update-harness',
+  'carry', 'notepad', 'save', 'promote', 'handoff', 'grill-me', 'workbench-runtime',
+  'improve-harness', 'pr', 'director', 'dispatcher', 'spec-planner', 'spec-manager',
+  'builder', 'auditor', 'reviewer', 'reconciler'
+];
+const prior29DomainModelingCoreSkills = [
+  'adoption', 'checkpoint', 'code-review', 'genesis', 'grilling', 'implement',
+  'make-it-so', 'to-docs', 'to-spec', 'to-tasks', 'tracer-bullet', 'update-harness',
+  'carry', 'notepad', 'save', 'promote', 'handoff', 'grill-me', 'workbench-runtime',
+  'improve-harness', 'domain-modeling', 'director', 'dispatcher', 'spec-planner', 'spec-manager',
+  'builder', 'auditor', 'reviewer', 'reconciler'
+];
+const priorWritingRetroCoreSkills = [
+  'adoption', 'checkpoint', 'code-review', 'genesis', 'grilling', 'implement',
+  'make-it-so', 'to-docs', 'to-spec', 'to-tasks', 'tracer-bullet', 'update-harness',
+  'carry', 'notepad', 'save', 'promote', 'handoff', 'grill-me',
+  'workbench-runtime', 'improve-harness', 'writing-for-agents', 'retro', 'director', 'dispatcher',
+  'spec-planner', 'spec-manager', 'builder', 'auditor', 'reviewer', 'reconciler'
+];
+// Frozen manifest policy at c80cb282.
+const priorPrDomainCoreSkills = [
+  'adoption', 'checkpoint', 'code-review', 'genesis', 'grilling', 'implement',
+  'make-it-so', 'to-docs', 'to-spec', 'to-tasks', 'tracer-bullet', 'update-harness',
+  'carry', 'notepad', 'save', 'promote', 'handoff', 'grill-me',
+  'workbench-runtime', 'improve-harness', 'domain-modeling', 'pr', 'director', 'dispatcher',
+  'spec-planner', 'spec-manager', 'builder', 'auditor', 'reviewer', 'reconciler'
+];
+// Frozen manifest policy at b1adee9d.
+const priorPrWritingRetroCoreSkills = [
+  'adoption', 'checkpoint', 'code-review', 'genesis', 'grilling', 'implement',
+  'make-it-so', 'to-docs', 'to-spec', 'to-tasks', 'tracer-bullet', 'update-harness',
+  'carry', 'notepad', 'save', 'promote', 'handoff', 'grill-me',
+  'workbench-runtime', 'improve-harness', 'pr', 'writing-for-agents', 'retro', 'director',
+  'dispatcher', 'spec-planner', 'spec-manager', 'builder', 'auditor', 'reviewer',
+  'reconciler'
+];
+const priorWikiJotCoreSkills = [
+  'adoption', 'checkpoint', 'code-review', 'genesis', 'grilling', 'implement',
+  'make-it-so', 'to-docs', 'to-spec', 'to-tasks', 'tracer-bullet', 'update-harness',
+  'carry', 'notepad', 'save', 'promote', 'handoff', 'grill-me', 'workbench-runtime',
+  'improve-harness', 'domain-modeling', 'pr', 'writing-for-agents', 'retro',
+  'director', 'dispatcher', 'spec-planner', 'spec-manager',
+  'builder', 'auditor', 'reviewer', 'reconciler'
+];
+const v321TransitionCoreSkills = [priorWikiJotCoreSkills, prior28CoreSkills, prior29PrCoreSkills, prior29DomainModelingCoreSkills, priorWritingRetroCoreSkills, priorPrDomainCoreSkills, priorPrWritingRetroCoreSkills];
 export const lanes = LANES;
 export const collections = COLLECTIONS;
 export const controls = ['AGENTS.md', 'BLUEPRINT.md', 'LEXICON.md', 'RUNBOOK.md', 'TASKBOARD.md', 'CLAUDE.md', 'README.md'];
@@ -50,13 +148,24 @@ export function readManagedSkillMarker(skillDirectory) {
   } catch { return null; }
 }
 const legacyLanes = { specs: 'workbench/specs', wiki: 'workbench/wiki', grilling: 'workbench/grilling', handoffs: 'workbench/handoffs', feedback: 'workbench/feedback' };
-const skillPolicy = { required: coreSkills, discovery: ['.agents/skills', '.claude/skills'], normalSetup: 'presence-only', updates: 'explicit-only' };
+// S-00V TK-001: the core skills ship in the room's skills lane and the two
+// discovery roots are tracked adapters into it, so setup lays the lane down
+// (`lane-install`) and the ordinary Workbench update replaces it
+// (`workbench-update`). The presence-only/explicit-only shape below is what
+// every room up to v3.2.1 declared when the core lived in the provider home;
+// it stays readable as a frozen row so those rooms validate until they update.
+const skillPolicy = { required: coreSkills, discovery: ['.agents/skills', '.claude/skills'], normalSetup: 'lane-install', updates: 'workbench-update' };
+const providerHomeSkillPolicy = { required: coreSkills, discovery: ['.agents/skills', '.claude/skills'], normalSetup: 'presence-only', updates: 'explicit-only' };
+export const SKILLS_RECEIPT = '.workbench-skills.json';
 // Taskboard owns the generated projection; Blueprint is destination-only.
 const generatedRegions = {
   'TASKBOARD.md': ['<!-- hot-specs:start -->', '<!-- hot-specs:end -->']
 };
 const templateVocabulary = new Set(templatePlaceholders);
-export const wikiContractFiles = ['SCHEMA.md', 'AGENTS.md', 'design-concepts/README.md'];
+// S-00I TK-01U: the features collection README joins the contract so a new
+// room is seeded with the collection's job and article shape, exactly as the
+// design-concepts README already is.
+export const wikiContractFiles = ['SCHEMA.md', 'AGENTS.md', 'design-concepts/README.md', 'features/README.md'];
 // Seeded lane documents are the third class of installed state, beside runtime
 // tools and installed skills: the harness copies them out of the release to be
 // read and, unlike a runtime tool, sometimes locally adjusted. Their generation
@@ -71,8 +180,26 @@ export const seededLaneDocuments = [
     lane: 'sessions', name: `notepads/templates/${name}`, template: `sessions/notepads/templates/${name}`
   }))
 ];
-const notepadCollections = Object.fromEntries(Object.entries(collections).filter(([name]) => name !== 'recovery'));
+// The preserved collection shapes derive from the pre-feature set, never the
+// live one, so appending `features` cannot redefine what an older room held.
+const notepadCollections = Object.fromEntries(Object.entries(PRE_FEATURE_COLLECTIONS).filter(([name]) => name !== 'recovery'));
 const legacyCollections = Object.fromEntries(Object.entries(notepadCollections).filter(([name]) => !['notepads', 'notepad-templates'].includes(name)));
+// S-00I TK-01U: every pre-feature shape stays valid exactly as stamped, and
+// each may carry the additive `features` collection appended at its declared
+// path. S-003X TK-004W: each may also carry `features` then `ddr`, the order a
+// room gains them. S-003Z TK-008D: and then `landmarks`. The live
+// `collections` is the fully appended current shape.
+const allowedCollectionShapes = [PRE_FEATURE_COLLECTIONS, notepadCollections, legacyCollections]
+  .flatMap((shape) => [
+    shape,
+    { ...shape, features: collections.features },
+    { ...shape, features: collections.features, ddr: collections.ddr },
+    { ...shape, features: collections.features, ddr: collections.ddr, landmarks: collections.landmarks }
+  ]);
+// S-003X TK-004W: the decision-record lifecycle folders the `ddr` collection
+// is created with, the same closed set the ADR collection uses (ADR-000I):
+// accepted records at the top, `proposed/` and the permanent `archive/`.
+export const DECISION_RECORD_LIFECYCLE_FOLDERS = Object.freeze(['proposed', 'archive']);
 
 
 function lstatOrNull(target) {
@@ -96,6 +223,97 @@ function gitRead(project, args) {
 
 export function insideWorkTree(project) {
   return gitRead(project, ['rev-parse', '--is-inside-work-tree']) === 'true';
+}
+
+// S-00M TK-001: the repository state a completion claim can hide, read at one
+// seam for `doctor` and `close`. It never throws, because a reader that throws
+// turns a missing tool into a broken command: a host without Git, a directory
+// outside any repository, or lanes the manifest cannot resolve all come back
+// as `{ known: false, reason, detail }` with reason `git-unavailable`,
+// `not-a-repository`, `git-failed` or `lanes-unresolved`. A known state is
+// `{ known: true, head: { detached, branch }, dirty, untracked: { controls,
+// adr, specs }, upstream }`. `dirty` lists tracked changes (staged, modified,
+// deleted, renamed, conflicted) and `untracked` only the untracked files under
+// the root controls, the ADR collection and the spec lane, as repository-root
+// paths. `upstream` is null when none is configured, and otherwise
+// `{ name, gone, ahead, behind }`, with null distance when the upstream ref is
+// gone. `options.git` names the Git executable, so a test can make it absent.
+//
+// S-00M TK-003 adds three fields for `close`, leaving the shapes above as
+// they were: `untrackedOther` lists every other untracked, non-ignored file
+// (repository-relative, including files outside the room root), so `dirty`,
+// the three lane lists and `untrackedOther` together are exactly what
+// `git status --porcelain` shows and what the Receipt's Dirty column counts;
+// `remotes` lists the configured remote names; and `pushed` is true only
+// when some `refs/remotes/*` ref contains HEAD, so a commit that reached any
+// remote counts as pushed with or without an upstream, and an unborn HEAD,
+// a room with no remote, or a commit no remote has is not.
+export function readRepositoryState(root, options = {}) {
+  const unknown = (reason, detail) => ({ known: false, reason, detail: String(detail ?? '').trim() });
+  try {
+    const project = path.resolve(root);
+    const git = options.git ?? 'git';
+    const run = (args) => spawnSync(git, ['-C', project, ...args], { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 });
+    const probe = run(['rev-parse', '--is-inside-work-tree', '--show-prefix']);
+    if (probe.error) return unknown(probe.error.code === 'ENOENT' ? 'git-unavailable' : 'git-failed', probe.error.message);
+    const [inside, prefix = ''] = probe.stdout.split('\n');
+    if (probe.status !== 0 || inside !== 'true') return unknown('not-a-repository', probe.stderr || `${project} is not inside a Git work tree`);
+    let lanes;
+    try {
+      lanes = { adr: collectionRelative(project, 'adr'), specs: laneRelative(project, 'specs') };
+    } catch (error) {
+      return unknown('lanes-unresolved', error.message);
+    }
+    const status = run(['status', '--porcelain=v2', '--branch', '--untracked-files=all', '-z']);
+    if (status.error || status.status !== 0) return unknown('git-failed', status.error?.message ?? status.stderr);
+    const head = { detached: false, branch: null };
+    let upstream = null;
+    const dirty = [];
+    const untracked = { controls: [], adr: [], specs: [] };
+    const untrackedOther = [];
+    const within = (file, lane) => file.startsWith(`${lane}/`);
+    const entries = status.stdout.split('\0');
+    for (let index = 0; index < entries.length; index += 1) {
+      const entry = entries[index];
+      if (entry.startsWith('# branch.head ')) {
+        const name = entry.slice('# branch.head '.length);
+        if (name === '(detached)') head.detached = true;
+        else head.branch = name;
+      } else if (entry.startsWith('# branch.upstream ')) {
+        upstream = { name: entry.slice('# branch.upstream '.length), gone: true, ahead: null, behind: null };
+      } else if (entry.startsWith('# branch.ab ')) {
+        const [, ahead, behind] = entry.match(/^# branch\.ab \+(\d+) -(\d+)$/) ?? [];
+        if (upstream && ahead !== undefined) Object.assign(upstream, { gone: false, ahead: Number(ahead), behind: Number(behind) });
+      } else if (entry.startsWith('1 ') || entry.startsWith('u ')) {
+        dirty.push(entry.split(' ').slice(entry.startsWith('1 ') ? 8 : 10).join(' '));
+      } else if (entry.startsWith('2 ')) {
+        dirty.push(entry.split(' ').slice(9).join(' '));
+        index += 1; // with -z a rename's original path is the next entry
+      } else if (entry.startsWith('? ')) {
+        const file = entry.slice(2);
+        // Lanes are root-relative; porcelain paths are repository-relative.
+        const relative = prefix && file.startsWith(prefix) ? file.slice(prefix.length) : (prefix ? null : file);
+        if (relative === null) untrackedOther.push(file);
+        else if (controls.includes(relative)) untracked.controls.push(file);
+        else if (within(relative, lanes.adr)) untracked.adr.push(file);
+        else if (within(relative, lanes.specs)) untracked.specs.push(file);
+        else untrackedOther.push(file);
+      }
+    }
+    for (const list of [dirty, untracked.controls, untracked.adr, untracked.specs, untrackedOther]) list.sort();
+    const remoteList = run(['remote']);
+    if (remoteList.error || remoteList.status !== 0) return unknown('git-failed', remoteList.error?.message ?? remoteList.stderr);
+    const remotes = remoteList.stdout.split('\n').filter(Boolean).sort();
+    let pushed = false;
+    if (run(['rev-parse', '--verify', '--quiet', 'HEAD']).status === 0) {
+      const containing = run(['for-each-ref', '--contains', 'HEAD', '--format=%(refname)', 'refs/remotes']);
+      if (containing.error || containing.status !== 0) return unknown('git-failed', containing.error?.message ?? containing.stderr);
+      pushed = containing.stdout.trim() !== '';
+    }
+    return { known: true, head, dirty, untracked, upstream, untrackedOther, remotes, pushed };
+  } catch (error) {
+    return unknown('git-failed', error?.message ?? error);
+  }
 }
 
 function remoteNames(project) {
@@ -147,26 +365,50 @@ export function listBranchNames(project) {
 }
 
 // origin/HEAD names the default branch; a repository without one falls back
-// to its checked-out branch, and a project outside Git to main.
+// to main or master when present, then its checked-out branch.
 export function defaultBranchName(project) {
   const originHead = gitRead(project, ['symbolic-ref', '--quiet', 'refs/remotes/origin/HEAD']);
   if (originHead?.startsWith('refs/remotes/origin/')) return originHead.slice('refs/remotes/origin/'.length);
-  return gitRead(project, ['symbolic-ref', '--quiet', '--short', 'HEAD']) || 'main';
+  const names = listBranchNames(project);
+  return ['main', 'master'].find((name) => names.includes(name)) ?? gitRead(project, ['symbolic-ref', '--quiet', '--short', 'HEAD']) ?? 'main';
+}
+
+// Setup creates only a missing local staging ref. Publishing remains a
+// protocol step, and existing local or remote integration refs stay intact.
+export function ensureIntegrationBranch(project, declared) {
+  if (!declared || !isBranchName(declared.defaultBranch) || !isBranchName(declared.integrationBranch)) {
+    return fail('invalid-branch', 'Setup requires valid default and integration branch names.');
+  }
+  if (declared.defaultBranch.toLowerCase() === declared.integrationBranch.toLowerCase()) {
+    return fail('integration-branch-not-distinct', 'Integration must be distinct from the owner-controlled default branch.');
+  }
+  if (!insideWorkTree(project)) return fail('integration-branch-missing', 'Initialize and commit the project repository before creating integration.');
+  if (resolveBranchRefs(project, declared.integrationBranch).length) return report('existing', { branch: declared.integrationBranch });
+  const base = resolveBranchRefs(project, declared.defaultBranch)[0];
+  if (!base) return fail('default-branch-missing', `Default branch ${declared.defaultBranch} must resolve before creating integration.`);
+  const created = spawnSync('git', ['branch', '--', declared.integrationBranch, base.ref], { cwd: project, encoding: 'utf8' });
+  if (created.status !== 0 || !resolveBranchRefs(project, declared.integrationBranch).length) {
+    return fail('integration-branch-missing', `Could not create ${declared.integrationBranch}: ${created.stderr?.trim() || 'Git branch creation failed'}`);
+  }
+  return report('created', { branch: declared.integrationBranch, base: base.ref });
 }
 
 // The manifest git block init and migrate write: explicit flags win, then an
 // existing integration-named branch by its exact case, then the defaults.
 // Declaring never creates a branch; the Genesis gate and doctor check it.
-function gitDeclaration(project, options) {
+export function gitDeclaration(project, options) {
   for (const flag of ['--default-branch', '--integration-branch']) {
     if (options[flag] !== undefined && !isBranchName(options[flag])) return fail('invalid-branch', `${flag} must be a Git branch name; received ${options[flag]}.`);
   }
   const names = listBranchNames(project);
   const existing = names.find((name) => name === 'integration') ?? names.find((name) => name.toLowerCase() === 'integration');
+  const defaultBranch = options['--default-branch'] ?? defaultBranchName(project);
+  const integrationBranch = options['--integration-branch'] ?? existing ?? 'integration';
+  if (defaultBranch.toLowerCase() === integrationBranch.toLowerCase()) return fail('integration-branch-not-distinct', 'Integration must be distinct from the owner-controlled default branch.');
   return report('declared', {
     git: {
-      defaultBranch: options['--default-branch'] ?? defaultBranchName(project),
-      integrationBranch: options['--integration-branch'] ?? existing ?? 'integration'
+      defaultBranch,
+      integrationBranch
     }
   });
 }
@@ -253,6 +495,58 @@ function verifyNotepadIgnores(project, manifest) {
   return { verification: 'git' };
 }
 
+// S-004M TK-008T: the legibility surface. A room declares how an agent runs
+// the product, operates it, inspects its state, sees its errors, exercises
+// the user journey and measures whether it worked - six entries, each a
+// command, a path or a short pointer the room's own tooling answers. The block
+// is additive like the git block: absent is valid, malformed is a malformed
+// manifest. An empty or bracketed-placeholder entry is valid here and is
+// doctor's attention finding, so a drafted block can be committed and
+// confirmed later; `confirmation: "pending"` is the marker setup writes and
+// grilling removes. The declaration is routing, never authority.
+export const LEGIBILITY_ENTRIES = Object.freeze(['run', 'operate', 'inspect', 'errors', 'journey', 'measure']);
+export const LEGIBILITY_PENDING = 'pending';
+const PLACEHOLDER_ENTRY = /^\[[^\]]*\]$/;
+
+function legibilityShapeIssue(legibility) {
+  if (!legibility || typeof legibility !== 'object' || Array.isArray(legibility)) return 'must be an object';
+  const unknown = Object.keys(legibility).filter((key) => !LEGIBILITY_ENTRIES.includes(key) && key !== 'confirmation');
+  if (unknown.length) return `carries unknown keys ${unknown.join(', ')}; the entries are ${LEGIBILITY_ENTRIES.join(', ')}`;
+  for (const entry of LEGIBILITY_ENTRIES) {
+    if (Object.hasOwn(legibility, entry) && typeof legibility[entry] !== 'string') return `entry ${entry} must be a string`;
+  }
+  if (Object.hasOwn(legibility, 'confirmation') && legibility.confirmation !== LEGIBILITY_PENDING) return `confirmation must be "${LEGIBILITY_PENDING}" or absent`;
+  return null;
+}
+
+// Classify a manifest's declaration for its consumers (doctor, setup): which
+// entries are declared, which are missing, empty or still a placeholder, and
+// whether the block is a setup draft awaiting grilling confirmation.
+export function legibilityState(manifest) {
+  const legibility = manifest?.legibility;
+  if (legibility === undefined) return { declared: false, present: [], undeclared: [...LEGIBILITY_ENTRIES], pending: false };
+  if (legibilityShapeIssue(legibility)) return { declared: false, present: [], undeclared: [...LEGIBILITY_ENTRIES], pending: false, malformed: true };
+  const present = LEGIBILITY_ENTRIES.filter((entry) => typeof legibility[entry] === 'string' && legibility[entry].trim() && !PLACEHOLDER_ENTRY.test(legibility[entry].trim()));
+  return { declared: true, present, undeclared: LEGIBILITY_ENTRIES.filter((entry) => !present.includes(entry)), pending: legibility.confirmation === LEGIBILITY_PENDING };
+}
+
+// A surface helps agents inspect a product; it does not grant permission or
+// make an otherwise valid room unusable. Shape errors stay with validation.
+export function legibilityFindings(project) {
+  const { manifest, failure } = readManifestFile(path.resolve(project));
+  if (failure || manifest?.schemaVersion !== SCHEMA_VERSION) return [];
+  const state = legibilityState(manifest);
+  if (state.malformed) return [];
+  const findings = [];
+  if (state.undeclared.length) {
+    findings.push(finding('legibility-undeclared', `workbench/manifest.json has no declared runtime surface for ${state.undeclared.join(', ')}; use workbench-layout.mjs declare-legibility to name commands, paths or pointers`, { entries: state.undeclared }));
+  }
+  if (state.pending) {
+    findings.push(finding('legibility-unconfirmed', 'workbench/manifest.json legibility is a draft awaiting grilling confirmation; confirm the surface, then use workbench-layout.mjs declare-legibility without --pending'));
+  }
+  return findings;
+}
+
 export function validateManifest(project) {
   const { manifest, failure } = readManifestFile(project);
   if (failure) return failure;
@@ -266,11 +560,13 @@ export function validateManifest(project) {
   if (!['genesis', 'adoption', 'upgrade'].includes(manifest.provenance?.lifecycle)) {
     return fail('invalid-manifest', 'Manifest provenance.lifecycle is invalid.');
   }
-  if (JSON.stringify(manifest.lanes) !== JSON.stringify(lanes)) {
-    return fail('invalid-lane', 'Manifest lanes must exactly match the six v3.1 support lanes.', { lanes: manifest.lanes });
+  // The seven-lane shape is current; the six-lane shape is what every room
+  // declared before the skills lane and stays readable until it updates.
+  if (![lanes, SIX_LANES].some((shape) => JSON.stringify(manifest.lanes) === JSON.stringify(shape))) {
+    return fail('invalid-lane', 'Manifest lanes must exactly match the seven support lanes, or the six lanes declared before the skills lane.', { lanes: manifest.lanes });
   }
-  if (![collections, notepadCollections, legacyCollections].some(shape => JSON.stringify(manifest.collections) === JSON.stringify(shape))) {
-    return fail('invalid-collection', 'Manifest collections must match the current layout or the preserved v3.1 collection set.', { collections: manifest.collections });
+  if (!allowedCollectionShapes.some(shape => JSON.stringify(manifest.collections) === JSON.stringify(shape))) {
+    return fail('invalid-collection', `Manifest collections must match the current layout or a preserved earlier collection set; the additive features collection, when declared, is ${collections.features}.`, { collections: manifest.collections });
   }
   for (const lane of Object.values(manifest.lanes)) {
     if (!isSafeRelative(lane)) return fail('invalid-lane', `Manifest lane ${lane} is unsafe.`);
@@ -279,6 +575,22 @@ export function validateManifest(project) {
   for (const collection of Object.values(manifest.collections)) {
     if (!isSafeRelative(collection)) return fail('invalid-collection', `Manifest collection ${collection} is unsafe.`);
     if (!ordinaryDirectory(project, collection)) return fail('missing-collection', `Manifest collection ${collection} must be an ordinary directory; it may be empty.`);
+  }
+  // S-01T TK-01X: the Landmark Tracker block is additive. Absent, nothing here
+  // runs and the report is byte-for-byte what it was; declared, the resolver's
+  // closed shape must hold, the root must not sit inside (or contain) a lane or
+  // collection - its records are tracked, never session state - and every
+  // declared directory must exist as an ordinary directory.
+  let tracker = null;
+  try { tracker = trackerDeclaration(manifest); }
+  catch (error) { return fail('invalid-collection', error.message, { landmarkTracker: manifest.landmarkTracker }); }
+  if (tracker) {
+    const owned = [...Object.values(manifest.lanes), ...Object.values(manifest.collections)];
+    const overlap = owned.find((relative) => relative === tracker.root || tracker.root.startsWith(`${relative}/`) || relative.startsWith(`${tracker.root}/`));
+    if (overlap) return fail('invalid-collection', `Manifest landmarkTracker root ${tracker.root} overlaps ${overlap}; the Tracker is its own root, not a lane or collection.`, { landmarkTracker: manifest.landmarkTracker });
+    for (const relative of [tracker.root, ...Object.values(tracker.collections)]) {
+      if (!ordinaryDirectory(project, relative)) return fail('missing-collection', `Manifest landmarkTracker directory ${relative} must be an ordinary directory; it may be empty.`);
+    }
   }
   const ignore = path.join(project, lanes.sessions, '.gitignore');
   const ignoreEntry = lstatOrNull(ignore);
@@ -291,6 +603,10 @@ export function validateManifest(project) {
   // The git block is an additive schema 2 field: absent is valid, malformed is not.
   if (manifest.git !== undefined && (!manifest.git || typeof manifest.git !== 'object' || Array.isArray(manifest.git) || !isBranchName(manifest.git.defaultBranch) || !isBranchName(manifest.git.integrationBranch))) {
     return fail('invalid-manifest', 'Manifest git block must declare defaultBranch and integrationBranch as Git branch names.', { git: manifest.git });
+  }
+  if (manifest.legibility !== undefined) {
+    const issue = legibilityShapeIssue(manifest.legibility);
+    if (issue) return fail('invalid-manifest', `Manifest legibility block ${issue}.`, { legibility: manifest.legibility });
   }
   // Earlier manifests remain readable at the policy their release declared:
   // v3.0.0 and v3.1.0 carried the twelve-skill bundle, v3.1.1 and v3.1.2 the
@@ -306,17 +622,62 @@ export function validateManifest(project) {
   // to eighteen in v3.1.4 (S-046). A label is frozen once it is stamped, not
   // once it is published - v3.1.0 was never released and was still frozen
   // rather than redefined.
-  const legacyPolicy = { ...skillPolicy, required: legacyCoreSkills };
-  const stancePolicy = { ...skillPolicy, required: [...legacyCoreSkills, ...stanceSkills] };
-  const carryPolicy = { ...skillPolicy, required: [...legacyCoreSkills, 'carry', ...stanceSkills] };
-  const supportedLegacy = { 'v3.0.0': legacyPolicy, 'v3.1.0': legacyPolicy, 'v3.1.1': stancePolicy, 'v3.1.2': stancePolicy, 'v3.1.3': carryPolicy, 'v3.1.4': { ...skillPolicy, required: notepadCoreSkills }, 'v3.2.0': { ...skillPolicy, required: initialV32CoreSkills } };
-  const accepted = [skillPolicy, supportedLegacy[manifest.workbenchVersion]].filter(Boolean).map((policy) => JSON.stringify(policy));
+  const stanceRequired = [...legacyCoreSkills, ...stanceSkills];
+  const carryRequired = [...legacyCoreSkills, 'carry', ...stanceSkills];
+  // Each frozen row is a required list; a room at that release validates with
+  // it under either setup shape, because the provider-home shape is what the
+  // release stamped and the lane shape is what the Workbench update writes
+  // when it lays the lane into such a room before restamping it. v3.2.1 is
+  // frozen for the same reason: rooms stamped v3.2.1 declared the
+  // provider-home policy before the skills lane existed, and its
+  // twenty-one-skill row stays exact now that `grill-me` grows the live
+  // bundle (S-00Z).
+  const supportedLegacy = { 'v3.0.0': legacyCoreSkills, 'v3.1.0': legacyCoreSkills, 'v3.1.1': stanceRequired, 'v3.1.2': stanceRequired, 'v3.1.3': carryRequired, 'v3.1.4': notepadCoreSkills, 'v3.2.0': initialV32CoreSkills, 'v3.2.1': handoffCoreSkills };
+  const legacyRequired = supportedLegacy[manifest.workbenchVersion];
+  // Transition cohorts are accepted only at their stamped version and only at
+  // the lane-install policy their rooms actually carry.
+  const transitionPolicies = manifest.workbenchVersion === 'v3.2.1'
+    ? v321TransitionCoreSkills.map((required) => ({ ...skillPolicy, required }))
+    : [];
+  const accepted = [skillPolicy, ...transitionPolicies, ...(legacyRequired ? [{ ...skillPolicy, required: legacyRequired }, { ...providerHomeSkillPolicy, required: legacyRequired }] : [])].map((policy) => JSON.stringify(policy));
   if (!accepted.includes(JSON.stringify(manifest.skillPolicy))) {
     return fail('invalid-skill-policy', 'Manifest skill policy must declare the closed missing-only core bundle.');
   }
   const ignored = verifyNotepadIgnores(project, manifest);
   if (ignored.failure) return ignored.failure;
-  return report('valid', { manifest, ignoreVerification: ignored.verification });
+  return report('valid', { manifest, ignoreVerification: ignored.verification, ...(tracker ? { tracker } : {}) });
+}
+
+// ADR-000H "One Task, one context": the context unit is a declared host fact
+// recorded in workbench/manifest.json with provenance, never a number
+// restated in portable control prose. This reader is the one seam sizing
+// guidance points at; it is a Plan goalpost only, so nothing in doctor, next,
+// claim, close or validateManifest above may consult it, and an undeclared
+// value fails explicitly rather than defaulting silently.
+export class ContextUnitUndeclaredError extends Error {
+  constructor(message) { super(message); this.name = 'ContextUnitUndeclaredError'; }
+}
+
+export function readContextUnit(project) {
+  const { manifest, failure } = readManifestFile(project);
+  if (failure) throw new ContextUnitUndeclaredError(failure.error.message);
+  const manifestPath = path.join(project, 'workbench', 'manifest.json');
+  const unit = manifest.contextUnit;
+  if (!unit || typeof unit !== 'object' || Array.isArray(unit)) {
+    throw new ContextUnitUndeclaredError(`${manifestPath} does not declare a contextUnit; sizing guidance has no declared value to read.`);
+  }
+  // ADR-000H requires the unit recorded "with provenance", so every provenance
+  // field is required and type-checked, named individually so a malformed
+  // field fails as loudly as an absent one.
+  if (typeof unit.value !== 'number') throw new ContextUnitUndeclaredError(`${manifestPath} contextUnit.value must be a number.`);
+  if (typeof unit.unit !== 'string' || !unit.unit) throw new ContextUnitUndeclaredError(`${manifestPath} contextUnit.unit must be a non-empty string.`);
+  if (typeof unit.decisionDate !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(unit.decisionDate)) throw new ContextUnitUndeclaredError(`${manifestPath} contextUnit.decisionDate must be a YYYY-MM-DD string.`);
+  if (typeof unit.source !== 'string' || !unit.source) throw new ContextUnitUndeclaredError(`${manifestPath} contextUnit.source must be a non-empty string.`);
+  if (!Array.isArray(unit.consideredAlternatives) || unit.consideredAlternatives.length === 0 || !unit.consideredAlternatives.every((value) => typeof value === 'number')) {
+    throw new ContextUnitUndeclaredError(`${manifestPath} contextUnit.consideredAlternatives must be an array of numbers.`);
+  }
+  if (typeof unit.reason !== 'string' || !unit.reason.trim()) throw new ContextUnitUndeclaredError(`${manifestPath} contextUnit.reason must be a non-empty string.`);
+  return unit;
 }
 
 function templateRoot() {
@@ -340,7 +701,7 @@ function fillTemplate(content, values) {
 // Validate all layout parents and the ignore destination before any mkdir or
 // migration move. A final-directory check alone misses linked ancestors.
 function preflightLayout(project, extraDirectories = []) {
-  for (const relative of ['workbench', ...Object.values(lanes), ...Object.values(collections), ...extraDirectories]) {
+  for (const relative of ['workbench', ...Object.values(lanes), ...Object.values(collections), ...decisionRecordFolders(), ...extraDirectories]) {
     let current = project;
     for (const part of relative.split('/')) {
       current = path.join(current, part);
@@ -350,7 +711,7 @@ function preflightLayout(project, extraDirectories = []) {
       }
     }
   }
-  for (const relative of ['workbench/manifest.json', `${lanes.sessions}/.gitignore`]) {
+  for (const relative of ['workbench/manifest.json', `${lanes.sessions}/.gitignore`, `${lanes.wiki}/.gitignore`]) {
     const entry = lstatOrNull(path.join(project, relative));
     if (entry && (!entry.isFile() || entry.isSymbolicLink() || entry.nlink > 1)) {
       return fail('lane-collision', `${relative} must be an ordinary, unshared file.`);
@@ -365,6 +726,17 @@ function writeSessionsIgnore(project) {
   // Retain project rules byte-for-byte, appending the required live-session block.
   const combined = current + (current && !current.endsWith('\n') ? '\n' : '') + SESSIONS_IGNORE;
   fs.writeFileSync(destination, combined);
+}
+
+// Add only the private capture rule; project-specific Wiki ignore rules survive.
+export function ensurePrivateWikiIgnore(project) {
+  const destination = path.join(project, lanes.wiki, '.gitignore');
+  assertSafeWritePath(project, destination);
+  const current = lstatOrNull(destination) ? fs.readFileSync(destination, 'utf8') : '';
+  const missing = ['.jot-private-*', '.jot-write-*/'].filter(rule => !current.split(/\r?\n/).includes(rule));
+  if (!missing.length) return false;
+  writeSafeFile(project, destination, current + (current && !current.endsWith('\n') ? '\n' : '') + '# Private Wiki capture stays local.\n' + missing.join('\n') + '\n');
+  return true;
 }
 
 export function initialize(options) {
@@ -406,9 +778,11 @@ export function initialize(options) {
       if (options.deferWikiSeed && relative.startsWith(`${lanes.wiki}/`)) continue;
       const target = path.join(project, relative);
       fs.mkdirSync(target, { recursive: true });
+      if (relative === collections.ddr) createDecisionRecordFolders(project, relative);
       if (!fs.readdirSync(target).length) fs.writeFileSync(path.join(target, '.gitkeep'), '');
     }
     writeSessionsIgnore(project);
+    if (!options.deferWikiSeed) ensurePrivateWikiIgnore(project);
     const seeded = options.deferWikiSeed ? { wiki: false, reason: 'legacy wiki move pending' } : seedWiki(project, options);
     fs.writeFileSync(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`);
     const documents = writeSeedDocuments(project, { ...options, notepadOnly: true });
@@ -458,7 +832,7 @@ function sourceIdentity(options) {
   return resolved;
 }
 
-export function seedWiki(project, options) {
+export function seedWiki(project, options, files = wikiContractFiles) {
   for (const relative of Object.values(collections).filter(value => value.startsWith(`${lanes.wiki}/`))) {
     fs.mkdirSync(path.join(project, relative), { recursive: true });
   }
@@ -469,8 +843,9 @@ export function seedWiki(project, options) {
     '[YYYY-MM-DD]': options['--date'] ?? new Date().toISOString().slice(0, 10),
     '[PROJECT_NAME]': options['--name'] ?? path.basename(project)
   };
-  const written = [];
-  for (const relative of wikiContractFiles) {
+  // Ignore rules are project-owned privacy configuration, not stamped Markdown.
+  const written = ensurePrivateWikiIgnore(project) ? [`${lanes.wiki}/.gitignore`] : [];
+  for (const relative of files) {
     const destination = path.join(project, lanes.wiki, relative);
     if (lstatOrNull(destination)) continue;
     fs.mkdirSync(path.dirname(destination), { recursive: true });
@@ -655,6 +1030,33 @@ function recordSourceUnlocked(options) {
   return report('recorded', { manifestPath, source });
 }
 
+// Declare or replace the legibility surface of an existing room: all six
+// entries at once (declare a bracketed placeholder rather than omit one, so
+// the gap stays visible), optionally marked pending for grilling. Nothing else
+// in the manifest changes, under the same lock every manifest writer takes.
+export function declareLegibility(options) {
+  const project = path.resolve(options['--project']);
+  return withIdentityLock(project, () => declareLegibilityUnlocked(project, options));
+}
+
+function declareLegibilityUnlocked(project, options) {
+  const { manifest, manifestPath, failure } = readManifestFile(project);
+  if (failure) return failure;
+  if (manifest.schemaVersion === 1) {
+    return fail('upgrade-required', 'Manifest schema 1 is the v3.0 five-lane layout; run workbench-layout.mjs migrate --project PATH once.', { schemaVersion: 1 });
+  }
+  if (manifest.schemaVersion !== SCHEMA_VERSION) return fail('invalid-manifest', 'Manifest schemaVersion is invalid.');
+  const legibility = {};
+  for (const entry of LEGIBILITY_ENTRIES) {
+    const value = options[`--${entry}`];
+    if (typeof value !== 'string' || !value.trim()) return fail('invalid-invocation', `declare-legibility requires --${entry}; declare a bracketed placeholder such as [${entry.toUpperCase()}_COMMAND] rather than omit it.`, { entry });
+    legibility[entry] = value;
+  }
+  if (options['--pending']) legibility.confirmation = LEGIBILITY_PENDING;
+  writeSafeFile(project, manifestPath, `${JSON.stringify({ ...manifest, legibility }, null, 2)}\n`);
+  return report('declared', { manifestPath, legibility });
+}
+
 // Assign once in an existing room. Commit this manifest before making clones
 // of a legacy room so they share its connection identity. No machine path is
 // stored in the project, and read-only validation never allocates an identity.
@@ -697,6 +1099,88 @@ function identifyUnlocked(project) {
   return report('identified', { workbenchId });
 }
 
+// S-00I TK-01U: create the additive features collection as an ordinary
+// directory, never through a link, and seed only its README (when absent) from
+// the release templates. A refusal is returned before anything is written.
+function addFeaturesCollection(project, manifest) {
+  const relative = collections.features;
+  try { assertSafeWritePath(project, path.join(project, relative, '.gitkeep')); }
+  catch (error) { return fail('lane-collision', error.message); }
+  const entry = lstatOrNull(path.join(project, relative));
+  if (entry && (entry.isSymbolicLink() || !entry.isDirectory())) return fail('lane-collision', `${relative} must be an ordinary directory.`);
+  fs.mkdirSync(path.join(project, relative), { recursive: true });
+  const seeded = seedWiki(project, { '--version': manifest.workbenchVersion }, ['features/README.md']);
+  if (!fs.readdirSync(path.join(project, relative)).length) fs.writeFileSync(path.join(project, relative, '.gitkeep'), '');
+  return { seeded };
+}
+
+// S-003X TK-004W: the `ddr` collection's lifecycle folders, as
+// project-relative paths, so layout preflight checks them like any other
+// declared directory.
+function decisionRecordFolders() {
+  return DECISION_RECORD_LIFECYCLE_FOLDERS.map(folder => `${collections.ddr}/${folder}`);
+}
+
+// Create each missing lifecycle folder of a decision-record collection as an
+// ordinary directory kept by a `.gitkeep`; an existing folder and anything
+// already in it are left exactly as they are. Callers check every path first.
+function createDecisionRecordFolders(project, relative) {
+  for (const folder of DECISION_RECORD_LIFECYCLE_FOLDERS) {
+    const target = path.join(project, relative, folder);
+    fs.mkdirSync(target, { recursive: true });
+    if (!fs.readdirSync(target).length) fs.writeFileSync(path.join(target, '.gitkeep'), '');
+  }
+}
+
+// S-003X TK-004W: check every directory the named additive collections would
+// create before the first one writes, so a refusal leaves the room unchanged.
+function additivePreflight(project, names) {
+  for (const name of names) {
+    if (!ADDITIVE_COLLECTIONS.includes(name)) throw new Error(`${name} is not an additive collection`);
+    for (const directory of name === 'ddr' ? [collections.ddr, ...decisionRecordFolders()] : [collections[name]]) {
+      try { assertSafeWritePath(project, path.join(project, directory, '.gitkeep')); }
+      catch (error) { return fail('lane-collision', error.message); }
+      const entry = lstatOrNull(path.join(project, directory));
+      if (entry && (entry.isSymbolicLink() || !entry.isDirectory())) return fail('lane-collision', `${directory} must be an ordinary directory.`);
+    }
+  }
+  return null;
+}
+
+// S-003X TK-004W: add the additive ddr collection to an existing room. Every
+// path it would create is checked before anything is written: the collection
+// and its lifecycle folders must each be an ordinary directory or absent. An
+// existing folder is adopted with its contents untouched; only missing
+// lifecycle folders are created. ADR records are never read or written.
+function addDdrCollection(project) {
+  const relative = collections.ddr;
+  for (const directory of [relative, ...decisionRecordFolders()]) {
+    try { assertSafeWritePath(project, path.join(project, directory, '.gitkeep')); }
+    catch (error) { return fail('lane-collision', error.message); }
+    const entry = lstatOrNull(path.join(project, directory));
+    if (entry && (entry.isSymbolicLink() || !entry.isDirectory())) return fail('lane-collision', `${directory} must be an ordinary directory.`);
+  }
+  fs.mkdirSync(path.join(project, relative), { recursive: true });
+  createDecisionRecordFolders(project, relative);
+  return {};
+}
+
+// S-003Z TK-008D: add the additive landmarks collection to an existing room:
+// the empty folder, kept by a `.gitkeep`, and nothing else. An existing
+// ordinary folder is adopted with its contents untouched; `LANDMARK.md`
+// artifacts are never read or written here, and the Tracker's JSON landmark
+// records are a different collection that stays where it is.
+function addLandmarksCollection(project) {
+  const relative = collections.landmarks;
+  try { assertSafeWritePath(project, path.join(project, relative, '.gitkeep')); }
+  catch (error) { return fail('lane-collision', error.message); }
+  const entry = lstatOrNull(path.join(project, relative));
+  if (entry && (entry.isSymbolicLink() || !entry.isDirectory())) return fail('lane-collision', `${relative} must be an ordinary directory.`);
+  fs.mkdirSync(path.join(project, relative), { recursive: true });
+  if (!fs.readdirSync(path.join(project, relative)).length) fs.writeFileSync(path.join(project, relative, '.gitkeep'), '');
+  return {};
+}
+
 function validateManifestShape(manifest) {
   if (!/^v\d+\.\d+\.\d+$/.test(manifest.workbenchVersion ?? '')) return fail('invalid-version', 'Workbench version must use vMAJOR.MINOR.PATCH.');
   if (!['genesis', 'adoption', 'upgrade'].includes(manifest.provenance.lifecycle)) return fail('invalid-provenance', 'Provenance must be genesis, adoption, or upgrade.');
@@ -720,6 +1204,57 @@ function migrateUnlocked(options) {
   if (manifest.schemaVersion === SCHEMA_VERSION) {
     const valid = validateManifest(project);
     if (valid.status !== 'valid') return valid;
+    // S-00V: a room stamped before the skills lane declares six lanes and the
+    // provider-home skill policy. Migration declares the seventh lane and
+    // the lane policy (the required list is untouched) and creates the empty
+    // lane, so `workbench-skills.mjs install` can lay the skills down next.
+    if (!manifest.lanes.skills) {
+      // The placeholder path checks every ancestor (workbench/, the lane) as
+      // an ordinary directory or absent; the lane itself may already exist,
+      // empty or holding room-local skills, and is checked explicitly next.
+      try { assertSafeWritePath(project, path.join(project, lanes.skills, '.gitkeep')); }
+      catch (error) { return fail('lane-collision', error.message); }
+      const laneEntry = lstatOrNull(path.join(project, lanes.skills));
+      if (laneEntry && (laneEntry.isSymbolicLink() || !laneEntry.isDirectory())) return fail('lane-collision', `${lanes.skills} must be an ordinary directory.`);
+      fs.mkdirSync(path.join(project, lanes.skills), { recursive: true });
+      if (!fs.readdirSync(path.join(project, lanes.skills)).length) fs.writeFileSync(path.join(project, lanes.skills, '.gitkeep'), '');
+      ensurePrivateWikiIgnore(project);
+      const updated = { ...manifest, lanes: { ...manifest.lanes, skills: lanes.skills }, skillPolicy: { ...skillPolicy, required: manifest.skillPolicy.required } };
+      writeSafeFile(project, manifestPath, `${JSON.stringify(updated, null, 2)}\n`);
+      return report('migrated', { manifestPath, manifest: updated, moved: [], added: ['lanes.skills'], next: 'run workbench-skills.mjs install --project PATH from the release checkout' });
+    }
+    // S-00I TK-01U: a room stamped with the current pre-feature collection
+    // set gains the features collection additively: the directory is created
+    // (seeded with its README when the release templates are beside this
+    // tool) and the declaration is appended; nothing else changes.
+    // S-003X TK-004W: the same route appends every later additive collection
+    // the room lacks, in declaration order, so a pre-feature room also gains
+    // `ddr` and a room stamped with the pre-DDR set gains `ddr` onward.
+    // S-003Z TK-008D: a room stamped with the current pre-landmark set gains
+    // only `landmarks`. Every addition is checked before the first one writes.
+    const additive = JSON.stringify(manifest.collections) === JSON.stringify(PRE_FEATURE_COLLECTIONS) ? ['features', 'ddr', 'landmarks']
+      : JSON.stringify(manifest.collections) === JSON.stringify(PRE_DDR_COLLECTIONS) ? ['ddr', 'landmarks']
+      : JSON.stringify(manifest.collections) === JSON.stringify(PRE_LANDMARK_COLLECTIONS) ? ['landmarks'] : null;
+    if (additive) {
+      const blocked = additivePreflight(project, additive);
+      if (blocked) return blocked;
+      let seeded;
+      if (additive.includes('features')) {
+        const added = addFeaturesCollection(project, manifest);
+        if (added.status) return added;
+        seeded = added.seeded;
+      }
+      if (additive.includes('ddr')) {
+        const addedDdr = addDdrCollection(project);
+        if (addedDdr.status) return addedDdr;
+      }
+      const addedLandmarks = addLandmarksCollection(project);
+      if (addedLandmarks.status) return addedLandmarks;
+      ensurePrivateWikiIgnore(project);
+      const updated = { ...manifest, collections };
+      writeSafeFile(project, manifestPath, `${JSON.stringify(updated, null, 2)}\n`);
+      return report('migrated', { manifestPath, manifest: updated, moved: [], added: additive.map(name => `collections.${name}`), ...(seeded ? { seeded } : {}) });
+    }
     if (JSON.stringify(manifest.collections) === JSON.stringify(collections)) {
       try { assertSafeReadPath(project, path.join(project, SEED_RECORD)); }
       catch (error) { return fail('lane-collision', error.message); }
@@ -727,12 +1262,15 @@ function migrateUnlocked(options) {
       const missing = seededLaneDocuments.filter(document => document.lane === 'sessions').map(document => `${lanes.sessions}/${document.name}`)
         .filter(relative => !seeds?.documents?.[relative] || !lstatOrNull(path.join(project, relative))?.isFile());
       if (missing.length) return fail('missing-collection', 'Notepad layout seeding is incomplete; run seed-documents from the clean release checkout before retrying migrate.', { missing });
+      let addedPrivateWikiIgnore;
+      try { addedPrivateWikiIgnore = ensurePrivateWikiIgnore(project); }
+      catch (error) { return fail('lane-collision', error.message); }
       if (!manifest.workbenchId) {
         const assigned = identifyUnlocked(project);
         if (!['identified', 'current'].includes(assigned.status)) return assigned;
         return report('migrated', { manifestPath, manifest: { ...manifest, workbenchId: assigned.workbenchId }, moved: [] });
       }
-      return report('current', { manifestPath, manifest });
+      return report(addedPrivateWikiIgnore ? 'migrated' : 'current', { manifestPath, manifest, ...(addedPrivateWikiIgnore ? { added: ['wiki.private-ignore'] } : {}) });
     }
     const unsafe = preflightLayout(project);
     if (unsafe) return unsafe;
@@ -745,7 +1283,14 @@ function migrateUnlocked(options) {
     const seedFailure = preflightSeedDocuments(project);
     if (seedFailure) return seedFailure;
     for (const name of ['notepads', 'notepad-templates', 'recovery']) fs.mkdirSync(path.join(project, collections[name]), { recursive: true });
+    const addedFeatures = addFeaturesCollection(project, manifest);
+    if (addedFeatures.status) return addedFeatures;
+    const addedDdr = addDdrCollection(project);
+    if (addedDdr.status) return addedDdr;
+    const addedLandmarks = addLandmarksCollection(project);
+    if (addedLandmarks.status) return addedLandmarks;
     writeSessionsIgnore(project);
+    ensurePrivateWikiIgnore(project);
     const updated = { ...manifest, workbenchId: manifest.workbenchId ?? allocateWorkbenchId(), collections, provenance: { ...manifest.provenance, layout: { source } } };
     writeSafeFile(project, manifestPath, `${JSON.stringify(updated, null, 2)}\n`);
     const documents = writeSeedDocuments(project, { '--version': source.release });
@@ -785,9 +1330,11 @@ function migrateUnlocked(options) {
   for (const relative of [...Object.values(lanes), ...Object.values(collections)]) {
     const target = path.join(project, relative);
     fs.mkdirSync(target, { recursive: true });
+    if (relative === collections.ddr) createDecisionRecordFolders(project, relative);
     if (!fs.readdirSync(target).length) fs.writeFileSync(path.join(target, '.gitkeep'), '');
   }
   writeSessionsIgnore(project);
+  ensurePrivateWikiIgnore(project);
   const migrated = {
     schemaVersion: SCHEMA_VERSION,
     workbenchVersion: options['--version'] ?? manifest.workbenchVersion,
@@ -853,7 +1400,7 @@ function validateFirstSpec(project, expectedVersion) {
     [`the packet must live at ${lanes.specs}/${entries[0].name}/SPEC.md`, () => packet.relativePath === `${lanes.specs}/${entries[0].name}/SPEC.md`],
     ['Status must be active so the work loop can select it', () => packet.status === 'active'],
     ['Priority must be a single digit 0-9', () => Number.isInteger(packet.priority) && packet.priority >= 0 && packet.priority <= 9],
-    ['at least one ticket must be ready with blockers none', () => packet.tickets.some((ticket) => ticket.status === 'ready' && ticket.blockers === 'none')],
+    ['at least one task must be ready with blockers none', () => packet.rows.some((row) => row.status === 'ready' && row.blockers === 'none')],
     [`the sections ${requiredSections.join(', ')} must all exist`, () => requiredSections.every((section) => new RegExp(`^## ${section}$`, 'm').test(content))],
     ['at least one acceptance criterion must remain unchecked', () => /^- \[ \] \S/m.test(content)]
   ];
@@ -865,7 +1412,7 @@ function validateFirstSpec(project, expectedVersion) {
 
 export const TOOLS_RECEIPT = '.workbench-tools.json';
 
-// The closed set of Workbench-managed runtime tools. Later capability tickets
+// The closed set of Workbench-managed runtime tools. Later capability tasks
 // append to this list; the product lane must contain exactly these files.
 //
 // It lives here, in a tool every room installs, rather than in the release-side
@@ -881,15 +1428,30 @@ export const TOOLS_RECEIPT = '.workbench-tools.json';
 // which the receipt hash comparison reports.
 export const RUNTIME_TOOLS = Object.freeze([
   'adr.mjs',
+  'claim-coordination.mjs',
   'diagnostics.mjs',
+  'github-coordination.mjs',
+  'host-floor.mjs',
+  'landmark-artifact.mjs',
+  'landmark-tracker.mjs',
+  'landmark-wiki.mjs',
+  'lane-sweep.mjs',
   'markdown-table.mjs',
   'notepads.mjs',
+  'jot.mjs',
+  'optional-capabilities.mjs',
   'privacy.mjs',
   'project-evidence.mjs',
+  'self-drift.mjs',
   'sessions.mjs',
   'session-transport.mjs',
   'spec-packet.mjs',
+  'spec-report.mjs',
   'spec-workbench.mjs',
+  'task-packet.mjs',
+  'task-receipt.mjs',
+  'task-record.mjs',
+  'taskboard.mjs',
   'template-placeholders.mjs',
   'visible-ids.mjs',
   'skill-inspection.mjs',
@@ -1165,7 +1727,7 @@ export function permissionScopeDrift(project, declaredLanes = lanes) {
   // A null declaration falls back to the default lanes: the check never
   // throws and never silently checks nothing.
   const checked = declaredLanes ?? lanes;
-  const authorship = Object.entries(checked).filter(([name]) => name !== 'tools');
+  const authorship = Object.entries(checked).filter(([name]) => name !== 'tools' && name !== 'skills');
   let buckets;
   try {
     const permissions = JSON.parse(fs.readFileSync(file, 'utf8'))?.permissions ?? {};
@@ -1176,6 +1738,10 @@ export function permissionScopeDrift(project, declaredLanes = lanes) {
   }
   const withheld = [];
   for (const [lane, relative] of Object.entries(checked)) {
+    // The skills lane holds managed core (replaced only by the Workbench
+    // update) beside room-owned extensions, so neither an Edit grant nor an
+    // ask hold on it is drift; the permission file decides it per room.
+    if (lane === 'skills') continue;
     const reasons = [];
     const denied = restrictions(buckets.deny, relative, project)[0];
     const askedRestrictions = restrictions(buckets.ask, relative, project);
@@ -1215,11 +1781,12 @@ function validateGenesisGit(project) {
   if (!declared) {
     return fail('integration-branch-undeclared', 'workbench/manifest.json must declare git.integrationBranch, the branch the independent review gate merges into; run init with --integration-branch or add the git block.', { reason: 'the manifest has no git block' });
   }
+  if (declared.defaultBranch.toLowerCase() === declared.integrationBranch.toLowerCase()) return fail('integration-branch-not-distinct', 'Integration must be distinct from the owner-controlled default branch.');
   if (!insideWorkTree(project)) {
     return fail('integration-branch-missing', `The project is not inside a Git work tree, so declared integration branch ${declared.integrationBranch} cannot resolve; initialize the repository and create the branch from ${declared.defaultBranch}.`, { branch: declared.integrationBranch, reason: 'the project is not inside a Git work tree' });
   }
   if (resolveBranchRefs(project, declared.integrationBranch).length === 0) {
-    return fail('integration-branch-missing', `Declared integration branch ${declared.integrationBranch} resolves neither as a local head nor on a remote; create it from ${declared.defaultBranch} and push it, or record the omission reason in the owning spec.`, { branch: declared.integrationBranch, reason: `no refs/heads/${declared.integrationBranch} and no remote carries ${declared.integrationBranch}` });
+    return fail('integration-branch-missing', `Declared integration branch ${declared.integrationBranch} resolves neither as a local head nor on a remote; create it from ${declared.defaultBranch} and push it before completing setup.`, { branch: declared.integrationBranch, reason: `no refs/heads/${declared.integrationBranch} and no remote carries ${declared.integrationBranch}` });
   }
   return null;
 }
@@ -1240,8 +1807,43 @@ export function validate(options, requireGenesis) {
   if (drift) return fail('permission-scope-drift', permissionScopeMessage(drift), { control: drift.control, lanes: drift.lanes, reason: drift.lanes.map((entry) => `${entry.lane}: ${entry.reason}`).join('; ') });
   const gitIssue = validateGenesisGit(project);
   if (gitIssue) return gitIssue;
-  if (fs.existsSync(path.join(project, 'skills'))) return fail('project-local-skills', 'Genesis must not create a project-local skills directory.');
-  return report('valid', { manifest: result.manifest, controls });
+  if (fs.existsSync(path.join(project, 'skills'))) return fail('project-local-skills', 'A root skills/ directory shadows the skills lane; move its contents into the lane or remove it.');
+  const skillsIssue = validateGenesisSkills(project, result.manifest);
+  if (skillsIssue) return skillsIssue;
+  return report('valid', { manifest: result.manifest, controls, ...(result.tracker ? { tracker: result.tracker } : {}) });
+}
+
+// Readiness also needs the skills lane laid down from the release: every
+// required skill present with a receipt naming the manifest's release, and
+// both discovery adapters resolving into the lane. Doctor reports the same
+// conditions without blocking on the receipt (see skill-inspection.mjs).
+function validateGenesisSkills(project, manifest) {
+  const lane = manifest.lanes.skills;
+  if (!lane) return fail('skill-lane-missing', 'The manifest declares no skills lane; run workbench-layout.mjs migrate --project PATH once.', { control: 'workbench/skills' });
+  const receiptPath = path.join(project, lane, SKILLS_RECEIPT);
+  const receiptEntry = lstatOrNull(receiptPath);
+  if (!receiptEntry?.isFile() || receiptEntry.isSymbolicLink()) {
+    return fail('skill-lane-missing', `${lane} must carry the Workbench skills receipt; run workbench-skills.mjs install from the release checkout.`, { control: lane });
+  }
+  let receipt;
+  try { receipt = JSON.parse(fs.readFileSync(receiptPath, 'utf8')); } catch (error) {
+    return fail('skill-lane-missing', `${lane}/${SKILLS_RECEIPT} is unreadable: ${error.message}`, { control: lane });
+  }
+  if (receipt.source?.release !== manifest.workbenchVersion) {
+    return fail('skill-lane-missing', `${lane}/${SKILLS_RECEIPT} names release ${receipt.source?.release ?? 'none'}; the manifest declares ${manifest.workbenchVersion}.`, { control: lane });
+  }
+  for (const skill of manifest.skillPolicy.required) {
+    if (!lstatOrNull(path.join(project, lane, skill, 'SKILL.md'))?.isFile()) return fail('skill-lane-missing', `${lane}/${skill}/SKILL.md is missing.`, { control: lane, skill });
+    for (const discoveryRoot of manifest.skillPolicy.discovery) {
+      const adapter = path.join(project, discoveryRoot, skill, 'SKILL.md');
+      let resolved;
+      try { resolved = fs.realpathSync(adapter); } catch { resolved = null; }
+      if (resolved !== fs.realpathSync(path.join(project, lane, skill, 'SKILL.md'))) {
+        return fail('skill-adapter-broken', `${discoveryRoot}/${skill} does not resolve into ${lane}; run workbench-skills.mjs install from the release checkout.`, { control: discoveryRoot, skill });
+      }
+    }
+  }
+  return null;
 }
 
 if (isMainModule(import.meta.url)) {
@@ -1252,6 +1854,7 @@ if (isMainModule(import.meta.url)) {
     else if (command === 'migrate') result = migrate(parseOptions(args, ['--project']));
     else if (command === 'identify') result = identify(parseOptions(args, ['--project']));
     else if (command === 'record-source') result = recordSource(parseOptions(args, ['--project']));
+    else if (command === 'declare-legibility') result = declareLegibility(parseOptions(args, ['--project', ...LEGIBILITY_ENTRIES.map((entry) => `--${entry}`)], ['--pending']));
     else if (command === 'seed-documents') {
       const options = parseOptions(args, ['--project']);
       result = seedLaneDocuments(options['--project'], options);
@@ -1259,9 +1862,9 @@ if (isMainModule(import.meta.url)) {
     else if (command === 'validate') {
       const requireGenesis = args.includes('--genesis');
       result = validate(parseOptions(args.filter((arg) => arg !== '--genesis'), ['--project']), requireGenesis);
-    } else throw new Error('Usage: workbench-layout.mjs init --project PATH --provenance genesis --version v3.2.1 [--source-commit SHA] [--source-repository URL] [--wiki-profile project|deployment] [--name NAME] [--default-branch NAME] [--integration-branch NAME] | migrate --project PATH [--version v3.2.1] [--source-commit SHA] [--source-repository URL] [--default-branch NAME] [--integration-branch NAME] | identify --project PATH | record-source --project PATH [--version v3.2.1] [--source-commit SHA] [--source-repository URL] | seed-documents --project PATH [--version v3.2.1] | validate --project PATH [--genesis] (source flags assert the clean release checkout\'s resolved HEAD and origin; a relocated partial copy cannot establish provenance)');
+    } else throw new Error('Usage: workbench-layout.mjs init --project PATH --provenance genesis --version v3.2.1 [--source-commit SHA] [--source-repository URL] [--wiki-profile project|deployment] [--name NAME] [--default-branch NAME] [--integration-branch NAME] | migrate --project PATH [--version v3.2.1] [--source-commit SHA] [--source-repository URL] [--default-branch NAME] [--integration-branch NAME] | identify --project PATH | record-source --project PATH [--version v3.2.1] [--source-commit SHA] [--source-repository URL] | declare-legibility --project PATH --run CMD --operate CMD --inspect CMD --errors CMD --journey CMD --measure CMD [--pending] | seed-documents --project PATH [--version v3.2.1] | validate --project PATH [--genesis] (source flags assert the clean release checkout\'s resolved HEAD and origin; a relocated partial copy cannot establish provenance)');
     process.stdout.write(`${JSON.stringify(result)}\n`);
-    if (!['initialized', 'valid', 'migrated', 'current', 'recorded', 'seeded', 'identified'].includes(result.status)) process.exitCode = 1;
+    if (!['initialized', 'valid', 'migrated', 'current', 'recorded', 'declared', 'seeded', 'identified'].includes(result.status)) process.exitCode = 1;
   } catch (error) {
     process.stdout.write(`${JSON.stringify(fail('invalid-invocation', error.message))}\n`);
     process.exitCode = 1;
