@@ -13,12 +13,15 @@ should be boring, exact, and executable.
 
 ## Ordinary Entry
 
-Follow `AGENTS.md` -> this section -> `LEXICON.md` -> Task Routing. Inspect the
-root, branch, upstream and dirty state; run the project-local spec doctor and
+Follow [AGENTS](../../AGENTS.md) -> [STARTUP Resume](../../STARTUP.md#resume) ->
+the assigned Spec and Task through the [manifest](../manifest.json). Use the
+[Runbook's Find, claim and resume route](../../RUNBOOK.md#find-claim-and-resume)
+for selection or resumption; consult [Lexicon Task Routing](../../LEXICON.md#task-routing)
+when needed. Inspect the root, branch, upstream and dirty state; run the project-local spec doctor and
 load the explicitly assigned spec. For owner-directed pickup, use `next --json`
 and `show` to resolve that assignment. The spec and ticket set the normal
 stance. Investigate within the task; do not invent a next task when blocked.
-Load remaining Runbook sections only for the operation being performed.
+Load other Runbook sections only for the operation being performed.
 
 For a setup-only Round One assignment, a fresh agent follows that route, checks
 the manifest, relevant Wiki and ADRs, and runs read-only configuration checks.
@@ -38,7 +41,7 @@ authorized by ordinary language; do not wait for a second skill invocation.
 | Decide or stress-test an idea | `grilling` with `notepad`; save answers/corrections before continuing |
 | Preserve or resume meaningful project context | `jot` in the topic Wiki; verify source, correction history and live state. Read legacy private `notepad` records when relevant. |
 | Reconcile agreed claims | `promote` with `to-docs` and `save`; no implied implementation |
-| Write specifications only | `to-spec` and needed `to-tickets`; stop at the specified endpoint |
+| Write specifications only | `to-spec` and needed `to-tasks`; stop at the specified endpoint |
 | Deliver assigned work | `carry` with `implement`, verification, independent integration review and `save` |
 | Prepare another agent's continuation | core `handoff`; readable Markdown with inherited scope |
 | Review a candidate or readiness | `code-review`; report only, no implementation or main merge |
