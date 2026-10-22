@@ -24,14 +24,6 @@
 
 - Branch from the current target using `codex/`, `claude/` or `backup/`. Never commit directly to `main` or `integration`; PRs default to `integration`. Follow the project's release instructions for exceptions; use [version-control procedures](workbench/skills/implement/SKILL.md#version-control-procedures).
 - Keep each commit to one logical change with an imperative subject. Include the Worker's [merge-safety and completion answers](workbench/skills/implement/SKILL.md#4-review-at-the-relevant-boundary) in the PR.
-- Follow [code-review](workbench/skills/code-review/SKILL.md) at the required review boundary. The owner-requested checked auto-merge gate below requires a separate-agent review for each queued PR, including Task PRs; do not merge while that review is pending.
+- Follow [checked auto-merge](RUNBOOK.md#ci-and-agent-review-auto-merge): each queued PR, including Tasks, requires CI and separate-agent [code review](workbench/skills/code-review/SKILL.md). This overrides older Task-review exemptions. Never bypass pending review.
 - When integration is authorized and its gates pass, merge, prove containment and clean up through [implement](workbench/skills/implement/SKILL.md#branch-completion). Only the owner promotes integration to `main` after required Task/Spec checks, reviews, verification and pre-PR QA; use a PR and prove containment. Never sweep unrelated or failed work into main.
 - Report what changed, why, risks, verification and the endpoint reached. Preserve unresolved review and Human QA findings in their existing owners.
-
-## Checked Auto-Merge
-
-For PRs into integration or Spec/Task work branches, follow
-[CI and agent review auto-merge](RUNBOOK.md#ci-and-agent-review-auto-merge).
-Required CI and a separate-agent review status precede automatic delivery; no
-human GitHub review is required. Main always needs explicit owner approval for
-the exact promotion. Do not queue main, bypass gates, or approve your own work.
