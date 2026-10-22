@@ -45,6 +45,10 @@ try {
     if (!oldRows.length) continue;
     let candidate;
     const destination = renames.get(file) ?? file;
+    const kind = file.endsWith('/TASK.md') ? '/TASK.md' : '/SPEC.md';
+    if (!destination.startsWith('workbench/specs/') || !destination.endsWith(kind)) {
+      throw new Error(`${file}: rename leaves its governed path or record kind. Keep evidence in the managed Spec/Task lane.`);
+    }
     try { candidate = git('show', `HEAD:${destination}`); }
     catch { throw new Error(`${file}: evidence-bearing file missing or moved.`); }
     const newRows = rows(candidate, heading);

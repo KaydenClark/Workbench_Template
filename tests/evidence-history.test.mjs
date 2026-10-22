@@ -9,6 +9,7 @@ import { fileURLToPath } from 'node:url';
 const checker = fileURLToPath(new URL('../tools/check-evidence-history.mjs', import.meta.url));
 const spec = 'workbench/specs/S-001-demo/SPEC.md';
 const task = 'workbench/specs/S-001-demo/tasks/TK-001/TASK.md';
+const retired = 'workbench/specs/retired/S-001-demo/SPEC.md';
 const evidence = '# Spec\n\n## Append-Only Evidence And Execution Log\n\n| Date | Proof |\n|---|---|\n| 2026-10-22 | passed |\n\n## Result\nPending.\n';
 const receipt = '# Task\n\n## Receipt\n\n| Run | Tests |\n|---|---|\n| 1 | passed |\n';
 function fixture(t) {
@@ -45,12 +46,14 @@ test('rejects deletion of an evidence-bearing governed file', t => {
   const result = f.run(); assert.equal(result.status, 1); assert.match(result.stderr, /missing or moved/);
 });
 test('allows a Git-detected rename that preserves all evidence', t => {
-  const f = fixture(t); f.git('mv', spec, 'workbench/specs/S-001-demo/OLD.md'); f.commit();
+  const f = fixture(t); fs.mkdirSync(path.dirname(path.join(f.root, retired)), { recursive: true });
+  f.git('mv', spec, retired); f.commit();
   assert.match(f.git('diff', '--name-status', '-M', f.base, 'HEAD'), /^R100/m);
   const result = f.run(); assert.equal(result.status, 0, result.stderr);
 });
 test('rejects changed evidence after a Git-detected rename', t => {
-  const f = fixture(t); const moved = 'workbench/specs/S-001-demo/OLD.md';
+  const f = fixture(t); const moved = retired;
+  fs.mkdirSync(path.dirname(path.join(f.root, moved)), { recursive: true });
   f.git('mv', spec, moved); f.write(moved, evidence.replace('passed', 'failed')); f.commit();
   assert.match(f.git('diff', '--name-status', '-M', f.base, 'HEAD'), /^R\d+/m);
   const result = f.run(); assert.equal(result.status, 1); assert.match(result.stderr, /existing rows changed/);
@@ -66,3 +69,29 @@ test('checks committed candidate bytes, not uncommitted replacements', t => {
   const f = fixture(t); f.write(spec, evidence.replace('passed', 'failed')); f.commit(); f.write(spec, evidence);
   assert.equal(f.run().status, 1);
 });
+
+test('rejects renames that escape future governed-path scanning', t => {
+  const f = fixture(t); f.git('mv', spec, 'workbench/specs/S-001-demo/OLD.md'); f.commit();
+  const result = f.run(); assert.equal(result.status, 1); assert.match(result.stderr, /governed path/);
+});
+for (const change of ['modify', 'delete']) {
+  test(`checks ${change} of evidence on the commit after native retirement`, t => {
+    const f = fixture(t); fs.mkdirSync(path.dirname(path.join(f.root, retired)), { recursive: true });
+    f.git('mv', spec, retired); f.commit();
+    assert.equal(f.run().status, 0);
+    const retiredBase = f.git('rev-parse', 'HEAD');
+    if (change === 'modify') f.write(retired, evidence.replace('passed', 'failed'));
+    else fs.unlinkSync(path.join(f.root, retired));
+    f.commit();
+    const result = f.run(retiredBase); assert.equal(result.status, 1);
+    assert.match(result.stderr, /existing rows changed|missing or moved/);
+  });
+}
+
+for (const destination of ['archive/SPEC.md', 'workbench/specs/S-001-demo/TASK.md']) {
+  test(`rejects an evidence rename to ${destination}`, t => {
+    const f = fixture(t); fs.mkdirSync(path.dirname(path.join(f.root, destination)), { recursive: true });
+    f.git('mv', spec, destination); f.commit();
+    const result = f.run(); assert.equal(result.status, 1); assert.match(result.stderr, /governed path/);
+  });
+}
