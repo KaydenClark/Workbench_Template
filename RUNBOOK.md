@@ -141,6 +141,8 @@ For one named verb, follow its [steps and loop](workbench/skills/implement/workf
 
 ```bash
 node tests/tour.test.mjs
+node tests/evidence-history.test.mjs
+node tools/check-evidence-history.mjs <immutable-base-sha>
 node --check tour.mjs
 node workbench/tools/workbench-layout.mjs validate --project .
 node workbench/tools/spec-workbench.mjs doctor
