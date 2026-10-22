@@ -52,6 +52,7 @@ nothing.
 
 | Question | Read first |
 |---|---|
+| What did the owner authorize for auto-merge? | [Auto-merge intent](context-auto-merge.md), then [the delivery procedure](../../RUNBOOK.md#ci-and-agent-review-auto-merge) |
 | What is a workbench, and what goes in each place? | `node tour.mjs`, then [S-001](../specs/S-001-self-explaining-room/SPEC.md) |
 | Where did this room come from? | `provenance` in [manifest.json](../manifest.json) - genesis from LLM Workbench v3.1.2 at `18ffc0d` |
 | How do I know the explanation is still true? | `node tests/tour.test.mjs` - drift is a test failure, not a backlog item |
