@@ -3,13 +3,13 @@
 **Spec ID:** S-000C
 **Status:** active
 **Priority:** 1
-**Owner:** unassigned
+**Owner:** codex-auto-merge
 **Stance:** Builder
 **Updated:** 2026-10-22
 **Catalog description:** Merge approved candidates automatically after CI while retaining owner authority for main.
 **Blockers:** none
-**Latest event:** Owner authorized setup in this chat on 2026-10-22.
-**Next gate:** Implement and verify the repository gates.
+**Latest event:** TK-001 claimed by codex-auto-merge.
+**Next gate:** Close TK-001 with verification and documentation proof.
 
 ## Outcome
 

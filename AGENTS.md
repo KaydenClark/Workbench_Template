@@ -27,3 +27,11 @@
 - Follow [code-review](workbench/skills/code-review/SKILL.md) at the required review boundary. Do not request separate-context review for a Task or merge while required review is pending.
 - When integration is authorized and its gates pass, merge, prove containment and clean up through [implement](workbench/skills/implement/SKILL.md#branch-completion). Only the owner promotes integration to `main` after required Task/Spec checks, reviews, verification and pre-PR QA; use a PR and prove containment. Never sweep unrelated or failed work into main.
 - Report what changed, why, risks, verification and the endpoint reached. Preserve unresolved review and Human QA findings in their existing owners.
+
+## Checked Auto-Merge
+
+For PRs into integration or Spec/Task work branches, follow
+[CI and agent review auto-merge](RUNBOOK.md#ci-and-agent-review-auto-merge).
+Required CI and a separate-agent review status precede automatic delivery; no
+human GitHub review is required. Main always needs explicit owner approval for
+the exact promotion. Do not queue main, bypass gates, or approve your own work.
