@@ -16,7 +16,9 @@ checks in [Test And Build](../../RUNBOOK.md#test-and-build), including main PRs
 and landed main commits. No Markdown path is treated as proof of low impact. Common checks include
 whitespace, doctor, Wiki and decision-record validation, and preservation of
 existing Spec evidence and Task receipt rows across the event range. The history
-check follows Git-detected moves and rejects missing or rewritten old rows.
+check follows Git-detected moves within the Spec/Task lane that retain the same
+record kind, so future runs keep scanning them. Missing or rewritten old rows
+and moves outside that coverage fail.
 
 PR checks test the proposed merge with its destination. Postmerge checks test the
 actual landed state. A new head or base needs current passing checks. Missing,

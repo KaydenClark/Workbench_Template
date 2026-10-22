@@ -85,6 +85,8 @@ RUNBOOK owns the commands and limits. AGENTS routes delivery to that procedure. 
 
 | 2026-10-22 | TK-000B | Added common evidence-history checks after policy PR #17 landed at 56e7f707d339af1d35c15fd2c30551d9bd96a89f. Main bootstrap remains separate. | Exact shared Audit checker and nine fixtures copied; 9/9 fixtures and 21/21 tour tests pass on both Template baselines. Syntax, layout, doctor, Wiki and ADR validators pass. Integration history check preserves 8 evidence sections against the fetched base. | RUNBOOK test commands and AUTO_MERGE common-check scope updated. | Hosted checks, independent review, history-check integration delivery and explicit approval of the concrete main bootstrap remain pending. No owner QA or release qualification claimed. |
 
+| 2026-10-22 | TK-000B | Corrected the shared history checker before delivery: a rename outside governed filenames could evade later runs. Prior candidates remained unmerged. | Updated exact Audit source from a5357d50a54ac165aae6d68bef1b0c0271e50f73. All 14 fixtures pass on integration and main, including later-commit edits/deletions after retirement and refused lane/kind escapes. Tour tests remain 21/21; all room validators pass. | AUTO_MERGE now states the governed move boundary. | Fresh hosted proof, independent review, integration delivery and explicit concrete main bootstrap approval remain pending. |
+
 ## Completion Result
 
 The original setup below is superseded by TK-000B; repair delivery and live settings readback remain pending.
