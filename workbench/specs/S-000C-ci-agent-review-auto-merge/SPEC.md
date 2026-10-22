@@ -8,8 +8,8 @@
 **Updated:** 2026-10-22
 **Catalog description:** Merge approved candidates automatically after CI while retaining owner authority for main.
 **Blockers:** none
-**Latest event:** TK-001 claimed by codex-auto-merge.
-**Next gate:** Close TK-001 with verification and documentation proof.
+**Latest event:** TK-001 closed with proof.
+**Next gate:** Setup delivered; retain owner QA and explicit main approval as separate gates. No further implementation is assigned.
 
 ## Outcome
 
@@ -21,7 +21,7 @@ Agents should not wait for a human to review their work or manually merge a chec
 
 ## Current Verified State
 
-GitHub auto-merge is disabled. Main has a PR rule with zero required human approvals. LLM_Workbench alone has a verify workflow on integration; the other two rooms have no workflow there.
+Before this setup, GitHub auto-merge was disabled. Main has a PR rule with zero required human approvals. LLM_Workbench alone has a verify workflow on integration; the other two rooms have no workflow there.
 
 ## Desired Behavior
 
@@ -52,10 +52,10 @@ Own .github/workflows, RUNBOOK.md, AGENTS.md, this Spec and its records, and rep
 
 ## Acceptance Criteria
 
-- [ ] CI runs for PRs to integration and Spec/Task branches.
-- [ ] Required CI and separate-agent review statuses gate automatic merges without human review requirements.
-- [ ] Main requires explicit owner approval and is excluded from the automated delivery procedure.
-- [ ] Settings and hosted checks are read back; incomplete gates remain visible.
+- [x] CI runs for PRs to integration and Spec/Task branches.
+- [x] Required CI and separate-agent review statuses gate automatic merges without human review requirements.
+- [x] Main requires explicit owner approval and is excluded from the automated delivery procedure.
+- [x] Settings and hosted checks are read back; incomplete gates remain visible.
 
 ## Testing Seams
 
@@ -77,9 +77,12 @@ RUNBOOK owns the commands and limits. AGENTS routes delivery to that procedure. 
 
 | 2026-10-22 | TK-001 | Live GitHub regenerated test merge SHAs on merge attempts with unchanged head and base; original status binding failed closed. | API readback showed the new test merge had no review status. Corrected procedure uses head SHA plus strict up-to-date checks; retargeting requires fresh review. | RUNBOOK. | Corrected candidate CI, independent review and actual merge. |
 
+| 2026-10-22 | TK-001 | GitHub required CI and independent-agent-review accepted; setup PR #15 merged to integration. | Hosted verify passed; fresh integration 58ca2665b4e343ffb40ddf17eef63d2122cd3a30 contains reviewed head 822e3ad0dc4ffb95996b5227ebb14cd48be4b311. Branch-effective rules require verify from Actions and separate-agent status; main requires explicit-owner-approval and remains unchanged. | AGENTS and RUNBOOK delivered. | No owner QA or main promotion authorized. |
+| 2026-10-22 | TK-001 | Task closed | PR 15 hosted CI passed, independent agent review passed, native gate merged without bypass, and fetched integration containment passed. | AGENTS, RUNBOOK and Spec. | No setup gap; owner QA and main promotion not authorized. Git state at close: dirty-tree (2 files: workbench/specs/S-000C-ci-agent-review-auto-merge/SPEC.md, workbench/specs/S-000C-ci-agent-review-auto-merge/tasks/TK-001/TASK.md); recorded reason: Record-only closure of setup already verified on remote integration; these receipts are being published through their own checked PR.; close attribution: {"agent":"codex-auto-merge","claimant":"codex-auto-merge","onBehalfOf":null} |
+
 ## Completion Result
 
-Pending. No owner QA or main approval recorded.
+Setup delivered through [PR #15](https://github.com/KaydenClark/Workbench_Template/pull/15); native Task closure recorded below. Spec acceptance is not owner QA or main approval.
 
 ## Remaining Limitations Or Follow-Up Specs
 

@@ -15,7 +15,7 @@ Commands live in `RUNBOOK.md`.
 <!-- hot-specs:start -->
 | Spec | Current slice | Owner | Blocker | Latest meaningful event | Next gate |
 |---|---|---|---|---|---|
-| [S-000C](workbench/specs/S-000C-ci-agent-review-auto-merge/SPEC.md) | TK-001: Install CI, document review handoff and configure GitHub rules (in-progress) | codex-auto-merge | none | TK-001 claimed by codex-auto-merge. | Close TK-001 with verification and documentation proof. |
+| [S-000C](workbench/specs/S-000C-ci-agent-review-auto-merge/SPEC.md) | Acceptance / owner gate | codex-auto-merge | none | TK-001 closed with proof. | Setup delivered; retain owner QA and explicit main approval as separate gates. No further implementation is assigned. |
 | [S-001](workbench/specs/S-001-self-explaining-room/SPEC.md) | Acceptance / owner gate | Kayden Clark | none | TK-003 unblocked by owner direction and closed; the room is published and clonable. | None; every slice is closed and the capability is published. |
 <!-- hot-specs:end -->
 
