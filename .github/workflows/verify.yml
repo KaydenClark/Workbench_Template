@@ -2,9 +2,9 @@ name: Workbench verification
 
 on:
   pull_request:
-    branches: [integration, 'codex/**', 'claude/**']
+    branches: [integration, main]
   push:
-    branches: [integration]
+    branches: [integration, main]
 
 permissions:
   contents: read
@@ -28,11 +28,15 @@ jobs:
           package-manager-cache: false
       - name: Run repository checks
         env:
+          WORKBENCH_VERIFY_BASE: ${{ github.event.pull_request.base.sha || github.event.before }}
           GIT_CONFIG_COUNT: "1"
           GIT_CONFIG_KEY_0: init.defaultBranch
           GIT_CONFIG_VALUE_0: main
         run: |
+          git diff --check "$WORKBENCH_VERIFY_BASE" HEAD
           node tests/tour.test.mjs
           node --check tour.mjs
           node workbench/tools/workbench-layout.mjs validate --project .
           node workbench/tools/spec-workbench.mjs doctor
+          node workbench/tools/wiki.mjs validate
+          node workbench/tools/adr.mjs validate

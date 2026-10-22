@@ -38,3 +38,16 @@ Supersedes: none
 
 Implementation and feature describe branches where Specs and Tasks are worked, not literal branch prefixes. Configure integration and existing codex/** and claude/** namespaces; exclude main, recovery and version-history branches from automated delivery.
 <!-- /jot-entry -->
+
+<!-- jot-entry -->
+### JOT-09808030-bf94-40e0-9f6a-1d5bca8fd3dd
+Kind: intent
+State: confirmed
+Recorded: 2026-10-22T22:44:36.579Z
+Author: Kayden
+Source: owner:01a16432-076c-7bb1-85c0-44519f22e141
+Topic: auto-merge
+Supersedes: JOT-5bcbc2d4-0c39-4240-9b46-4a942666f8f0
+
+Owner requested applying the CI repair proposal and confirmed: Repair all three repositories. Ordinary work branches must accept development pushes. Integration and main require PRs, current successful verify, and force-push/deletion protection. Remove hand-posted agent-review and owner-approval statuses. Keep Task self-check and merge answers, independent assembled-Spec review, and one explicit owner promotion/release decision. A minimal CI-only main bootstrap is in scope; pending integration product work and actual release qualification are not.
+<!-- /jot-entry -->

@@ -8,12 +8,12 @@
 **Updated:** 2026-10-22
 **Catalog description:** Merge approved candidates automatically after CI while retaining owner authority for main.
 **Blockers:** none
-**Latest event:** TK-001 closed with proof.
-**Next gate:** Setup delivered; retain owner QA and explicit main approval as separate gates. No further implementation is assigned.
+**Latest event:** TK-000B claimed by codex-ci-repair.
+**Next gate:** Close TK-000B with verification and documentation proof.
 
 ## Outcome
 
-PRs into integration and Spec/Task work branches can auto-merge after CI and separate-agent review. Main requires explicit owner approval.
+Ordinary work branches accept development pushes. Integration and main receive current automated proof through PRs; assembled Specs receive independent review and main promotion requires one explicit owner decision.
 
 ## Why It Matters
 
@@ -25,15 +25,15 @@ Before this setup, GitHub auto-merge was disabled. Main has a PR rule with zero 
 
 ## Desired Behavior
 
-Require verify from GitHub Actions and independent-agent-review. Scope automated delivery to integration, codex/** and claude/** targets. Do not infer literal implementation/ or feature/ prefixes. Retain zero required human reviewers. Record separate-context review against the exact merge candidate, with new evidence after head or base changes. Require explicit-owner-approval for main. Never infer that approval from tests or agent review.
+Require verify from GitHub Actions, strict up-to-date PRs, and force-push/deletion protection only on integration and main. Run the full Template suite for both PR targets and their landed commits. Remove hand-posted review/approval statuses and ordinary work-branch push gates. Task self-check and merge answers precede integration; independent review occurs at assembled-Spec acceptance. Main promotion and release remain explicit owner decisions, not statuses.
 
 ## Decisions And Contracts
 
-The owner is the only person working on these repositories. Agents share the GitHub account. Required statuses enforce recorded gates, but cannot prove separate agent identity or human intent cryptographically. New branch creation remains allowed; updates to gated destinations need passing checks. Auto-merge is armed per reviewed PR; no blanket approval of existing PRs.
+The owner is the only person working on these repositories. Agents share the GitHub account, so independent review and owner intent remain process obligations. The owner approved this repair and its narrow main CI bootstrap; no pending integration product content or versioned release is authorized. Auto-merge is armed per eligible integration PR.
 
 ## Non-Goals
 
-Main promotion, another GitHub account, managed runtime changes, recovery/version branch protection, unrelated repairs, or automatic approval of old PRs.
+Pending product promotion, actual versioned release or installed-upgrade qualification, another GitHub account, managed runtime changes, recovery/version branch protection, unrelated repairs, or automatic approval of old PRs.
 
 ## Dependencies And Blockers
 
@@ -52,10 +52,11 @@ Own .github/workflows, RUNBOOK.md, AGENTS.md, this Spec and its records, and rep
 
 ## Acceptance Criteria
 
-- [x] CI runs for PRs to integration and Spec/Task branches.
-- [x] Required CI and separate-agent review statuses gate automatic merges without human review requirements.
-- [x] Main requires explicit owner approval and is excluded from the automated delivery procedure.
-- [x] Settings and hosted checks are read back; incomplete gates remain visible.
+- [ ] Ordinary work branches accept normal update pushes.
+- [ ] Integration and main require current verify, PRs, and force-push/deletion protection.
+- [ ] CI runs the full Template suite for integration/main PRs and landed commits.
+- [ ] Task merge answers, assembled-Spec review and one owner promotion/release decision replace hand-posted statuses.
+- [ ] A minimal main CI bootstrap carries no pending integration product work.
 
 ## Testing Seams
 
@@ -80,7 +81,11 @@ RUNBOOK owns the commands and limits. AGENTS routes delivery to that procedure. 
 | 2026-10-22 | TK-001 | GitHub required CI and independent-agent-review accepted; setup PR #15 merged to integration. | Hosted verify passed; fresh integration 58ca2665b4e343ffb40ddf17eef63d2122cd3a30 contains reviewed head 822e3ad0dc4ffb95996b5227ebb14cd48be4b311. Branch-effective rules require verify from Actions and separate-agent status; main requires explicit-owner-approval and remains unchanged. | AGENTS and RUNBOOK delivered. | No owner QA or main promotion authorized. |
 | 2026-10-22 | TK-001 | Task closed | PR 15 hosted CI passed, independent agent review passed, native gate merged without bypass, and fetched integration containment passed. | AGENTS, RUNBOOK and Spec. | No setup gap; owner QA and main promotion not authorized. Git state at close: dirty-tree (2 files: workbench/specs/S-000C-ci-agent-review-auto-merge/SPEC.md, workbench/specs/S-000C-ci-agent-review-auto-merge/tasks/TK-001/TASK.md); recorded reason: Record-only closure of setup already verified on remote integration; these receipts are being published through their own checked PR.; close attribution: {"agent":"codex-auto-merge","claimant":"codex-auto-merge","onBehalfOf":null} |
 
+| 2026-10-22 | TK-000B | Owner approved the repair proposal for all three repositories after the blanket work-branch rule blocked a correction push. | Baseline main lacked CI; a trigger assertion failed as expected. Changed workflow covers PRs and pushes to integration/main. Local tour tests 21/21, syntax, layout, doctor, Wiki and ADR validation passed. | AGENTS, RUNBOOK, AUTO_MERGE.md and sourced Wiki correction. | CI-only main bootstrap, hosted checks, independent assembled review, live rule replacement and containment. |
+
 ## Completion Result
+
+The original setup below is superseded by TK-000B; repair delivery and live settings readback remain pending.
 
 Setup delivered through [PR #15](https://github.com/KaydenClark/Workbench_Template/pull/15); native Task closure recorded below. Spec acceptance is not owner QA or main approval.
 
