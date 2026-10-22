@@ -15,7 +15,7 @@ Commands live in `RUNBOOK.md`.
 <!-- hot-specs:start -->
 | Spec | Current slice | Owner | Blocker | Latest meaningful event | Next gate |
 |---|---|---|---|---|---|
-| [S-000C](workbench/specs/S-000C-ci-agent-review-auto-merge/SPEC.md) | Acceptance / owner gate | codex-auto-merge | none | TK-001 closed with proof. | Setup delivered; retain owner QA and explicit main approval as separate gates. No further implementation is assigned. |
+| [S-000C](workbench/specs/S-000C-ci-agent-review-auto-merge/SPEC.md) | TK-000B: Repair work-branch delivery gates, review policy and main CI coverage (in-progress; runs 1, codex/ci-policy-repair @ 99f8cc0, dirty 8) | codex-auto-merge | none | TK-000B claimed by codex-ci-repair. | Close TK-000B with verification and documentation proof. |
 | [S-001](workbench/specs/S-001-self-explaining-room/SPEC.md) | Acceptance / owner gate | Kayden Clark | none | TK-003 unblocked by owner direction and closed; the room is published and clonable. | None; every slice is closed and the capability is published. |
 <!-- hot-specs:end -->
 
