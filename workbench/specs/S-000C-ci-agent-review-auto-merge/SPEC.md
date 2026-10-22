@@ -75,6 +75,8 @@ RUNBOOK owns the commands and limits. AGENTS routes delivery to that procedure. 
 |---|---|---|---|---|---|
 | 2026-10-22 | TK-001 | Owner requested auto-merge, clarified separate-agent review and generic work-branch meaning. | Live GitHub settings and workflow inventory read. | This Spec. | Implementation, tests, independent review and settings readback. |
 
+| 2026-10-22 | TK-001 | Live GitHub regenerated test merge SHAs on merge attempts with unchanged head and base; original status binding failed closed. | API readback showed the new test merge had no review status. Corrected procedure uses head SHA plus strict up-to-date checks; retargeting requires fresh review. | RUNBOOK. | Corrected candidate CI, independent review and actual merge. |
+
 ## Completion Result
 
 Pending. No owner QA or main approval recorded.
