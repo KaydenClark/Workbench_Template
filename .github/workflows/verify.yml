@@ -1,0 +1,44 @@
+name: Workbench verification
+
+on:
+  pull_request:
+    branches: [integration, main]
+  push:
+    branches: [integration, main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: workbench-verify-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '26'
+          package-manager-cache: false
+      - name: Run repository checks
+        env:
+          WORKBENCH_VERIFY_BASE: ${{ github.event.pull_request.base.sha || github.event.before }}
+          GIT_CONFIG_COUNT: "1"
+          GIT_CONFIG_KEY_0: init.defaultBranch
+          GIT_CONFIG_VALUE_0: main
+        run: |
+          git diff --check "$WORKBENCH_VERIFY_BASE" HEAD
+          node tests/evidence-history.test.mjs
+          node tools/check-evidence-history.mjs "$WORKBENCH_VERIFY_BASE"
+          node tests/tour.test.mjs
+          node --check tour.mjs
+          node workbench/tools/workbench-layout.mjs validate --project .
+          node workbench/tools/spec-workbench.mjs doctor
+          node workbench/tools/wiki.mjs validate
+          node workbench/tools/adr.mjs validate
