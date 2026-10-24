@@ -8,8 +8,8 @@
 **Updated:** 2026-10-24
 **Catalog description:** Install the complete upstream Workbench capability reference and route it from the Wiki as the first v3.2.2 documentation contribution.
 **Blockers:** none
-**Latest event:** TK-000C claimed by codex-catalog.
-**Next gate:** Close TK-000C with verification and documentation proof.
+**Latest event:** TK-000C closed with proof.
+**Next gate:** Owner review and main verification remain separate; PR20 carries remote integration and fresh-clone receipts.
 
 ## Outcome
 
@@ -93,8 +93,12 @@ Wiki reference, router, public README link, this Spec and generated projections.
 |---|---|---|---|---|---|
 | 2026-10-24 | spec | Owner assigned reference catalog as a v3.2.2 contribution | Baseline suite green; current version and schema checked | Scope recorded | Copy, verification and review pending |
 | 2026-10-24 | TK-001 | Ticket closed | 21/21 tour tests; syntax, layout, Wiki validation and doctor pass; pinned source path/commit and byte-equality audit; independent content review PASS at41266a9 | Installed portable capability catalog, summarized MEMORY route, README and Lexicon entry routes | Independent review of final work-record closeout, reviewed integration and fresh remote clone receipt; owner main promotion and full release upgrade remain separate |
+| 2026-10-24 | TK-000C | Task closed | Current Template suite passes:21 tour+14 history tests,8 preserved sections,syntax,layout,doctor,Wiki,ADR,diff; hosted verify40091641714 success on e4087a2; content and preservation review PASS; installed state unchanged | Current capability reference, MEMORY/README routes and sourced scope | Final metadata review and CI, integration and fresh-clone receipts; main and full release remain separate; close attribution: {"agent":"codex-catalog","claimant":"codex-catalog","onBehalfOf":null} |
+| 2026-10-24 | TK-000C | Post-close final Template verification | Full current suite passed:21 tour tests,14 history tests,8 protected sections against62db588,syntax,layout,doctor,Wiki,ADR,diff; hosted verify40091641714 SUCCESS at e4087a2 | Complete catalog and sourced routes verified | Final metadata review/CI and staged delivery; main and full release remain separate |
 
 ## Completion Result
+
+The live-base catalog contribution is implemented and checked. [PR20](https://github.com/KaydenClark/Workbench_Template/pull/20) carries its remote integration and fresh-clone receipts. This Spec remains active for the owner/main boundary, not further catalog implementation.
 
 The catalog is installed and verified against the pinned upstream content.
 Independent content review passed on `41266a9b7936a99c7bf06d7ccd97e0997163b52e`.
