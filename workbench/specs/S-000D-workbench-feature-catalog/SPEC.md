@@ -47,7 +47,7 @@ reusable Wiki template, with a summarized route and public Wiki entry link.
 - Preserve all product/runtime/skills/manifest/history bytes. One branch holds
   this entire contribution; main promotion stays owner-only.
 - Source owns catalog content and pinned capability evidence under Workbench
-  Feature Catalog (S-005X); this Spec owns installed copy and local checks.
+  Feature Catalog (S-006L); this Spec owns installed copy and local checks.
 
 ## Non-Goals
 
@@ -72,7 +72,7 @@ initial candidate and stale tracking baseline.
 
 - [x] Installed reference matches the reviewed upstream catalog and has a summarized MEMORY route.
 - [x] Existing Template suite and Wiki validation pass; runtime, skills, manifest and product bytes remain unchanged.
-- [ ] Immutable independent review and remote integration containment recorded.
+- [x] Immutable independent review and remote integration containment recorded.
 
 ## Testing Seams
 
@@ -96,16 +96,14 @@ Wiki reference, router, public README link, this Spec and generated projections.
 | 2026-10-24 | TK-000C | Task closed | Current Template suite passes:21 tour+14 history tests,8 preserved sections,syntax,layout,doctor,Wiki,ADR,diff; hosted verify40091641714 success on e4087a2; content and preservation review PASS; installed state unchanged | Current capability reference, MEMORY/README routes and sourced scope | Final metadata review and CI, integration and fresh-clone receipts; main and full release remain separate; close attribution: {"agent":"codex-catalog","claimant":"codex-catalog","onBehalfOf":null} |
 | 2026-10-24 | TK-000C | Post-close final Template verification | Full current suite passed:21 tour tests,14 history tests,8 protected sections against62db588,syntax,layout,doctor,Wiki,ADR,diff; hosted verify40091641714 SUCCESS at e4087a2 | Complete catalog and sourced routes verified | Final metadata review/CI and staged delivery; main and full release remain separate |
 | 2026-10-24 | review | Review verdict: pass at f4ba03c1d04d9c6b7a3a2a18228e164579c49885 [762d7c935bfa] #1 | Independent exact-candidate review PASS; current nine-command suite and preservation checked. Required hosted CI, integration receipt and fresh-clone readback remain delivery checks; no main/release approval. | codex-independent-catalog-review | 3 |
+| 2026-10-24 | TK-000C | Reconciled actual remote delivery receipts and source identity correction | PR20 merge6aea5aaa contains reviewed525bf41; PRCI40092077881 and landedCI40092198491 SUCCESS. Fresh remote clone passed the full current9-command suite and catalog byte equality. Source PR595 reissued its collided work record asS-006L using full remote inventory; catalog bytes unchanged | Source owner reference corrected; original evidence preserved | Owner/main and complete versioned package remain separate |
+| 2026-10-24 | review | Review verdict: pass at 9e4c3f64287bea7f220577ad9a281483215f0ebe [4f04264d8da5] #2 | Independent follow-up review PASS: source owner correction, actual delivery/fresh-clone receipts, protected evidence preserved; catalog and installed state unchanged. Exact-head hosted CI remains required before this receipt reconciliation merges. | codex-independent-catalog-review | 2 |
 
 ## Completion Result
 
-The live-base catalog contribution is implemented and checked. [PR20](https://github.com/KaydenClark/Workbench_Template/pull/20) carries its remote integration and fresh-clone receipts. This Spec remains active for the owner/main boundary, not further catalog implementation.
+Catalog delivered to integration through [PR20](https://github.com/KaydenClark/Workbench_Template/pull/20), merge `6aea5aaaf0fa9d3e6f2f485eef71a0ffde39d981`, containing reviewed head `525bf417218a51e9e44b5d23b05a4ee9c320fd78`. Final-head and landed CI passed. A fresh remote clone passed the complete current suite and catalog byte comparison.
 
-The catalog is installed and verified against the pinned upstream content.
-Independent content review passed on `41266a9b7936a99c7bf06d7ccd97e0997163b52e`.
-The delivery PR supplies the remote integration and fresh-clone receipts.
-This Spec remains active for owner Human QA and main verification; no owner
-approval, complete release upgrade or main promotion is claimed.
+The [source catalog contribution](https://github.com/KaydenClark/LLM_Workbench/pull/595) is now owned by Workbench Feature Catalog (S-006L); the old candidate identity collided with retained remote work and is not an alias. This record preserves the original append-only evidence and corrects only its live source route. No further catalog implementation is pending here. Owner/main verification and the complete v3.2.2 package remain separate; this Spec stays active for that boundary.
 
 ## Remaining Limitations Or Follow-Up Specs
 
