@@ -15,6 +15,7 @@ Commands live in `RUNBOOK.md`.
 <!-- hot-specs:start -->
 | Spec | Current slice | Owner | Blocker | Latest meaningful event | Next gate |
 |---|---|---|---|---|---|
+| [S-00C](workbench/specs/S-00C-workbench-feature-catalog/SPEC.md) | TK-001: Install and verify the complete upstream capability reference (in-progress) | codex-catalog | none | TK-001 claimed by codex-catalog. | Close TK-001 with verification and documentation proof. |
 | [S-001](workbench/specs/S-001-self-explaining-room/SPEC.md) | Acceptance / owner gate | Kayden Clark | none | TK-003 unblocked by owner direction and closed; the room is published and clonable. | None; every slice is closed and the capability is published. |
 <!-- hot-specs:end -->
 

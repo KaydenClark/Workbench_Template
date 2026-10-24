@@ -7,7 +7,7 @@ provenance:
   - Genesis or Adoption of this room
 source_paths:
   - workbench/wiki
-last_verified: 2026-09-08
+last_verified: 2026-10-24
 ---
 
 # Example Workbench Memory
@@ -19,6 +19,10 @@ last_verified: 2026-09-08
 
 This router holds durable room memory only: context, decision-history
 pointers, and routing. It never duplicates live task state; it routes to it.
+
+## Workbench Feature Catalog
+
+- [Workbench features and capabilities](workbench-capabilities.md) - every capability, its purpose, introduction-version evidence, availability and limits.
 
 ## Source Precedence
 
@@ -55,9 +59,8 @@ nothing.
 | How do I know the explanation is still true? | `node tests/tour.test.mjs` - drift is a test failure, not a backlog item |
 | How did the harness get here, and how do I stand in an earlier generation? | [VERSION_HISTORY.md](../docs/VERSION_HISTORY.md), then `git checkout version/NN-...`; recorded by [S-002](../specs/S-002-version-history-replay/SPEC.md) |
 
-This room is young and deliberately small; it has no flat notes yet. The rows
-above route to live controls and to the room's own executable description,
-which is where its durable knowledge actually lives.
+The capability reference above explains the upstream Workbench. The room-specific
+rows route to the live controls and this room's executable description.
 
 Add a row only when a durable note exists to route to. A young room may have an
 empty table; that is fine. Grow flat notes beside this router and inside the

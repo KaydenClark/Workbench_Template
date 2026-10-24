@@ -24,7 +24,7 @@ These are the Context Map's entry routes. Follow the smallest applicable route:
 |---|---|
 | Accepted terminology and product direction | This Lexicon -> [Blueprint](BLUEPRINT.md) |
 | Assigned work, evidence, and implementation | [Manifest](workbench/manifest.json) -> assigned stable spec -> its referenced source/tests |
-| Complete capability inventory | [Spec catalog](workbench/specs/CATALOG.md) -> stable spec; includes completed history |
+| Workbench capabilities, purpose and introduction history | [Wiki router](workbench/wiki/MEMORY.md#workbench-feature-catalog) -> maintained capability reference; [Spec catalog](workbench/specs/CATALOG.md) retains delivery records |
 | Durable knowledge and design concepts | [Wiki router](workbench/wiki/MEMORY.md) -> relevant note -> its governing sources |
 | Decision rationale | [ADR register](workbench/docs/adr/REGISTER.md) -> active decision -> its operational owners; [history](workbench/docs/adr/HISTORY.md) remains explicit |
 | Commands and recovery | [Runbook](RUNBOOK.md) -> relevant procedure -> named tool |
