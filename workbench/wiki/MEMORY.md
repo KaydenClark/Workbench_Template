@@ -24,6 +24,7 @@ state; it routes to it. Private jots remain outside shared routes.
 ## Workbench Feature Catalog
 
 - [Workbench features and capabilities](workbench-capabilities.md) - capabilities, purpose, introduction evidence, source availability and limits.
+- [Catalog scope](context-workbench-feature-catalog.md) - the sourced owner intent and local delivery boundary.
 
 ## Source Precedence
 
