@@ -8,8 +8,8 @@
 **Updated:** 2026-10-24
 **Catalog description:** Install the complete upstream Workbench capability reference and route it from the Wiki as the first v3.2.2 documentation contribution.
 **Blockers:** none
-**Latest event:** TK-001 claimed by codex-catalog.
-**Next gate:** Close TK-001 with verification and documentation proof.
+**Latest event:** TK-001 closed with proof.
+**Next gate:** Confirm acceptance criteria and completion result.
 
 ## Outcome
 
@@ -55,12 +55,12 @@ Source catalog candidate; no unrelated project work.
 
 | Ticket | Slice | Status | Blockers | Proof |
 |---|---|---|---|---|
-| TK-001 | Install and verify the complete upstream capability reference | in-progress | none | pending |
+| TK-001 | Install and verify the complete upstream capability reference | done | none | 21/21 tour tests; syntax, layout, Wiki validation and doctor pass; pinned source path/commit and byte-equality audit; independent content review PASS at41266a9 |
 
 ## Acceptance Criteria
 
-- [ ] Installed reference matches the reviewed upstream catalog and has a summarized MEMORY route.
-- [ ] Existing Template suite and Wiki validation pass; runtime, skills, manifest and product bytes remain unchanged.
+- [x] Installed reference matches the reviewed upstream catalog and has a summarized MEMORY route.
+- [x] Existing Template suite and Wiki validation pass; runtime, skills, manifest and product bytes remain unchanged.
 - [ ] Immutable independent review and remote integration containment recorded.
 
 ## Testing Seams
@@ -81,10 +81,15 @@ Wiki reference, router, public README link, this Spec and generated projections.
 | Date | Ticket | Event | Verification | Docs | Remaining gap |
 |---|---|---|---|---|---|
 | 2026-10-24 | spec | Owner assigned reference catalog as a v3.2.2 contribution | Baseline suite green; current version and schema checked | Scope recorded | Copy, verification and review pending |
+| 2026-10-24 | TK-001 | Ticket closed | 21/21 tour tests; syntax, layout, Wiki validation and doctor pass; pinned source path/commit and byte-equality audit; independent content review PASS at41266a9 | Installed portable capability catalog, summarized MEMORY route, README and Lexicon entry routes | Independent review of final work-record closeout, reviewed integration and fresh remote clone receipt; owner main promotion and full release upgrade remain separate |
 
 ## Completion Result
 
-Pending reviewed integration. Full release upgrade, owner Human QA and main are not claimed.
+The catalog is installed and verified against the pinned upstream content.
+Independent content review passed on `41266a9b7936a99c7bf06d7ccd97e0997163b52e`.
+The delivery PR supplies the remote integration and fresh-clone receipts.
+This Spec remains active for owner Human QA and main verification; no owner
+approval, complete release upgrade or main promotion is claimed.
 
 ## Remaining Limitations Or Follow-Up Specs
 
