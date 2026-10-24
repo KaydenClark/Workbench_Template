@@ -22,6 +22,9 @@ The manifest declares every managed support path. Application code belongs to
 the project that adopts the structure; the harness runtime remains under
 workbench/tools and changes only through an explicit managed update.
 
+Read the [Workbench feature catalog](workbench/wiki/workbench-capabilities.md)
+for capabilities, purpose, version evidence and availability.
+
 ## How This Project Is Run
 
 Start with [AGENTS](AGENTS.md) -> [STARTUP](STARTUP.md) -> the assigned Spec and Task. Use [Runbook orientation](RUNBOOK.md#orientation) for an unfamiliar operation. Read other owners when the operation needs them:

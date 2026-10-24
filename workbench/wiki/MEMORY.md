@@ -21,6 +21,11 @@ This router holds durable room memory only: context, decision-history
 pointers, source-linked Jot context and routing. It never duplicates live Task
 state; it routes to it. Private jots remain outside shared routes.
 
+## Workbench Feature Catalog
+
+- [Workbench features and capabilities](workbench-capabilities.md) - capabilities, purpose, introduction evidence, source availability and limits.
+- [Catalog scope](context-workbench-feature-catalog.md) - the sourced owner intent and local delivery boundary.
+
 ## Source Precedence
 
 1. Verified runtime and this room's live controls: `AGENTS.md`, `BLUEPRINT.md`,
