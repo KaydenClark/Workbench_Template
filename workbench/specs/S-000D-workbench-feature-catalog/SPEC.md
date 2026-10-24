@@ -1,6 +1,6 @@
-# S-00C - Workbench Feature Catalog
+# S-000D - Workbench Feature Catalog
 
-**Spec ID:** S-00C
+**Spec ID:** S-000D
 **Status:** active
 **Priority:** 1
 **Owner:** codex-catalog
@@ -8,8 +8,8 @@
 **Updated:** 2026-10-24
 **Catalog description:** Install the complete upstream Workbench capability reference and route it from the Wiki as the first v3.2.2 documentation contribution.
 **Blockers:** none
-**Latest event:** TK-001 closed with proof.
-**Next gate:** Confirm acceptance criteria and completion result.
+**Latest event:** TK-000C claimed by codex-catalog.
+**Next gate:** Close TK-000C with verification and documentation proof.
 
 ## Outcome
 
@@ -21,6 +21,13 @@ availability and limitations from this room's existing Wiki router.
 The tour explains this reference room; it does not catalog the upstream product.
 
 ## Current Verified State
+
+Live integration basis on 2026-10-24: `62db588443e04ad99a52b0d2bcdc0a2ec99b9dd1`.
+The initial tracking ref was stale because generic fetch selected main. The
+explicit integration refspec revealed newer controls and installed capabilities.
+This candidate preserves that live tree and adds a current-source supplement.
+The following initial observations are historical setup evidence, not current
+installed-state assertions.
 
 Inspected main `bcd0747ad2a40e3a3b27a2193b48612d30dce936`; delivery baseline
 integration `fc0fc18c2c1752c8c98a4fed20304e803c71f53c`: installed v3.2.1,
@@ -40,7 +47,7 @@ reusable Wiki template, with a summarized route and public Wiki entry link.
 - Preserve all product/runtime/skills/manifest/history bytes. One branch holds
   this entire contribution; main promotion stays owner-only.
 - Source owns catalog content and pinned capability evidence under Workbench
-  Feature Catalog (S-001Y); this Spec owns installed copy and local checks.
+  Feature Catalog (S-005X); this Spec owns installed copy and local checks.
 
 ## Non-Goals
 
@@ -52,6 +59,10 @@ rewriting completed records or publishing main.
 Source catalog candidate; no unrelated project work.
 
 ## Vertical Implementation Slices
+
+The live reconciliation Task below owns remaining execution. Earlier slice
+records in this section and the evidence log are historical, bounded to the
+initial candidate and stale tracking baseline.
 
 | Ticket | Slice | Status | Blockers | Proof |
 |---|---|---|---|---|

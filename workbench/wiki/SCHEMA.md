@@ -7,7 +7,7 @@ provenance:
   - LLM Workbench template wiki
 source_paths:
   - workbench/wiki
-last_verified: 2026-09-08
+last_verified: 2026-10-18
 ---
 
 # Wiki Schema and CRUD Contract
@@ -16,10 +16,12 @@ last_verified: 2026-09-08
 
 ## Purpose And Ownership
 
-The wiki is this project's durable, navlinked knowledge base. It compiles
-source-backed context so agents follow a concise map instead of rediscovering
-raw conversations and files. It routes to the live controls; it never copies
-them.
+The wiki is this project's evolving, navlinked synthesis of source-backed
+knowledge, intent, findings, proposals and unresolved questions. Agents update
+the affected topic when an authorized operation changes it; a cold start
+retrieves only the needed context. It routes to live controls without copying
+their requirements or current Task state. Legacy notepads remain readable
+sources, not a second authority.
 
 The wiki is not a Governance Plane and owns none. A note may document
 Grounding or Enduring Context, but those are roles of claims in an operation,
@@ -42,16 +44,43 @@ additional index service is required by this boundary.
   one deployment-profile wiki.
 
 Declared collections are `design-concepts/` (required to exist, may be empty),
-`guidebooks/` (ordered procedures), and `archive/` (historical, generated,
-superseded, and migration evidence). Every collection is flat; only `archive/`
-may nest. `MEMORY.md` is the only router.
+`features/` (one readable article per completed Spec, captured at its closure
+point; may be empty), `guidebooks/` (ordered procedures), and `archive/`
+(historical, generated, superseded, and migration evidence). Every collection
+is flat; only `archive/` may nest. `MEMORY.md` is the only router. This
+standalone reference room retains its project Wiki profile and historical
+routes.
+
+## Fresh Capture And Privacy
+
+The installed [Jot skill](../skills/jot/SKILL.md) captures small, source-linked
+entries in an existing topic page or a flat `context-TOPIC.md` page. Record the
+claim kind and state, source, speaker or author, time and linked correction or
+supersession. A confirmed owner intention is not implementation proof or Canon.
+Append corrections without erasing the original claim and its provenance.
+
+New project context is shared by default and routed from `MEMORY.md` so a fresh
+clone can recover it. Check source and privacy before publication. Explicit
+private capture uses ignored, untracked `.jot-private-TOPIC.md` pages; retrieval
+opts in to them within existing access. They do not enter shared discovery,
+validation or public bundles. A sensitivity label is not access control, and
+moving private material into tracked pages requires specific exposure approval.
+Keep legacy source records intact.
+
+## Page Kinds
+
+`MEMORY.md` is the overview router and gives every linked page a useful
+one-line summary. Topic pages may explain an entity or concept, synthesize
+sources, or retain a durable comparison. `design-concepts/` holds durable
+cross-cutting models; `features/` holds completed capability explanations.
+Temporary status and Task state remain in their operational owners.
 
 ## Required Properties
 
 Every active note uses YAML frontmatter with:
 
 ```yaml
-type: memory | project | person | machine | guidebook | design-concept | meta
+type: memory | project | person | machine | guidebook | design-concept | feature | meta
 status: active | partial | stale | archived
 sensitivity: normal | private | restricted
 knowledge_role: canonical | curated | derived | historical
@@ -82,9 +111,14 @@ last_verified: YYYY-MM-DD
 
 - Create a note only when no existing active note owns the fact.
 - Keep every collection flat; do not add category indexes.
-- Do not create notes for one-off chat answers, temporary status, or tasks.
-- Design Concept articles are created only on the owner's direction; see
-  `design-concepts/README.md`.
+- Do not create notes for temporary status or tasks. File a chat answer only
+  when it produced durable source-backed knowledge, not for a passing answer.
+- An agent creates or updates pages touched by an authorized operation; the
+  operation authorizes its Wiki maintenance, without per-article approval.
+  Record that operation in a Design Concept article's `authorized_by` and
+  `History`; see `design-concepts/README.md`.
+- Capture a completed Spec in `features/` at its closure point, before its
+  records are retired or discarded; see `features/README.md`.
 
 ## Read
 
@@ -96,6 +130,9 @@ last_verified: YYYY-MM-DD
 
 ## Update
 
+- At an operation's exit, update each affected topic or entity page, relevant
+  synthesis and router summary. Keep settled requirements and decisions in
+  their governing owners and link to them from the Wiki.
 - Update the owning note rather than appending a second version elsewhere.
 - Refresh `last_verified` only for facts actually checked in the current task.
 - Label inferred claims with `Inference:` and dated claims with their date.
@@ -103,6 +140,14 @@ last_verified: YYYY-MM-DD
   source is verified.
 - Never copy live task rows, spec evidence, or generated Taskboard state into
   a note; link to the owner instead.
+
+## Lint
+
+After a Wiki update, read touched pages and their affected routes for source
+coverage, correct summaries and contradictions, then run validation. At
+assembled review, review affected pages against changed controls as well as
+whole-Wiki structural validation. A green validator is not semantic proof;
+the [to-docs Wiki lint](../skills/to-docs/SKILL.md#wiki-lint) gives the checks.
 
 ## Stale Handling
 
@@ -134,8 +179,8 @@ node workbench/tools/wiki.mjs validate
 node workbench/tools/wiki.mjs normalize
 ```
 
-The validator checks the router, the declared collections, required
-properties and enums, relative source paths, the Design Concept article shape,
+The validator checks the router, declared collections, required properties
+and enums, relative source paths, Design Concept and features article shapes,
 the absence of copied live task state and secret-like material, and reports
 stale notes as attention. `validate` never writes.
 
@@ -146,8 +191,9 @@ for a manifest whose recorded source identity is a placeholder or disagrees with
 `workbenchVersion`. `doctor` emits both, from the installed-state hook beside
 its managed-runtime check; the checks themselves live in
 `workbench/tools/workbench-layout.mjs` and are repaired by its `seed-documents`
-and `record-source` commands. `RUNBOOK.md` -> Upgrading The Harness
-documents them. Neither blocks.
+and `record-source` commands. The installed
+[update-harness skill](../skills/update-harness/SKILL.md) documents their
+upgrade route. Neither blocks.
 
 `normalize` is the explicit repair for a note missing required properties. It
 inserts only what is absent, never edits a body or overwrites a declared value,
@@ -156,4 +202,5 @@ allows - `status: partial`, `knowledge_role: derived`, a `provenance` line
 naming the normalization, the note's own path as `source_paths`, and
 `last_verified` set to the day it ran - and infers `type` from the note's
 location. Correct those values by hand afterwards; a Design Concept article
-still needs its owner-directed `authorized_by`, `parent`, and sections.
+still needs its `authorized_by`, `parent`, and sections, and a features article
+still needs its sections.

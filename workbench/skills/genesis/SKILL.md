@@ -1,0 +1,102 @@
+---
+name: genesis
+description: Create a new greenfield project from a founding prompt using the Workbench bootstrap protocol and a private remote recovery boundary.
+---
+
+Use Genesis only for a new greenfield project. If the target already contains
+real code, history, or project controls, route to `/adoption` instead. An
+explicit copy of the Workbench Template into a fresh target is still greenfield:
+it starts a new project with its own identity and evidence, rather than
+inheriting the Template's room state.
+
+1. [Recover the release source](#recover-the-release-source), then read
+   `templates/GENESIS.md` completely. Treat it as the bootstrap procedure;
+   this skill is only its conversational entrypoint.
+2. Preserve the founding prompt verbatim, verify the target path is inside the
+   authorized workspace, and classify the target before writing anything:
+   create it as an empty directory if absent, then run
+   `node tools/workbench-classify.mjs classify --project PATH` from the release
+   checkout. Continue only when the verdict is `genesis`; `adoption` routes to
+   `/adoption`, `upgrade` routes to `/update-harness`, and `unclassifiable`
+   stops with the reported reasons for the owner. `init` accepts any
+   directory without a manifest, so this read-only verdict is the routing
+   check; the fresh-Template `derive` path instead refuses an existing
+   destination itself. Then prepare owner questions from the prompt and
+   verified evidence, and ask only when a missing answer changes architecture, privacy,
+   money, credentials, or destructive risk. Preparation does not answer a
+   question or create a decision.
+3. Run the Genesis phases in order: prepare questions; record explicitly locked
+   owner decisions as needed in active ADRs under the manifest-declared
+   `workbench/docs/adr/` collection; verify Actuality; then derive scoped Specs
+   from those inputs and any bounded choice the owner stated plainly in the
+   founding prompt. Do not turn an assumption, inherited Template content, or a
+   prepared question into an owner decision.
+4. For an explicitly selected fresh Template copy, use the validated
+   `tools/genesis-from-decisions.mjs derive` path documented in the protocol.
+   It forms the room from reviewed drafts and recorded decisions; implementation
+   and remote recovery still follow. Otherwise create the seven filled root controls, run
+   the release checkout's `node workbench/tools/workbench-layout.mjs init` for
+   the schema 2 support root (it seeds the wiki contract, declares
+   `git.defaultBranch` and `git.integrationBranch` from `--default-branch` and
+   `--integration-branch`, and appends the Workbench line-ending block to
+   `.gitattributes`, which is committed with the room so a Windows
+   `core.autocrlf=true` clone keeps the receipt hashes; a Windows clone also
+   needs `core.symlinks=true` for the skill adapters) and
+   `node tools/workbench-tools.mjs install` for the receipt-backed runtime
+   tools and `node tools/workbench-skills.mjs install --project PATH` for the
+   receipt-backed skills lane and its discovery links, copy and fill the wiki router, create one stable spec under the
+   manifest-declared path, and record the exact commands: getting started in
+   `README.md`, the run, operate, inspect and error commands in the manifest's
+   `legibility` declaration, and verification in the Runbook. From then on run
+   the project's own `node workbench/tools/spec-workbench.mjs ...` copies. Do
+   not copy global core into a project-local skill tree or create a second proof store.
+   Authorized room-local extensions follow the
+   [`workbench-runtime` skill](../workbench-runtime/SKILL.md#room-local-skills).
+5. Establish Git recovery immediately. When the current authorization and
+   authenticated repository namespace permit remote creation, create a private
+   remote if none was supplied. Never infer public visibility, change
+   credentials, or overwrite an existing remote.
+6. Follow the workspace branch policy. By default, publish task checkpoints and
+   completed work to a prefixed task branch and promote verified work only to
+   the declared integration branch (`git.integrationBranch` in
+   `workbench/manifest.json`; `init` declares `integration` unless told
+   otherwise). Every project requires this staging branch, distinct from the
+   default branch. Create it from the default branch when absent and push it
+   (`git branch NAME DEFAULT` then `git push -u origin NAME`); verify the remote
+   ref and preserve an existing branch. A creation or publication blocker stays
+   in the first Spec and leaves Genesis incomplete. The merge from the
+   declared branch into the default branch stays with the owner.
+7. Always commit and push after every completed task and before yielding incomplete
+   work. A local-only scaffold, or a working tree that was never committed, is
+   not a completed Genesis handoff; the `templates/GENESIS.md` completion boxes
+   require the commit on a prefixed branch and the resolving integration branch
+   verified on the remote, distinct from the default branch.
+8. Run the generated project's targeted and full verification, update the
+   owning spec evidence, render its Taskboard, run doctor, pass the readiness
+   gate `node workbench/tools/workbench-layout.mjs validate --project PATH --genesis`
+   (it fails closed on a missing skills lane, tools receipt, filled control or
+   actionable first spec), and report the remote recovery ref plus the
+   under-one-minute demo.
+
+## Recover the release source
+
+Setup protocols and classification are release-side, not installed runtime
+commands. Resolve the room's skills lane through its manifest, then inspect
+its `.workbench-skills.json` receipt's `source.repository` and `source.commit`.
+These identify the source of this installed setup procedure. The manifest's
+`provenance.source` can be older formation history; do not silently substitute
+it for an updated skills receipt. Runtime tools have their own source receipt.
+If required components name different sources, verify the requested setup
+candidate and compatibility before mutation; do not assume newest wins.
+
+Locate a clean checkout of that repository at that exact commit, or fetch an
+isolated checkout within the authorized workspace. Verify remote, full HEAD
+and clean source paths. With no receipt (a fresh target or producer checkout),
+use the explicitly selected verified release; if none is recoverable, request
+that missing source once and hold only setup. No private machine path is needed.
+
+From that checkout read `templates/GENESIS.md` (or `templates/ADOPTION.md` for
+Adoption), including `Configure project authority` in Genesis. Run classification
+there with `node tools/workbench-classify.mjs classify --project ABSOLUTE_TARGET`.
+Do not run a nonexistent room-local `tools/` command, install producer tooling
+into the runtime lane, or treat missing release files as a successful setup.

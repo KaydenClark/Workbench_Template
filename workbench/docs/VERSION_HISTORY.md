@@ -303,3 +303,79 @@ private transport runtime. The tour and filled controls explain these changes.
 verification, fresh-project proof and the separate Example integration result.
 Original genesis provenance remains v3.1.2; installed component receipts name
 v3.2.0. This update does not rewrite the historical replay branches.
+
+## Unreleased Template upgrade candidate (2026-10-18)
+
+The historical generations and `v3.2.1` manifest label above remain the
+released baseline. The current Template branch installs a later, **unreleased**
+Workbench candidate without assigning it a new version or adding a replay
+branch. Its managed runtime and skills receipts pin producer candidate
+`0ce1750750f80767536f4d4c0bc44bf5ccabe730` (31 runtime files and 33 skills
+containing 53 managed files). The native update changed one runtime file and
+three skill files from the earlier installed generations; other managed payload
+bytes remain as installed.
+These identify installed bytes, not a final producer integration pin or a
+published release. The Template also carries two generic startup-route sections
+from producer candidate `aebfb970fa7f84032f0df52a6c61c5d9432b7cb3` and
+reconciles room-owned controls, Wiki pages, tour and tests for this room.
+
+The room deliberately retains its name, genesis and historical upgrade proof,
+version replay table, manifest identity, and `v3.2.1` release labels in
+receipts. Those facts describe the room's lineage and released baseline; they
+do not override the pinned candidate source commits. The installed Wiki and
+Lexicon follow current feature, Jot, privacy and Task routes while keeping this
+room's existing tour, historical Spec links and standalone Wiki profile. A
+final integration identity and upgrade acceptance are recorded only after the
+applicable review, verification and integration steps succeed.
+
+### Producer integration containment (2026-10-19)
+
+The selected source `0ce1750750f80767536f4d4c0bc44bf5ccabe730` is now an
+ancestor of LLM Workbench `integration` at
+`c581d7510f398ef7675f7adc51a57d4c8309147b`. Its managed runtime and
+skills payload is unchanged at that integration tip. The receipts continue to
+pin the selected source commit so installed bytes remain identifiable; this
+containment does not stamp a release or establish Template integration delivery.
+
+### Template integration delivery (2026-10-19)
+
+Workbench_Template PR11 merged reviewed candidate
+`cd68ea759b100b94e423051a69da2264267cbaf5` into Template `integration`
+as `f3d34a0f7d2bbb60b2a087afa18079aa09cf3bb8` at
+`2026-10-19T05:42:21Z`. The merge and candidate share tree
+`d62319c0d44f1510aed06e07b1473cf84f763d47`. This records the completed
+upgrade integration.
+The managed receipts still pin selected source
+`0ce1750750f80767536f4d4c0bc44bf5ccabe730`, unchanged in producer
+`integration` at `c581d7510f398ef7675f7adc51a57d4c8309147b`. The build
+remains unreleased, and Template `main` was not promoted by this merge.
+
+### Producer integration re-pin (2026-10-19)
+
+A second unreleased carry re-pinned the managed runtime and skills receipts
+from `0ce1750750f80767536f4d4c0bc44bf5ccabe730` to LLM Workbench source
+`9734078399efb2b49b9fbca195d2c8f3c68b9722`, the producer `integration` tip when
+the carry started. The `v3.2.1` release label stays on the manifest and
+receipts because the source manifest still declares it; this stamps no release
+and does not promote Template `main`. The carry ran the source's additive
+layout migration (status `current`, no change) and the explicit native updates
+of runtime tools and core skills, and every installed managed file matches the
+pinned source.
+
+Managed files that changed: runtime tools `spec-workbench.mjs` (legacy numeric
+Task rows exempt from the remote-identity collision check),
+`skill-inspection.mjs` and `workbench-layout.mjs` (room line-ending policy and
+its `line-endings` doctor state); core skills `adoption`, `genesis` and
+`update-harness`. The other 28 runtime files and 30 skills are unchanged. The
+Glossary retirement (producer PR 431) was not landed at the pin and is not
+carried: this room's controls are unchanged and `LEXICON.md` is still the
+vocabulary control.
+
+Room-owned change: the Template had no `.gitattributes`; it now ends with the
+Workbench line-endings block (`/workbench/**` and each root control as
+`text=auto eol=lf`) so a Windows checkout with `core.autocrlf=true` keeps LF and
+the receipt hashes hold. The two `backups[].path` fields the updates appended
+were removed from the receipts before commit because they name a local
+temporary home, as the previous carry did. Component rollback from the receipt
+backups is therefore not established; whole-room Git recovery to the Template
+`integration` commit before this carry is the recovery route.

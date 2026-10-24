@@ -1,1004 +1,164 @@
 # Workbench Template - Runbook
 
-> Generated from LLM Workbench v3.2.1. See Upgrading The Harness
-> below.
+> Generated from LLM Workbench v3.2.1. See the `update-harness`
+> skill -> Upgrading The Harness.
 
-**Last reviewed:** 2026-09-08
-**Blueprint reviewed:** 2026-09-09
-**Runtime owner:** Kayden Clark (owner); any agent may run every command here.
-**Environment:** local only
+## Orientation
 
-This file explains how to operate, verify, recover, and evaluate the project. It
-should be boring, exact, and executable.
+Start with [STARTUP](STARTUP.md), then assigned Spec/Task. New project: [Genesis](workbench/skills/genesis/SKILL.md); existing project: [Adoption](workbench/skills/adoption/SKILL.md). Return to the assignment; this manual grants no authority.
 
-## Ordinary Entry
+## Find, claim and resume
 
-Follow `AGENTS.md` -> this section -> `LEXICON.md` -> Task Routing. Inspect the
-root, branch, upstream and dirty state; run the project-local spec doctor and
-load the explicitly assigned spec. For owner-directed pickup, use `next --json`
-and `show` to resolve that assignment. The spec and ticket set the normal
-stance. Investigate within the task; do not invent a next task when blocked.
-Load remaining Runbook sections only for the operation being performed.
+To select or resume assigned work, start with [Situate the slice](workbench/skills/implement/SKILL.md#1-situate-the-slice). Execution follows [selection and lifecycle](workbench/skills/implement/SKILL.md#work-selection-and-lifecycle), including claim/resume gates. Check current ownership and corrections; return to the same Task on failure.
 
-For a setup-only Round One assignment, a fresh agent follows that route, checks
-the manifest, relevant Wiki and ADRs, and runs read-only configuration checks.
-Return the result in chat only: no feedback report, handoff, checkpoint,
-self-created task, or other delivered prose artifact. Internal JSON capture
-follows the meaningful-work rule and is reconciled at closeout; it does not
-turn a chat-only setup check into a reporting assignment. Round One precedes
-feedback testing.
+## Direct and dispatch
 
-### Behavior Selection
+For coordination, follow [Director](workbench/skills/director/SKILL.md), [Dispatcher](workbench/skills/dispatcher/SKILL.md) and [landmarks](workbench/skills/director/SKILL.md#landmark-lifecycle). Return blockers to their owner; keep one shared writer.
 
-After resolving the requested scope, compose the smallest behavior already
-authorized by ordinary language; do not wait for a second skill invocation.
+## Preserve decisions and corrections
 
-| User intent | Behavior and endpoint |
-|---|---|
-| Decide or stress-test an idea | `grilling` with `notepad`; save answers/corrections before continuing |
-| Preserve or resume meaningful work | `notepad`; verify live state and returned revision |
-| Reconcile agreed claims | `promote` with `to-docs` and `save`; no implied implementation |
-| Write specifications only | `to-spec` and needed `to-tickets`; stop at the specified endpoint |
-| Deliver assigned work | `carry` with `implement`, verification, independent integration review and `save` |
-| Prepare another agent's continuation | core `handoff`; readable Markdown with inherited scope |
-| Review a candidate or readiness | `code-review`; report only, no implementation or main merge |
+Before dependent output, [Jot](workbench/skills/jot/SKILL.md); [promote](workbench/skills/promote/SKILL.md) authorized decisions. Return corrections to their source with history.
 
-Every helper inherits the caller's narrower endpoint. Mention is not invocation
-and invocation is not new authority. Optional routers and historical extension
-skills are not prerequisites. For meaningful work, create/resume a JSON note,
-read its revision, verify Actuality and correct stale state before dependent
-work. Confirm successful append/current results after material changes and
-validate/read back before voluntary pause or handoff. Runtime revision, privacy
-and dependency checks enforce those operations; host-native interception of
-arbitrary agent actions is not claimed.
+## Check, review and publish
 
-## Prerequisites
+Use [verification](#test-and-build), [assembled review](workbench/skills/code-review/SKILL.md), then [publication](workbench/skills/implement/SKILL.md#branch-completion). Return failures to affected work. A pushed candidate is pending; main needs scoped authority.
 
-Required tools:
+## Handoff and recover
 
-- Node.js 20 or newer (`node --version`). Nothing else.
+At continuation boundaries, [handoff](workbench/skills/handoff/SKILL.md) and [reconcile](STARTUP.md#reconcile). Return through [resume](STARTUP.md#resume); stale summaries defer to current sources.
 
-Required accounts/services:
+## Workflows
 
-- None. The room runs entirely offline.
+For one named verb, follow its [steps and loop](workbench/skills/implement/workflow-reference.md#workflows); read only the needed section. Compatibility routes follow.
 
-Required local files:
+### Align
 
-- None. Everything the room needs is committed.
+[Procedure](workbench/skills/implement/workflow-reference.md#align).
 
-## Environment Configuration
+### Approve
 
-None. This room reads no environment variables and holds no configuration
-outside the files committed to it. That is deliberate: the smallest room that
-demonstrates the structure should not also demonstrate secret handling.
+[Procedure](workbench/skills/implement/workflow-reference.md#approve).
 
-The rules still bind if that ever changes:
+### Check
 
-- Do not commit real credential files, tokens, local databases, logs, or
-  private data.
-- Keep secrets local-only.
-- Prefer a visible degraded state over fake data when a source is unavailable.
+[Procedure](workbench/skills/implement/workflow-reference.md#check).
 
-## Install
+### Clean Up
 
-```bash
-node --version   # v20 or newer. The room has no dependencies.
-```
+[Procedure](workbench/skills/implement/workflow-reference.md#clean-up).
 
-Expected result:
+### Complete
 
-- `node --version` prints v20 or newer. There is no install step to succeed or fail.
+[Procedure](workbench/skills/implement/workflow-reference.md#complete).
 
-## Run Locally
+### Confirm
 
-```bash
-node tour.mjs              # the annotated map: every place, what it owns, why
-node tour.mjs --lifecycle  # how this room came to exist, and how it reaches a newer version
-node tour.mjs --json       # both, as data
-```
+[Procedure](workbench/skills/implement/workflow-reference.md#confirm).
 
-Open:
+### Delivered
 
-- Nothing to open. The output is the product.
+[Procedure](workbench/skills/implement/workflow-reference.md#delivered).
 
-Expected result:
+### Explore
 
-- The annotated map prints: three zones, every root control, every declared lane and collection, and the product.
+[Procedure](workbench/skills/implement/workflow-reference.md#explore).
+
+### Idea
+
+[Procedure](workbench/skills/implement/workflow-reference.md#idea).
+
+### Implement
+
+[Procedure](workbench/skills/implement/workflow-reference.md#implement).
+
+### Jot
+
+[Procedure](workbench/skills/implement/workflow-reference.md#jot).
+
+### Journey
+
+[Procedure](workbench/skills/implement/workflow-reference.md#journey).
+
+### Judge
+
+[Procedure](workbench/skills/implement/workflow-reference.md#judge).
+
+### Lane Sweep
+
+[Procedure](workbench/skills/implement/workflow-reference.md#lane-sweep).
+
+### Map
+
+[Procedure](workbench/skills/implement/workflow-reference.md#map).
+
+### Plan
+
+[Procedure](workbench/skills/implement/workflow-reference.md#plan).
+
+### Prepare
+
+[Procedure](workbench/skills/implement/workflow-reference.md#prepare).
+
+### Promote
+
+[Procedure](workbench/skills/implement/workflow-reference.md#promote).
+
+### Prototype
+
+[Procedure](workbench/skills/implement/workflow-reference.md#prototype).
+
+### Publish
+
+[Procedure](workbench/skills/implement/workflow-reference.md#publish).
+
+### QA
+
+[Procedure](workbench/skills/implement/workflow-reference.md#qa).
+
+### Record
+
+[Procedure](workbench/skills/implement/workflow-reference.md#record).
+
+### Review
+
+[Procedure](workbench/skills/implement/workflow-reference.md#review).
+
+### Ship
+
+[Procedure](workbench/skills/implement/workflow-reference.md#ship).
+
+### Submit
+
+[Procedure](workbench/skills/implement/workflow-reference.md#submit).
+
+### Verify
+
+[Procedure](workbench/skills/implement/workflow-reference.md#verify).
 
 ## Test And Build
 
-Fast check:
+[Check policy](workbench/skills/implement/SKILL.md#engineering-and-verification).
 
 ```bash
 node tests/tour.test.mjs
-```
-
-Full verification:
-
-```bash
-node tests/tour.test.mjs
+node tests/evidence-history.test.mjs
+node tools/check-evidence-history.mjs <immutable-base-sha>
 node --check tour.mjs
 node workbench/tools/workbench-layout.mjs validate --project .
 node workbench/tools/spec-workbench.mjs doctor
+node workbench/tools/wiki.mjs validate
+node workbench/tools/adr.mjs validate
+git diff --check
 ```
-
-Expected result:
-
-- `tests/tour.test.mjs` passes with zero failures, `validate` reports `current`,
-  and `doctor` exits 0.
 
 ### Test Coverage Policy
 
-Treat tests as the project specification, not as a comfort signal. The suite
-should be strong enough that if someone accidentally deletes a meaningful line,
-branch, route, data contract, workflow step, validation rule, or bug fix, at
-least one test or documented manual check fails.
+[Coverage](workbench/skills/implement/SKILL.md#test-coverage-policy).
 
-Coverage rules:
+## Template Operations
 
-- Prefer red/green TDD: write or update the failing test first, confirm the
-  expected failure, then implement the smallest fix.
-- Run every relevant existing test before judging the suite.
-- Keep tests that prove behavior a user, API consumer, operator, or future
-  maintainer depends on.
-- Improve tests that assert the wrong level, hide real failures, rely on stale
-  fixtures, overuse snapshots, or pass without checking meaningful behavior.
-- Remove tests that are stale, duplicated without adding a boundary, or pure
-  bloat.
-- If behavior cannot be tested in the current harness, record the exact reason
-  and use the strongest concrete manual check available.
+For this reference room's exact setup, upgrade, recovery and evaluation commands, follow the relevant section of [Template operations](workbench/docs/TEMPLATE_OPERATIONS.md).
 
-## Workbench Lifecycle, Diagnostics, And Decision Records
+## CI And Agent Review Auto-Merge
 
-The project runs its own installed runtime tools from the manifest-declared
-tools lane:
-
-```bash
-node workbench/tools/spec-workbench.mjs next --json
-node workbench/tools/spec-workbench.mjs show S-###
-node workbench/tools/spec-workbench.mjs claim S-### --agent NAME
-node workbench/tools/spec-workbench.mjs close S-### --proof "..." --docs "..." --remaining-gap "..."
-node workbench/tools/spec-workbench.mjs render
-node workbench/tools/spec-workbench.mjs doctor
-node workbench/tools/adr.mjs new --title "Decision title"
-node workbench/tools/adr.mjs validate
-node workbench/tools/adr.mjs register
-```
-
-`doctor` prints every registered finding with its severity and blocking
-effect and exits non-zero only for `all` or `selection` findings; a
-`selected-slice` finding is excluded by `next` and refused by `claim`, and an
-`attention` finding stays visible without blocking. `doctor --home USER_HOME`
-(default: the user home, only ever read) also checks each installed core skill's
-managed marker `.workbench-skill.json` (schema 2: `source`, `release`,
-`commit`, `contentHash`, and current `compatibleRooms.minimum`/`.maximum`).
-A room inside the declared inclusive range may differ from the global release.
-Missing, broken, modified, unknown generation/range, incompatible, conflicting
-source, duplicate Codex discovery and mixed global generations are attention
-findings with effect `none`. Older markers without a range remain unknown;
-version equality does not establish compatibility. Normal setup preserves
-existing names and explicit update owns repair. Filesystem discovery is distinct
-from configured-host invocation. `doctor` also reports
-`integration-branch-undeclared` and `integration-branch-missing` (scope
-`git`, effect `none`) until `workbench/manifest.json` `git.integrationBranch`
-names a branch that resolves locally or on a remote; the Genesis readiness
-gate fails closed on the same two conditions. When that branch resolves and
-the spec `next` would select is already complete there, `doctor` reports
-`complete-on-integration` (attention) without hiding the work. Decision records live in
-`workbench/docs/adr/`; an accepted record names the control that carries its
-operational owners in `canonicalized_in`. Active accepted decision claims are
-architectural Canon. `register` derives active `REGISTER.md` and complete
-`HISTORY.md`; supersession uses one whole-record `superseded_by` filename and
-deprecation requires `deprecation_reason`. Historical bodies remain unchanged.
-
-`permission-scope-drift` is reported when `.claude/settings.json` exists and
-withholds a manifest-declared authorship lane (no covering `Edit` `allow` rule,
-a `deny` or `ask` rule covers it, or a restrictive pattern is uncertain), or
-grants `workbench/tools/` in `allow` without a covering `ask` holding the whole
-lane; an intersecting tools deny also remains visible. It names each lane,
-never blocks, and never edits the file. Claude Code applies `Edit` rules to every built-in
-file-editing tool. Resolve the finding by adding the
-`Edit(./workbench/<lane>/**)` rules, holding `workbench/tools/**` in `ask`,
-simplifying an uncertain restriction, or recording the deliberate restriction
-in `AGENTS.md`. The Genesis readiness check fails closed on the same finding;
-a room without the file is unaffected.
-
-The wiki lane raises `room-brain-unrouted` (attention) when a root control does
-not route back to the room brain: `AGENTS.md` must reference `workbench/wiki/`
-and `README.md` must reference `MEMORY.md`; the finding names the control that
-lacks the route, and a room whose manifest declares a different wiki lane path
-sees it until its controls name that lane. It raises `stale-stamp` (attention)
-when a wiki contract file or the room brain carries a `Generated from LLM
-Workbench` stamp naming a version other than `workbench/manifest.json`; refresh
-the stamp when the harness is upgraded (`validate --genesis` fails the same
-files with `version-mismatch`).
-
-### Visible Identifiers
-
-```bash
-node workbench/tools/spec-workbench.mjs next-id --prefix S --json
-node workbench/tools/spec-workbench.mjs next-id S-### --prefix TK --json
-node workbench/tools/adr.mjs new --title "Decision title"
-```
-
-`next-id` is a read-only proposal, not a reservation or permission to create work.
-Ticket proposals require the assigned spec and reserve labels from all specs in
-the Workbench. Write the returned label only during authorized planning, then
-render and run doctor before requesting another. ADR `new` writes a proposed
-record through the existing exclusive-publication path. Existing paths stay fixed.
-
-New durable labels contain at least one letter, so they cannot reuse historical
-decimal IDs that are no longer present. Spec/ticket minimum width is three;
-ADR allocation keeps width four. Width grows without truncation using alphabet
-`0-9 A-Z a-z`. Sorting uses suffix length then that alphabet, independent of
-locale; it is label ordering, not creation chronology. Case-folded and leading-zero
-collisions are refused. Letter-bearing ticket labels are unique across the room;
-legacy numeric ticket references retain their existing spec-qualified scope and
-are not claimed globally unique. Their bytes and lookup routes are preserved.
-
-Spec parsing, selection, blockers, claim/close, rendering, Genesis readiness,
-ADR registers, Wiki copied-task-state checks, guardrail contradiction checks and
-citation-anchor coverage accept the new syntax. Existing numeric syntax remains
-readable. Socket/team registry IDs and internal entry sequence IDs keep their
-existing formats; these commands do not allocate those artifact types.
-
-### JSON Notepads
-
-Visible note identifiers can be allocated without changing existing note paths:
-
-```bash
-node workbench/tools/notepads.mjs allocate --prefix N --objective OBJECTIVE_KEY --title "TITLE"
-node workbench/tools/notepads.mjs read --id N-001 --view current
-```
-
-Choose the artifact type prefix explicitly (for example N for objective notes);
-it is the prefix in the visible ID, not another identity field. Markdown
-handoffs do not use the JSON-notepad ID allocator.
-Allocation uses alphabet `0-9 A-Z a-z`, starts at one with minimum width three,
-and grows without truncation. It chooses the first unoccupied label; identifiers
-do not encode chronology. Legacy numeric labels reserve their existing text and
-are never decoded as a base-62 allocation high-water mark or renamed. Prefixes
-have independent scopes within the room. Case-folded and leading-zero variants
-reserve the same value, so N-00A, N-00a and N-000A cannot be allocated twice.
-Those restrictions deliberately avoid aliases on case-insensitive filesystems.
-
-`--id` resolves through the local inventory, including legacy records whose
-filenames differ from their IDs. It refuses unmatched or ambiguous identifiers.
-`--note` retains its original filename/path behavior; never combine the selectors.
-Allocation skips occupied destination names even when their stored IDs differ.
-Unreadable records or ambiguous IDs refuse identifier operations until their
-inventory is reconciled; they are preserved. Ordinary `create --note NAME`
-remains available for legacy named context. Allocation assumes one writer and
-checks current records; it supplies neither a distributed lock nor an eternal
-registry of deleted local notes. Active handoff retention still prevents source
-cleanup. Durable spec/ticket/ADR behavior is described above.
-
-New notepads are JSON. `workbench/tools/notepads.mjs` owns structural checks
-and updates. A new layout declares `sessions/notepads/`: bare names create
-`notepads/work/NAME.json`; explicit project-relative paths select another local
-type folder. Handoffs are authored as Markdown (`.md`) in the declared
-`handoffs` collection; they are readable continuation instructions, not JSON
-notepads and not `notepads.mjs` records. The tracked `notepad-templates`
-subcollection carries `notepad.schema.json` plus work and grilling JSON examples;
-the portable Markdown handoff shape is bundled as `assets/HANDOFF.md` in the installed `handoff` skill; producer source also exposes `templates/HANDOFF.md`.
-The schema describes new `notepad-1` interchange, while the runtime additionally
-checks unique entry IDs, links and revision safety. Legacy `scope-1` reading and
-migration remain supported without moving or regenerating source history.
-
-Existing schema 2 rooms remain valid. From the clean release checkout run
-`workbench-layout.mjs migrate --project PATH --version VERSION` to add the two
-collections and seed examples with recorded hashes. This moves no old note,
-preserves earlier provenance and the room version, and reports the layout source
-separately. Existing adjusted examples are retained and reported by the seeded
-document mechanism. Repeated migration reports `current`; use `seed-documents`
-to refresh untouched seeded examples. Seeding verifies the clean release and
-ordinary source, destination and receipt paths before writing or recording. An
-asserted version must match the source checkout. Validation checks effective Git
-ignore rules and already tracked live files in Git worktrees; outside Git its
-`ignoreVerification` says `not-a-git-worktree`, and no tracking guarantee follows.
-On a room without the new declaration,
-bare note names still use the legacy grilling collection. Never rewrite legacy
-Markdown merely to change its extension.
-
-```bash
-node workbench/tools/notepads.mjs list --objective KEY
-node workbench/tools/notepads.mjs create --note NAME --objective KEY --title "TITLE" --focus "FOCUS"
-node workbench/tools/notepads.mjs read --note NOTE --view current
-node workbench/tools/notepads.mjs read --note NOTE --topic TOPIC --limit N --cursor N
-node workbench/tools/notepads.mjs append --note NOTE --revision N --kind KIND --topic TOPIC --content "TEXT"
-node workbench/tools/notepads.mjs current --note NOTE --revision N --state "STATE" --next-action "NEXT" --view-field NAME=VALUE
-node workbench/tools/notepads.mjs trim --note NOTE --revision N --entry ENTRY_ID
-node workbench/tools/notepads.mjs validate --note NOTE
-node workbench/tools/notepads.mjs migrate --note NOTE
-node workbench/tools/notepads.mjs delete --note NOTE --revision N
-```
-
-Only `--note` and the revision a write checks are always required. `list`
-takes `--objective` or no filter at all; `read` takes `--topic`, `--entry`,
-`--kind`, `--limit` and `--cursor`; `append` takes `--corrects`,
-`--depends-on`, `--interpretation` and `--source-file`; `current` takes
-`--unresolved` once per open item and `--view-field` for a field this workflow
-keeps in the current view; `trim` takes `--durable-owner` to record
-where the removed material now lives.
-
-Kinds are `directive`, `source_record`, `finding`, `proposal`, `decision`,
-`correction`, `verification`, and `blocker`. A kind names what a record is for
-a reader; it never grants authority or verifies a claim.
-
-1. Resolve the explicit objective or note first; related records share objective
-   context. If no stronger signal exists, inspect the newest-created local note
-   or handoff and check relevance before using it.
-2. Preserve a compact current view (objective, state, unresolved work, next action)
-   and ordered entries containing meaningful source text, findings, uncertainty,
-   and corrections. Save important context as it becomes available, before
-   continuing work that would leave it only in the conversation. Token exhaustion
-   or Stop may prevent another write; do not wait for closeout. JSON strings may
-   contain full prose. A workflow may keep its own field in the current view;
-   `current` preserves it across an update.
-3. After interruption, load relevant context and verify current controls and
-   actual project state. File availability alone proves neither freshness nor
-   successful recovery. Preserve significant work while it is underway.
-4. For an owner-requested handoff, author a destination-specific Markdown
-   compaction from the selected material in `sessions/handoffs/`. State the job,
-   verified facts, exact resume action, boundaries, and source paths in plain
-   language. Include needed corrections and dependencies. Carry the selected
-   content when the destination cannot read the local note.
-5. Before cleanup, verify that promoted material is present in its durable
-   owner and that retained work can still be understood and resumed. Trim only
-   reconciled material from a retained note; preserve unresolved context,
-   corrections, and active handoff dependencies. Flush or delete the whole
-   record only when all important material is reconciled and nothing still
-   depends on it. No routine archive or extra approval is needed for this normal
-   cleanup. Preserve legacy sources and existing checkpoints under their current
-   retention rules.
-
-`read --view current` returns the resumption view and the revision to write
-against without putting entry history into the response. A topic read carries
-the corrections and declared dependencies of what it selected, each entry
-marked `match` or `context`, and reports `page.matched`, `page.returned`,
-`page.has_more`, and `page.next_cursor`: a bounded read never truncates
-silently, so never report a slice as the whole record.
-
-Every write names the revision it read. A mismatch is refused as
-`stale-revision` naming the current one, `create` refuses an existing name and
-`append` an existing entry id as `duplicate-identity`, and a correction or
-dependency naming material the note does not hold is refused too. New material
-is privacy-scanned before it can reach the file; preserved history is not
-rescanned, because an old record may legitimately quote a matching string.
-A refused or failed write leaves the previous valid record unchanged.
-
-An id is never reused. `append` remembers the highest number each id prefix has
-reached in `extensions.entry_sequence`, and `trim` records the mark for what it
-removes, so an id already cited in a durable owner cannot come back naming
-different material after the entry that proved the number is gone.
-
-`trim` removes named reconciled entries and refuses with `retained-dependency`
-rather than breaking a link in either direction: removing material a retained
-entry still depends on is refused, and so is removing a correction while
-keeping the claim it corrects, which would leave the record asserting a fact
-already known to be wrong with nothing marking it superseded. Trim both halves
-together once the correction has landed in its durable owner.
-
-A subcommand refuses any flag it does not recognise, naming the ones it does.
-A dropped `--corects` would otherwise report a correction appended and write
-an entry with no link at all. A workflow that keeps its own field in the
-current view writes it with `--view-field name=value`, JSON when the value
-parses as JSON and the raw string otherwise; `current` preserves it from then
-on, and `state`, `unresolved` and `next_action` keep their own flags.
-
-An interim `scope-1` record reads as it is and migrates once, preserving its
-recorded text and timestamps, before it can be written to.
-
-`sessions.mjs` keeps `scan`; legacy `checkpoint` invocation refuses new copies. Do not send a
-JSON note through that copier and call its `.md` output a notepad operation.
-Skill prose and human-readable projections may remain Markdown.
-
-### Frozen History And Operational Recovery
-
-Existing `sessions/checkpoints/` files and citations remain unchanged.
-The legacy `sessions.mjs checkpoint` command refuses new copies. New selected
-claims follow direct owner promotion below. Operational receipts and backups
-use the ignored `sessions/recovery/` collection declared by the manifest;
-notepad discovery excludes it. Preserve old recovery references, and restore
-from the recorded Git SHA or explicit backup with byte read-back before claiming
-recovery. Do not treat local operational recovery as durable provenance.
-
-### Optional Private Session Transport
-
-Transport is optional; ordinary local notepad commands remain independent.
-The current implementation verifies the selected `workbench_sessions` GitHub
-repository through authenticated `gh` metadata. It never creates a remote,
-copies credentials, changes visibility or accepts public/unknown visibility.
-Start with an existing local clone of that private repository, an initialized
-branch and working local Git commit identity. The transport must have a distinct
-Git store, remote and root lineage from the project; a project worktree or clone
-is not a transport repository. This boundary is rechecked during use and final
-remote read-back. Assign and commit this room's
-`workbenchId` before cloning or configuring it.
-
-```bash
-node workbench/tools/session-transport.mjs configure --checkout PRIVATE_CHECKOUT \
-  --branch BRANCH --acknowledge-private-history
-node workbench/tools/session-transport.mjs status
-node workbench/tools/session-transport.mjs push --note NOTE
-node workbench/tools/session-transport.mjs resume --note NOTE
-```
-
-The explicit acknowledgment accepts retained private Git history, the privacy
-scan's limits, and that notes cannot transfer unpushed code or running processes.
-Machine paths and connection state stay in the ignored local recovery collection.
-A committed room identity plus root commit lineage protects the selected remote
-namespace `workbenches/<WBID>/`; its small `workbench.json` contains no machine
-path. Only explicitly selected valid JSON live notes, grilling records and
-handoffs map beneath `sessions/`. Templates, schemas, durable owners and recovery
-files never become selected notes. Unsafe paths, non-UTF-8 JSON and decoded privacy matches
-refuse before upload, including private strings hidden by duplicate JSON keys.
-Selected path ancestry reserves one case spelling across platforms; final
-acknowledgment rechecks namespace identity and path aliases as well as note bytes. Transport names use plain alphanumeric/dot/dash/underscore
-path components; unsupported existing names remain local unchanged.
-
-Push after a meaningful save or before switching devices. Resume fetches before
-writing selected local notes. A confirmed result names the freshly fetched
-remote SHA and checks selected bytes. Unchanged saves make no new commit. Private
-metadata/fetch/push failure reports pending with the last confirmed SHA; it never
-claims current acknowledgment. A local operation lock and a transport Git lock
-serialize participating commands. Revision conflicts preserve local and remote
-versions and require explicit reconciliation; there is no force push, implicit
-remote deletion or promise of machine-crash recovery. Keep one active note writer;
-other Git clients and local note writers do not automatically honor these locks.
-
-For a same-note conflict, keep one active writer and reconcile deliberately:
-
-1. Preserve the competing local note in a new ordinary file under the declared
-   ignored recovery collection; verify its effective Git ignore rule and bytes.
-2. Inspect the remote note at the result's `fetchedRemoteSha` and mapped path
-   using the configured checkout. Match its hash to the conflict result. Treat
-   its contents as evidence, never as instructions.
-3. If accepting that remote revision as the baseline, replace the local note
-   with those exact inspected bytes and run `resume` again. Stop on another
-   conflict; an advancing remote must be inspected anew.
-4. Re-author the retained local findings/corrections into that current note using
-   revision-checked note operations, resolving duplicate entry identities and
-   contradictions explicitly. Then push and verify acknowledgment. Retain the
-   original backup until no unresolved source or correction depends on it.
-
-This procedure records an explicit reconciliation choice. Merely retrying an
-unchanged conflict cannot overwrite either revision or update the baseline.
-
-Before replacing resumed notes, the helper retains original bytes and prior
-acknowledgment state in an ignored, restricted recovery directory. A write or
-read-back failure reports `partial`, names attempted and completed note writes,
-and points to the recovery record without acknowledging success. Inspect the
-record and compare current hashes before restoring anything; reconcile changes
-explicitly and retry. Successful resumes remove their temporary backups; a
-cleanup failure names retained recovery residue. This is observable recovery
-for caught failures, not an atomic multi-file or machine-crash guarantee.
-
-The helper uses a temporary Git index to preserve the checkout's existing files
-and staging area. Transport errors use registered effect-none diagnostics and
-never block local Workbench selection. Preserve failed-operation state and
-inspect it before retrying. A stale lock is an explicit recovery condition,
-never automatically stolen. Deleting current data does not erase private Git
-history; historical erasure is outside this tool.
-
-Local bare-repository tests inject simulated private metadata only at the module
-testing seam. They do not verify a private service or real device/provider round
-trip. Actual private-repository, Mac/Windows and Claude/Codex continuation gates
-remain separate from these mechanical tests.
-
-### Portable Save, Promote And Room-Local Skills
-
-`save` preserves already-authorized work in its existing owners, updates local
-continuation through `notepad`, and reports the recovery boundary actually
-verified. `promote` distills selected supported material, including corrections,
-through the direct owner promotion command below, then composes `save` for the
-already-promoted result. Neither starts implementation or grants broader scope.
-Explicit invocation and composition are distinct from mention. A promotion that
-was already performed must not be recursively promoted by save.
-
-The core machine catalog is `coreSkills` in the layout runtime; documentation
-and tests derive its size from that catalog. The current candidate includes
-save/promote while preserving checkpoint as a no-write compatibility notice.
-The v3.1.4 eighteen-skill manifest policy remains readable as a frozen legacy
-row; adding candidate source does not publish or stamp v3.2.0.
-
-For an authorized room-specific extension, keep its sole source at the project
-path `.agents/skills/NAME/SKILL.md`. Choose a name absent from required core and
-both global and project discovery roots; preserve any collision for explicit
-reconciliation. Track that source under the room's own Git policy. Create only
-a missing project `.claude/skills/NAME` directory symlink resolving to the same
-source, and ignore this generated adapter in project Git. On Windows, use a
-supported directory adapter only after checking the actual host; inability to
-create it leaves that discovery gate open. Do not duplicate implementation bytes
-or add `.codex/skills`. Compare resolved paths and then invoke the extension in
-the actual configured application. File presence and a valid alias alone do
-not prove native discovery or callability.
-
-Global installation does not publish room-local source into a personal catalog.
-That acceptance is a separately authorized operation. The global doctor
-`--home` inspection covers the declared global core; inspect project extension
-names and adapters separately. A new room needs no local extension and no
-personal catalog for core save/promote/notepad operation. Genesis's prohibition
-on a root `skills/` core shadow does not prohibit this room-owned source route.
-
-### Direct Owner Promotion
-
-Reconcile selected claims into an existing owner; keep their corrections and
-unfinished context in the working note. The author selects the proper owner,
-checks current authorization and distills faithful candidate text. A note label,
-ID or tool result grants no authority. This command neither commits nor cleans
-up the source.
-
-```bash
-node workbench/tools/sessions.mjs promote --from NOTE --revision N \
-  --entries finding-001,correction-001 --to OWNER.md --expected SHA256 \
-  --content AUTHORED_DRAFT.md
-```
-
-`--expected` is the SHA-256 of the destination bytes just read. The source must
-be a valid local JSON note. The separate authored draft and existing destination
-must be ordinary, singly linked files inside the project. Drafts are temporary
-authored documents, not new notepad records; keep them ignored until deliberately
-reconciled. The command requires every selected entry, carries its corrections
-and dependencies, refuses private material, stale inputs and ignored-note
-citations, and validates the proposed owner before writing. Existing controls,
-specs, ADRs, Wiki and docs/feedback Markdown owners are supported; create new
-owners through their ordinary authorized workflow first.
-
-Spec checks reuse lifecycle diagnostics and preserve existing append-only rows;
-ADR and Wiki checks reuse their validators. Controls receive heading and placeholder checks; other documents receive a
-heading check. These are not semantic policy audits. Run the owner's normal
-checks too. Successful output names source selection/context, old/new hashes and
-verified destination bytes. Reconcile remaining source dependencies before a
-separate notepad trim; unchanged source and draft do not prove cleanup is safe.
-
-Use one writer. Revision/hash checks are sequential guards, not filesystem locks
-or concurrent-write protection. A recoverable publication/read-back failure
-restores original bytes. If the filesystem also refuses restoration, the command
-returns `partial`, exits nonzero and retains the named original backup for
-recovery; do not retry or trim blindly. A leftover `recoveryResidue` names a
-backup whose cleanup failed. No crash-proof or machine-loss guarantee is claimed.
-Legacy checkpoint creation is retired; existing checkpoint history remains available.
-
-## Evaluation And Benchmarking
-
-Use this section to prove whether the workbench or project process is improving.
-The goal is evidence, not taste.
-
-### Benchmark-Driven Improvement
-
-Before changing agent rules, control docs, evaluation criteria, or the working
-process, capture the available guardrail or benchmark baseline. Put the intended
-score movement or outcome hypothesis in the owning spec, then record the
-before/after score and remaining recommendations after the change.
-
-Use 100/100 as a deliberately hard north star, not the release gate. Regression
-checks are the minimum ship gate. Never weaken a criterion to manufacture
-progress, and do not treat a static coverage score as outcome evidence. If this
-project has no executable benchmark yet, add one or state that the change cannot
-yet be called better.
-
-### Claims To Test
-
-The harness or process is only worth calling better when it can support at least
-one of these claims:
-
-1. Better than no project instructions.
-2. Better than a representative generic instruction file.
-3. Better than the prior version on the same task suite.
-
-### Evaluation Design
-
-Use controlled conditions:
-
-| Condition | What the agent gets | Purpose |
-|---|---|---|
-| `c0_none` | no project instructions | baseline |
-| `c1_generic` | a generic `AGENTS.md` / `CLAUDE.md` style file | common alternative |
-| `c2_current` | current project or template docs | current candidate |
-| `c3_candidate` | proposed branch or changed docs | improvement test |
-
-Score task outcomes, not how good the docs feel. Useful dimensions:
-
-| Dimension | What it measures |
-|---|---|
-| Correctness | hidden or independent acceptance check passes |
-| Scope adherence | changed files stay inside the task allowlist |
-| Verification honesty | final claims match independently rerun checks |
-| Docs upkeep | stale docs were updated or explicitly marked unchanged |
-
-Run multiple trials per condition when using stochastic agents. Report effect
-size and confidence interval when possible. Do not claim broad proof from one
-run.
-
-### Workbench Evaluation Commands
-
-The static evaluator and stochastic trial framework are producer tools in the
-pinned LLM_Workbench checkout; they are not installed in this room. Follow that
-checkout's Runbook for those commands and name the target room explicitly.
-Room-local acceptance uses `node tests/tour.test.mjs`, `node --check tour.mjs`,
-managed layout validation and spec doctor, as listed in Verification above.
-
-Real comparison runs may spend API budget. Size the run first and record the
-model, conditions, task suite, trial count, and result path before making claims.
-
-### Harness Feedback Loop
-
-The manifest feedback lane (`workbench/feedback/`) is the return channel to the
-upstream harness. Use its `REPORT_FORMAT.md`; lessons logged there feed harness changes, which must clear the same
-bar as any other "better" claim: a proposed template change is `c3_candidate`
-above, tested against the current docs on the same task suite before it ships.
-Feedback flows out; validated improvements flow back in as a harness upgrade
-(Upgrading The Harness, above). Taste alone never closes the loop; evidence does.
-
-## Data Operations
-
-The reference has no application data or application database migrations.
-Workbench support state has declared seeding, migration and recovery operations;
-use the matched managed-runtime procedures above. Its application-level
-persistent state is the files in the repository.
-
-## Deployment Or Startup
-
-None. There is nothing to deploy and no long-running process. The room is read
-where it sits and run with `node tour.mjs`.
-
-## Version-Control Procedures
-
-Git authority and policy live in `AGENTS.md` -> Git Rules. Keep executable
-commands and expected results here:
-
-```bash
-git status --short --branch
-git switch -c claude/s001-<slug> integration
-git diff --check && git diff integration...HEAD --stat
-gh pr create --base integration --head claude/s001-<slug>
-```
-
-Expected result: a clean working tree, a branch based on `integration`, and a PR
-whose diff contains only the slice it claims.
-
-Closeout, once the integration review has passed. A pushed branch is
-recoverable, not delivered; finish the merge and clean up after yourself:
-
-Run merge and containment verification as a fail-fast sequence. Pin the reviewed
-commit and reject a changed candidate. Merge must not delete branches before
-containment is verified. A linked worktree holding the target must not block
-verification. Only run cleanup when the owner has not deferred it; verify each
-local and remote tip is contained, tolerate absent branches, and use an atomic
-expected-tip guard on remote deletion so concurrent pushes are preserved.
-
-```bash
-(
-set -eu
-gh pr merge <number> --merge
-git fetch origin && git merge-base --is-ancestor <reviewed-sha> origin/integration && echo contained
-)
-```
-
-After successful verification, if cleanup is authorized:
-
-```bash
-git branch -d claude/s001-<slug> && git push origin --delete claude/s001-<slug>
-git worktree prune
-```
-
-Expected result: `integration` contains the reviewed commit, the merged branch is
-deleted locally and remotely, and no unmerged work was force-deleted.
-
-When cleanup is owner-deferred, the declared integration branch contains the
-reviewed work and the branches remain available for later cleanup. Disposable
-review clones and linked worktrees live outside the canonical checkout, under
-the host temporary directory; `git worktree prune` drops the registrations of
-removed ones, and a finished review checkout is removed once its review is
-recorded. None is a durable owner.
-
-## Upgrading The Harness
-
-These control docs were generated from a specific LLM Workbench version, recorded
-in the `Generated from LLM Workbench v3.2.1` stamp at the top of each
-doc. That stamp lets you tell when the project is running an older harness than
-the current one.
-
-To upgrade:
-
-1. Check the clean LLM Workbench release checkout's releases/changelog for what changed since
-   `v3.2.1`.
-2. Re-copy only the changed template sections; keep this project's filled-in
-   specifics. Never let `[BRACKETED]` placeholders leak back into filled docs.
-3. For this existing v3 room, use the pinned source layout migration for any
-   additive collections and reconcile `workbenchVersion` to the new version;
-   a `current` layout result alone does not advance that stamp. Preserve
-   historical genesis and layout provenance. Update managed runtime tools only with that checkout's
-   `node tools/workbench-tools.mjs update --project PATH --home HOME --explicit-update`;
-   keep its receipt and backup as the component recovery point.
-4. Update each doc's version stamp to the new version. Do not rewrite the room
-   manifest's historical adoption source to impersonate the newly installed
-   component generation.
-5. Re-run the full verification suite and record the upgrade in its owning spec.
-
-The runtime tools in `workbench/tools/` are Workbench-managed: their receipt
-(`.workbench-tools.json`) records the exact source release, commit, and file
-hashes. Verify them with `node /PATH/TO/LLM_WORKBENCH/tools/workbench-tools.mjs verify --project .`
-and replace them only through `update --explicit-update`, which backs up the
-previous files and records a rollback path. Never hand-edit a managed tool.
-
-This project's own `node workbench/tools/spec-workbench.mjs doctor` runs the
-same receipt hash check from the tools this project carries, so a hand-edited
-managed tool fails the check here with no release checkout present. It fails at
-the `all` effect, which also makes `next` and `claim` refuse until the runtime
-is repaired. The check runs only when `workbench/tools/` carries a receipt; a
-receipt that cannot be read, records no file hashes, names a file outside that
-lane, or does not account for every managed tool is reported as
-`tools-receipt-missing` rather than switching the check off. That last one
-matters because the drift report names the file it found: deleting that key
-would otherwise switch the check off for exactly the hand-edited tool. The
-authoritative list of what is managed ships inside the installed tools
-themselves, so a receipt is checked against that list and not against whatever
-the lane happens to hold - a managed tool deleted along with its key is still
-named. Dotted entries are skipped.
-
-The two coverage conditions have different repairs. A managed tool the receipt
-does not account for is refreshed with `update --explicit-update` from the
-release checkout, which rewrites the lost key and restores a deleted managed
-file. A file the managed runtime does not include has to be moved out of the
-lane instead: `update` cannot adopt it and reports `current`, and `install`
-refuses a lane that already carries a receipt.
-
-Without a release checkout `doctor` cannot say whether the receipt went stale
-or the bytes were changed - it reports every drifted file as
-`source-unavailable` - so run `verify` from the release checkout to classify
-it. A deleted receipt is the readiness gate's finding, not this check's. A
-deleted managed tool that another managed tool imports stops `doctor` from
-loading at all, so what appears is a loader stack trace rather than a finding.
-
-The source checkout must have a concrete `origin` and 40-character `HEAD`, and
-its managed source lane must be clean; otherwise install/update refuses before
-creating a receipt or backup.
-
-Managed-tool updates and rollbacks reject symlinked lane ancestors, linked or
-nonregular managed files, and unsafe backup entries before copying or creating
-backups. Resolve the path collision while preserving its target, then retry the
-explicit operation. Ordinary drift in a regular managed file still receives a
-backup and can be restored.
-
-Layout initialization and schema migration preserve existing session ignore
-rules and reject linked destination paths before writes. ADR creation, register
-rendering and direct owner promotion also reject unsafe destination chains and
-use private temporary files; direct promotion refuses a `--from` source
-outside the repository root, or one reached through a symbolic link, with
-`invalid-note` and writes nothing. Legacy Wiki adoption moves existing
-knowledge before seeding only the missing contract files.
-
-Treat a harness upgrade like any other change: smallest correct diff, verified,
-with proof. If a downstream lesson should flow *back* to the harness, capture it
-per the project's `WORKBENCH_FEEDBACK` convention.
-
-## Manual Harness Feedback Reports
-
-Run this workflow after a setup-only Round One check succeeds. It assesses the
-assigned target; it never authorizes a repair or invokes automated repair.
-
-1. Resolve `lanes.feedback`, `lanes.specs` and the relevant collections through
-   `workbench/manifest.json`. Pin the target revision and the assigned question.
-2. Inspect only relevant controls, source and named proof. Test consequential
-   claims, distinguish observation from inference, and disclose evidence limits.
-3. Write `REPORT-topic-date.md` in the declared feedback lane using its
-   `REPORT_FORMAT.md`. Include Target And Scope, Evidence And Limitations,
-   Findings, Challenged Or Rejected Findings, Next Action And Open Questions,
-   and Review Boundary. No findings is valid. Reports never live loose or in
-   the Wiki. If the format is absent in an older installation, these sections
-   are sufficient; explicit upgrades may copy it from the source templates.
-4. Put accepted follow-up work in its existing linked spec; proposed repairs
-   remain pending owner authorization. A report is not a work assignment.
-5. At a meaningful continuation boundary, a fresh session should find the report,
-   its linked spec, and the next executable action or owner gate using repository
-   state only. No universal handoff or new self-created task is required.
-6. Before integration, the candidate's separate-context review challenges the
-   report's consequential claims and recommendations along with the change.
-
-## Troubleshooting
-
-| Symptom | Likely cause | Check | Fix |
-|---|---|---|---|
-| `node tour.mjs` prints nothing | Node older than v20 (no top-level ESM support in the shipped form) | `node --version` | Install Node 20+ |
-| `every lane the manifest declares is explained` fails | A lane or collection was added to `workbench/manifest.json` and never described | `node tests/tour.test.mjs` | Add the place to `PLACES` in `tour.mjs`, with what it owns and why |
-| `the tools lane holds only what the receipt accounts for` fails | A file was added to `workbench/tools/`, which the managed runtime does not ship | `ls workbench/tools/` | Move it out of the lane. Leaving it there makes `next` and `claim` refuse with exit 1 |
-| `doctor` reports `unverified-provenance` | The manifest's recorded source release no longer matches its version stamp | `node workbench/tools/spec-workbench.mjs doctor` | Re-stamp with `workbench-layout.mjs record-source` from a clean release checkout |
-| `validate` reports `upgrade-required` | The manifest is schema 1 (a v3.0 five-lane room) | `node workbench/tools/workbench-layout.mjs validate --project .` | Run `workbench-layout.mjs migrate --project .` once |
-
-## Recovery And Rollback
-
-If a change fails:
-
-1. Identify the touched files and failing command.
-2. Revert only the smallest change needed, preserving user work.
-3. Rerun the failing verification command.
-4. Update the owning spec with the result and remaining gap, then render.
-
-Do not delete data, reset databases, rewrite history, or rotate secrets unless
-the user explicitly approves that action.
-
-## Operational Proof
-
-If a command changed durable project state, append evidence to the owning spec.
-For routine read-only runs, a final response note is enough.
-
-## Evidence And Continuation Practices
-
-Size a ticket so a fresh context can recover its inputs, exercise one useful
-behavior at its public seam and finish named verification. There is no accepted
-universal byte or token threshold. Unknown consequential product choices belong
-in a decision slice of the already assigned spec before dependent implementation;
-this does not authorize creating a task from an unassigned finding.
-
-Saving context or authoring a requested handoff does not terminate a session.
-Continue to the authorized endpoint. Preserve the complete original question
-inventory and stable IDs/statuses/corrections; a compact view routes to retained
-sources rather than replacing them. Multiple objective-linked notes are allowed,
-with an unambiguous active resume route. Stale migrated discovery paths belong
-in the existing ownership/migration assignment.
-
-When partitioning evidence, preserve previously published rows byte-for-byte and
-link successor work from its owner; do not rewrite an old result to match newer
-truth. Name which immutable tree each claim reads. A generated projection names
-its sources and freshness limits; no cached observer service is implied.
-
-The claim-age diagnostic compares UTC calendar date stamps and reports a claim
-older than one calendar day (strictly greater than 86,400,000 milliseconds).
-The old prose saying working day was inaccurate. Historical GPT_OS local-day
-Preflight and ref-deduplication rules remain scoped historical requirements,
-not an automatically imported Workbench algorithm.
-
-Author small ADRs for independently changing consequential decisions with real
-alternatives or reversal cost. Binding rules stay in current owners. A semantic
-review checks agreement; text presence alone cannot establish fidelity.
-Portable record parsing treats LF, CRLF and CR as syntax variations; read-only
-validation never normalizes files as a side effect.
-
-Keep setup human-readable and staged through the documented Genesis, adoption
-and explicit-upgrade routes. Verify every consumed source lane before mutation,
-then installed behavior in the actual room. Project-owned schemas/templates and
-promoted Wiki knowledge travel in project Git; optional private session transport
-handles live working context separately. A clean upstream test is not downstream
-acceptance. Recheck actual destination refs and preserve unknown remote state.
-
-When an assigned evidence record needs partitioning, first pin the source commit
-and preserve the original published file. Keep each distinct introduction and
-its provenance with the material it introduces; never merge those boundaries
-into a new narrative. In the existing owning spec, record each successor part's
-stable path, source range or entry IDs, count and content hash, plus total source
-and resulting counts. Verify that the parts account for all selected material
-exactly once, with exclusions explicitly named, and read back their bytes against
-the pinned source. Append a route from the existing owner to the parts; leave
-published rows and prior citations intact. No automatic size cap or routine
-partition is required. Never weaken validators or discard evidence to fit a cap.
-
-
-### Workbench connection identity
-
-`workbench/manifest.json` stores `workbenchId`, a `WB-` identifier containing
-128 random bits encoded in the shared base-62 alphabet. New Genesis/adoption
-initialization assigns a new identity. Clone, worktree, rename, relocation and
-maintenance preserve the manifest's identity; visible artifact IDs retain their
-existing room scope. No path, credential or remote configuration enters this
-field. Global uniqueness is probabilistic; transport must check its selected
-namespace inventory before association.
-
-For an existing room without the field, explicitly assign it once:
-
-```bash
-node workbench/tools/workbench-layout.mjs identify --project .
-```
-
-Commit that manifest before cloning the legacy room. Repeated assignment reads
-back the existing value without rewriting it. Read-only validation never assigns
-identity; ordinary legacy local work remains available without transport.
-Migration assigns missing identity and preserves existing valid identity.
-Malformed identity is refused, never silently regenerated. Independent projects
-use fresh initialization rather than copying another project's manifest.
-
-Local assignment uses an exclusive `workbench/.identity.lock`. A busy result
-preserves the existing writer's lock; after interruption, verify that writer is
-inactive before deliberately removing its stale lock. This is local writer
-serialization, not a cross-clone transaction or a crash-recovery claim.
-
-### Configured-host capability checks
-
-The minimum is writable declared lanes (relative, home-relative and absolute),
-native skill discovery and invocation, Node execution of managed tools, the
-selected directory adapter, and checkout record syntax. Evidence is scoped to
-the actual host/application/configuration. Missing capabilities affect dependent
-operations only; unavailable checks stay unverified. Capability does not prove
-enforcement or agent reliability. Remote transport is optional.
-
-From the pinned producer checkout, run `node tools/configured-host.mjs --probe
-CONFIG.json`. The explicitly supplied JSON names `root` (producer checkout),
-`sourceCommit` (the expected full 40-character producer commit),
-`sourceRepository` (the expected producer `origin` URL),
-`cwd` (authorized temporary adapter location), `home`, nonempty `lanes` (existing
-writable directories), `skill` (a declared SKILL.md path), and optional `node`
-(runtime executable). The command creates and removes private temporary probes
-only in those locations. Before executing managed doctor, it verifies that
-`root` is the named Git checkout root at the expected commit and origin, with
-clean manifest, managed-tool, and ADR inputs. It executes managed doctor and parses actual ADRs;
-line-ending variants are structural evidence. Its exit code fails on a failed
-operation; zero may include unverified checks and is not blanket compatibility.
-Native discovery/invocation always needs a separate provider trace. Record the
-provider, model if reported, configuration, OS, exact source and operations;
-explicit skill-path invocation alone does not prove automatic discovery.
-
-Keep an empty tracked `.gitkeep` in required empty collections, including
-`workbench/sessions/recovery/`, so a clean Git clone contains the tour paths.
-Recovery contents remain ignored; the marker contains no operational data.
-
-## Template Ownership
-
-This installed reference is the Workbench Template. Its repository name and
-historical genesis/proof records remain unchanged. The optional tour explains
-the manifest; the manifest owns paths, root controls own operation and stable
-specs own scoped work. Actual project personalization remains a separate task.
-
-## Handoff Retention
-
-An owner-requested handoff is separately authored as a Markdown file in
-`sessions/handoffs/`, using the installed `handoff` skill and its bundled `assets/HANDOFF.md` as the copy-ready shape.
-It names the retained source, when any, in prose and must carry enough context
-for a receiver without local access. Before trimming or deleting source context,
-the author verifies that the receiver's needed material is durable or otherwise
-retained; Markdown handoffs are intentionally readable rather than tool-managed
-JSON records. Existing JSON handoffs remain legacy local sources and are not
-newly created.
-
-For a legacy JSON retaining destination, reconcile it before releasing retention: set its status to
-`RECONCILED`, clear unresolved items with `--unresolved ""`, and clear its next
-action with `--next-action ""`. Source cleanup remains a separate decision.
-Whole `delete` requires the source to be reconciled with no entries, unresolved
-items, next action, or active declared retainer. Unreadable live records block
-cleanup with named paths because retention cannot be established; repair or
-reconcile them without discarding their source bytes. This does not block other
-work or grant the tool authority to choose what is important. Writes and cleanup
-assume one writer per note; revision checks are not simultaneous-writer locks.
-
-## Independent Review Boundaries
-
-Task/integration review uses a fresh context and immutable candidate, comparison
-base, expected integration tip and named verification. Inspect scope, behavior,
-recovery, documentation, installed identities and consequential report claims.
-If the target changes, compare and review the resulting candidate as required
-before combining branches; a prior PASS is not approval of changed content.
-
-Whole-Workbench main-readiness review is separately requested, review-only work.
-It checks the combined product for drift, open gates, coherent skill composition,
-installed acceptance and semantic ownership. For the Blueprint, require all
-applicable destination sections, no status/version/evidence/catalog material,
-only materially relevant active ADR links, lossless removed-claim disposition,
-and root/template agreement. Record an explicit semantic pass/fail verdict;
-structure and link checks alone are insufficient. Only the owner approves/merges main.
-
-For incident claims inspect original call/result pairs, including failed,
-rejected and interrupted calls. Record coverage and missing/truncated evidence.
-Distinguish not attempted, rejected before execution, executed and failed,
-local success and remote acceptance with read-back. A summary's omission is
-not proof of non-occurrence. Behavioral acceptance separately records actual
-provider/version/model, prompt, source/installed hashes and observed skill use;
-explicit-path fixtures do not establish ordinary-prompt discovery. Unavailable
-checks remain unverified. Repeated controlled trials are needed for reliability.
-
-
-## Reference Upgrade Acceptance
-
-This repository is [Workbench_Template](https://github.com/KaydenClark/Workbench_Template),
-formerly Example_Workbench. It is the installed reference used to test every
-LLM Workbench version update. Upgrade completion requires the full room suite,
-matching manifest/control/runtime versions, exact managed-byte verification,
-preservation inventory and recovery evidence, followed by independent review,
-remote integration containment and checks in a fresh remote clone. The producer
-release gate consumes the owning upgrade spec's proof. Main remains owner-only.
-
-The v3.2.1 runtime also provides `workbench/tools/project-evidence.mjs prepare`.
-Its request names source evidence and open questions; it creates a local grilling
-note without inventing owner decisions. The full tour test suite exercises the
-installed command in a disposable room and verifies the source hash. Fresh-room
-Genesis derivation remains a producer command; this installation does not ship
-`tools/genesis-from-decisions.mjs`.
+Follow [checked delivery](workbench/docs/AUTO_MERGE.md) for CI, Task merge answers, assembled-Spec review, work-branch pushes and explicit main/release approval.
