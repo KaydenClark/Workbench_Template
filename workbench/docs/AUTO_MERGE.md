@@ -10,7 +10,7 @@ alone does not. This policy supersedes the earlier blanket work-branch gates.
 `integration` and `main` require a PR, successful `verify` from GitHub Actions,
 an up-to-date branch, and protection against force-push and deletion. The workflow
 runs on PRs targeting both branches and on pushes to both landed branches. It has
-no path filters, one Ubuntu job, pinned actions, read-only permissions and
+no path filters, one Linux job on the Servitor self-hosted runner, pinned actions, read-only permissions and
 concurrency cancellation. The Template suite is small, so every run uses all
 checks in [Test And Build](../../RUNBOOK.md#test-and-build), including main PRs
 and landed main commits. No Markdown path is treated as proof of low impact. Common checks include
@@ -70,3 +70,9 @@ release approval is established by this CI repair.
 These changes configure this named repository. They do not update managed core
 skills or the upstream generic templates. Shared credentials make review
 independence and owner approval process obligations, not machine identity proofs.
+
+Servitor runs this job inside its isolated `workbench-ci` Linux VM. There is
+no GitHub-hosted fallback and no hosted-runner minute consumption. The
+[producer operator guide](https://github.com/KaydenClark/LLM_Workbench/blob/integration/workbench/docs/SERVITOR_CI.md)
+owns runner availability, restart and diagnostics. Required checks and owner
+main/release authority remain unchanged.
