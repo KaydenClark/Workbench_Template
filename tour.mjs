@@ -199,7 +199,7 @@ export const PLACES = [
     lane: 'feedback',
     path: 'workbench/feedback',
     owns: 'The return channel to the harness these controls came from.',
-    why: 'When a rule is wrong, the room needs somewhere to say so that is not the rule itself. It sits in a lane rather than at the root so the root keeps exactly eight controls.',
+    why: 'When a rule is wrong, the room needs somewhere to say so that is not the rule itself. It sits in a lane rather than at the root so the root controls stay at eight.',
   },
   {
     zone: 'The support root',
@@ -286,9 +286,9 @@ export const ROUTE = [
   },
 ];
 
-const ZONE_BLURBS = {
+export const ZONE_BLURBS = {
   'Root controls':
-    'Eight files, always at the root, always the same eight. An agent reads these\n  on entry and nothing else is required to know how to behave here.',
+    'Eight controls sit at the root, the same eight in every room. An agent reads these\n  on entry to know how to behave here. Two other root files are not controls:\n  STARTUP.md is the shared continuation view, and LEXICON.md is the archived\n  v3.2.1 vocabulary kept as history.',
   'The support root':
     'Everything the harness manages lives under `workbench/`, plus the skills lane at\n  `.agents/skills`, declared by a manifest rather than assumed by path. This is what\n  makes a room portable and upgradable.',
   'The product':

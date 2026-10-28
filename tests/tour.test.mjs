@@ -11,7 +11,7 @@ import crypto from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 
-import { PLACES, ROOM_ROOT, ROUTE, lifecycle, readManifest } from '../tour.mjs';
+import { PLACES, ROOM_ROOT, ROUTE, ZONE_BLURBS, lifecycle, readManifest } from '../tour.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const manifest = readManifest(root);
@@ -65,6 +65,22 @@ test('the eight root controls are present and all eight are explained', () => {
   assert.deepEqual(rootZone, [...controls].sort(),
     'the root-controls zone must be exactly the eight controls — no more, no fewer');
   assert.ok(!described.has('LEXICON.md'), 'the retired Lexicon is not a current root control');
+});
+
+test('root Markdown files are the eight controls plus named non-control files, and the tour says so', () => {
+  const controls = ['AGENTS.md', 'BLUEPRINT.md', 'GLOSSARY.md', 'ARCHITECTURE.md', 'RUNBOOK.md', 'TASKBOARD.md', 'CLAUDE.md', 'README.md'];
+  const nonControls = { 'STARTUP.md': /continuation view/i, 'LEXICON.md': /archived/i };
+  const rootMarkdown = fs.readdirSync(root).filter((name) => name.endsWith('.md'));
+  for (const name of rootMarkdown) {
+    assert.ok(controls.includes(name) || name in nonControls, `${name} sits at the root but is neither a control nor a named non-control file`);
+  }
+  const blurb = ZONE_BLURBS['Root controls'];
+  for (const [name, role] of Object.entries(nonControls)) {
+    if (!rootMarkdown.includes(name)) continue;
+    assert.ok(blurb.includes(name), `the root-controls blurb must name ${name} as a non-control file`);
+    assert.match(blurb.slice(blurb.indexOf(name)), role, `the root-controls blurb must say what ${name} is`);
+  }
+  assert.doesNotMatch(blurb, /always the same eight|nothing else is required/i, 'the blurb must not claim the root holds only the eight controls');
 });
 
 test('the skills lane is the tracked .agents/skills directory with one Claude link into it', () => {

@@ -358,7 +358,7 @@ The manifest's declared wiki shape: `project` (one room's memory router and coll
 A file in `workbench/tools/` installed from the Workbench release and listed in the tools receipt with its source release, commit, and hash.
 
 **Declared integration branch**:
-The branch, named by exact case in `workbench/manifest.json` `git.integrationBranch`, into which the independent review gate merges task branches; `git.defaultBranch` names the branch it is created from.
+The branch, named by exact case in `workbench/manifest.json` `git.integrationBranch`, which receives Task PRs after their self-check, merge answers and CI and stages assembled Spec work for its independent review; `git.defaultBranch` names the branch it is created from.
 
 ### Continuity and evidence boundaries
 

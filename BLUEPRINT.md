@@ -27,8 +27,9 @@ differences while exposing compatibility and unresolved acceptance honestly.
 
 One local command explains the room. The tour is an orientation aid checked
 against the manifest, not a second authority or an application to impose on every
-future project. Agents enter through AGENTS and STARTUP, then the assigned Spec
-and Task; the Runbook, Architecture and Glossary route needed procedures, owners and meanings. They
+future project. Agents enter through AGENTS, the Runbook orientation, Architecture
+routes and the Glossary, then the assigned Spec and Task; STARTUP is the shared
+continuation view, not an entry authority. They
 preserve the scope of ordinary requests and capture significant fresh context,
 decisions and corrections as source-linked Wiki jots before dependent output.
 Legacy JSON notes remain readable; a recipient-specific handoff is Markdown.

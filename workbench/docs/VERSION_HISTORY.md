@@ -394,7 +394,8 @@ recorded in [S-000E](../specs/S-000E-v3-2-2-harness-upgrade/SPEC.md).
 - `migrate` installed `GLOSSARY.md`, `ARCHITECTURE.md` and the grouped Wiki
   vocabulary articles. They are filled for this room; every Lexicon line has a
   recorded landing or disposition, and `LEXICON.md` stays as an archived file
-  (see S-000E for why it is not retired).
+  (see S-000E for why it is not retired). Its 69 removed-line dispositions
+  await owner confirmation; do not run `retire-lexicon` before then.
 - Runtime tools and core skills were updated with receipts and backups; the
   optional `diagnose-and-propose` and `grill-with-docs` skills were installed by
   explicit selection.

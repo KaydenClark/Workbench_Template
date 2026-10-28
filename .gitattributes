@@ -1,3 +1,5 @@
+# Room-owned: the archived v3.2.1 Lexicon keeps LF checkout like the controls.
+/LEXICON.md text=auto eol=lf
 # >>> LLM Workbench line endings (managed by workbench-layout.mjs init)
 # Workbench records, runtime tools and controls check out as LF on every
 # host, so receipt hashes and record parsing hold under core.autocrlf=true.

@@ -8,7 +8,7 @@
 **Updated:** 2026-10-28
 **Catalog description:** Install the pinned LLM Workbench v3.2.2 source candidate into Workbench_Template integration through the supported update route, preserving the room and recording upgrade and recovery proof for the release audit.
 **Blockers:** none within the installation; release fitness audit, independent assembled review and owner main approval are separate gates
-**Latest event:** Reinstalled from repaired source a58466ad and re-verified.
+**Latest event:** Independent review findings repaired on the room side.
 **Next gate:** Required CI and reviewed merge into Template integration.
 
 ## Outcome
@@ -70,7 +70,11 @@ and `git diff --check`. No ignored files existed under `workbench/`.
   Owner review of that merged meaning is open.
 - `LEXICON.md` is archived, not retired: `retire-lexicon` would delete it, and
   the completed S-00A Blueprint inventory names `LEXICON.md` as a claim owner
-  that its tour test opens. Deleting it is a separate owner step.
+  that its tour test opens. The archived state was reached by removing 69
+  unlanded lines on the installing agent's judgment (68 superseded, 1 moved).
+  Those dispositions are pending owner confirmation, so **do not run
+  `retire-lexicon` before the owner confirms them**; deletion is a separate
+  owner step after that.
 - The four Wiki contract files `workbench/wiki/SCHEMA.md`, `workbench/wiki/AGENTS.md`,
   `workbench/wiki/design-concepts/README.md` and `workbench/wiki/features/README.md`
   are room-customized (31-198 lines differ from the template). Only their
@@ -139,7 +143,7 @@ optional skills, DDR projection and this Spec), and the reconciled controls,
 product and docs listed with a decision each. No room-owned file was deleted;
 `workbenchId` and genesis/layout provenance are unchanged.
 
-Managed bytes (rechecked against `413e7039`): from the pinned source, `workbench-tools.mjs verify` and
+Managed bytes (rechecked against `a58466ad`): from the pinned source, `workbench-tools.mjs verify` and
 `workbench-skills.mjs verify` both report `valid` with no update available;
 all 35 runtime files and all 33 core skill trees equal the source bytes; the
 optional skills equal `workbench/optional-skills/diagnose-and-propose`
@@ -153,19 +157,23 @@ deliberately not adopted. GLOSSARY and ARCHITECTURE differ from the template
 only by filled room content.
 
 Recovery: the whole-room recovery point is the baseline commit `2f162c46`.
-The managed backups are `/private/tmp/tk00b7-home/.workbench-tools-backup-5zXgD3`
-and `/private/tmp/tk00b7-home/.workbench-skills-backup-BDQdop`, recorded in the
-receipts; they are machine-local temporary directories, so component rollback
-from a fresh clone or another machine is not available. In a disposable
-`git clone --no-hardlinks` copy, `workbench-tools.mjs rollback` restored the 15
-replaced runtime files to their baseline bytes and removed the 4 added ones,
-and `workbench-skills.mjs rollback` restored the 31 replaced core skills; the
-two optional skills, controls, Glossary/Architecture and lane relocation stay,
-so backups alone are not whole-room recovery. Reapplying both updates returned
-every file to the candidate bytes (only the receipts' backup metadata differ)
-and both verifies report `valid`. In a second copy, `skills-lane-rollback`
-returned the lane to `workbench/skills` with both links pointing into it, and a
-rerun `migrate` relocated it again to a tree identical to the candidate.
+The current managed backups come from the `a58466ad` reinstall, run with
+`--home /private/tmp/tk00b7-home3`, and the receipts record them as
+`~/.workbench-tools-backup-dDE7Ac` and `~/.workbench-skills-backup-ELYoF6`.
+That home is a volatile temporary directory on the installing machine, so
+component rollback from a fresh clone or another machine is not available.
+Earlier installs left their own backup entries (absolute paths under
+`/private/tmp/tk00b7-home` and `~/` paths under `/private/tmp/tk00b7-home2`),
+which are equally volatile. In a disposable `git clone --no-hardlinks` copy,
+`workbench-tools.mjs rollback` and `workbench-skills.mjs rollback` with the
+receipts' `~/NAME` form and `--home /private/tmp/tk00b7-home3` restored the
+previous candidate's bytes. Reapplying both updates returned every file to the
+candidate bytes, with only receipt backup metadata differing, and both
+`verify` runs report `valid`. Managed rollback leaves the optional skills,
+controls, Glossary/Architecture and lane relocation in place, so backups alone
+are not whole-room recovery. In a separate copy (first install),
+`skills-lane-rollback` returned the lane to `workbench/skills`, and a rerun
+`migrate` relocated it again to a tree identical to the candidate.
 
 ## Documentation Impact
 
@@ -184,6 +192,7 @@ feedback log rows; tour and its tests.
 | 2026-10-28 | TK-000D | Inventory, managed-byte, rollback and scenario evidence | Candidate suite: diff check, evidence-history 14/14, history check (10 sections vs 2f162c46), tour 22/22, syntax, layout valid, doctor no blocker, Wiki and ADR valid. Pinned-source verify valid for tools and skills. Rollback/reapply and skills-lane-rollback/migrate exercised in disposable copies. Installed gate in a disposable copy: claim refused before any write with no authority fields, with an unresolved Jot, with a superseded Jot and with a Jot naming another Spec; one current confirmed owner-intent Jot cited in both fields allowed the claim. Real S-000C shows missing Confirmation and Execution approval and has no ready Task. Jot read/search in a fresh clone returned the current entry with its correction context; a confirmed term written to GLOSSARY.md validated, and a malformed entry was refused. Evaluator diagnostic 52.6/113 before, 65.5/113 after (structural only) | preservation.json, Upgrade Proof | CI, independent review and integration containment pending |
 | 2026-10-28 | TK-000D | Reinstalled from repaired pinned source 413e7039 (LLM_Workbench PR #637) | migrate current, Lexicon archived with 69 dispositions (9 lines now tool-landed), no retired-lane links; the source's line-ending policy step rewrote .gitattributes to one managed block; tools update changed 6 files and skills update changed implement and update-harness with backups recorded as `~/` descriptors; optional reinstall refused with skill-collision over identical bytes (no write). Pinned-source verify valid for tools and skills; all 35 runtime files, 33 core skill trees and both optional skills equal 413e7039. Doctor: no retired-skills-lane-link; positive control with one stale `../skills/` link reports it. Fresh relocation from 2f162c46 reports 74 retired-lane links and writes one block. Disposable copy: tools and skills rollback (backup directory plus --home) restored the 857a196 bytes, both verify valid, reapply returned candidate bytes with only receipt metadata differing, tour 22/22 | preservation.json reinstall deltas, lexicon-disposition.json, controls | CI, independent review and integration containment pending |
 | 2026-10-28 | TK-000D | Reinstalled from repaired pinned source a58466ad (LLM_Workbench PR #638) | tools update changed workspace-closeout.mjs and skills update changed implement and update-harness, with `~/` backups; optional skills report current; migrate current, Lexicon archived. Pinned-source verify valid; all 35 runtime files, 33 core skill trees and both optional skills equal a58466ad. Disposable copy: rollback with the receipts' `~/NAME` form plus --home restored the 421094e bytes, both verify valid, reapply returned candidate bytes, tour 22/22. Closeout: this room's table-backed S-000E cannot host a snapshot (`unknown-task`); in a disposable GitHub clone with a record-backed fixture Task, an inherited stash, an untracked file and local-only commits, `check` exited 1 with retained-stash-not-remote, retained-bytes-not-remote, retained-ref-not-remote and unaccounted findings, and remoteRecoverable false | preservation.json, Spec header | CI, independent review and integration containment pending |
+| 2026-10-28 | TK-000D | Independent review of 934c9348 (APPROVE, non-blocking findings) repaired on the room side | Glossary **Declared integration branch** corrected to the AGENTS meaning, and Lexicon line 162 given its own note; 69 Lexicon dispositions marked pending owner confirmation, with a retire-lexicon gate in LEXICON.md status, this Spec and Version History; archive tidied (2 separator rows, empty Continuity Terms table, 4 landed fragments) with migrate still archived and 0 unlanded (genericHomesMissing now lists GLOSSARY.md and ARCHITECTURE.md because the room changed template lines); Upgrade Proof records a58466ad and the volatile `--home /private/tmp/tk00b7-home3`; Template operations points the v3.2.1 policy to revision 2f162c46; Blueprint entry route, Architecture codemap and README/tour root-file statements made truthful (tour test red first: module export missing and blurb claim, then 23/23); `/LEXICON.md text=auto eol=lf` added as a room-owned line outside the managed block, `git check-attr eol LEXICON.md` reports lf, and the policy step keeps it. Suite: evidence-history 14/14, history check, tour 23/23, syntax, layout, doctor no blocker, Wiki, ADR, diff check, 0 broken links; pinned-source verify valid | GLOSSARY, LEXICON, ARCHITECTURE, BLUEPRINT, README, tour and test, .gitattributes, Template operations, Version History, Spec, disposition | CI, owner Lexicon confirmation and integration containment pending |
 
 ## Completion Result
 

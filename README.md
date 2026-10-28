@@ -52,7 +52,9 @@ Start with [AGENTS](AGENTS.md) -> [Runbook orientation](RUNBOOK.md#get-oriented)
   Workbench Feedback, the return channel to the reusable harness these docs
   came from: log where the harness rules themselves are unclear, wrong, or slow
   the work down, so they can be improved upstream. It lives in the feedback
-  lane so the root keeps exactly eight controls.
+  lane so the root controls stay at eight. The only other root files are
+  [`STARTUP.md`](STARTUP.md), the shared continuation view, and the archived
+  v3.2.1 [`LEXICON.md`](LEXICON.md).
 - [`workbench/docs/VERSION_HISTORY.md`](workbench/docs/VERSION_HISTORY.md) -
   how the harness got here. This repository's history replays every LLM
   Workbench generation as one commit and one `version/` branch each, from the

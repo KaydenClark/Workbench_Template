@@ -3,11 +3,12 @@
 > Generated from LLM Workbench v3.2.1.
 
 **Last reviewed:** 2026-10-18
-**Status:** archived; superseded by GLOSSARY.md and ARCHITECTURE.md in the v3.2.2 update (see workbench/specs/S-000E-v3-2-2-harness-upgrade/lexicon-disposition.json)
+**Status:** archived; superseded by GLOSSARY.md and ARCHITECTURE.md in the v3.2.2 update. Retirement is gated: do not run `retire-lexicon` until the owner confirms the 69 pending dispositions in workbench/specs/S-000E-v3-2-2-harness-upgrade/lexicon-disposition.json (the S-00A Blueprint inventory also opens this file).
 
 This is the canonical lookup table for terms whose meaning is shared across the
 project. Read it when a request, spec, test, or skill uses project language that
 could be ambiguous.
+
 
 ## Task Routing
 
@@ -39,9 +40,6 @@ owners; it does not add a second Wiki index or copy their contents.
 
 ## Artifact Ownership Schema
 
-
-|---|---|
-
 The Spec's `TASK.md` records are temporary execution structure; they are real
 files created and updated by the installed Spec tool. A features article may
 preserve a completed capability explanation, but never copies live Task state
@@ -51,10 +49,6 @@ authority or establishes release. This room deliberately retains its
 standalone Wiki, tour, historical Spec IDs and version replay; the generic
 source's additional project or deployment examples are not copied as room
 facts.
-
-
-
-|---|---|
 
 ## Workbench Terms
 
@@ -66,11 +60,6 @@ facts.
 | **Feature article** | A readable Wiki explanation of a completed Spec's delivered capability, captured at closure. | [Features](workbench/wiki/features/README.md) holds this knowledge; it does not replace the Spec's evidence or Task records. |
 | **Coordination hand-back** | A point during an assigned run where the owner had to supply something that was not a preference, tradeoff, authorization, or unavailable resource under `AGENTS.md`'s governing gate: a settled decision repeated, evidence already in the project located for the agent, a routine technical finding reconciled, or an already-authorized step prompted. | It is a defect in a record, route, skill, or tool, recorded per occurrence with its cause and smallest correction in the assigned spec's evidence log by the `carry` skill. Answering a genuine owner decision is not one, and neither is a new framework built in response to one. `AGENTS.md` Safety And Change Control owns when an owner is asked; these four reasons restate that gate and never widen it. |
 
-## Continuity Terms
-
-| Term | Definition | Distinction |
-|---|---|---|
-
 ## Stance Terms
 
 | Term | Definition | Distinction |
@@ -80,12 +69,6 @@ facts.
 | **Reconciler** | The stance that reconciles achieved work with the state and owners needed for continuation. | It neither manufactures completion nor duplicates truth in a universal handoff. |
 
 ## Governance Core
-
-Design-concept routing: a question about what a product, subsystem, or
-spec still decide when a requirement or verified Actuality matters.
-
-Shared by every Workbench. These rows describe roles and boundaries; the
-binding behavior lives in `AGENTS.md`, cross-cutting architecture in
 
 | Term | Definition | Distinction |
 |---|---|---|
@@ -106,6 +89,7 @@ binding behavior lives in `AGENTS.md`, cross-cutting architecture in
 | **Place** | One entry in the tour: a path, its zone, the truth it owns, and the reason that truth is not kept somewhere else. | A place is not merely a directory. A directory nobody can say a "why" for does not belong in the room. |
 | **Zone** | One of the three groupings a place belongs to: `Root controls`, `The support root`, `The product`. | Zones organize the explanation. They are not lanes, and the manifest does not know about them. |
 | **Drift** | The condition where the room's structure and the tour's description of it disagree. | Drift is a test failure here, not a documentation backlog item. `node tests/tour.test.mjs` is what makes that true. |
+
 ## Continuity And Evidence Boundaries
 
 - **Workbench connection identity:** the stable namespace selected for optional

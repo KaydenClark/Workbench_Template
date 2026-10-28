@@ -499,7 +499,9 @@ lists the same 33 required names. The lane also holds the optional
 `diagnose-and-propose` and `grill-with-docs` skills this reference room selected;
 they are room-local, outside the core receipt, and installed only by explicit
 selection. The earlier v3.2.1 candidate's 21-name transition policy remains
-readable history in [S-000E](../specs/S-000E-v3-2-2-harness-upgrade/SPEC.md).
+readable history in this file at Template integration
+[`2f162c46`](https://github.com/KaydenClark/Workbench_Template/blob/2f162c46afed6488862d2c3963b07bb0d905cabd/workbench/docs/TEMPLATE_OPERATIONS.md#portable-save-promote-and-room-local-skills)
+and in the v3.2.1 manifest at that revision.
 
 For an authorized room-specific extension, keep its sole tracked source at
 `.agents/skills/NAME/SKILL.md`, with a name outside the managed core. Follow
