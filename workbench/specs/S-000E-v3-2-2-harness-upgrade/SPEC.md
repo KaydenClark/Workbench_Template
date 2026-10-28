@@ -8,7 +8,7 @@
 **Updated:** 2026-10-28
 **Catalog description:** Install the pinned LLM Workbench v3.2.2 source candidate into Workbench_Template integration through the supported update route, preserving the room and recording upgrade and recovery proof for the release audit.
 **Blockers:** none within the installation; release fitness audit, independent assembled review and owner main approval are separate gates
-**Latest event:** Pinned v3.2.2 source installed and exercised on the receiving branch.
+**Latest event:** Installation inventory, managed bytes, recovery and installed scenarios recorded.
 **Next gate:** Required CI and reviewed merge into Template integration.
 
 ## Outcome
@@ -125,6 +125,43 @@ candidate tracked path with its before/after hash and decision.
 the pinned tool reported unlanded after the successors were filled, and where
 each one's meaning now lives.
 
+Inventory: 165 baseline and 195 candidate tracked paths at installation commit
+`1bf6d2a`; 72 kept byte-for-byte, 20 moved unchanged and 35 moved and updated
+by the lane relocation and skills update, 16 other managed updates plus 4
+managed manifest/attribute/link/seed changes, 35 additions (installed
+successors, vocabulary articles, seeded documents, 4 new runtime tools, 2
+optional skills, DDR projection and this Spec), and the reconciled controls,
+product and docs listed with a decision each. No room-owned file was deleted;
+`workbenchId` and genesis/layout provenance are unchanged.
+
+Managed bytes: from the pinned source, `workbench-tools.mjs verify` and
+`workbench-skills.mjs verify` both report `valid` with no update available;
+all 35 runtime files and all 33 core skill trees equal the source bytes; the
+optional skills equal `workbench/optional-skills/diagnose-and-propose`
+(content hash `36d49dad...febf`) and `.agents/skills/grill-with-docs`
+(`df30d301...ec88`) at the source and are reported `roomLocal`.
+
+Control fidelity (pinned source report): AGENTS keeps 10 room-worded lines and
+replaces two newer template lines with room equivalents (its own edit scope and
+its checked-delivery review line); the template's agent main-promotion line is
+deliberately not adopted. GLOSSARY and ARCHITECTURE differ from the template
+only by filled room content.
+
+Recovery: the whole-room recovery point is the baseline commit `2f162c46`.
+The managed backups are `/private/tmp/tk00b7-home/.workbench-tools-backup-5zXgD3`
+and `/private/tmp/tk00b7-home/.workbench-skills-backup-BDQdop`, recorded in the
+receipts; they are machine-local temporary directories, so component rollback
+from a fresh clone or another machine is not available. In a disposable
+`git clone --no-hardlinks` copy, `workbench-tools.mjs rollback` restored the 15
+replaced runtime files to their baseline bytes and removed the 4 added ones,
+and `workbench-skills.mjs rollback` restored the 31 replaced core skills; the
+two optional skills, controls, Glossary/Architecture and lane relocation stay,
+so backups alone are not whole-room recovery. Reapplying both updates returned
+every file to the candidate bytes (only the receipts' backup metadata differ)
+and both verifies report `valid`. In a second copy, `skills-lane-rollback`
+returned the lane to `workbench/skills` with both links pointing into it, and a
+rerun `migrate` relocated it again to a tree identical to the candidate.
+
 ## Documentation Impact
 
 AGENTS, RUNBOOK, README, BLUEPRINT, STARTUP and TASKBOARD stamps and routes;
@@ -139,6 +176,7 @@ feedback log rows; tour and its tests.
 |---|---|---|---|---|---|
 | 2026-10-28 | TK-000D | Baseline recovered and suite run before writes | Template integration 2f162c46; tour 21/21, evidence-history 14/14, history check, syntax, layout valid, doctor no blocker, Wiki and ADR valid, diff check; 165 tracked paths hashed | none | Installation pending |
 | 2026-10-28 | TK-000D | Pinned v3.2.2 installed through the v3 route | migrate relocated workbench/skills to .agents/skills (one move commit), installed GLOSSARY/ARCHITECTURE and 12 vocabulary articles; stamp and skillPolicy set; seed-documents seeded 2 documents and retained REPORT_FORMAT.md; tools update changed 19 files (35 managed), skills update changed 31 of 33; optional diagnose-and-propose and grill-with-docs installed; migrate reports current and Lexicon archived | Controls, Wiki, tour and tests reconciled | Inventory commit, rollback exercise, CI and review pending |
+| 2026-10-28 | TK-000D | Inventory, managed-byte, rollback and scenario evidence | Candidate suite: diff check, evidence-history 14/14, history check (10 sections vs 2f162c46), tour 22/22, syntax, layout valid, doctor no blocker, Wiki and ADR valid. Pinned-source verify valid for tools and skills. Rollback/reapply and skills-lane-rollback/migrate exercised in disposable copies. Installed gate in a disposable copy: claim refused before any write with no authority fields, with an unresolved Jot, with a superseded Jot and with a Jot naming another Spec; one current confirmed owner-intent Jot cited in both fields allowed the claim. Real S-000C shows missing Confirmation and Execution approval and has no ready Task. Jot read/search in a fresh clone returned the current entry with its correction context; a confirmed term written to GLOSSARY.md validated, and a malformed entry was refused. Evaluator diagnostic 52.6/113 before, 65.5/113 after (structural only) | preservation.json, Upgrade Proof | CI, independent review and integration containment pending |
 
 ## Completion Result
 

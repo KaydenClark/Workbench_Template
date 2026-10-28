@@ -1,0 +1,1829 @@
+{
+  "base": "2f162c46afed6488862d2c3963b07bb0d905cabd",
+  "candidate_commit": "1bf6d2a21f85d0274097c062532c95a030e2590a",
+  "source": "8f08f11165c043a581c3c7130cb7c813eeec4483",
+  "source_release": "v3.2.2",
+  "inventory_scope": "Every tracked path at the baseline and at the installation commit; later S-000E record commits add only this Spec's own evidence.",
+  "identity_preserved": true,
+  "historical_provenance_preserved": true,
+  "counts": {
+    "Move": 20,
+    "Add": 35,
+    "Move and managed update": 35,
+    "Keep": 72,
+    "Port": 8,
+    "Managed": 4,
+    "Archive": 1,
+    "Regenerated projection; stamp v3.2.2": 1,
+    "Product test": 1,
+    "Product": 1,
+    "Repair": 3,
+    "Append": 2,
+    "Managed update": 16,
+    "Copy": 1
+  },
+  "baseline_paths": 165,
+  "candidate_paths": 195,
+  "files": [
+    {
+      "file": ".agents/skills",
+      "from": null,
+      "class": "project-owned",
+      "before": "054d9570bc39c2374bdc6efb81c23f5100b2844824336b664fc98c3417fb1b57",
+      "after": null,
+      "mode": "120000",
+      "decision": "Move: the adapter link was replaced by the real lane directory (migrate relocation)"
+    },
+    {
+      "file": ".agents/skills/.workbench-skills.json",
+      "from": null,
+      "class": "managed-skills",
+      "before": null,
+      "after": "1022be1b9d287dd27a24fb1f4dd4d7ba62759da948d310f36e0424c31c327822",
+      "mode": "100644",
+      "decision": "Add: managed-skills"
+    },
+    {
+      "file": ".agents/skills/adoption/SKILL.md",
+      "from": "workbench/skills/adoption/SKILL.md",
+      "class": "managed-skills",
+      "before": "7f1149b058af280b7be8196d67dd2b1d5ef46fae33669f33966a0e2bcd7b40c5",
+      "after": "d0ac8473a58ed4b4082a44c40371d68f6fdf1095b4e6398fac357f87bdebb68d",
+      "mode": "100644",
+      "decision": "Move and managed update: workbench/skills/adoption/SKILL.md"
+    },
+    {
+      "file": ".agents/skills/auditor/SKILL.md",
+      "from": "workbench/skills/auditor/SKILL.md",
+      "class": "managed-skills",
+      "before": "6419f70910c46ed59248059781a1d34f85b22665b3a0e0e255474899801a02b6",
+      "after": "89bad78e8fc69b6871f2b8973793128f0cfe6bc451e35b18db471cae31dc8fd1",
+      "mode": "100644",
+      "decision": "Move and managed update: workbench/skills/auditor/SKILL.md"
+    },
+    {
+      "file": ".agents/skills/builder/SKILL.md",
+      "from": "workbench/skills/builder/SKILL.md",
+      "class": "managed-skills",
+      "before": "2559c739c55090b8d62269fec44da977db615e3ece9cee668043d9b1d39571f9",
+      "after": "ebea0a68fa94c58dda573fc401bc3d025ad863a7a9f522d5bb4b247b1555d00d",
+      "mode": "100644",
+      "decision": "Move and managed update: workbench/skills/builder/SKILL.md"
+    },
+    {
+      "file": ".agents/skills/builder/references/verification.md",
+      "from": "workbench/skills/builder/references/verification.md",
+      "class": "managed-skills",
+      "before": "8d4c187e6c7cf18fcf3be9577172c83f76bcd672735f2c436aa8988d4624df6d",
+      "after": "8d4c187e6c7cf18fcf3be9577172c83f76bcd672735f2c436aa8988d4624df6d",
+      "mode": "100644",
+      "decision": "Move: renamed from workbench/skills/builder/references/verification.md by migrate, bytes unchanged"
+    },
+    {
+      "file": ".agents/skills/carry/SKILL.md",
+      "from": "workbench/skills/carry/SKILL.md",
+      "class": "managed-skills",
+      "before": "e0ce7f5e6d837be929855a908d1d6b19d51013f6a6ce8333642a488d27ddece8",
+      "after": "b90f2830e0fe1fa51acdaaeebe79d41cc2273d3cf26d7039e0c471d1c97ebeb2",
+      "mode": "100644",
+      "decision": "Move and managed update: workbench/skills/carry/SKILL.md"
+    },
+    {
+      "file": ".agents/skills/checkpoint/SKILL.md",
+      "from": "workbench/skills/checkpoint/SKILL.md",
+      "class": "managed-skills",
+      "before": "0b76e99b2c74a83d4dea6d72a0a00212d0e481fd2f90f12da684e0db462c4336",
+      "after": "c8197579b988fb51d53a0acdaff91411ee6a26a57eb66d65418025ad6af89322",
+      "mode": "100644",
+      "decision": "Move and managed update: workbench/skills/checkpoint/SKILL.md"
+    },
+    {
+      "file": ".agents/skills/code-review/SKILL.md",
+      "from": "workbench/skills/code-review/SKILL.md",
+      "class": "managed-skills",
+      "before": "9d0c6aff278e3eadc8966aa03e83758b9eb9cf369282cdd3f74d311c2499789d",
+      "after": "9d0c6aff278e3eadc8966aa03e83758b9eb9cf369282cdd3f74d311c2499789d",
+      "mode": "100644",
+      "decision": "Move: renamed from workbench/skills/code-review/SKILL.md by migrate, bytes unchanged"
+    },
+    {
+      "file": ".agents/skills/diagnose-and-propose/SKILL.md",
+      "from": null,
+      "class": "optional-skill",
+      "before": null,
+      "after": "e1dd150d7ce447737180ca35a97f15254809226155320c308f3e806f01e20c9d",
+      "mode": "100644",
+      "decision": "Add: optional-skill"
+    },
+    {
+      "file": ".agents/skills/director/SKILL.md",
+      "from": "workbench/skills/director/SKILL.md",
+      "class": "managed-skills",
+      "before": "5f391483df834bf5196b0ddd953beb753278ad39fca70162331297a427d7dfe3",
+      "after": "1d21015c12af404ef4d206b558510819e7315caece6482f0e443c8687e5ee8c4",
+      "mode": "100644",
+      "decision": "Move and managed update: workbench/skills/director/SKILL.md"
+    },
+    {
+      "file": ".agents/skills/director/procedures.md",
+      "from": "workbench/skills/director/procedures.md",
+      "class": "managed-skills",
+      "before": "75c0be1978a8dbc8543229a7370c3958b6f19ec48a5a0ab8551162fed3a90c2a",
+      "after": "6ef5a19dbf21237e829ae2a8d3b5a0fe13d801a1a59edfda27953091ef416856",
+      "mode": "100644",
+      "decision": "Move and managed update: workbench/skills/director/procedures.md"
+    },
+    {
+      "file": ".agents/skills/dispatcher/SKILL.md",
+      "from": "workbench/skills/dispatcher/SKILL.md",
+      "class": "managed-skills",
+      "before": "e9e9813af5a94482e1967ec10323997460f916183b50ea87e958b12dcc397c29",
+      "after": "fe383b82ea1ebc48a47857d074a9da52dfa350eca540e46a6d5c2482aa4eb9e3",
+      "mode": "100644",
+      "decision": "Move and managed update: workbench/skills/dispatcher/SKILL.md"
+    },
+    {
+      "file": ".agents/skills/dispatcher/assembled-review.md",
+      "from": "workbench/skills/dispatcher/assembled-review.md",
+      "class": "managed-skills",
+      "before": "38ed9f66f14fbd2e02c8747354ffdacf49c8456bab15c59af367aca86a78f426",
+      "after": "239be4cfdab661ab848a1abfa9f1263c65022d0e1e66c4114ddbecfd53070dcd",
+      "mode": "100644",
+      "decision": "Move and managed update: workbench/skills/dispatcher/assembled-review.md"
+    },
+    {
+      "file": ".agents/skills/dispatcher/procedures.md",
+      "from": "workbench/skills/dispatcher/procedures.md",
+      "class": "managed-skills",
+      "before": "7956a24e5eeed6a92a071f560065a90ee8b2abb020e2ad251323b54add167a49",
+      "after": "02bc6e1325b071b18c3e7bdc4766396365c9aa369c279c2754b4c0d953efa7f8",
+      "mode": "100644",
+      "decision": "Move and managed update: workbench/skills/dispatcher/procedures.md"
+    },
+    {
+      "file": ".agents/skills/domain-modeling/GLOSSARY-FORMAT.md",
+      "from": "workbench/skills/domain-modeling/GLOSSARY-FORMAT.md",
+      "class": "managed-skills",
+      "before": "0ea2103d60a0a56ad62e1076f804fe04c4f4baee2c84883c368de96537e1c29c",
+      "after": "1c9c1c614921f5f0edb4f7e0952c7f26fc1f19ef41b44810de77e89f6eb30a25",
+      "mode": "100644",
+      "decision": "Move and managed update: workbench/skills/domain-modeling/GLOSSARY-FORMAT.md"
+    },
+    {
+      "file": ".agents/skills/domain-modeling/NOTICE.md",
+      "from": "workbench/skills/domain-modeling/NOTICE.md",
+      "class": "managed-skills",
+      "before": "a478ab0a6b405eaa9af80c5b34080c0bff263727ecbe72a8a89911cd425acead",
+      "after": "a478ab0a6b405eaa9af80c5b34080c0bff263727ecbe72a8a89911cd425acead",
+      "mode": "100644",
+      "decision": "Move: renamed from workbench/skills/domain-modeling/NOTICE.md by migrate, bytes unchanged"
+    },
+    {
+      "file": ".agents/skills/domain-modeling/SKILL.md",
+      "from": "workbench/skills/domain-modeling/SKILL.md",
+      "class": "managed-skills",
+      "before": "01e44b6945e04bd9c5ef713a862f814cba2ce2730b56bdd7bf72d4d630d6661c",
+      "after": "b70a0e5e324868354cbe72ad77d16a696700f7d60a3880ac45d9276f9174a0a1",
+      "mode": "100644",
+      "decision": "Move and managed update: workbench/skills/domain-modeling/SKILL.md"
+    },
+    {
+      "file": ".agents/skills/genesis/SKILL.md",
+      "from": "workbench/skills/genesis/SKILL.md",
+      "class": "managed-skills",
+      "before": "7bd8c57c31bd1f3072a34afc3dc26b5e50e03bf7e33ca4f8cc1f1b71212eef7e",
+      "after": "2c6adaf5bc61cef70e6c3eb91073458a421bda919ca42a7b294b1d550d8f59bf",
+      "mode": "100644",
+      "decision": "Move and managed update: workbench/skills/genesis/SKILL.md"
+    },
+    {
+      "file": ".agents/skills/grill-me/SKILL.md",
+      "from": "workbench/skills/grill-me/SKILL.md",
+      "class": "managed-skills",
+      "before": "8f27a3819985994d41c539254b3acd9b94445e7e8b00da899d608544234e23ee",
+      "after": "7f68220b2d45a5ff35665c0247ec8a60903e0a0af109b0b60da9c7b4e52ad622",
+      "mode": "100644",
+      "decision": "Move and managed update: workbench/skills/grill-me/SKILL.md"
+    },
+    {
+      "file": ".agents/skills/grill-with-docs/SKILL.md",
+      "from": null,
+      "class": "optional-skill",
+      "before": null,
+      "after": "7de372c13488f1ee96cc11cd8907b56b6809cc93eef776eeddd37de6b6cbe3fe",
+      "mode": "100644",
+      "decision": "Add: optional-skill"
+    },
+    {
+      "file": ".agents/skills/grill-with-docs/agents/openai.yaml",
+      "from": "workbench/skills/retro/agents/openai.yaml",
+      "class": "optional-skill",
+      "before": "a1499d95abd8447558c535fe5554adcc3c9b988a0a39264a6283d430effe1e94",
+      "after": "a1499d95abd8447558c535fe5554adcc3c9b988a0a39264a6283d430effe1e94",
+      "mode": "100644",
+      "decision": "Move: renamed from workbench/skills/retro/agents/openai.yaml by migrate, bytes unchanged"
+    },
+    {
+      "file": ".agents/skills/grilling/SKILL.md",
+      "from": "workbench/skills/grilling/SKILL.md",
+      "class": "managed-skills",
+      "before": "dc172e1122fde840b128f0f23caddd084cc534873edb438518d15d0f715ec23c",
+      "after": "7e6f38d55b4714b654b10acecb2a50da92c9d73cbdadca7a4d3f875fd78e5c48",
+      "mode": "100644",
+      "decision": "Move and managed update: workbench/skills/grilling/SKILL.md"
+    },
+    {
+      "file": ".agents/skills/handoff/SKILL.md",
+      "from": null,
+      "class": "managed-skills",
+      "before": null,
+      "after": "bef990be4bc3ae34629fb432c7d04995fbd7d4266c2dcb4a0a5f6558afac4486",
+      "mode": "100644",
+      "decision": "Add: managed-skills"
+    },
+    {
+      "file": ".agents/skills/handoff/assets/HANDOFF.md",
+      "from": "workbench/skills/handoff/assets/HANDOFF.md",
+      "class": "managed-skills",
+      "before": "21c40ac51ffdc952785cee0dea9d92688dbb548d5fe30dfabd858b554575d246",
+      "after": "e247f709d9171d68b6fd6d3389968b6236939dc718a41279cd22d2a55426621d",
+      "mode": "100644",
+      "decision": "Move and managed update: workbench/skills/handoff/assets/HANDOFF.md"
+    },
+    {
+      "file": ".agents/skills/implement/SKILL.md",
+      "from": "workbench/skills/implement/SKILL.md",
+      "class": "managed-skills",
+      "before": "1dbf1e0a0ad6b539ac727bf174af8cd7692f56f911f839cd4486d0f1b3101bd8",
+      "after": "7835491415dbd372865f198aedb6b208c0e81bc3e50dfe22ad3b537e0ef3d008",
+      "mode": "100644",
+      "decision": "Move and managed update: workbench/skills/implement/SKILL.md"
+    },
+    {
+      "file": ".agents/skills/implement/execution-authority.md",
+      "from": null,
+      "class": "managed-skills",
+      "before": null,
+      "after": "6c85ccf9e94da53c32593b5ed0f9bf317e2297f4ea64f4f4a97a0bc8698beb75",
+      "mode": "100644",
+      "decision": "Add: managed-skills"
+    },
+    {
+      "file": ".agents/skills/implement/references/scenario.md",
+      "from": "workbench/skills/implement/references/scenario.md",
+      "class": "managed-skills",
+      "before": "c1d071bb15a98a04125a1f725d4f22697bf9029790d9614c12d90a5345de1c4e",
+      "after": "c1d071bb15a98a04125a1f725d4f22697bf9029790d9614c12d90a5345de1c4e",
+      "mode": "100644",
+      "decision": "Move: renamed from workbench/skills/implement/references/scenario.md by migrate, bytes unchanged"
+    },
+    {
+      "file": ".agents/skills/implement/workflow-reference.md",
+      "from": "workbench/skills/implement/workflow-reference.md",
+      "class": "managed-skills",
+      "before": "1d80e3f46ffd6e89740b4beeef0c04c25b8726f66cd4821bf47c335544b11ce8",
+      "after": "f94243c121c13423a600a5f0e01d0dd35c356b8f7649707b406a6599a61ea99a",
+      "mode": "100644",
+      "decision": "Move and managed update: workbench/skills/implement/workflow-reference.md"
+    },
+    {
+      "file": ".agents/skills/improve-harness/SKILL.md",
+      "from": "workbench/skills/improve-harness/SKILL.md",
+      "class": "managed-skills",
+      "before": "0b19300727cb388e68b56ff09ec9016a6423e3adfec8d95bcfa7c64e368b6542",
+      "after": "c342a861d128e7e9e6acd77f37d9decb9da0fa325fd955cad36742434d62bcee",
+      "mode": "100644",
+      "decision": "Move and managed update: workbench/skills/improve-harness/SKILL.md"
+    },
+    {
+      "file": ".agents/skills/jot/SKILL.md",
+      "from": "workbench/skills/jot/SKILL.md",
+      "class": "managed-skills",
+      "before": "a953922ee70bdd47208836d5ccb06b9c9a608bf106c59d90c62a37720c252bac",
+      "after": "2b68d549dd4dbb2e0f6b629e0330e11455eed52f37cb8c9a22ed14225ddee036",
+      "mode": "100644",
+      "decision": "Move and managed update: workbench/skills/jot/SKILL.md"
+    },
+    {
+      "file": ".agents/skills/make-it-so/SKILL.md",
+      "from": "workbench/skills/make-it-so/SKILL.md",
+      "class": "managed-skills",
+      "before": "08ae8238f0aae66c3959800fe0c24bcd6be2e462471227f4cf73388dac7231e2",
+      "after": "5f1c5e14a198ba9555fd0038f867fa55c52f80c21a7dcecc5f0d697dbf7b5c6e",
+      "mode": "100644",
+      "decision": "Move and managed update: workbench/skills/make-it-so/SKILL.md"
+    },
+    {
+      "file": ".agents/skills/notepad/SKILL.md",
+      "from": "workbench/skills/notepad/SKILL.md",
+      "class": "managed-skills",
+      "before": "09caa4baa19acc0edeb4afc2e8e038b72263c300620ca4200187ba8091efda52",
+      "after": "c81dc5ff6fc4388cf0a76e7c666497824fc5821a75f69961018ef2b5c275193c",
+      "mode": "100644",
+      "decision": "Move and managed update: workbench/skills/notepad/SKILL.md"
+    },
+    {
+      "file": ".agents/skills/pr/CREDITS.md",
+      "from": "workbench/skills/pr/CREDITS.md",
+      "class": "managed-skills",
+      "before": "a7a087127665d7298a72280ef6e19c41ad8404523712a788c8dc3ab414bc2497",
+      "after": "a7a087127665d7298a72280ef6e19c41ad8404523712a788c8dc3ab414bc2497",
+      "mode": "100644",
+      "decision": "Move: renamed from workbench/skills/pr/CREDITS.md by migrate, bytes unchanged"
+    },
+    {
+      "file": ".agents/skills/pr/NOTICE.md",
+      "from": "workbench/skills/pr/NOTICE.md",
+      "class": "managed-skills",
+      "before": "ed6d6b6e0be6f87d322d92e57bcb0099d555c4843e1847134b054a4dded5c1a6",
+      "after": "ed6d6b6e0be6f87d322d92e57bcb0099d555c4843e1847134b054a4dded5c1a6",
+      "mode": "100644",
+      "decision": "Move: renamed from workbench/skills/pr/NOTICE.md by migrate, bytes unchanged"
+    },
+    {
+      "file": ".agents/skills/pr/SKILL.md",
+      "from": "workbench/skills/pr/SKILL.md",
+      "class": "managed-skills",
+      "before": "ab63f1cf78647389edcd386c9427c5dfca27ed2836930c24773ffee834c19bcd",
+      "after": "ab63f1cf78647389edcd386c9427c5dfca27ed2836930c24773ffee834c19bcd",
+      "mode": "100644",
+      "decision": "Move: renamed from workbench/skills/pr/SKILL.md by migrate, bytes unchanged"
+    },
+    {
+      "file": ".agents/skills/pr/agents/openai.yaml",
+      "from": "workbench/skills/pr/agents/openai.yaml",
+      "class": "managed-skills",
+      "before": "2295b586624db4ef546f3fd4695492f039d941a46d8a1593a702ce3ca511b8ad",
+      "after": "2295b586624db4ef546f3fd4695492f039d941a46d8a1593a702ce3ca511b8ad",
+      "mode": "100644",
+      "decision": "Move: renamed from workbench/skills/pr/agents/openai.yaml by migrate, bytes unchanged"
+    },
+    {
+      "file": ".agents/skills/promote/SKILL.md",
+      "from": "workbench/skills/promote/SKILL.md",
+      "class": "managed-skills",
+      "before": "27fe12d1685ae914196a9a8865e60d0fa976ef8282fabac273913e292a2d8f35",
+      "after": "503b886ae3a07aeb4833ef3aaa6d2899439de4eceb602b60917f08ba585cfc72",
+      "mode": "100644",
+      "decision": "Move and managed update: workbench/skills/promote/SKILL.md"
+    },
+    {
+      "file": ".agents/skills/reconciler/SKILL.md",
+      "from": "workbench/skills/reconciler/SKILL.md",
+      "class": "managed-skills",
+      "before": "91e5651c862c09da6e7242e8b22139c7a2436a1d71b19643887fa3561df2d64f",
+      "after": "8e643628971d2dd5d50bfba8b2019443f18b1fc33400567cb21789674413f439",
+      "mode": "100644",
+      "decision": "Move and managed update: workbench/skills/reconciler/SKILL.md"
+    },
+    {
+      "file": ".agents/skills/reconciler/references/reconcile.md",
+      "from": "workbench/skills/reconciler/references/reconcile.md",
+      "class": "managed-skills",
+      "before": "9faf43630abc0b9210caf29c4b8617e06cba983c5f6b77db950274c8cc416658",
+      "after": "f8e6947840d2496286e249a097e302164892352cfce5975654002fa9ee321f43",
+      "mode": "100644",
+      "decision": "Move and managed update: workbench/skills/reconciler/references/reconcile.md"
+    },
+    {
+      "file": ".agents/skills/retro/NOTICE.md",
+      "from": "workbench/skills/retro/NOTICE.md",
+      "class": "managed-skills",
+      "before": "635472f16338f0af4fae749ebda362ca37b7dfd9e5f9d12ee8bf76785e984d32",
+      "after": "635472f16338f0af4fae749ebda362ca37b7dfd9e5f9d12ee8bf76785e984d32",
+      "mode": "100644",
+      "decision": "Move: renamed from workbench/skills/retro/NOTICE.md by migrate, bytes unchanged"
+    },
+    {
+      "file": ".agents/skills/retro/SKILL.md",
+      "from": "workbench/skills/retro/SKILL.md",
+      "class": "managed-skills",
+      "before": "78f855acfb690e069e9f7f23325126857470bc196d747dd2b8498f4a64283e1b",
+      "after": "a1304dfd60b105f01292ed8e9b7f43266bd103fd912d3655430517b827e6ea78",
+      "mode": "100644",
+      "decision": "Move and managed update: workbench/skills/retro/SKILL.md"
+    },
+    {
+      "file": ".agents/skills/retro/agents/openai.yaml",
+      "from": null,
+      "class": "managed-skills",
+      "before": null,
+      "after": "a1499d95abd8447558c535fe5554adcc3c9b988a0a39264a6283d430effe1e94",
+      "mode": "100644",
+      "decision": "Add: managed-skills"
+    },
+    {
+      "file": ".agents/skills/reviewer/SKILL.md",
+      "from": "workbench/skills/reviewer/SKILL.md",
+      "class": "managed-skills",
+      "before": "01601710ead6caf3660316ef7907172d61fdcd7cb151060bd5fccc93dd2f2cc8",
+      "after": "0e9099222067daf334c92270d6024e85c4477a825479a39dd83e87e79c61d046",
+      "mode": "100644",
+      "decision": "Move and managed update: workbench/skills/reviewer/SKILL.md"
+    },
+    {
+      "file": ".agents/skills/reviewer/references/review-evidence.md",
+      "from": "workbench/skills/reviewer/references/review-evidence.md",
+      "class": "managed-skills",
+      "before": "a252c734d9e77379debc12620c4b992f1baad752c36cf13cf26ca0e4cc73d94c",
+      "after": "a252c734d9e77379debc12620c4b992f1baad752c36cf13cf26ca0e4cc73d94c",
+      "mode": "100644",
+      "decision": "Move: renamed from workbench/skills/reviewer/references/review-evidence.md by migrate, bytes unchanged"
+    },
+    {
+      "file": ".agents/skills/save/SKILL.md",
+      "from": "workbench/skills/save/SKILL.md",
+      "class": "managed-skills",
+      "before": "967469152f2a60f73f797cd15132160ad11e661c827d106580866862504d772e",
+      "after": "f578b88d1fcd4cb29199e026ca1fa039cb0aa9d1d30ef93304c2b7296df27305",
+      "mode": "100644",
+      "decision": "Move and managed update: workbench/skills/save/SKILL.md"
+    },
+    {
+      "file": ".agents/skills/save/startup-reconciliation.md",
+      "from": "workbench/skills/save/startup-reconciliation.md",
+      "class": "managed-skills",
+      "before": "961cc04f681889fd429855ac933eb5732ccbb9e88e4d135cd82efc502f99c04a",
+      "after": "961cc04f681889fd429855ac933eb5732ccbb9e88e4d135cd82efc502f99c04a",
+      "mode": "100644",
+      "decision": "Move: renamed from workbench/skills/save/startup-reconciliation.md by migrate, bytes unchanged"
+    },
+    {
+      "file": ".agents/skills/spec-manager/SKILL.md",
+      "from": "workbench/skills/spec-manager/SKILL.md",
+      "class": "managed-skills",
+      "before": "fff7701c4b8852e92034be43a7e1907fab71e9483683fd1c4fdb9502f4ad7933",
+      "after": "9ee183b1a3cf9f28a1e699a11b94fd748b9732081d8a67830679e5cb827d4541",
+      "mode": "100644",
+      "decision": "Move and managed update: workbench/skills/spec-manager/SKILL.md"
+    },
+    {
+      "file": ".agents/skills/spec-planner/SKILL.md",
+      "from": "workbench/skills/spec-planner/SKILL.md",
+      "class": "managed-skills",
+      "before": "83df06cdf1b601326197bb6b766529eae9b5898b31d6af1d9c7b777f5c8c92b0",
+      "after": "e9964a0c841db80a1b03759f61da927e7a68b1d52fc406e3a2fd5bc3d910082c",
+      "mode": "100644",
+      "decision": "Move and managed update: workbench/skills/spec-planner/SKILL.md"
+    },
+    {
+      "file": ".agents/skills/to-docs/SKILL.md",
+      "from": "workbench/skills/to-docs/SKILL.md",
+      "class": "managed-skills",
+      "before": "49ef7f9f20834449a303edc6912c0c74871c4737804626382f67796885b8ff0a",
+      "after": "b3cb2da60d22c7c3fd471c7c90f75bde31d74e16e396717d08bf8c72b48b5d37",
+      "mode": "100644",
+      "decision": "Move and managed update: workbench/skills/to-docs/SKILL.md"
+    },
+    {
+      "file": ".agents/skills/to-spec/SKILL.md",
+      "from": "workbench/skills/to-spec/SKILL.md",
+      "class": "managed-skills",
+      "before": "90308f5ab03a2cb35a02dfe0ef39779c3a11f4207e0754093e721a7f63ef9afb",
+      "after": "182cbf350fb5763ded15ef7badc7f20cb0fd44bc8b2fdbdb7f183df66525c41e",
+      "mode": "100644",
+      "decision": "Move and managed update: workbench/skills/to-spec/SKILL.md"
+    },
+    {
+      "file": ".agents/skills/to-tasks/SKILL.md",
+      "from": null,
+      "class": "managed-skills",
+      "before": null,
+      "after": "8c7250b82aeaf71e1a5ce2ac41b7ef0c2eb80596ac55087336f60bc64273ab6b",
+      "mode": "100644",
+      "decision": "Add: managed-skills"
+    },
+    {
+      "file": ".agents/skills/to-tasks/sizing.md",
+      "from": null,
+      "class": "managed-skills",
+      "before": null,
+      "after": "41a3fffe7b16fe451177c6b543a17f5b95c9b1e7944e2337fddd79bf6bfdee7c",
+      "mode": "100644",
+      "decision": "Add: managed-skills"
+    },
+    {
+      "file": ".agents/skills/tracer-bullet/SKILL.md",
+      "from": "workbench/skills/tracer-bullet/SKILL.md",
+      "class": "managed-skills",
+      "before": "bbab999c4eaaa781444ab8696bf633c8f9e1e0de21bedf2456923c2f670e43e3",
+      "after": "67d9579ec38b689321ce7af8aac6f56c5b1161541cce857f268bc3e4437a7875",
+      "mode": "100644",
+      "decision": "Move and managed update: workbench/skills/tracer-bullet/SKILL.md"
+    },
+    {
+      "file": ".agents/skills/update-harness/SKILL.md",
+      "from": null,
+      "class": "managed-skills",
+      "before": null,
+      "after": "2efcdbe84b279b0ac555eea6a708de8ba44d676f99fe3b14e564657888817cd0",
+      "mode": "100644",
+      "decision": "Add: managed-skills"
+    },
+    {
+      "file": ".agents/skills/workbench-runtime/SKILL.md",
+      "from": "workbench/skills/workbench-runtime/SKILL.md",
+      "class": "managed-skills",
+      "before": "48b7eea1a3b1b7e5adabfe8df4ad86e6c7419d58e39c52732e8ab74159144c3d",
+      "after": "f21af3deaa66f2945a84d57612332d95e63b98d4c046fa079667b7ae253c0c4c",
+      "mode": "100644",
+      "decision": "Move and managed update: workbench/skills/workbench-runtime/SKILL.md"
+    },
+    {
+      "file": ".agents/skills/writing-for-agents/INVOCATION.md",
+      "from": null,
+      "class": "managed-skills",
+      "before": null,
+      "after": "94126739f07a05e7d39097926147b82014463e8206881563a9327e0954e572e3",
+      "mode": "100644",
+      "decision": "Add: managed-skills"
+    },
+    {
+      "file": ".agents/skills/writing-for-agents/NOTICE.md",
+      "from": "workbench/skills/writing-for-agents/NOTICE.md",
+      "class": "managed-skills",
+      "before": "be284384460d509b6d2d009387f8c459899d3f4269c3f535042e78ee54446de2",
+      "after": "be284384460d509b6d2d009387f8c459899d3f4269c3f535042e78ee54446de2",
+      "mode": "100644",
+      "decision": "Move: renamed from workbench/skills/writing-for-agents/NOTICE.md by migrate, bytes unchanged"
+    },
+    {
+      "file": ".agents/skills/writing-for-agents/REFERENCE.md",
+      "from": "workbench/skills/writing-for-agents/REFERENCE.md",
+      "class": "managed-skills",
+      "before": "551adca942227b44192edba88acd4e8db911f0121ce58ad16944ccf6a896a74a",
+      "after": "551adca942227b44192edba88acd4e8db911f0121ce58ad16944ccf6a896a74a",
+      "mode": "100644",
+      "decision": "Move: renamed from workbench/skills/writing-for-agents/REFERENCE.md by migrate, bytes unchanged"
+    },
+    {
+      "file": ".agents/skills/writing-for-agents/SKILL-MECHANICS.md",
+      "from": "workbench/skills/writing-for-agents/SKILL-MECHANICS.md",
+      "class": "managed-skills",
+      "before": "c768e6307c7c10728c401c213f2c4ba71c542127eeb7ad2956aabd15a0fa0059",
+      "after": "c768e6307c7c10728c401c213f2c4ba71c542127eeb7ad2956aabd15a0fa0059",
+      "mode": "100644",
+      "decision": "Move: renamed from workbench/skills/writing-for-agents/SKILL-MECHANICS.md by migrate, bytes unchanged"
+    },
+    {
+      "file": ".agents/skills/writing-for-agents/SKILL.md",
+      "from": "workbench/skills/writing-for-agents/SKILL.md",
+      "class": "managed-skills",
+      "before": "a30dedc34b68917826ac871da2c4b1a44e6a41cd3b8c3d86990e535d510c0c74",
+      "after": "3cc0a5e18c90596306b785caf7d10cd7c97023309103134697a7309085001fef",
+      "mode": "100644",
+      "decision": "Move and managed update: workbench/skills/writing-for-agents/SKILL.md"
+    },
+    {
+      "file": ".claude/README.md",
+      "from": null,
+      "class": "project-owned",
+      "before": "8c11ca42639fe70ec3a586b138e416c2ba621995b7018ac466891f3057f1e2c5",
+      "after": "8c11ca42639fe70ec3a586b138e416c2ba621995b7018ac466891f3057f1e2c5",
+      "mode": "100644",
+      "decision": "Keep: preserved byte-for-byte"
+    },
+    {
+      "file": ".claude/settings.json",
+      "from": null,
+      "class": "project-owned",
+      "before": "da406ea165bdc87675b1c09651b3c480f873cfb9c283a7cf886b4e14038b78bc",
+      "after": "e17fbcb151ba83c88e153d0a705346cb5d609c47493842c78d0e282f1e474721",
+      "mode": "100644",
+      "decision": "Port: template permission list (GLOSSARY, ARCHITECTURE, .agents/skills)"
+    },
+    {
+      "file": ".claude/skills",
+      "from": null,
+      "class": "project-owned",
+      "before": "054d9570bc39c2374bdc6efb81c23f5100b2844824336b664fc98c3417fb1b57",
+      "after": "3c74c93317f015d16370349a76529b6f8332c808bdd589e7640eeba6a1b1b874",
+      "mode": "120000",
+      "decision": "Managed: link retargeted to ../.agents/skills by migrate"
+    },
+    {
+      "file": ".gitattributes",
+      "from": null,
+      "class": "project-owned",
+      "before": "b541e42fba469ff3df67d3e50c47568609b650a22d66458cdf87c0b533eec960",
+      "after": "5d6bca77b8f4d087dd3e9a38591ca8ce1c71626c1aaeb00c3073a5341637bbc8",
+      "mode": "100644",
+      "decision": "Managed: current line-endings block appended by migrate"
+    },
+    {
+      "file": ".github/workflows/verify.yml",
+      "from": null,
+      "class": "project-owned",
+      "before": "69db8675e8200bb61b90b358686a9c1e04a8d6a158e884ae0006df811448c939",
+      "after": "69db8675e8200bb61b90b358686a9c1e04a8d6a158e884ae0006df811448c939",
+      "mode": "100644",
+      "decision": "Keep: preserved byte-for-byte"
+    },
+    {
+      "file": ".gitignore",
+      "from": null,
+      "class": "project-owned",
+      "before": "4d56952b0fb13bf8f9b6c13a6d4c34a075bac3af447636a1df4335d7576e2f97",
+      "after": "4d56952b0fb13bf8f9b6c13a6d4c34a075bac3af447636a1df4335d7576e2f97",
+      "mode": "100644",
+      "decision": "Keep: preserved byte-for-byte"
+    },
+    {
+      "file": "AGENTS.md",
+      "from": null,
+      "class": "project-owned",
+      "before": "30738c2d3e2fc9052ffaf8cf7af0db0d6db356e3cfefa60eec0bf657d9854e9b",
+      "after": "220a9f4575e2dfc1ede986980ba202cfca0555ce54388717bf8e93dcf8186f6b",
+      "mode": "100644",
+      "decision": "Port: v3.2.2 stamp, Get-oriented route, Explore/Prepare authority bullet, .agents/skills routes, Glossary/Architecture routes, workspace closeout; room scope, test and main rules kept"
+    },
+    {
+      "file": "ARCHITECTURE.md",
+      "from": null,
+      "class": "project-owned",
+      "before": null,
+      "after": "0579d4335005266f0f71e9eb1e90f468fbcbd661eb0933292f3cfd77bb33a0d0",
+      "mode": "100644",
+      "decision": "Add: installed by migrate from the Template, filled for this room"
+    },
+    {
+      "file": "BLUEPRINT.md",
+      "from": null,
+      "class": "project-owned",
+      "before": "15f00212674fff4ed445b67429330664a1c915e452910819d6f02f247b0312b3",
+      "after": "2905f46700a7185a98dad370b22ae67b5b87460cf82756b3dbb585637ed88fce",
+      "mode": "100644",
+      "decision": "Port: eight root controls, Architecture/Glossary routing, .agents/skills lane; destination headings unchanged"
+    },
+    {
+      "file": "CLAUDE.md",
+      "from": null,
+      "class": "project-owned",
+      "before": "336cc4fbf19beaada7ccf9986414fa91851a8d7a07dfb3ccbe800a69eed0ab49",
+      "after": "336cc4fbf19beaada7ccf9986414fa91851a8d7a07dfb3ccbe800a69eed0ab49",
+      "mode": "100644",
+      "decision": "Keep: preserved byte-for-byte"
+    },
+    {
+      "file": "GLOSSARY.md",
+      "from": null,
+      "class": "project-owned",
+      "before": null,
+      "after": "3c2d48e782f621c474fae4d454e03e73c14330b22aed5b0975d242a6beed5fb4",
+      "mode": "100644",
+      "decision": "Add: installed by migrate from the Template, filled for this room"
+    },
+    {
+      "file": "LEXICON.md",
+      "from": null,
+      "class": "project-owned",
+      "before": "7f629c2cc95b17bd4d5ab0e5e9e13cf04ee314780d4b0d6ca8c7c9ae7e48e543",
+      "after": "ef166d8f321b65b212d51a08897046b65a68c3f0cb694b18047409e9d9b3e74e",
+      "mode": "100644",
+      "decision": "Archive: 78 dispositioned lines removed after successor landing (lexicon-disposition.json); status marked archived; file kept for the S-00A inventory"
+    },
+    {
+      "file": "README.md",
+      "from": null,
+      "class": "project-owned",
+      "before": "36ab7ce4040ff176e753ea2fcb5040338987bc17bcccd862457f43bc31a9f3c0",
+      "after": "2219db6994425416a9814cf660f3608decdb8118a4b3ecb8b6a2e9180c9b2c3b",
+      "mode": "100644",
+      "decision": "Port: stamp, Glossary/Architecture controls, eight controls, .agents/skills links, v3.2.2 candidate boundary"
+    },
+    {
+      "file": "RUNBOOK.md",
+      "from": null,
+      "class": "project-owned",
+      "before": "260ff5864ec3af93217a03cca5d9ae70b587abea037cf2f602dff0c719271288",
+      "after": "7115ab83c57fb99cfa052a6275ca79272f2076ffc1fc6c1d2fc3b67bf07fafb1",
+      "mode": "100644",
+      "decision": "Port: stamp, Get oriented section (orientation anchor kept), six-workflow summary, Cleanup/Deliver anchors (old anchors kept), Ship stage removed, discovery and organization routes"
+    },
+    {
+      "file": "STARTUP.md",
+      "from": null,
+      "class": "project-owned",
+      "before": "3e945e08c6c11405c65a0483061d52b4b0de4faa561445816e61f8126c877b90",
+      "after": "3bec38c1ad69be1fadb50a871eb647c75c0640d7ad57415e6a96d100f605c0bc",
+      "mode": "100644",
+      "decision": "Port: .agents/skills routes"
+    },
+    {
+      "file": "TASKBOARD.md",
+      "from": null,
+      "class": "project-owned",
+      "before": "5c18b78de989bdcd61df1926f684dc90c169941796dd4c2b9e7cbd987bf075ab",
+      "after": "1ec1e8d9fac14d8ab7f66801b0715667fdc6204bcd9397214a5632e0451425bc",
+      "mode": "100644",
+      "decision": "Regenerated projection; stamp v3.2.2"
+    },
+    {
+      "file": "tests/evidence-history.test.mjs",
+      "from": null,
+      "class": "project-owned",
+      "before": "76a6e541031223389a73b92a631a41217f62990476ca6d8447a2fed7abd15aa4",
+      "after": "76a6e541031223389a73b92a631a41217f62990476ca6d8447a2fed7abd15aa4",
+      "mode": "100644",
+      "decision": "Keep: preserved byte-for-byte"
+    },
+    {
+      "file": "tests/tour.test.mjs",
+      "from": null,
+      "class": "project-owned",
+      "before": "09967d6ee72425b99939d83fc87bc4f70b4440a130a4ac034aa35118438ac9ef",
+      "after": "a17202ca1389a52233e76f9545f2a2985ff7f0a81242ba0ceefcfc666e59b044",
+      "mode": "100644",
+      "decision": "Product test: red-first expectations for eight controls, v3.2.2, the relocated lane"
+    },
+    {
+      "file": "tools/check-evidence-history.mjs",
+      "from": null,
+      "class": "project-owned",
+      "before": "a27d06ab17a1f3a7a8c0ad95aa241a906a167ed0477ee2295219279c32de20cd",
+      "after": "a27d06ab17a1f3a7a8c0ad95aa241a906a167ed0477ee2295219279c32de20cd",
+      "mode": "100644",
+      "decision": "Keep: preserved byte-for-byte"
+    },
+    {
+      "file": "tour.mjs",
+      "from": null,
+      "class": "project-owned",
+      "before": "f709772a2218266cd46bf943b0380e6bf8334d359fc65f78074171819081819d",
+      "after": "2a1f5de0c9c2be1b2dcb860f3d66b6fee033ca8c36bd43c54011de28c16389a6",
+      "mode": "100644",
+      "decision": "Product: eight root controls, GLOSSARY/ARCHITECTURE places, .agents/skills lane, skills update route step"
+    },
+    {
+      "file": "workbench/.workbench-seed.json",
+      "from": null,
+      "class": "project-owned",
+      "before": "85b1ad2d29ce7cdd5047a2ff58f854b76e5b414e7c9e74e3a214c0c3019c9815",
+      "after": "c2e7f5a693e1ebcdab92bcd6b574e690e1910ce58f249843a6f13098ebd57cfc",
+      "mode": "100644",
+      "decision": "Managed: seed-documents record"
+    },
+    {
+      "file": "workbench/docs/.gitkeep",
+      "from": null,
+      "class": "project-owned",
+      "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "after": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": "100644",
+      "decision": "Keep: preserved byte-for-byte"
+    },
+    {
+      "file": "workbench/docs/AUTO_MERGE.md",
+      "from": null,
+      "class": "project-owned",
+      "before": "8247cfb231e1c062fe61d0a7fb1e1e51b4052cc088cde18fb84e0d48e8888594",
+      "after": "2c3810d409b00abfc4b0952634f236b8cbde8f7a6683410ec69223e7773cdf23",
+      "mode": "100644",
+      "decision": "Repair: skill link after lane relocation"
+    },
+    {
+      "file": "workbench/docs/ORGANIZATION.md",
+      "from": null,
+      "class": "project-owned",
+      "before": null,
+      "after": "fc72f5a151f2a162c0077367a60e80a8dceccbacc5b1f3766f0ec5ef31d96edd",
+      "mode": "100644",
+      "decision": "Add: seeded by seed-documents"
+    },
+    {
+      "file": "workbench/docs/TEMPLATE_OPERATIONS.md",
+      "from": null,
+      "class": "project-owned",
+      "before": "a8ccb9400f4597faae5259672960b9aa81314fe10f2b2215845a00e6364ea398",
+      "after": "7c2052f9adc09a90b74f733467a2288f50ff9194e9105fd44b4a9a5ab12739b3",
+      "mode": "100644",
+      "decision": "Port: stamp, skill links, Architecture/Glossary route, v3.2.2 skill catalog and upgrade steps"
+    },
+    {
+      "file": "workbench/docs/VERSION_HISTORY.md",
+      "from": null,
+      "class": "project-owned",
+      "before": "46a36c5a4f7399a36119a02316efb849b47cb85603955e1434c0c7e6aa1747f9",
+      "after": "25e9a7b454d01f2c3e2960dfab6c53be1f87a58de2069e1252a617f7869746fd",
+      "mode": "100644",
+      "decision": "Append: v3.2.2 assessment candidate section"
+    },
+    {
+      "file": "workbench/docs/WORKBENCH_STRUCTURE.md",
+      "from": null,
+      "class": "project-owned",
+      "before": null,
+      "after": "3f4ef9a94cd948005d5d0a3d271dd9680575d25ea2ae2e7cfb6755a2fdf9bfbd",
+      "mode": "100644",
+      "decision": "Add: seeded by seed-documents"
+    },
+    {
+      "file": "workbench/docs/adr/.gitkeep",
+      "from": null,
+      "class": "project-owned",
+      "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "after": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": "100644",
+      "decision": "Keep: preserved byte-for-byte"
+    },
+    {
+      "file": "workbench/docs/adr/0001-template-ownership-and-continuity.md",
+      "from": null,
+      "class": "project-owned",
+      "before": "455e7f8415ef38895b87b3a0afb1e473c6b60f2aa21e79e7569eeb12b0bf2429",
+      "after": "455e7f8415ef38895b87b3a0afb1e473c6b60f2aa21e79e7569eeb12b0bf2429",
+      "mode": "100644",
+      "decision": "Keep: preserved byte-for-byte"
+    },
+    {
+      "file": "workbench/docs/adr/HISTORY.md",
+      "from": null,
+      "class": "project-owned",
+      "before": "a40776a78a94da4d9061bb529bc8a207bcc2dcbef50cb757a1a8bfc8b4f71c99",
+      "after": "a40776a78a94da4d9061bb529bc8a207bcc2dcbef50cb757a1a8bfc8b4f71c99",
+      "mode": "100644",
+      "decision": "Keep: preserved byte-for-byte"
+    },
+    {
+      "file": "workbench/docs/adr/REGISTER.md",
+      "from": null,
+      "class": "project-owned",
+      "before": "5e8cabb6f27a9e4d295480ce667d45b5689501e8aa32bc85b84f93be619fad61",
+      "after": "5e8cabb6f27a9e4d295480ce667d45b5689501e8aa32bc85b84f93be619fad61",
+      "mode": "100644",
+      "decision": "Keep: preserved byte-for-byte"
+    },
+    {
+      "file": "workbench/docs/ddr/HISTORY.md",
+      "from": null,
+      "class": "project-owned",
+      "before": null,
+      "after": "7e3965a2dc5efa67aabd13ea7413be4d0153f88b2df67fceb442e9a47c25f048",
+      "mode": "100644",
+      "decision": "Add: rendered DDR projection (adr.mjs register --kind ddr) so Architecture routes resolve"
+    },
+    {
+      "file": "workbench/docs/ddr/REGISTER.md",
+      "from": null,
+      "class": "project-owned",
+      "before": null,
+      "after": "e1ce576e401891a31e78d03a81d13ae76ec4f89ad5af68a45ed1ab199c75c6fb",
+      "mode": "100644",
+      "decision": "Add: rendered DDR projection (adr.mjs register --kind ddr) so Architecture routes resolve"
+    },
+    {
+      "file": "workbench/docs/ddr/archive/.gitkeep",
+      "from": null,
+      "class": "project-owned",
+      "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "after": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": "100644",
+      "decision": "Keep: preserved byte-for-byte"
+    },
+    {
+      "file": "workbench/docs/ddr/proposed/.gitkeep",
+      "from": null,
+      "class": "project-owned",
+      "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "after": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": "100644",
+      "decision": "Keep: preserved byte-for-byte"
+    },
+    {
+      "file": "workbench/feedback/.gitkeep",
+      "from": null,
+      "class": "project-owned",
+      "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "after": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": "100644",
+      "decision": "Keep: preserved byte-for-byte"
+    },
+    {
+      "file": "workbench/feedback/REPORT_FORMAT.md",
+      "from": null,
+      "class": "project-owned",
+      "before": "31680ad3a127299de1efc6a3795037bf20f36ca2f7153dd070c077fc956c2d39",
+      "after": "31680ad3a127299de1efc6a3795037bf20f36ca2f7153dd070c077fc956c2d39",
+      "mode": "100644",
+      "decision": "Keep: preserved byte-for-byte"
+    },
+    {
+      "file": "workbench/feedback/WORKBENCH_FEEDBACK.md",
+      "from": null,
+      "class": "project-owned",
+      "before": "32adc60eb2cb3ac9c7dc60d0deaaf416204d500941081e2f9b2715d52b2f32ab",
+      "after": "1aa79b5012b39204f496dfceee97aa634ee5afa0167abf03b901ca9e2255881e",
+      "mode": "100644",
+      "decision": "Append: four observed friction rows"
+    },
+    {
+      "file": "workbench/landmarks/.gitkeep",
+      "from": null,
+      "class": "project-owned",
+      "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "after": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": "100644",
+      "decision": "Keep: preserved byte-for-byte"
+    },
+    {
+      "file": "workbench/manifest.json",
+      "from": null,
+      "class": "project-owned",
+      "before": "ce5ee091c960aff2a6237c1c5d993b9fa2237aa2e6f74b5a228728509af5141b",
+      "after": "07d789f38e4af7a7f37ffaa93b7681a50e17f36a851d22456baf7d5c122e475f",
+      "mode": "100644",
+      "decision": "Managed: lanes.skills relocated, workbenchVersion v3.2.2, release skillPolicy; provenance unchanged"
+    },
+    {
+      "file": "workbench/sessions/.gitignore",
+      "from": null,
+      "class": "project-owned",
+      "before": "b22ec04b90a3b40c7921dfbc480abb06e0d5f1f70979d8e0487f8ef4e644f10e",
+      "after": "b22ec04b90a3b40c7921dfbc480abb06e0d5f1f70979d8e0487f8ef4e644f10e",
+      "mode": "100644",
+      "decision": "Keep: preserved byte-for-byte"
+    },
+    {
+      "file": "workbench/sessions/.gitkeep",
+      "from": null,
+      "class": "project-owned",
+      "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "after": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": "100644",
+      "decision": "Keep: preserved byte-for-byte"
+    },
+    {
+      "file": "workbench/sessions/checkpoints/.gitkeep",
+      "from": null,
+      "class": "project-owned",
+      "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "after": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": "100644",
+      "decision": "Keep: preserved byte-for-byte"
+    },
+    {
+      "file": "workbench/sessions/grilling/.gitkeep",
+      "from": null,
+      "class": "project-owned",
+      "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "after": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": "100644",
+      "decision": "Keep: preserved byte-for-byte"
+    },
+    {
+      "file": "workbench/sessions/handoffs/.gitkeep",
+      "from": null,
+      "class": "project-owned",
+      "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "after": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": "100644",
+      "decision": "Keep: preserved byte-for-byte"
+    },
+    {
+      "file": "workbench/sessions/notepads/templates/grilling.example.json",
+      "from": null,
+      "class": "project-owned",
+      "before": "4856b43d2f939a131172e24f455fca457b17508da505d56c89312d58906a2458",
+      "after": "4856b43d2f939a131172e24f455fca457b17508da505d56c89312d58906a2458",
+      "mode": "100644",
+      "decision": "Keep: preserved byte-for-byte"
+    },
+    {
+      "file": "workbench/sessions/notepads/templates/handoff.example.json",
+      "from": null,
+      "class": "project-owned",
+      "before": "4923c44076344979732fc87ca4aadde82b3bf98914003e7e298084c67f67d1b7",
+      "after": "4923c44076344979732fc87ca4aadde82b3bf98914003e7e298084c67f67d1b7",
+      "mode": "100644",
+      "decision": "Keep: preserved byte-for-byte"
+    },
+    {
+      "file": "workbench/sessions/notepads/templates/notepad.schema.json",
+      "from": null,
+      "class": "project-owned",
+      "before": "2bdc47d139314642bc4b90e8e2d2e2a5e24cc4d258aaa90ec4d126def2be00c0",
+      "after": "2bdc47d139314642bc4b90e8e2d2e2a5e24cc4d258aaa90ec4d126def2be00c0",
+      "mode": "100644",
+      "decision": "Keep: preserved byte-for-byte"
+    },
+    {
+      "file": "workbench/sessions/notepads/templates/work.example.json",
+      "from": null,
+      "class": "project-owned",
+      "before": "7608eb9e6879fb564041011f6c09756de696b01a1292a48c2cee9e32c6b82376",
+      "after": "7608eb9e6879fb564041011f6c09756de696b01a1292a48c2cee9e32c6b82376",
+      "mode": "100644",
+      "decision": "Keep: preserved byte-for-byte"
+    },
+    {
+      "file": "workbench/sessions/recovery/.gitkeep",
+      "from": null,
+      "class": "project-owned",
+      "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "after": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": "100644",
+      "decision": "Keep: preserved byte-for-byte"
+    },
+    {
+      "file": "workbench/skills/.workbench-skills.json",
+      "from": null,
+      "class": "managed-skills",
+      "before": "1add65c803881b7966c5e9cc361a6173dee7ed543e18490d6d5236c92dff2dde",
+      "after": null,
+      "mode": "100644",
+      "decision": "Move: relocated to .agents/skills by migrate"
+    },
+    {
+      "file": "workbench/skills/handoff/SKILL.md",
+      "from": null,
+      "class": "managed-skills",
+      "before": "d9ca7aad5b7ff707eb8aff5f92b27e9c9628a9330d042a7326ca5e4fa2c6d581",
+      "after": null,
+      "mode": "100644",
+      "decision": "Move: relocated to .agents/skills by migrate"
+    },
+    {
+      "file": "workbench/skills/to-tasks/SKILL.md",
+      "from": null,
+      "class": "managed-skills",
+      "before": "8a8d8a015d80e05cf3f4fff06e20cc17bb5ee04c584d712e87aa9d651931a890",
+      "after": null,
+      "mode": "100644",
+      "decision": "Move: relocated to .agents/skills by migrate"
+    },
+    {
+      "file": "workbench/skills/update-harness/SKILL.md",
+      "from": null,
+      "class": "managed-skills",
+      "before": "c42fff8142971aec6272852fb055050b92f464330ae2f298ef86345fbc72e7b3",
+      "after": null,
+      "mode": "100644",
+      "decision": "Move: relocated to .agents/skills by migrate"
+    },
+    {
+      "file": "workbench/specs/.gitkeep",
+      "from": null,
+      "class": "project-owned",
+      "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "after": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": "100644",
+      "decision": "Keep: preserved byte-for-byte"
+    },
+    {
+      "file": "workbench/specs/CATALOG.md",
+      "from": null,
+      "class": "project-owned",
+      "before": "e53fb9771b66a1dcb6dbd5433c5c26c561c32de1147bbce281860dfe70842ccc",
+      "after": "e53fb9771b66a1dcb6dbd5433c5c26c561c32de1147bbce281860dfe70842ccc",
+      "mode": "100644",
+      "decision": "Keep: preserved byte-for-byte"
+    },
+    {
+      "file": "workbench/specs/S-000C-ci-agent-review-auto-merge/SPEC.md",
+      "from": null,
+      "class": "project-owned",
+      "before": "75c615f1efcf5d3c52e5112aad84f764390cf25898bdb55e742299dde5b4c6b3",
+      "after": "75c615f1efcf5d3c52e5112aad84f764390cf25898bdb55e742299dde5b4c6b3",
+      "mode": "100644",
+      "decision": "Keep: preserved byte-for-byte"
+    },
+    {
+      "file": "workbench/specs/S-000C-ci-agent-review-auto-merge/tasks/TK-000B/TASK.md",
+      "from": null,
+      "class": "project-owned",
+      "before": "31210d9424d90a196e5494ec7faec589e570b769e550b37fdc2a149f0c7ddf14",
+      "after": "31210d9424d90a196e5494ec7faec589e570b769e550b37fdc2a149f0c7ddf14",
+      "mode": "100644",
+      "decision": "Keep: preserved byte-for-byte"
+    },
+    {
+      "file": "workbench/specs/S-000C-ci-agent-review-auto-merge/tasks/TK-001/TASK.md",
+      "from": null,
+      "class": "project-owned",
+      "before": "bcd28ffb1234de4b141dde199c38fa68d43a5db420250756a1676a3e804b0094",
+      "after": "bcd28ffb1234de4b141dde199c38fa68d43a5db420250756a1676a3e804b0094",
+      "mode": "100644",
+      "decision": "Keep: preserved byte-for-byte"
+    },
+    {
+      "file": "workbench/specs/S-000D-workbench-feature-catalog/SPEC.md",
+      "from": null,
+      "class": "project-owned",
+      "before": "dff1d65f35ec1eba967dae4ba82e8444f64f3666b4dcdfb07ca9717434551ec7",
+      "after": "dff1d65f35ec1eba967dae4ba82e8444f64f3666b4dcdfb07ca9717434551ec7",
+      "mode": "100644",
+      "decision": "Keep: preserved byte-for-byte"
+    },
+    {
+      "file": "workbench/specs/S-000D-workbench-feature-catalog/tasks/.gitkeep",
+      "from": null,
+      "class": "project-owned",
+      "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "after": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": "100644",
+      "decision": "Keep: preserved byte-for-byte"
+    },
+    {
+      "file": "workbench/specs/S-000D-workbench-feature-catalog/tasks/TK-000C/TASK.md",
+      "from": null,
+      "class": "project-owned",
+      "before": "942d69c2826515374fbaf439d7af876da7aeedfc568f832a886277550198f0c6",
+      "after": "942d69c2826515374fbaf439d7af876da7aeedfc568f832a886277550198f0c6",
+      "mode": "100644",
+      "decision": "Keep: preserved byte-for-byte"
+    },
+    {
+      "file": "workbench/specs/S-000E-v3-2-2-harness-upgrade/SPEC.md",
+      "from": null,
+      "class": "project-owned",
+      "before": null,
+      "after": "8268654dcd9b73ae5c2327e51f3f2361c400c775fe2eb429d9180b76643d2aeb",
+      "mode": "100644",
+      "decision": "Add: this upgrade Spec"
+    },
+    {
+      "file": "workbench/specs/S-000E-v3-2-2-harness-upgrade/lexicon-disposition.json",
+      "from": null,
+      "class": "project-owned",
+      "before": null,
+      "after": "70239d02e27af4a09476cf7560557a30143e594761488c4bdc08b073e6f852c6",
+      "mode": "100644",
+      "decision": "Add: Lexicon disposition record"
+    },
+    {
+      "file": "workbench/specs/S-001-self-explaining-room/SPEC.md",
+      "from": null,
+      "class": "project-owned",
+      "before": "ae6ecf54660154bfacb1277bd1a16cabde6abe38d51ac52b8c5df6a443205c13",
+      "after": "ae6ecf54660154bfacb1277bd1a16cabde6abe38d51ac52b8c5df6a443205c13",
+      "mode": "100644",
+      "decision": "Keep: preserved byte-for-byte"
+    },
+    {
+      "file": "workbench/specs/S-002-version-history-replay/SPEC.md",
+      "from": null,
+      "class": "project-owned",
+      "before": "1770df4c81d24351005706068beb4b6ef360a75e53f013ded90508a459222392",
+      "after": "1770df4c81d24351005706068beb4b6ef360a75e53f013ded90508a459222392",
+      "mode": "100644",
+      "decision": "Keep: preserved byte-for-byte"
+    },
+    {
+      "file": "workbench/specs/S-003-v3-2-0-upgrade-and-project-validation/SPEC.md",
+      "from": null,
+      "class": "project-owned",
+      "before": "32ac4322050f5de321590a9cd240069865b08226fcb27f8de3a987c790323e71",
+      "after": "32ac4322050f5de321590a9cd240069865b08226fcb27f8de3a987c790323e71",
+      "mode": "100644",
+      "decision": "Keep: preserved byte-for-byte"
+    },
+    {
+      "file": "workbench/specs/S-003-v3-2-0-upgrade-and-project-validation/fresh-project-result.json",
+      "from": null,
+      "class": "project-owned",
+      "before": "44b0711b664303115f8c58c45316ddae9c0411f7cb5a38b9fd9301641f928370",
+      "after": "44b0711b664303115f8c58c45316ddae9c0411f7cb5a38b9fd9301641f928370",
+      "mode": "100644",
+      "decision": "Keep: preserved byte-for-byte"
+    },
+    {
+      "file": "workbench/specs/S-003-v3-2-0-upgrade-and-project-validation/installation-result.json",
+      "from": null,
+      "class": "project-owned",
+      "before": "67d29760d59d720cb20dfce366ed0c2c2e0e5038e0286166c64fc8913f43b09c",
+      "after": "67d29760d59d720cb20dfce366ed0c2c2e0e5038e0286166c64fc8913f43b09c",
+      "mode": "100644",
+      "decision": "Keep: preserved byte-for-byte"
+    },
+    {
+      "file": "workbench/specs/S-00A-workbench-template-reformation/SPEC.md",
+      "from": null,
+      "class": "project-owned",
+      "before": "9499fcf3b4ae9bcf3a7897c585e81db88e53ec78e7684890d38030138859dd2c",
+      "after": "9499fcf3b4ae9bcf3a7897c585e81db88e53ec78e7684890d38030138859dd2c",
+      "mode": "100644",
+      "decision": "Keep: preserved byte-for-byte"
+    },
+    {
+      "file": "workbench/specs/S-00A-workbench-template-reformation/blueprint-source.json",
+      "from": null,
+      "class": "project-owned",
+      "before": "716737f5888942f6a0d42ecc5f7b2e4e89bda8de31832273a74d128d2e0831e4",
+      "after": "716737f5888942f6a0d42ecc5f7b2e4e89bda8de31832273a74d128d2e0831e4",
+      "mode": "100644",
+      "decision": "Keep: preserved byte-for-byte"
+    },
+    {
+      "file": "workbench/specs/S-00A-workbench-template-reformation/control-fidelity.json",
+      "from": null,
+      "class": "project-owned",
+      "before": "715df61dd1162efa49dd8394473413dbc6317d31e9442c16177a3114e2dd9eed",
+      "after": "715df61dd1162efa49dd8394473413dbc6317d31e9442c16177a3114e2dd9eed",
+      "mode": "100644",
+      "decision": "Keep: preserved byte-for-byte"
+    },
+    {
+      "file": "workbench/specs/S-00A-workbench-template-reformation/update-acceptance.json",
+      "from": null,
+      "class": "project-owned",
+      "before": "cfa2ce94f8f66bffb678a4e44d2647b7c9df954e1233b3d1e69fbe07efb59a5c",
+      "after": "cfa2ce94f8f66bffb678a4e44d2647b7c9df954e1233b3d1e69fbe07efb59a5c",
+      "mode": "100644",
+      "decision": "Keep: preserved byte-for-byte"
+    },
+    {
+      "file": "workbench/specs/S-00B-v3-2-1-harness-upgrade/SPEC.md",
+      "from": null,
+      "class": "project-owned",
+      "before": "32dcacbf950adfb0864e2c49ede54986ba02dd80a8c0523c19c39f28eec4e7d9",
+      "after": "32dcacbf950adfb0864e2c49ede54986ba02dd80a8c0523c19c39f28eec4e7d9",
+      "mode": "100644",
+      "decision": "Keep: preserved byte-for-byte"
+    },
+    {
+      "file": "workbench/specs/S-00B-v3-2-1-harness-upgrade/control-fidelity.json",
+      "from": null,
+      "class": "project-owned",
+      "before": "35f18fdec71c45d35a1da29b9a2ca8c402112c6492b84228c597d1955f90018c",
+      "after": "35f18fdec71c45d35a1da29b9a2ca8c402112c6492b84228c597d1955f90018c",
+      "mode": "100644",
+      "decision": "Keep: preserved byte-for-byte"
+    },
+    {
+      "file": "workbench/specs/S-00B-v3-2-1-harness-upgrade/preservation.json",
+      "from": null,
+      "class": "project-owned",
+      "before": "c95725a576640465ce1098e59e621dd47d90b3b63c1262cae9b1a517dc68e95f",
+      "after": "c95725a576640465ce1098e59e621dd47d90b3b63c1262cae9b1a517dc68e95f",
+      "mode": "100644",
+      "decision": "Keep: preserved byte-for-byte"
+    },
+    {
+      "file": "workbench/tools/.gitkeep",
+      "from": null,
+      "class": "managed-runtime",
+      "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "after": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": "100644",
+      "decision": "Keep: preserved byte-for-byte"
+    },
+    {
+      "file": "workbench/tools/.workbench-tools.json",
+      "from": null,
+      "class": "managed-runtime",
+      "before": "af5ea25aaba65cd8e1fe26fe0a5a8b11e46ef9d7cd13ad625ef9350762e529bc",
+      "after": "af0120bad343b61e2593c0f365512037a119212ddc129497c228e307b7c871d4",
+      "mode": "100644",
+      "decision": "Managed update: managed-runtime"
+    },
+    {
+      "file": "workbench/tools/adr.mjs",
+      "from": null,
+      "class": "managed-runtime",
+      "before": "ea2cb9c87b3bf2bb379c588907c51b657fb9fe41930ea21ad0c8c72ed0891645",
+      "after": "f732f6d9d5a6138aec304a7db0f4bc513e0f89ab92d6c6d1b3e776a5064acb33",
+      "mode": "100644",
+      "decision": "Managed update: managed-runtime"
+    },
+    {
+      "file": "workbench/tools/claim-coordination.mjs",
+      "from": null,
+      "class": "managed-runtime",
+      "before": "7f4755d3f0b2f42510aff122ab65aed812c4e2c73cb1988bb50a777cfa373560",
+      "after": "83068a6f5ec06cb52aef8778699f380ba1a21477e6be22dfc79afa0863604aa0",
+      "mode": "100644",
+      "decision": "Managed update: managed-runtime"
+    },
+    {
+      "file": "workbench/tools/diagnostics.mjs",
+      "from": null,
+      "class": "managed-runtime",
+      "before": "4ce85cc3332e78f1530f45738fd9bf6b11e663793bcba574f70b76c704a71b23",
+      "after": "e6d371f0e058a0391d9a9e0bc207a428db22518b20c5f8e9a8b5e8f991f38f2c",
+      "mode": "100644",
+      "decision": "Managed update: managed-runtime"
+    },
+    {
+      "file": "workbench/tools/github-coordination.mjs",
+      "from": null,
+      "class": "managed-runtime",
+      "before": "1d4c120ab8442e12c0a0186e7cdb0bfd7e6d8079682c96fc49b8025febf5a720",
+      "after": "1d4c120ab8442e12c0a0186e7cdb0bfd7e6d8079682c96fc49b8025febf5a720",
+      "mode": "100644",
+      "decision": "Keep: preserved byte-for-byte"
+    },
+    {
+      "file": "workbench/tools/glossary-format.mjs",
+      "from": null,
+      "class": "managed-runtime",
+      "before": null,
+      "after": "1bf28fb20a4e74a27abf219c46370316c3df6a6f7bc557d08e082170717420ff",
+      "mode": "100644",
+      "decision": "Add: managed-runtime"
+    },
+    {
+      "file": "workbench/tools/host-floor.mjs",
+      "from": null,
+      "class": "managed-runtime",
+      "before": "db5bfeb569af46f0df464d5e614bd5fd25e9297f1aaf7a4a3dc7eecda6c7a193",
+      "after": "db5bfeb569af46f0df464d5e614bd5fd25e9297f1aaf7a4a3dc7eecda6c7a193",
+      "mode": "100644",
+      "decision": "Keep: preserved byte-for-byte"
+    },
+    {
+      "file": "workbench/tools/jot.mjs",
+      "from": null,
+      "class": "managed-runtime",
+      "before": "eaf7f48b693cfb39a9dd82ae79515f15ef70d73e43364a5264a9da73e92f106d",
+      "after": "ec6f8675e0ed29cc0db2a448dad48a33af62d853ac3efb19ee59aeda5f78f8c4",
+      "mode": "100644",
+      "decision": "Managed update: managed-runtime"
+    },
+    {
+      "file": "workbench/tools/landmark-artifact.mjs",
+      "from": null,
+      "class": "managed-runtime",
+      "before": "2c3b46907d16097ca4d45c1ead05f8f6d11ddb9753210065c7b2e5ec5bcb1c11",
+      "after": "2c3b46907d16097ca4d45c1ead05f8f6d11ddb9753210065c7b2e5ec5bcb1c11",
+      "mode": "100644",
+      "decision": "Keep: preserved byte-for-byte"
+    },
+    {
+      "file": "workbench/tools/landmark-tracker.mjs",
+      "from": null,
+      "class": "managed-runtime",
+      "before": "f196b51e693d0cffc75928abeed2e99765624ec16ad436e020f59dff27a7e0cd",
+      "after": "3c0a56f72c166cdb6869bd48390d1067769ce0a600115f0878aab461cd3a758d",
+      "mode": "100644",
+      "decision": "Managed update: managed-runtime"
+    },
+    {
+      "file": "workbench/tools/landmark-wiki.mjs",
+      "from": null,
+      "class": "managed-runtime",
+      "before": "dd5eee302f9cb8afb1db7949461554bc7471a575425cc920aa0b04a6b1322d52",
+      "after": "dd5eee302f9cb8afb1db7949461554bc7471a575425cc920aa0b04a6b1322d52",
+      "mode": "100644",
+      "decision": "Keep: preserved byte-for-byte"
+    },
+    {
+      "file": "workbench/tools/lane-sweep.mjs",
+      "from": null,
+      "class": "managed-runtime",
+      "before": "b4143a27b5b99de9e1d705144493766869818c744d00a57312413376b691eacf",
+      "after": "b4143a27b5b99de9e1d705144493766869818c744d00a57312413376b691eacf",
+      "mode": "100644",
+      "decision": "Keep: preserved byte-for-byte"
+    },
+    {
+      "file": "workbench/tools/lexicon-retirement-data.mjs",
+      "from": null,
+      "class": "managed-runtime",
+      "before": null,
+      "after": "2bf39531db946a47d4cbc10af8893e41d8f5de53baf153f67fdb39c6b59498da",
+      "mode": "100644",
+      "decision": "Add: managed-runtime"
+    },
+    {
+      "file": "workbench/tools/markdown-table.mjs",
+      "from": null,
+      "class": "managed-runtime",
+      "before": "acca5cb04cecb0044c74aaa38f42d6f0e4e6addb26b45a744d14ca0b74487e6b",
+      "after": "acca5cb04cecb0044c74aaa38f42d6f0e4e6addb26b45a744d14ca0b74487e6b",
+      "mode": "100644",
+      "decision": "Keep: preserved byte-for-byte"
+    },
+    {
+      "file": "workbench/tools/notepads.mjs",
+      "from": null,
+      "class": "managed-runtime",
+      "before": "157bb7c93f0b7914414ba2a2b9b47c631cfbf3b85d48f8efc79d572934febc4b",
+      "after": "157bb7c93f0b7914414ba2a2b9b47c631cfbf3b85d48f8efc79d572934febc4b",
+      "mode": "100644",
+      "decision": "Keep: preserved byte-for-byte"
+    },
+    {
+      "file": "workbench/tools/optional-capabilities.mjs",
+      "from": null,
+      "class": "managed-runtime",
+      "before": "430df9d08ba18e4af2a389019b3b591f23ad9ae390801b2a39273878d05490be",
+      "after": "430df9d08ba18e4af2a389019b3b591f23ad9ae390801b2a39273878d05490be",
+      "mode": "100644",
+      "decision": "Keep: preserved byte-for-byte"
+    },
+    {
+      "file": "workbench/tools/organization.mjs",
+      "from": null,
+      "class": "managed-runtime",
+      "before": null,
+      "after": "bda6fc519b5d2e72640fcd79930bc1479a078f43b6593fb57d653b616862fafa",
+      "mode": "100644",
+      "decision": "Add: managed-runtime"
+    },
+    {
+      "file": "workbench/tools/privacy.mjs",
+      "from": null,
+      "class": "managed-runtime",
+      "before": "8731047bc626b7b7a539b04c674aac2ac19452e7103cebd53ccf336c32a3ad8b",
+      "after": "8731047bc626b7b7a539b04c674aac2ac19452e7103cebd53ccf336c32a3ad8b",
+      "mode": "100644",
+      "decision": "Keep: preserved byte-for-byte"
+    },
+    {
+      "file": "workbench/tools/project-evidence.mjs",
+      "from": null,
+      "class": "managed-runtime",
+      "before": "5fdfdce8f57b749b3be995a1f31ff9bf69ce4b6c6cf8690df9719661813eeca3",
+      "after": "5fdfdce8f57b749b3be995a1f31ff9bf69ce4b6c6cf8690df9719661813eeca3",
+      "mode": "100644",
+      "decision": "Keep: preserved byte-for-byte"
+    },
+    {
+      "file": "workbench/tools/self-drift.mjs",
+      "from": null,
+      "class": "managed-runtime",
+      "before": "65b0480c6cdd0f0d372f6f38c0f8b3d665597d03dc74f770d6a53aaaf4e986d2",
+      "after": "2b84f455849372f47fcec3fb95754816536bcf79d4e6c484a23182e0c3b85c18",
+      "mode": "100644",
+      "decision": "Managed update: managed-runtime"
+    },
+    {
+      "file": "workbench/tools/session-transport.mjs",
+      "from": null,
+      "class": "managed-runtime",
+      "before": "17172dcb489a2fa571551a605f3130fd20d6bc2a17d8cba8811ef39a8c2c5416",
+      "after": "17172dcb489a2fa571551a605f3130fd20d6bc2a17d8cba8811ef39a8c2c5416",
+      "mode": "100644",
+      "decision": "Keep: preserved byte-for-byte"
+    },
+    {
+      "file": "workbench/tools/sessions.mjs",
+      "from": null,
+      "class": "managed-runtime",
+      "before": "cc5b75c5b1ea83d0f08201eeb005af97640049a974bd90ea580a14439e7f4c38",
+      "after": "efc5310b48459523277bf50374f20319d0b75d6bc7846af7413826caf4ff0bf3",
+      "mode": "100644",
+      "decision": "Managed update: managed-runtime"
+    },
+    {
+      "file": "workbench/tools/skill-inspection.mjs",
+      "from": null,
+      "class": "managed-runtime",
+      "before": "ccaf53a43091e2ecb693b4f866387ba87dbd6f9971500c7f88f57c4bc9e14a1b",
+      "after": "ac92932518d5c120392eca542b7695ce08c05638b93e04ef80f32ea51521c672",
+      "mode": "100644",
+      "decision": "Managed update: managed-runtime"
+    },
+    {
+      "file": "workbench/tools/spec-packet.mjs",
+      "from": null,
+      "class": "managed-runtime",
+      "before": "8fe47ec5dda6e237a6005b99e6679c7588fd19d15eba31cc2378f0c8f4e5f132",
+      "after": "8fe47ec5dda6e237a6005b99e6679c7588fd19d15eba31cc2378f0c8f4e5f132",
+      "mode": "100644",
+      "decision": "Keep: preserved byte-for-byte"
+    },
+    {
+      "file": "workbench/tools/spec-report.mjs",
+      "from": null,
+      "class": "managed-runtime",
+      "before": "cccc26ec4b4aba5676148a39b36ae85b3285d0b5f750171ea21dd1ebe5ccb762",
+      "after": "7f1afb2613995d7fc32389d5104cab7e39e7c71efbf983569004c9bfe75163c3",
+      "mode": "100644",
+      "decision": "Managed update: managed-runtime"
+    },
+    {
+      "file": "workbench/tools/spec-workbench.mjs",
+      "from": null,
+      "class": "managed-runtime",
+      "before": "8909773e6538971da4140d3c5284a65d98ccf21fd82c86ab9039f8a9d5833f57",
+      "after": "580ec66576c06c264d43d3093a8d01bf62bbab9d36cb3c6af9c1e50cf3ee21f4",
+      "mode": "100644",
+      "decision": "Managed update: managed-runtime"
+    },
+    {
+      "file": "workbench/tools/task-packet.mjs",
+      "from": null,
+      "class": "managed-runtime",
+      "before": "688e46ff537561dec55f557bfc3a408f82c8bacbbd456729883fcbf042329c5a",
+      "after": "688e46ff537561dec55f557bfc3a408f82c8bacbbd456729883fcbf042329c5a",
+      "mode": "100644",
+      "decision": "Keep: preserved byte-for-byte"
+    },
+    {
+      "file": "workbench/tools/task-receipt.mjs",
+      "from": null,
+      "class": "managed-runtime",
+      "before": "aaefb6321bdd4568f1e850f885b0b8aaf56a2e4c383f8786c3df79b3a0ebb7c5",
+      "after": "aaefb6321bdd4568f1e850f885b0b8aaf56a2e4c383f8786c3df79b3a0ebb7c5",
+      "mode": "100644",
+      "decision": "Keep: preserved byte-for-byte"
+    },
+    {
+      "file": "workbench/tools/task-record.mjs",
+      "from": null,
+      "class": "managed-runtime",
+      "before": "f146d93b3351952bb5c4c02d6676157271690c4f64f2ea979e36da5786970dd2",
+      "after": "21aeb1acf8138b4c9afd397dc247191dcf30fd2f36fc5c696624d70d6e3c0347",
+      "mode": "100644",
+      "decision": "Managed update: managed-runtime"
+    },
+    {
+      "file": "workbench/tools/taskboard.mjs",
+      "from": null,
+      "class": "managed-runtime",
+      "before": "e2cebd88f301182109347a191c6647295609a0283a84f69e27ef5096e4cd7e75",
+      "after": "e2cebd88f301182109347a191c6647295609a0283a84f69e27ef5096e4cd7e75",
+      "mode": "100644",
+      "decision": "Keep: preserved byte-for-byte"
+    },
+    {
+      "file": "workbench/tools/template-placeholders.mjs",
+      "from": null,
+      "class": "managed-runtime",
+      "before": "29ab00b3d116b62828a7c60be7296a58f4e4e12fb0fc8b2054ad4f136afd6236",
+      "after": "d6e45ebcbeb028ded78b597d852d24017c65e52ae7ed193bfc3497ee4f51eb48",
+      "mode": "100644",
+      "decision": "Managed update: managed-runtime"
+    },
+    {
+      "file": "workbench/tools/visible-ids.mjs",
+      "from": null,
+      "class": "managed-runtime",
+      "before": "587b737001ec95a5bbee2f4f9b3920bacdb5b7e540f01da87ea8fe0b0ee4796f",
+      "after": "587b737001ec95a5bbee2f4f9b3920bacdb5b7e540f01da87ea8fe0b0ee4796f",
+      "mode": "100644",
+      "decision": "Keep: preserved byte-for-byte"
+    },
+    {
+      "file": "workbench/tools/wiki.mjs",
+      "from": null,
+      "class": "managed-runtime",
+      "before": "9f515c3d609da5903cfbf49c625451cb9f60c67134e5c4858670f2fec86a03d6",
+      "after": "d9ec1e9de9839c2b32c625fdec610755786490225a328365ecdf719e50c9d0e1",
+      "mode": "100644",
+      "decision": "Managed update: managed-runtime"
+    },
+    {
+      "file": "workbench/tools/workbench-layout.mjs",
+      "from": null,
+      "class": "managed-runtime",
+      "before": "8cf06a576c57276a0cd01b92bbac1e635fa46122a64de002698451d263aa5e61",
+      "after": "6ed0ae994ea6b723edc68e1b74c9ce3b58169e18b1f48b6d9256ec4839fcf3b1",
+      "mode": "100644",
+      "decision": "Managed update: managed-runtime"
+    },
+    {
+      "file": "workbench/tools/workbench-paths.mjs",
+      "from": null,
+      "class": "managed-runtime",
+      "before": "f0a3068f1b30f9f08dc0ed9f0bc890ff8e74e6133a1892cc4de263c5ee981bba",
+      "after": "374e876452d69d726447c63c408981407ec06d818b5def642af79798a3e32aee",
+      "mode": "100644",
+      "decision": "Managed update: managed-runtime"
+    },
+    {
+      "file": "workbench/tools/workspace-closeout.mjs",
+      "from": null,
+      "class": "managed-runtime",
+      "before": null,
+      "after": "7cb8f732563c8d4af6615c4b5b0c5a7ae60aa76b06602ad082f279a9866a98ae",
+      "mode": "100644",
+      "decision": "Add: managed-runtime"
+    },
+    {
+      "file": "workbench/wiki/.gitignore",
+      "from": null,
+      "class": "project-owned",
+      "before": "7cd0c1095e6fb0636e86017e7bee1a584f2b7c90bb80bdaa06434c911e0a9cb2",
+      "after": "7cd0c1095e6fb0636e86017e7bee1a584f2b7c90bb80bdaa06434c911e0a9cb2",
+      "mode": "100644",
+      "decision": "Keep: preserved byte-for-byte"
+    },
+    {
+      "file": "workbench/wiki/.gitkeep",
+      "from": null,
+      "class": "project-owned",
+      "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "after": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": "100644",
+      "decision": "Keep: preserved byte-for-byte"
+    },
+    {
+      "file": "workbench/wiki/AGENTS.md",
+      "from": null,
+      "class": "project-owned",
+      "before": "c22b304642dbb6a8ee37d16858127cd9f11fee02103e17bad6e7ed6cea4b5908",
+      "after": "c22b304642dbb6a8ee37d16858127cd9f11fee02103e17bad6e7ed6cea4b5908",
+      "mode": "100644",
+      "decision": "Keep: preserved byte-for-byte"
+    },
+    {
+      "file": "workbench/wiki/MEMORY.md",
+      "from": null,
+      "class": "project-owned",
+      "before": "9e329eef48f3f262bd2f5ccdd98feea7005a6fabc0fede9f71a9a1626d14855b",
+      "after": "d1a325f6272579c354e4b37f0af04f6e23c5f5e2111a34a2d3df613ff4205c72",
+      "mode": "100644",
+      "decision": "Port: stamp, Vocabulary section, Glossary/Architecture routes, Jot link"
+    },
+    {
+      "file": "workbench/wiki/SCHEMA.md",
+      "from": null,
+      "class": "project-owned",
+      "before": "658e42510f14bad24a65a934d14c3e3638b07b79f20a907ab4324931f6376983",
+      "after": "30b2b62d86c0266fceaf3bff7d7cce677f4caa5b101277bdec02348ff4b1d2ee",
+      "mode": "100644",
+      "decision": "Repair: skill links; stamp pending reconciliation"
+    },
+    {
+      "file": "workbench/wiki/ai-coding-reference.md",
+      "from": null,
+      "class": "project-owned",
+      "before": null,
+      "after": "7e4a40acc33a76946adf428d40be90a6e808f8473030b0cd4053668511609e16",
+      "mode": "100644",
+      "decision": "Add: grouped vocabulary article installed by migrate from the Template"
+    },
+    {
+      "file": "workbench/wiki/archive/.gitkeep",
+      "from": null,
+      "class": "project-owned",
+      "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "after": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": "100644",
+      "decision": "Keep: preserved byte-for-byte"
+    },
+    {
+      "file": "workbench/wiki/context-auto-merge.md",
+      "from": null,
+      "class": "project-owned",
+      "before": "6487d4dd295d3fed9ada35374f5781c5c49d71a049b406af83b6bd6a17264940",
+      "after": "6487d4dd295d3fed9ada35374f5781c5c49d71a049b406af83b6bd6a17264940",
+      "mode": "100644",
+      "decision": "Keep: preserved byte-for-byte"
+    },
+    {
+      "file": "workbench/wiki/context-workbench-feature-catalog.md",
+      "from": null,
+      "class": "project-owned",
+      "before": "a7a0eb2436c73b9c869d308d057fa2e91368ef60f5adf54d0fafefcf4551e6fe",
+      "after": "a7a0eb2436c73b9c869d308d057fa2e91368ef60f5adf54d0fafefcf4551e6fe",
+      "mode": "100644",
+      "decision": "Keep: preserved byte-for-byte"
+    },
+    {
+      "file": "workbench/wiki/design-concepts/.gitkeep",
+      "from": null,
+      "class": "project-owned",
+      "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "after": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": "100644",
+      "decision": "Keep: preserved byte-for-byte"
+    },
+    {
+      "file": "workbench/wiki/design-concepts/README.md",
+      "from": null,
+      "class": "project-owned",
+      "before": "0bd4ee03cfa5f4dead773ad35e740b499e9a721ba86532af76aa7fc725bac38e",
+      "after": "83d7f9cd9c9d1acc79f0b0f52a56053809cd34690d089a0de81f749d1685baf7",
+      "mode": "100644",
+      "decision": "Repair: discovery route to Glossary/Architecture; stamp pending reconciliation"
+    },
+    {
+      "file": "workbench/wiki/features/README.md",
+      "from": null,
+      "class": "project-owned",
+      "before": "845a5fe6c2b29057a9014466a9f73f95f583cabd834bfc32e54214b9a8dca7f8",
+      "after": "845a5fe6c2b29057a9014466a9f73f95f583cabd834bfc32e54214b9a8dca7f8",
+      "mode": "100644",
+      "decision": "Keep: preserved byte-for-byte"
+    },
+    {
+      "file": "workbench/wiki/guidebooks/.gitkeep",
+      "from": null,
+      "class": "project-owned",
+      "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "after": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": "100644",
+      "decision": "Keep: preserved byte-for-byte"
+    },
+    {
+      "file": "workbench/wiki/vocabulary-chats-and-roles.md",
+      "from": null,
+      "class": "project-owned",
+      "before": null,
+      "after": "b133e8b3f0133e4ba9968d3c54f56119aab4f0d54e2ae98fbfd399085f566297",
+      "mode": "100644",
+      "decision": "Add: grouped vocabulary article installed by migrate from the Template"
+    },
+    {
+      "file": "workbench/wiki/vocabulary-continuity-and-evidence-boundaries.md",
+      "from": null,
+      "class": "project-owned",
+      "before": null,
+      "after": "0cf0491a1e1e4e1e342035fa5ad159046971e64c960fa4a23278c4c26c396f87",
+      "mode": "100644",
+      "decision": "Add: grouped vocabulary article installed by migrate from the Template"
+    },
+    {
+      "file": "workbench/wiki/vocabulary-continuity-terms.md",
+      "from": null,
+      "class": "project-owned",
+      "before": null,
+      "after": "f7ca9aae6dcb862f433cbc79d126b2185908c9e884f7fd273f2ac108aa9e1ad8",
+      "mode": "100644",
+      "decision": "Add: grouped vocabulary article installed by migrate from the Template"
+    },
+    {
+      "file": "workbench/wiki/vocabulary-destination-and-direction.md",
+      "from": null,
+      "class": "project-owned",
+      "before": null,
+      "after": "d8873a573f5193da4b583be9651a4b84e69d4ef376f4f591fc497f3bde0c150f",
+      "mode": "100644",
+      "decision": "Add: grouped vocabulary article installed by migrate from the Template"
+    },
+    {
+      "file": "workbench/wiki/vocabulary-feedback-disposition.md",
+      "from": null,
+      "class": "project-owned",
+      "before": null,
+      "after": "eabb8ddccfd373b7f35f291d31f22dd4c4fd7ecb79d8470b049811c9a7cf94bd",
+      "mode": "100644",
+      "decision": "Add: grouped vocabulary article installed by migrate from the Template"
+    },
+    {
+      "file": "workbench/wiki/vocabulary-governance-core.md",
+      "from": null,
+      "class": "project-owned",
+      "before": null,
+      "after": "3e305e17a775665091e8b62dca2712439a11a916ff167338af88a202e7debfc5",
+      "mode": "100644",
+      "decision": "Add: grouped vocabulary article installed by migrate from the Template"
+    },
+    {
+      "file": "workbench/wiki/vocabulary-project-terms.md",
+      "from": null,
+      "class": "project-owned",
+      "before": null,
+      "after": "8c769befa0adff08e70e61ebbd8768bb9bb4f58dfc319ff7d244fc9a5e7c8ed6",
+      "mode": "100644",
+      "decision": "Add: room project-terms article (Lexicon Project Terms distinctions)"
+    },
+    {
+      "file": "workbench/wiki/vocabulary-specs-and-tasks.md",
+      "from": null,
+      "class": "project-owned",
+      "before": null,
+      "after": "73f7d1bddf81753cdf849377b699659874fe049871d606a9a0f7da115d7bf260",
+      "mode": "100644",
+      "decision": "Add: grouped vocabulary article installed by migrate from the Template"
+    },
+    {
+      "file": "workbench/wiki/vocabulary-stance-terms.md",
+      "from": null,
+      "class": "project-owned",
+      "before": null,
+      "after": "4839e16d99a9cdba373d8bb5bfdb813730f33068ead65463dd65440ee1faca47",
+      "mode": "100644",
+      "decision": "Add: grouped vocabulary article installed by migrate from the Template"
+    },
+    {
+      "file": "workbench/wiki/vocabulary-workbench-meanings-of-ai-coding-terms.md",
+      "from": null,
+      "class": "project-owned",
+      "before": null,
+      "after": "8ee0834101c122204b43a10e668b39b6aa36c1b93e231caf6b0378c90ad9fd39",
+      "mode": "100644",
+      "decision": "Add: grouped vocabulary article installed by migrate from the Template"
+    },
+    {
+      "file": "workbench/wiki/vocabulary-workbench-room-and-artifacts.md",
+      "from": null,
+      "class": "project-owned",
+      "before": null,
+      "after": "b9951ab22c13291af80f6ffb753ecd1f837a0c716887498cad99874638695400",
+      "mode": "100644",
+      "decision": "Add: grouped vocabulary article installed by migrate from the Template"
+    },
+    {
+      "file": "workbench/wiki/vocabulary-workflow-verbs.md",
+      "from": null,
+      "class": "project-owned",
+      "before": null,
+      "after": "e3e271f215bc167a0a4e2fe14a781ebb621a077c10e604fbb6733f43eaacfffa",
+      "mode": "100644",
+      "decision": "Add: grouped vocabulary article installed by migrate from the Template"
+    },
+    {
+      "file": "workbench/wiki/workbench-capabilities.md",
+      "from": null,
+      "class": "project-owned",
+      "before": "c26c036647c3cfb457dcddb1ebaae504b346d145368d0416e4965a0f7edff09e",
+      "after": "c5dac88ad20ac97365ed23c9481164859202ab16fa19af448bb88b1d44e9c6ac",
+      "mode": "100644",
+      "decision": "Copy: pinned source templates/wiki/workbench-capabilities.md"
+    }
+  ]
+}
