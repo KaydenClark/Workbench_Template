@@ -3,7 +3,7 @@
   "source": {
     "repository": "https://github.com/KaydenClark/LLM_Workbench.git",
     "release": "v3.2.2",
-    "commit": "413e7039219a55bec31feb73e61c0c895307d3f9",
+    "commit": "a58466ad1dca4ce7d6bd1a8328f47d6a58a2ee8d",
     "dirty": false
   },
   "installedAt": "2026-09-06",
@@ -42,7 +42,7 @@
     "glossary-format.mjs": "1bf28fb20a4e74a27abf219c46370316c3df6a6f7bc557d08e082170717420ff",
     "lexicon-retirement-data.mjs": "3bd7854b25206a68f8ba63a045355bae0f2e687fa654582c784ec9fe6bc6b6b4",
     "organization.mjs": "bda6fc519b5d2e72640fcd79930bc1479a078f43b6593fb57d653b616862fafa",
-    "workspace-closeout.mjs": "00859c0fcb4d5bf3c04d01d7274e9a7d6d3575ac2f1b7a90d46006b288d735c5"
+    "workspace-closeout.mjs": "a61609e2a3d8f63810de95ab43ae353ba9942f9f69ec47d23d4da66ffc14efb9"
   },
   "backups": [
     {
@@ -203,6 +203,16 @@
         "workspace-closeout.mjs": "7cb8f732563c8d4af6615c4b5b0c5a7ae60aa76b06602ad082f279a9866a98ae",
         "workbench-layout.mjs": "6ed0ae994ea6b723edc68e1b74c9ce3b58169e18b1f48b6d9256ec4839fcf3b1",
         "workbench-paths.mjs": "374e876452d69d726447c63c408981407ec06d818b5def642af79798a3e32aee"
+      }
+    },
+    {
+      "path": "~/.workbench-tools-backup-dDE7Ac",
+      "files": [
+        "workspace-closeout.mjs"
+      ],
+      "absent": [],
+      "hashes": {
+        "workspace-closeout.mjs": "00859c0fcb4d5bf3c04d01d7274e9a7d6d3575ac2f1b7a90d46006b288d735c5"
       }
     }
   ],

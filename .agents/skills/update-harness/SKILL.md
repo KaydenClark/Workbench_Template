@@ -410,7 +410,8 @@ Settle the target's starting point first:
      directory inside it (`.workbench-tools-backup-*`, and
      `.workbench-skills-backup-*` for skills), prints the path as `backup` on
      stdout and records it in the lane receipt's `backups` as a hostless
-     `~/NAME`, so `rollback` takes the same `--home`. The skills `update` has one route with no backup: when
+     `~/NAME`, so `rollback` takes the same `--home` and accepts either that
+     recorded `~/NAME` (quoted) or the full path. The skills `update` has one route with no backup: when
      every core skill hash already matches but the `.claude/skills` link is
      missing, it lays the link,
      returns `current` and creates no backup directory, so for that adapter-only

@@ -517,7 +517,12 @@ removal, publication or main authority.
    permission behavior remains unverified. Staged-only local
    copy claims stay unsupported until verified through a named Git candidate.
    Unchanged inherited bytes are retained, not remotely recoverable, unless their
-   exact object is in verified remote history. Local-only, missing, changed,
+   exact object is in verified remote history. The same holds, changed or not,
+   for index entries, stashes, every ref (tags and remote-tracking included), a
+   detached HEAD and other registered checkouts, which must be clean with a
+   remote HEAD. Verified remote history is one set for every kind: integration,
+   declared candidates and each advertised origin tip of a local ref.
+   Local-only, missing, changed,
    unexplained or unavailable evidence stays incomplete. Correct the cause and rerun; never weaken the check or discard
    evidence. Record the result and limits in the existing Spec/Task.
 

@@ -266,7 +266,7 @@ export function checkWorkspace(project,options){
   for(const ref of now.refs){
    if(priorRefs.get(ref.ref)===ref.commit||ref.ref.startsWith('refs/remotes/')||ref.ref===integrationRef)continue;
    if(integration&&git(c.root,['merge-base','--is-ancestor',ref.commit,integration],true)!==null)continue;
-   const item=declarations.get(`${ref.ref==='refs/stash'?'stash':'ref'}:${ref.ref}`)??dispositions.items.find(item=>item.kind==='path'&&item.commit===ref.commit&&item.ref===ref.ref);
+   const item=declarations.get(`${ref.ref==='refs/stash'?'stash':'ref'}:${ref.ref}`)??(ref.ref==='refs/stash'?declarations.get(`stash:${ref.commit}`):undefined)??dispositions.items.find(item=>item.kind==='path'&&item.commit===ref.commit&&item.ref===ref.ref);
    if(!item||!verifyRecovery({...item,commit:ref.commit},null)){accounted=false;recoverable=false;finding('unaccounted-ref',{ref:ref.ref});}
   }
   // A disappearing original ref also needs a checked surviving recovery ref.
@@ -282,9 +282,21 @@ export function checkWorkspace(project,options){
   }
   // Replacement or absence is not preservation. Check originals against the
   // replacement working tree/index, using only advertised, verified history.
+  const allRefs=(text(c.root,['for-each-ref','--format=%(refname)%09%(objectname)%09%(symref)'])??'').split('\n').filter(Boolean).map(line=>{const[ref,commit,symref]=line.split('\t');return{ref,commit,symref};}).filter(row=>!row.symref&&row.ref!=='refs/stash');
+  const advertisedName=ref=>ref.startsWith('refs/remotes/')?(ref.startsWith('refs/remotes/origin/')?`refs/heads/${ref.slice('refs/remotes/origin/'.length)}`:null):ref;
+  const advertisedNames=[...new Set(allRefs.map(row=>advertisedName(row.ref)).filter(Boolean))];
+  const advertised=advertisedNames.length?remoteRefs(c.root,advertisedNames):new Map();
+  if(advertised===null){recoverable=false;finding('remote-unavailable');}
   const history=verifiedTips.size?git(c.root,['rev-list','--objects','--no-object-names','--missing=error',...verifiedTips,'--'],true):null;
   const remoteObjects=new Set(history?history.toString('utf8').split('\n').filter(Boolean):[]);
   if(verifiedTips.size&&!history){accounted=false;recoverable=false;finding('remote-history-unavailable');}
+  // One reachability set for every item kind: integration, declared candidates
+  // and each advertised origin tip present locally with complete history. A tip
+  // whose history is incomplete is left out, so it verifies nothing.
+  for(const tip of new Set(advertised?advertised.values():[]))if(!remoteObjects.has(tip)&&git(c.root,['cat-file','-e',`${tip}^{commit}`],true)!==null){
+   const reached=git(c.root,['rev-list','--objects','--no-object-names','--missing=error',tip,'--'],true);
+   if(reached)for(const object of reached.toString('utf8').split('\n'))if(object)remoteObjects.add(object);
+  }
   // Unchanged is local retention, not remote recovery: inherited bytes count as
   // recoverable only when their exact Git object is in verified remote history.
   // Their untouched checkout permissions (a umask-0002 0664) are not content,
@@ -293,6 +305,28 @@ export function checkWorkspace(project,options){
    const old=before.get(row.path);if(!old||old.kind==='missing')continue;
    if(['file','symlink'].includes(old.kind)&&remoteObjects.has(old.gitObject))continue;
    recoverable=false;finding('retained-bytes-not-remote',{path:row.path});
+  }
+  // The same rule covers every other retained Git object, changed or inherited:
+  // index entries, stashes, refs (tags and remote-tracking included), a detached
+  // HEAD and other registered checkouts. Accounting rules above stay unchanged.
+  // An annotated tag object is verified by its exact advertised value.
+  const refInRemote=(ref,commit)=>remoteObjects.has(commit)||(Boolean(advertisedName(ref))&&advertised?.get(advertisedName(ref))===commit);
+  for(const row of allRefs)if(!refInRemote(row.ref,row.commit)){recoverable=false;finding('retained-ref-not-remote',{ref:row.ref});}
+  for(const commit of now.stashes)if(!remoteObjects.has(commit)){recoverable=false;finding('retained-stash-not-remote',{commit});}
+  if(text(c.root,['symbolic-ref','-q','HEAD'],true)===null&&!remoteObjects.has(now.head)){recoverable=false;finding('retained-head-not-remote',{commit:now.head});}
+  for(const entry of now.index.entries.split('\0').filter(Boolean)){
+   const match=/^(\d+) ([a-f0-9]+) (\d)\t([\s\S]+)$/.exec(entry);if(!match)continue;
+   const[,mode,object,,name]=match,live=current.get(name);
+   if(remoteObjects.has(object)||(live?.gitObject===object&&live.gitMode===mode))continue;
+   if(mode==='160000'&&integration&&text(c.root,['ls-tree',integration,'--',name],true)===`160000 commit ${object}\t${name}`)continue;
+   recoverable=false;finding('retained-index-not-remote',{path:name});
+  }
+  for(const worktree of now.worktrees){
+   const name=path.resolve(worktree.path);if(name===c.root||worktree.bare)continue;
+   const status=fs.existsSync(name)?git(name,['status','--porcelain=v1','-z','--untracked-files=all','--ignored'],true):null;
+   const flags=status===null?null:git(name,['ls-files','-v','-z'],true);
+   const hidden=flags===null||nul(flags).some(value=>/^[a-zS] /.test(value));
+   if(status===null||status.length||hidden||!remoteObjects.has(worktree.head)){recoverable=false;finding('retained-worktree-not-remote',{path:name,reason:status===null?'unreadable':status.length?'uncommitted-or-ignored-content':hidden?'hidden-index-flags':'head-not-remote'});}
   }
   for(const[name,old]of before){
    const live=current.get(name);if(old.kind==='missing'||sameFile(old,live))continue;
@@ -329,7 +363,8 @@ export function checkWorkspace(project,options){
   if(removed)result.workspaceRelease={eligible:false,state:'removed',reason:'Source checkout and registration are absent; recovery proof is checked separately.'};
   if(registered?.locked)finding('worktree-locked');
   const finalRemote=remoteRefs(c.root,[...requested]);
-  if(remote&&(!finalRemote||!same([...remote],[...finalRemote]))){recoverable=false;finding('remote-changed-during-check');}
+  const finalAdvertised=advertisedNames.length?remoteRefs(c.root,advertisedNames):new Map();
+  if(remote&&(!finalRemote||!same([...remote],[...finalRemote])||!advertised||!finalAdvertised||!same([...advertised],[...finalAdvertised]))){recoverable=false;finding('remote-changed-during-check');}
   result.remoteObservation={at:new Date().toISOString(),integration:integration??null};
   result.accounted=accounted;
   result.remoteRecoverable=recoverable;
