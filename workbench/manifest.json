@@ -27,7 +27,7 @@
     "sessions": "workbench/sessions",
     "feedback": "workbench/feedback",
     "tools": "workbench/tools",
-    "skills": "workbench/skills"
+    "skills": ".agents/skills"
   },
   "collections": {
     "adr": "workbench/docs/adr",
