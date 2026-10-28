@@ -285,6 +285,15 @@ export function checkWorkspace(project,options){
   const history=verifiedTips.size?git(c.root,['rev-list','--objects','--no-object-names','--missing=error',...verifiedTips,'--'],true):null;
   const remoteObjects=new Set(history?history.toString('utf8').split('\n').filter(Boolean):[]);
   if(verifiedTips.size&&!history){accounted=false;recoverable=false;finding('remote-history-unavailable');}
+  // Unchanged is local retention, not remote recovery: inherited bytes count as
+  // recoverable only when their exact Git object is in verified remote history.
+  // Their untouched checkout permissions (a umask-0002 0664) are not content,
+  // so only changed paths carry the filesystem-mode rule.
+  for(const row of result.items)if(row.disposition==='retained-unchanged'){
+   const old=before.get(row.path);if(!old||old.kind==='missing')continue;
+   if(['file','symlink'].includes(old.kind)&&remoteObjects.has(old.gitObject))continue;
+   recoverable=false;finding('retained-bytes-not-remote',{path:row.path});
+  }
   for(const[name,old]of before){
    const live=current.get(name);if(old.kind==='missing'||sameFile(old,live))continue;
    const original=old.gitObject&&remoteObjects.has(old.gitObject)?git(c.root,['cat-file','blob',old.gitObject],true):null;

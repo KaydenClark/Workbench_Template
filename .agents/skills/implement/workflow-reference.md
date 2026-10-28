@@ -516,8 +516,9 @@ removal, publication or main authority.
    Links use the local host default (observed 0755 on macOS); native Windows
    permission behavior remains unverified. Staged-only local
    copy claims stay unsupported until verified through a named Git candidate.
-   Local-only, missing, changed, unexplained or unavailable evidence stays
-   incomplete. Correct the cause and rerun; never weaken the check or discard
+   Unchanged inherited bytes are retained, not remotely recoverable, unless their
+   exact object is in verified remote history. Local-only, missing, changed,
+   unexplained or unavailable evidence stays incomplete. Correct the cause and rerun; never weaken the check or discard
    evidence. Record the result and limits in the existing Spec/Task.
 
 5. Keep accounting, remote recovery and workspace release distinct. The checker

@@ -362,3 +362,18 @@ export function writeSafeFile(root, destination, content, { exclusive = false, s
     else fs.rmSync(temporaryDir, { recursive: true, force: true });
   }
 }
+
+// Template v3.2.2 install: tracked tool and skill receipts name a backup under
+// the user home as `~/NAME`, never a machine-local absolute path. Rollback
+// resolves that descriptor against the same home (--home or the OS home); a
+// legacy absolute entry still resolves to itself.
+export function homeBackupDescriptor(home, backup) {
+  const relative = path.relative(path.resolve(home), path.resolve(backup));
+  if (!relative || relative.startsWith('..') || path.isAbsolute(relative)) return path.resolve(backup);
+  return `~/${relative.split(path.sep).join('/')}`;
+}
+export function resolveBackupDescriptor(recorded, home) {
+  if (typeof recorded !== 'string') return null;
+  if (recorded.startsWith('~/')) return path.resolve(home, ...recorded.slice(2).split('/'));
+  return path.isAbsolute(recorded) ? path.resolve(recorded) : null;
+}

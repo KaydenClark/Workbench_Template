@@ -222,6 +222,8 @@ const registry = Object.freeze({
   // managed migration without blocking.
   'room-skill-duplicate': entry('error', 'skills', 'all', 'one skill name has more than one copy inside the room'),
   'skill-lane-legacy': entry('attention', 'skills', 'none', 'the room still keeps its skills in the retired workbench/skills lane'),
+  // Template v3.2.2 install: a room doc still links into the retired lane.
+  'retired-skills-lane-link': entry('attention', 'skills', 'none', 'a room document links into the retired workbench/skills lane; point it at .agents/skills'),
   // The relocation and its rollback refuse before any write; doctor never emits these.
   'skills-relocation-collision': entry('error', 'skills', 'none', 'a skills directory or link is in the way of the lane relocation or its rollback'),
   'skills-rollback-unavailable': entry('error', 'skills', 'none', 'the room is not on the .agents/skills lane that the skills-lane rollback restores from'),

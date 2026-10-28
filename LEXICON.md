@@ -42,6 +42,15 @@ owners; it does not add a second Wiki index or copy their contents.
 
 |---|---|
 
+The Spec's `TASK.md` records are temporary execution structure; they are real
+files created and updated by the installed Spec tool. A features article may
+preserve a completed capability explanation, but never copies live Task state
+or replaces the retained Spec's dated proof. The Wiki explains; a receipt
+records an installation; a test exercises a seam; none independently grants
+authority or establishes release. This room deliberately retains its
+standalone Wiki, tour, historical Spec IDs and version replay; the generic
+source's additional project or deployment examples are not copied as room
+facts.
 
 
 

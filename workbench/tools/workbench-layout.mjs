@@ -843,6 +843,23 @@ function flaggedAttributesMessage(project) {
   return `${ATTRIBUTES_FILE} is tracked but marked skip-worktree or assume-unchanged (a sparse checkout that leaves it out marks it skip-worktree), so Git would not see the Workbench line-ending block as a change and the commit would leave it out; back up any local edit, then clear the flags with \`git update-index --no-skip-worktree ${ATTRIBUTES_FILE}\` and \`git update-index --no-assume-unchanged ${ATTRIBUTES_FILE}\` (a sparse checkout: \`git sparse-checkout disable\`), and retry. Nothing was written.`;
 }
 
+const LINE_ENDING_BLOCK_END = '# <<< LLM Workbench line endings';
+function stripManagedLineEndingBlocks(text) {
+  const lines = text.split('\n');
+  const kept = [];
+  for (let index = 0; index < lines.length; index += 1) {
+    if (lines[index].replace(/\r$/, '') === LINE_ENDING_BLOCK_START) {
+      let end = index + 1;
+      while (end < lines.length && ![LINE_ENDING_BLOCK_START, LINE_ENDING_BLOCK_END].includes(lines[end].replace(/\r$/, ''))) end += 1;
+      if (end < lines.length && lines[end].replace(/\r$/, '') === LINE_ENDING_BLOCK_END) { index = end; continue; }
+    }
+    kept.push(lines[index]);
+  }
+  // Removing a block that ended the file leaves its trailing newline's empty
+  // tail; keep exactly the project's own final newline state otherwise.
+  return kept.join('\n');
+}
+
 // Append the line-ending block unless the room already carries it; the
 // project's existing bytes are kept as they are.
 export function ensureLineEndingPolicy(project) {
@@ -857,9 +874,14 @@ export function ensureLineEndingPolicy(project) {
   // The block counts only whole and last, since the last matching rule wins: a
   // stray marker, a partial copy or a later override gets a fresh block after it.
   if (current.toString('latin1').replaceAll('\r\n', '\n').trimEnd().endsWith(LINE_ENDING_POLICY.trimEnd())) return false;
-  const separator = current.length && current[current.length - 1] !== 0x0a ? '\n' : '';
+  // Template v3.2.2 install: an earlier complete managed block (start marker
+  // through end marker) is replaced, not followed by a second block. Project
+  // lines, partial copies and stray markers are kept byte for byte (latin1
+  // round-trips every byte); the current block is then written last.
+  const kept = stripManagedLineEndingBlocks(current.toString('latin1'));
+  const separator = kept.length && !kept.endsWith('\n') ? '\n' : '';
   const mode = lstatOrNull(destination)?.mode;
-  writeSafeFile(project, destination, Buffer.concat([current, Buffer.from(separator + LINE_ENDING_POLICY)]));
+  writeSafeFile(project, destination, Buffer.concat([Buffer.from(kept, 'latin1'), Buffer.from(separator + LINE_ENDING_POLICY)]));
   // writeSafeFile publishes a new 0644 file; an existing file keeps the
   // permission bits its owner chose (a 0600 file must not widen to 0644).
   if (mode !== undefined) fs.chmodSync(destination, mode & 0o7777);
@@ -1570,9 +1592,12 @@ function lexiconLandingInRoom(project, templates, manifest, room) {
   const wikiLane = manifest?.lanes?.wiki ?? lanes.wiki;
   const missingHomes = templates ? genericHomesMissing(templates, wikiLane, room) : [];
   const unlanded = [];
+  const owners = [];
   let sectionOwner = null, parentOwner = null;
-  lexicon.split(/\r?\n/).forEach((line, index) => {
+  const lines = lexicon.split(/\r?\n/);
+  lines.forEach((line, index) => {
     const normalized = normalizeLandingText(line);
+    owners[index] = sectionOwner;
     if (landingExempt(normalized)) return;
     // The section a line sits under names its designated successor; a
     // room-added `##` heading opens a section with none, and a room-added
@@ -1583,6 +1608,7 @@ function lexiconLandingInRoom(project, templates, manifest, room) {
       if (heading[1] === '##') parentOwner = known;
       sectionOwner = known ?? (heading[1] === '##' ? null : parentOwner);
     }
+    owners[index] = sectionOwner;
     // Identity stamps (name, version, review date, status) are not entries.
     if (generic.patterns.some(pattern => pattern.test(normalized))) return;
     if (generic.headings?.has(normalized)) return;
@@ -1593,7 +1619,25 @@ function lexiconLandingInRoom(project, templates, manifest, room) {
     if (term ? termRowLanded(normalized, room) : standaloneLanded(normalized, sectionOwner, room)) return;
     unlanded.push(isGeneric ? { line: index + 1, text: normalized, generic: true } : { line: index + 1, text: normalized });
   });
-  return { unlanded, templateSources: generic.sources, genericHomesMissing: missingHomes };
+  // Template v3.2.2 install: a soft-wrapped paragraph or list item is one
+  // Markdown claim whose physical fragments never match a complete claim
+  // alone. Its lines land together only when the joined text lands in the
+  // designated owner of its first line; tables, headings and quotes stay per line.
+  const pending = new Set(unlanded.map(item => item.line));
+  const opener = text => text && !/^(?:#{1,6} |\||>|```|~~~)/.test(text);
+  const continues = text => opener(text) && !/^(?:[-+*]|\d+[.)])\s/.test(text);
+  for (let start = 0; start < lines.length;) {
+    const first = normalizeLandingText(lines[start]);
+    let end = start + 1;
+    if (opener(first)) while (end < lines.length && continues(normalizeLandingText(lines[end]))) end++;
+    const block = Array.from({ length: end - start }, (_, offset) => start + offset + 1);
+    if (block.length > 1 && block.some(line => pending.has(line))) {
+      const joined = normalizeLandingText(lines.slice(start, end).join(' '));
+      if (standaloneLanded(joined, owners[start], room)) for (const line of block) pending.delete(line);
+    }
+    start = end;
+  }
+  return { unlanded: unlanded.filter(item => pending.has(item.line)), templateSources: generic.sources, genericHomesMissing: missingHomes };
 }
 
 function lexiconFinding(unlanded, missingHomes = []) {
@@ -2154,7 +2198,68 @@ function relocateSkillsLane(project, manifestPath, manifest) {
   fs.symlinkSync('../.agents/skills', claude, 'dir');
   const updated = { ...manifest, lanes: { ...manifest.lanes, skills: SKILLS_LANE } };
   writeSafeFile(project, manifestPath, `${JSON.stringify(updated, null, 2)}\n`);
-  return report('migrated', { manifestPath, manifest: updated, moved: [{ source: LEGACY_SKILLS_LANE, destination: SKILLS_LANE }], relocated: { from: LEGACY_SKILLS_LANE, to: SKILLS_LANE }, rollback: 'node workbench/tools/workbench-layout.mjs skills-lane-rollback --project PATH', next: 'commit the rename, the .claude/skills link, the manifest and .gitattributes together' });
+  return report('migrated', { manifestPath, manifest: updated, moved: [{ source: LEGACY_SKILLS_LANE, destination: SKILLS_LANE }], relocated: { from: LEGACY_SKILLS_LANE, to: SKILLS_LANE }, retiredLaneLinks: retiredSkillsLaneLinks(project), rollback: 'node workbench/tools/workbench-layout.mjs skills-lane-rollback --project PATH', next: 'commit the rename, the .claude/skills link, the manifest and .gitattributes together' });
+}
+
+// Template v3.2.2 install: relocation leaves room-owned relative links into
+// the retired workbench/skills lane broken. Prose is reported, never
+// rewritten, because room docs include append-only evidence the owner must
+// repair deliberately; each entry carries its exact .agents/skills target.
+// Scope is the root Markdown controls, workbench/** except frozen or live
+// session records, and the skills lane; fenced code is not a link.
+function roomMarkdownFiles(project, skillsLane) {
+  const files = [];
+  const skip = new Set([path.join(project, 'workbench', 'sessions'), path.join(project, LEGACY_SKILLS_LANE)]);
+  const visit = (directory) => {
+    let entries;
+    try { entries = fs.readdirSync(directory, { withFileTypes: true }); } catch { return; }
+    for (const entry of entries) {
+      const full = path.join(directory, entry.name);
+      if (entry.isDirectory() && !skip.has(full)) visit(full);
+      else if (entry.isFile() && entry.name.endsWith('.md')) files.push(full);
+    }
+  };
+  for (const entry of fs.readdirSync(project, { withFileTypes: true })) {
+    if (entry.isFile() && entry.name.endsWith('.md')) files.push(path.join(project, entry.name));
+  }
+  visit(path.join(project, 'workbench'));
+  if (skillsLane && skillsLane !== LEGACY_SKILLS_LANE) visit(path.join(project, skillsLane));
+  return files.sort();
+}
+
+export function retiredSkillsLaneLinks(project) {
+  const root = path.resolve(project);
+  const { manifest, failure } = readManifestFile(root);
+  if (failure || manifest?.lanes?.skills !== SKILLS_LANE) return [];
+  const retired = path.join(root, LEGACY_SKILLS_LANE);
+  const links = [];
+  // PR #637 Codex P2: private captures and Git-ignored pages are never read;
+  // the public admission check fails closed when Git cannot answer.
+  const candidates = roomMarkdownFiles(root, SKILLS_LANE)
+    .map(file => path.relative(root, file).split(path.sep).join('/'))
+    .filter(relative => !/^\.jot-(?:private|write)-/.test(path.posix.basename(relative)));
+  for (const file of publicLandingPaths(root, candidates).map(relative => path.join(root, relative))) {
+    let text;
+    try { text = fs.readFileSync(file, 'utf8'); } catch { continue; }
+    const prose = text.replace(/^(```|~~~)[^\n]*\n[\s\S]*?^\1[^\n]*$/gm, '');
+    for (const match of prose.matchAll(/\]\(\s*<?([^)\s>]+)>?(?:\s+"[^"]*")?\s*\)/g)) {
+      const link = match[1];
+      if (/^[a-z][a-z0-9+.-]*:/i.test(link) || link.startsWith('#') || link.startsWith('/')) continue;
+      const [target, anchor] = link.split(/(?=#)/);
+      let resolved;
+      try { resolved = path.resolve(path.dirname(file), decodeURIComponent(target)); } catch { continue; }
+      if (resolved !== retired && !resolved.startsWith(retired + path.sep)) continue;
+      if (fs.existsSync(resolved)) continue;
+      const moved = path.join(root, SKILLS_LANE, path.relative(retired, resolved));
+      const replacement = path.relative(path.dirname(file), moved).split(path.sep).join('/') + (anchor ?? '');
+      links.push({ file: path.relative(root, file).split(path.sep).join('/'), link, replacement });
+    }
+  }
+  return links;
+}
+
+export function retiredSkillsLaneLinkFindings(project) {
+  return retiredSkillsLaneLinks(project).map((item) => finding('retired-skills-lane-link', `${item.file} links to ${item.link} in the retired ${LEGACY_SKILLS_LANE} lane; point it at ${item.replacement}`, item));
 }
 
 export function rollbackSkillsLane(options) {

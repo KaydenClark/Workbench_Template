@@ -3,7 +3,7 @@
   "source": {
     "repository": "https://github.com/KaydenClark/LLM_Workbench.git",
     "release": "v3.2.2",
-    "commit": "8f08f11165c043a581c3c7130cb7c813eeec4483",
+    "commit": "413e7039219a55bec31feb73e61c0c895307d3f9",
     "dirty": false
   },
   "installedAt": "2026-10-19",
@@ -13,13 +13,13 @@
     "code-review": "402d14d1538475edb633b4c13808cbb5290963869251c7e452830cfb882e6006",
     "genesis": "beae6621c13b1048c65821948c6bd2c0f0194d656fdfa286d4e99da01f9c8504",
     "grilling": "1762965557a8e64ae786aef41436a54436fe96ff79e697e9c0c90bf8fa1e17e9",
-    "implement": "c923f2e1ed35e1a3c8893f73f681fb772c4275a5e5b9ce30965c3d458587a435",
+    "implement": "248a9d2c15e6315baf8ca89473d8fb80654c9c176f215c365ee49d683fbf76ee",
     "make-it-so": "3ddbeeddd3e730f210f5b529fbbcf4a5e9b9cf0317d0cf6b4bce77d2e86927f2",
     "to-docs": "5e058c330236b78ec498d742d301f5a6b49ea2a7cc09376605f67dedd6f44bd3",
     "to-spec": "60011d959797e6b253a1dc660cdc8886f65289cea8be3c91cff8c0e9a18b0bfa",
     "to-tasks": "f3ec72f6bfd7efa641e32b0dd5ded265fdc960f83ad2b1ee7424764271df01e9",
     "tracer-bullet": "3e567ca9d9aaa70dc087b90822f82b9865a70a2a61a99ca95989049a103b9c3a",
-    "update-harness": "56bbd41a3c00250ab47760a1815117ca1196e00b28269eb28569c6cdace69722",
+    "update-harness": "9f1527304441c0f49edba1582ab8e94a48b396cee2a2b789caafee80b06c2eda",
     "carry": "f09b4da88b6cd0ef9864f15d92cf133ddf92d8399f9df188751ceeae9eb5477a",
     "notepad": "aa8d2d5b18d4a055d165ab3c27181803fd4d43798bc2d3016714aa69db9e7591",
     "jot": "dabfcbfb7fd7e15f085f08885801cf065644141bb329dee25576b2607d030f20",
@@ -112,6 +112,13 @@
         "auditor",
         "reviewer",
         "reconciler"
+      ]
+    },
+    {
+      "path": "~/.workbench-skills-backup-8FFZiT",
+      "skills": [
+        "implement",
+        "update-harness"
       ]
     }
   ],

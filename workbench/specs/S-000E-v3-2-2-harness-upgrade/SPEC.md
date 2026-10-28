@@ -14,7 +14,7 @@
 ## Outcome
 
 Workbench_Template, the installed reference room, consumes LLM Workbench v3.2.2
-source `8f08f11165c043a581c3c7130cb7c813eeec4483` on its `integration` branch:
+source `413e7039219a55bec31feb73e61c0c895307d3f9` on its `integration` branch:
 managed runtime, core skills, the two optional skills selected for this room,
 manifest stamp and receipts, filled Glossary and Architecture, the relocated
 `.agents/skills` lane and the six confirmed workflows, with every room-owned
@@ -98,7 +98,7 @@ merged integration revision. S-006J TK-00B4 may consume this exact candidate.
 
 ## Acceptance Criteria
 
-- [ ] Installed receipts and every managed byte match pinned source `8f08f111`; manifest, stamps and receipts agree on v3.2.2.
+- [ ] Installed receipts and every managed byte match pinned source `413e7039`; manifest, stamps and receipts agree on v3.2.2.
 - [ ] Glossary and Architecture are filled for this room and every Lexicon line has a recorded landing or disposition.
 - [ ] Workflow routes and definitions match the six confirmed workflows, with the Explore and Prepare gates installed and exercised.
 - [ ] Before/after inventory accounts for every change and preserves identity, provenance, product, Specs, ADR, Wiki and evidence.

@@ -383,7 +383,7 @@ backups is therefore not established; whole-room Git recovery to the Template
 ## v3.2.2 assessment candidate (2026-10-28)
 
 The managed runtime, core skills and manifest now carry the **v3.2.2** label
-from LLM Workbench source `8f08f11165c043a581c3c7130cb7c813eeec4483`, installed
+from LLM Workbench source `413e7039219a55bec31feb73e61c0c895307d3f9`, installed
 on a `claude/` branch from Template `integration`
 `2f162c46afed6488862d2c3963b07bb0d905cabd` through the v3 update route
 recorded in [S-000E](../specs/S-000E-v3-2-2-harness-upgrade/SPEC.md).
@@ -404,3 +404,7 @@ recorded in [S-000E](../specs/S-000E-v3-2-2-harness-upgrade/SPEC.md).
 This is an assessment candidate on integration, not a release: Template `main`
 remains v3.2.1 until an owner-approved promotion of the assessed revision.
 Historical genesis and layout provenance are unchanged.
+
+The candidate was first installed from `8f08f11165c043a581c3c7130cb7c813eeec4483`
+and then reinstalled on the same branch from `413e7039`, which repairs the
+producer defects that first install found (S-000E evidence log).

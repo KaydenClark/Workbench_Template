@@ -2,7 +2,7 @@
   "source": "LEXICON.md at Template integration 2f162c46afed6488862d2c3963b07bb0d905cabd",
   "sha256": "7f629c2cc95b17bd4d5ab0e5e9e13cf04ee314780d4b0d6ca8c7c9ae7e48e543",
   "lines": 191,
-  "method": "Pinned source 8f08f111 workbench-layout.mjs migrate reported these lines unlanded after GLOSSARY.md, ARCHITECTURE.md, the Wiki router and the project-terms article were filled. Every other non-empty line landed by the tool's own check. Each line below is removed from LEXICON.md with the recorded disposition; the original bytes remain in Git history at the source commit.",
+  "method": "Pinned source 413e7039219a55bec31feb73e61c0c895307d3f9 workbench-layout.mjs migrate, run against the original Lexicon after GLOSSARY.md, ARCHITECTURE.md, the Wiki router and the project-terms article were filled, reported these 69 lines unlanded. Every other non-empty line, including the paragraph at lines 73-81 moved verbatim into ARCHITECTURE.md, landed by the tool's own check and stays in the archived LEXICON.md. Each line below was removed from LEXICON.md with its recorded disposition; the original bytes remain in Git history at the source commit.",
   "unlanded": [
     {
       "line": 14,
@@ -227,78 +227,6 @@
       "disposition": "superseded",
       "home": "ARCHITECTURE.md#ownership",
       "note": "Each job row has a successor row in the Ownership job table."
-    },
-    {
-      "line": 73,
-      "text": "The Spec's `TASK.md` records are temporary execution structure; they are real",
-      "generic": false,
-      "disposition": "moved",
-      "home": "ARCHITECTURE.md#ownership",
-      "note": "Paragraph moved verbatim as whole sentences after the Ownership job table."
-    },
-    {
-      "line": 74,
-      "text": "files created and updated by the installed Spec tool. A features article may",
-      "generic": false,
-      "disposition": "moved",
-      "home": "ARCHITECTURE.md#ownership",
-      "note": "Paragraph moved verbatim as whole sentences after the Ownership job table."
-    },
-    {
-      "line": 75,
-      "text": "preserve a completed capability explanation, but never copies live Task state",
-      "generic": false,
-      "disposition": "moved",
-      "home": "ARCHITECTURE.md#ownership",
-      "note": "Paragraph moved verbatim as whole sentences after the Ownership job table."
-    },
-    {
-      "line": 76,
-      "text": "or replaces the retained Spec's dated proof. The Wiki explains; a receipt",
-      "generic": false,
-      "disposition": "moved",
-      "home": "ARCHITECTURE.md#ownership",
-      "note": "Paragraph moved verbatim as whole sentences after the Ownership job table."
-    },
-    {
-      "line": 77,
-      "text": "records an installation; a test exercises a seam; none independently grants",
-      "generic": false,
-      "disposition": "moved",
-      "home": "ARCHITECTURE.md#ownership",
-      "note": "Paragraph moved verbatim as whole sentences after the Ownership job table."
-    },
-    {
-      "line": 78,
-      "text": "authority or establishes release. This room deliberately retains its",
-      "generic": false,
-      "disposition": "moved",
-      "home": "ARCHITECTURE.md#ownership",
-      "note": "Paragraph moved verbatim as whole sentences after the Ownership job table."
-    },
-    {
-      "line": 79,
-      "text": "standalone Wiki, tour, historical Spec IDs and version replay; the generic",
-      "generic": false,
-      "disposition": "moved",
-      "home": "ARCHITECTURE.md#ownership",
-      "note": "Paragraph moved verbatim as whole sentences after the Ownership job table."
-    },
-    {
-      "line": 80,
-      "text": "source's additional project or deployment examples are not copied as room",
-      "generic": false,
-      "disposition": "moved",
-      "home": "ARCHITECTURE.md#ownership",
-      "note": "Paragraph moved verbatim as whole sentences after the Ownership job table."
-    },
-    {
-      "line": 81,
-      "text": "facts.",
-      "generic": false,
-      "disposition": "moved",
-      "home": "ARCHITECTURE.md#ownership",
-      "note": "Paragraph moved verbatim as whole sentences after the Ownership job table."
     },
     {
       "line": 83,
@@ -628,5 +556,9 @@
       "home": "GLOSSARY.md **Core compatibility**",
       "note": "The retired workbench/skills lane reference no longer applies."
     }
+  ],
+  "history": [
+    "8f08f111 run: 78 lines reported unlanded and removed, because that tool checked wrapped prose line by line.",
+    "413e7039 run: wrapped lines land when joined, so the 9 lines of the moved paragraph (73-81) are tool-verified and restored to the archived file; 69 dispositions remain."
   ]
 }

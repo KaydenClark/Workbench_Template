@@ -225,7 +225,10 @@ Settle the target's starting point first:
      lane relocated by the first `migrate`: it renames `workbench/skills` to
      `.agents/skills` in place, replaces the `.claude/skills` link with
      `../.agents/skills`, sets `lanes.skills` to `.agents/skills` and reports
-     `relocated`. It never copies a skill, and it refuses with
+     `relocated`. It lists room links still pointing into the retired lane in
+     `retiredLaneLinks`, each with its `.agents/skills` `replacement`; repair
+     live docs and leave frozen evidence, since doctor keeps reporting them as
+     `retired-skills-lane-link`. It never copies a skill, and it refuses with
      `skills-relocation-collision` before any write when `.agents/skills` or
      `.claude/skills` is a real directory or a link outside the lane; move such
      skills into the lane first as step 4 describes. Stage the whole rename
@@ -403,11 +406,11 @@ Settle the target's starting point first:
      the whole-room inventories above still hash it.
 
      Then update the managed lanes. `--home` names an existing directory (create
-     it first; the default is the user's home) and only an `update` uses it:
-     each creates its backup directory inside it
-     (`.workbench-tools-backup-*`, and `.workbench-skills-backup-*` for
-     skills), prints the path as `backup` on stdout and records it in the lane
-     receipt's `backups`. The skills `update` has one route with no backup: when
+     it first; the default is the user's home); an `update` creates its backup
+     directory inside it (`.workbench-tools-backup-*`, and
+     `.workbench-skills-backup-*` for skills), prints the path as `backup` on
+     stdout and records it in the lane receipt's `backups` as a hostless
+     `~/NAME`, so `rollback` takes the same `--home`. The skills `update` has one route with no backup: when
      every core skill hash already matches but the `.claude/skills` link is
      missing, it lays the link,
      returns `current` and creates no backup directory, so for that adapter-only
@@ -458,7 +461,7 @@ Settle the target's starting point first:
      from `install` may also differ.
      Name the rollback: the before Git SHA is the whole-room recovery point.
      The recorded backups restore through each tool's `rollback --project PATH
-     --backup DIR`, but `workbench-skills.mjs rollback` restores only the core
+     --backup DIR` (plus the update's `--home`), but `workbench-skills.mjs rollback` restores only the core
      skills that existed and were backed up, and does not remove a skill the
      update added because the target release's core set holds it and the room's
      did not, and backups alone are not whole-room recovery. When the
@@ -603,7 +606,7 @@ recovery point whenever a response below says so.
 | `tools-receipt-drift`, `skills-receipt-drift` | `verify` found a managed file or core skill that differs from its receipt; its `drift` entries give the reason. Before the update, copy any hand edit the room wants to keep into the upgrade Spec or a room-added skill under another name: `update` backs the edit up and replaces it. For skills the reasons are `unaccounted` (the receipt lacks a core skill, which `update` records), `missing` or `unsafe` (`update` restores it), `modified` (as above) and `adapter` (a discovery root that does not resolve into the lane: `update` lays a missing link, and a real directory is `adapter-collision`). |
 | `skills-receipt-missing`, `skills-installed`, `skills-collision`, `adapter-collision` | Step 4 covers these: `install` when no receipt exists, `update` when one does, the same-name and duplicate resolution before the move. An unreadable skills receipt reads as missing: restore it from the before commit, never write one by hand. |
 | `invalid-backup`, `rollback-conflict`, `rollback-mismatch` | `--backup` must be a directory the lane's current receipt records, with a receipt the tool can restore; `rollback-conflict` means a managed file changed after the update, and `rollback-mismatch` that restored bytes differ. Stop, never force: record the refusal and use the before Git commit as the recovery point. |
-| `skills-relocation-collision`, `skills-rollback-unavailable`, `skill-lane-legacy`, `room-skill-duplicate` | `skills-relocation-collision`: `migrate` or `skills-lane-rollback` found a real directory or a foreign link at `.agents/skills`, `.claude/skills` or `workbench/skills` and wrote nothing; move those skills into the lane under step 4, then rerun. `skills-rollback-unavailable`: the room is not on the `.agents/skills` lane, so there is nothing to roll back. `skill-lane-legacy` is doctor's attention finding for a room still on the retired `workbench/skills` lane: run `migrate`. `room-skill-duplicate` fails doctor while one skill name has more than one copy inside the room (for example a leftover `workbench/skills/<name>` or a real `.claude/skills`): keep the `.agents/skills` copy, compare the others byte for byte, and remove or rename them as step 4 describes. |
+| `skills-relocation-collision`, `skills-rollback-unavailable`, `skill-lane-legacy`, `retired-skills-lane-link`, `room-skill-duplicate` | `skills-relocation-collision`: `migrate` or `skills-lane-rollback` found a real directory or a foreign link at `.agents/skills`, `.claude/skills` or `workbench/skills` and wrote nothing; move those skills into the lane under step 4, then rerun. `skills-rollback-unavailable`: the room is not on the `.agents/skills` lane, so there is nothing to roll back. `skill-lane-legacy` is doctor's attention finding for a room still on the retired `workbench/skills` lane: run `migrate`. `retired-skills-lane-link` is doctor's attention finding for a room doc whose relative link still resolves into the retired lane: point it at the named `replacement`. `room-skill-duplicate` fails doctor while one skill name has more than one copy inside the room (for example a leftover `workbench/skills/<name>` or a real `.claude/skills`): keep the `.agents/skills` copy, compare the others byte for byte, and remove or rename them as step 4 describes. |
 | `project-local-skills`, `skill-lane-missing`, `skill-adapter-broken`, `skill-pointer-dangling`, `stale-seed` | Findings the room's `doctor` reports after the update. A root `skills/` directory shadows the lane: move its skills into the lane under unused names or remove it once its bytes are in Git. `skill-lane-missing` and `skill-adapter-broken`: run the step 4 `install` or `update`. `skill-pointer-dangling`: restore the skill or re-point the entry in step 5. `stale-seed` for a document the release no longer seeds (such as `handoff.example.json`) has no repair command: record it in the upgrade Spec. |
 | `stale-stamp` | A doctor attention finding: a Wiki contract file or the router is stamped with a version other than the manifest's. `migrate` ran before the stamp, so a collection file it created (such as `workbench/wiki/features/README.md`) carries the earlier one, and `seed-documents` does not refresh the Wiki contract files. Bring each to the target version as step 3 and section 4 say, or record it as pending reconciliation. |
 | `unverified-provenance` | A doctor attention finding: `provenance.source` is missing, is not a full 40-character commit, names no repository or records a release other than `workbenchVersion` (after the step 3 stamp it still names the earlier release). The source stays historical, so a release mismatch alone is not authority to run `record-source`: record the finding as accepted in the upgrade Spec. A missing or malformed source is re-recorded from a clean release checkout with `node workbench/tools/workbench-layout.mjs record-source --project PATH`, which writes only `provenance.source`. |

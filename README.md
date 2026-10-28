@@ -102,7 +102,7 @@ Same license as the LLM Workbench harness it was generated from. This room is
 meant to be copied, read, and discarded.
 
 The manifest and managed receipts carry the **v3.2.2 release label** from
-LLM Workbench source `8f08f11165c043a581c3c7130cb7c813eeec4483`, installed on
+LLM Workbench source `413e7039219a55bec31feb73e61c0c895307d3f9`, installed on
 Template `integration` through the update route recorded in
 [S-000E](workbench/specs/S-000E-v3-2-2-harness-upgrade/SPEC.md). It is an
 assessment candidate: release fitness is assessed on integration before any
