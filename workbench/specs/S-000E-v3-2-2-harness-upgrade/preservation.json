@@ -1,7 +1,7 @@
 {
   "base": "2f162c46afed6488862d2c3963b07bb0d905cabd",
-  "candidate_commit": "6f04d015c1f493c330f04587c762a5dd72cd2101",
-  "source": "413e7039219a55bec31feb73e61c0c895307d3f9",
+  "candidate_commit": "4ec3c906b41fb37cb4cadb64476b25938aa7dc3b",
+  "source": "a58466ad1dca4ce7d6bd1a8328f47d6a58a2ee8d",
   "source_release": "v3.2.2",
   "inventory_scope": "Every tracked path at the baseline and at the installation commit; later S-000E record commits add only this Spec's own evidence.",
   "identity_preserved": true,
@@ -39,10 +39,11 @@
       "from": null,
       "class": "managed-skills",
       "before": null,
-      "after": "43a8503abbdcd83810fac578f33baa1e87317eb9175ef7a597745451c04d49ff",
+      "after": "f3dd75eedbde9a0ad533c90031b5e147184b015f64c41d531dbdd571dd041432",
       "mode": "100644",
       "decision": "Add: managed-skills",
-      "reinstall_413e7039": "changed: managed update"
+      "reinstall_413e7039": "changed: managed update",
+      "reinstall_a58466ad": "changed: managed update"
     },
     {
       "file": ".agents/skills/adoption/SKILL.md",
@@ -283,10 +284,11 @@
       "from": "workbench/skills/implement/workflow-reference.md",
       "class": "managed-skills",
       "before": "1d80e3f46ffd6e89740b4beeef0c04c25b8726f66cd4821bf47c335544b11ce8",
-      "after": "ccf93f32abd1d9e0cccb72207c414165838880ad554baa70ac0d15bf63f76bd2",
+      "after": "9983a44963efa3e98c53506a2b65e093a3f668ceeaf8291c16dbd335caea7957",
       "mode": "100644",
       "decision": "Move and managed update: workbench/skills/implement/workflow-reference.md",
-      "reinstall_413e7039": "changed: managed update"
+      "reinstall_413e7039": "changed: managed update",
+      "reinstall_a58466ad": "changed: managed update"
     },
     {
       "file": ".agents/skills/improve-harness/SKILL.md",
@@ -518,10 +520,11 @@
       "from": null,
       "class": "managed-skills",
       "before": null,
-      "after": "e7a791681332192ede3e09a227943c73f1e8eddcc1e9dc42dab413ab35bbd445",
+      "after": "b6cb850ddfad43430c6717858b58b048b542989adf8b1accf439940d7e18aaa1",
       "mode": "100644",
       "decision": "Add: managed-skills",
-      "reinstall_413e7039": "changed: managed update"
+      "reinstall_413e7039": "changed: managed update",
+      "reinstall_a58466ad": "changed: managed update"
     },
     {
       "file": ".agents/skills/workbench-runtime/SKILL.md",
@@ -721,7 +724,7 @@
       "from": null,
       "class": "project-owned",
       "before": "5c18b78de989bdcd61df1926f684dc90c169941796dd4c2b9e7cbd987bf075ab",
-      "after": "e9a5f86049ab4d1a33f946a83d5c8f0f0c632f204e49e7853e3873d923d4ece9",
+      "after": "ba8f101ebb5b013584f307c91c183bc61a2d138ef6b81a6ad0529da0eba3e038",
       "mode": "100644",
       "decision": "Regenerated projection; stamp v3.2.2",
       "reinstall_413e7039": "changed: regenerated"
@@ -1147,7 +1150,7 @@
       "from": null,
       "class": "project-owned",
       "before": null,
-      "after": "d52ead1b695903934242cd96c7ddc4719e1eb1eea6b67b65c6ef5a1cf68ae01f",
+      "after": "4d41892811c11fe93041bf9c761776fa51439034c38419dcd61ebcaa0b452f32",
       "mode": "100644",
       "decision": "Add: this upgrade Spec",
       "reinstall_413e7039": "changed: room record"
@@ -1284,10 +1287,11 @@
       "from": null,
       "class": "managed-runtime",
       "before": "af5ea25aaba65cd8e1fe26fe0a5a8b11e46ef9d7cd13ad625ef9350762e529bc",
-      "after": "7296b8ad2249dd1f313b0abc805c7ae5c7610e5b5388c90f147a17aa12ceca65",
+      "after": "cad4ae8e4a006bc09b3f250611c744a88ead6b13e163cc4d603229ed991a08b4",
       "mode": "100644",
       "decision": "Managed update: managed-runtime",
-      "reinstall_413e7039": "changed: managed update"
+      "reinstall_413e7039": "changed: managed update",
+      "reinstall_a58466ad": "changed: managed update"
     },
     {
       "file": "workbench/tools/adr.mjs",
@@ -1605,10 +1609,11 @@
       "from": null,
       "class": "managed-runtime",
       "before": null,
-      "after": "00859c0fcb4d5bf3c04d01d7274e9a7d6d3575ac2f1b7a90d46006b288d735c5",
+      "after": "a61609e2a3d8f63810de95ab43ae353ba9942f9f69ec47d23d4da66ffc14efb9",
       "mode": "100644",
       "decision": "Add: managed-runtime",
-      "reinstall_413e7039": "changed: managed update"
+      "reinstall_413e7039": "changed: managed update",
+      "reinstall_a58466ad": "changed: managed update"
     },
     {
       "file": "workbench/wiki/.gitignore",
@@ -1850,7 +1855,7 @@
       "from": null,
       "class": "project-owned",
       "before": null,
-      "after": "6811d7ca8f9e441474779e01ca90c3a2fe8ccf679249433da834ec1e08184cb5",
+      "after": "190d7f5456277de01e8fc9cb993d148052499d8a0d678aee9247da64bea28982",
       "mode": "100644",
       "decision": "Add"
     }
@@ -1880,5 +1885,22 @@
     "workbench/tools/workbench-paths.mjs",
     "workbench/tools/workspace-closeout.mjs",
     "workbench/wiki/workbench-capabilities.md"
+  ],
+  "reinstall_a58466ad_changed": [
+    ".agents/skills/.workbench-skills.json",
+    ".agents/skills/implement/workflow-reference.md",
+    ".agents/skills/update-harness/SKILL.md",
+    "workbench/tools/.workbench-tools.json",
+    "workbench/tools/workspace-closeout.mjs"
+  ],
+  "reinstalls": [
+    {
+      "commit": "6f04d01",
+      "source": "413e7039219a55bec31feb73e61c0c895307d3f9"
+    },
+    {
+      "commit": "4ec3c90",
+      "source": "a58466ad1dca4ce7d6bd1a8328f47d6a58a2ee8d"
+    }
   ]
 }

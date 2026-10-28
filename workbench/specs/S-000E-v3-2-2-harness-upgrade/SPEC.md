@@ -8,13 +8,13 @@
 **Updated:** 2026-10-28
 **Catalog description:** Install the pinned LLM Workbench v3.2.2 source candidate into Workbench_Template integration through the supported update route, preserving the room and recording upgrade and recovery proof for the release audit.
 **Blockers:** none within the installation; release fitness audit, independent assembled review and owner main approval are separate gates
-**Latest event:** Reinstalled from repaired source 413e7039 and re-verified.
+**Latest event:** Reinstalled from repaired source a58466ad and re-verified.
 **Next gate:** Required CI and reviewed merge into Template integration.
 
 ## Outcome
 
 Workbench_Template, the installed reference room, consumes LLM Workbench v3.2.2
-source `413e7039219a55bec31feb73e61c0c895307d3f9` on its `integration` branch:
+source `a58466ad1dca4ce7d6bd1a8328f47d6a58a2ee8d` on its `integration` branch:
 managed runtime, core skills, the two optional skills selected for this room,
 manifest stamp and receipts, filled Glossary and Architecture, the relocated
 `.agents/skills` lane and the six confirmed workflows, with every room-owned
@@ -98,7 +98,7 @@ merged integration revision. S-006J TK-00B4 may consume this exact candidate.
 
 ## Acceptance Criteria
 
-- [ ] Installed receipts and every managed byte match pinned source `413e7039`; manifest, stamps and receipts agree on v3.2.2.
+- [ ] Installed receipts and every managed byte match pinned source `a58466ad`; manifest, stamps and receipts agree on v3.2.2.
 - [ ] Glossary and Architecture are filled for this room and every Lexicon line has a recorded landing or disposition.
 - [ ] Workflow routes and definitions match the six confirmed workflows, with the Explore and Prepare gates installed and exercised.
 - [ ] Before/after inventory accounts for every change and preserves identity, provenance, product, Specs, ADR, Wiki and evidence.
@@ -183,6 +183,7 @@ feedback log rows; tour and its tests.
 | 2026-10-28 | TK-000D | Pinned v3.2.2 installed through the v3 route | migrate relocated workbench/skills to .agents/skills (one move commit), installed GLOSSARY/ARCHITECTURE and 12 vocabulary articles; stamp and skillPolicy set; seed-documents seeded 2 documents and retained REPORT_FORMAT.md; tools update changed 19 files (35 managed), skills update changed 31 of 33; optional diagnose-and-propose and grill-with-docs installed; migrate reports current and Lexicon archived | Controls, Wiki, tour and tests reconciled | Inventory commit, rollback exercise, CI and review pending |
 | 2026-10-28 | TK-000D | Inventory, managed-byte, rollback and scenario evidence | Candidate suite: diff check, evidence-history 14/14, history check (10 sections vs 2f162c46), tour 22/22, syntax, layout valid, doctor no blocker, Wiki and ADR valid. Pinned-source verify valid for tools and skills. Rollback/reapply and skills-lane-rollback/migrate exercised in disposable copies. Installed gate in a disposable copy: claim refused before any write with no authority fields, with an unresolved Jot, with a superseded Jot and with a Jot naming another Spec; one current confirmed owner-intent Jot cited in both fields allowed the claim. Real S-000C shows missing Confirmation and Execution approval and has no ready Task. Jot read/search in a fresh clone returned the current entry with its correction context; a confirmed term written to GLOSSARY.md validated, and a malformed entry was refused. Evaluator diagnostic 52.6/113 before, 65.5/113 after (structural only) | preservation.json, Upgrade Proof | CI, independent review and integration containment pending |
 | 2026-10-28 | TK-000D | Reinstalled from repaired pinned source 413e7039 (LLM_Workbench PR #637) | migrate current, Lexicon archived with 69 dispositions (9 lines now tool-landed), no retired-lane links; the source's line-ending policy step rewrote .gitattributes to one managed block; tools update changed 6 files and skills update changed implement and update-harness with backups recorded as `~/` descriptors; optional reinstall refused with skill-collision over identical bytes (no write). Pinned-source verify valid for tools and skills; all 35 runtime files, 33 core skill trees and both optional skills equal 413e7039. Doctor: no retired-skills-lane-link; positive control with one stale `../skills/` link reports it. Fresh relocation from 2f162c46 reports 74 retired-lane links and writes one block. Disposable copy: tools and skills rollback (backup directory plus --home) restored the 857a196 bytes, both verify valid, reapply returned candidate bytes with only receipt metadata differing, tour 22/22 | preservation.json reinstall deltas, lexicon-disposition.json, controls | CI, independent review and integration containment pending |
+| 2026-10-28 | TK-000D | Reinstalled from repaired pinned source a58466ad (LLM_Workbench PR #638) | tools update changed workspace-closeout.mjs and skills update changed implement and update-harness, with `~/` backups; optional skills report current; migrate current, Lexicon archived. Pinned-source verify valid; all 35 runtime files, 33 core skill trees and both optional skills equal a58466ad. Disposable copy: rollback with the receipts' `~/NAME` form plus --home restored the 421094e bytes, both verify valid, reapply returned candidate bytes, tour 22/22. Closeout: this room's table-backed S-000E cannot host a snapshot (`unknown-task`); in a disposable GitHub clone with a record-backed fixture Task, an inherited stash, an untracked file and local-only commits, `check` exited 1 with retained-stash-not-remote, retained-bytes-not-remote, retained-ref-not-remote and unaccounted findings, and remoteRecoverable false | preservation.json, Spec header | CI, independent review and integration containment pending |
 
 ## Completion Result
 
