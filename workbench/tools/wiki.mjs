@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 // Portable wiki validator: router, declared collections, note metadata,
-// portability, the Design Concept and features article shapes, no copied live task state,
+// portability, the Design Concept and features article shapes, a lexicon article's
+// declared glossary term and its GLOSSARY.md link, no copied live task state,
 // no secret-like material, a one-line summary beside each routed page. Staleness and
 // a missing summary are attention, never blocking.
 import fs from 'node:fs';
@@ -10,6 +11,7 @@ import { finding } from './diagnostics.mjs';
 import { assertSafeReadPath, assertSafeWritePath, collectionRelative, findRoot, isMainModule, lanePath, laneRelative, liveRecordPath, markdownLinkTargets, readManifest, writeSafeFile, WIKI_PROFILES } from './workbench-paths.mjs';
 import { collectRecordReferenceFiles, insertFrontmatterKeys, localLinks, parseFrontmatter, planReferenceRewrite } from './adr.mjs';
 import { scanPrivacy } from './privacy.mjs';
+import { canonicalRoomFile, isGroupedVocabularyArticle, linkResolvesToRootControl, parseGlossary } from './glossary-format.mjs';
 import { versionStamp, wikiContractFiles } from './workbench-layout.mjs';
 
 export const NOTE_TYPES = Object.freeze(['memory', 'project', 'person', 'machine', 'guidebook', 'design-concept', 'feature', 'meta']);
@@ -242,8 +244,63 @@ export function routerSummaryFindings(root, wikiRoot, routerFile, content) {
   return findings;
 }
 
+// S-004O TK-009D: a lexicon article is a Wiki page that explains one glossary
+// term. It declares the term in `glossary_term:` and links the room's root
+// `GLOSSARY.md`, which owns the canonical definition (a `**Term**:` entry). A
+// page that declares no term is a general reference page and needs no glossary
+// entry, so a room without `GLOSSARY.md` is checked only where a page declares
+// a term, and is then told the glossary is absent.
+export const GLOSSARY_FILE = 'GLOSSARY.md';
+
+// The pinned parser lives in glossary-format.mjs so the layout tool can share it
+// without importing the Wiki validator; this re-export keeps its public name.
+export { parseGlossary };
+
+export function glossaryEntryTerms(content) {
+  return new Set([...String(content).replace(/\r\n?/g, '\n').matchAll(/^\*\*(.+?)\*\*:\s*$/gm)].map((match) => match[1].trim()));
+}
+
+// PR431 comment 4312687917: a glossary that exists but is not the canonical
+// room-root file is reported here, directly, so a room with no declared-term
+// page cannot pass `validate` or `doctor` on a linked root control.
+function roomGlossary(root, options) {
+  const identity = canonicalRoomFile(root, GLOSSARY_FILE);
+  if (!identity.exists) return { terms: null, findings: [] };
+  if (!identity.canonical) {
+    return { terms: null, findings: [finding('invalid-note', `${GLOSSARY_FILE} is ${identity.reason}; the room glossary must be the ordinary, unshared file at the room root`, { note: GLOSSARY_FILE })] };
+  }
+  const file = identity.path;
+  try {
+    const content = options.contentOverrides?.get(file) ?? fs.readFileSync(file, 'utf8');
+    const parsed = parseGlossary(content, GLOSSARY_FILE);
+    return { terms: new Set(parsed.entries.map(entry => entry.term)), findings: [] };
+  } catch (error) {
+    return { terms: null, findings: [finding('invalid-note', error.message, { note: GLOSSARY_FILE })] };
+  }
+}
+
+function lexiconArticleFindings(root, file, relative, declared, content, glossaryTerms) {
+  const term = typeof declared === 'string' ? declared.replace(/^(['"])(.*)\1$/, '$2').trim() : '';
+  if (!term) return [finding('invalid-note', `${relative} glossary_term is empty; a lexicon article names the ${GLOSSARY_FILE} term it explains, and a general reference page omits the key`, { note: relative })];
+  const findings = [];
+  const terms = glossaryTerms();
+  if (terms === null) {
+    findings.push(finding('invalid-note', `${relative} declares glossary_term ${term}, but this room has no ${GLOSSARY_FILE} to hold its canonical definition; add the glossary entry or remove the key from a general reference page`, { note: relative }));
+  } else if (!terms.has(term)) {
+    findings.push(finding('invalid-note', `${relative} declares glossary_term ${term}, which is not a ${GLOSSARY_FILE} entry (**${term}**:); name an existing entry exactly or add it to the glossary first`, { note: relative }));
+  }
+  if (!markdownLinkTargets(content).some((link) => linkResolvesToRootControl(root, file, link, GLOSSARY_FILE))) {
+    findings.push(finding('invalid-note', `${relative} declares glossary_term ${term} and must link its canonical definition in ${GLOSSARY_FILE} at the room root`, { note: relative }));
+  }
+  return findings;
+}
+
 export function validateWiki(root, options = {}) {
   const findings = [];
+  // Installed validation and promotion inspect the same complete candidate,
+  // even when the Wiki has no declared-term articles yet.
+  const glossary = roomGlossary(root, options);
+  findings.push(...glossary.findings);
   const wikiRoot = lanePath(root, 'wiki');
   const wikiRelative = laneRelative(root, 'wiki');
   const manifest = readManifest(root);
@@ -292,6 +349,7 @@ export function validateWiki(root, options = {}) {
   const draftRoot = path.join(wikiRoot, DRAFT_COLLECTION);
   const draftRelative = `${wikiRelative}/${DRAFT_COLLECTION}`;
   const basenames = new Map();
+  const glossaryTerms = () => glossary.terms;
   for (const file of walkMarkdown(wikiRoot)) {
     const relative = path.relative(root, file).split(path.sep).join('/');
     const content = options.contentOverrides?.get(file) ?? fs.readFileSync(file, 'utf8');
@@ -351,6 +409,14 @@ export function validateWiki(root, options = {}) {
       for (const section of ['Evidence and Sources', 'History']) {
         if (!new RegExp(`^## ${section}$`, 'm').test(content)) findings.push(finding('invalid-note', `${relative} must end with a ${section} section`, { note: relative }));
       }
+    }
+    if (data.glossary_term !== undefined) findings.push(...lexiconArticleFindings(root, file, relative, data.glossary_term, content, glossaryTerms));
+    // PR431 comment 4315959839: a grouped `vocabulary-*` article at the lane
+    // root is a term home without a declaration, recognized by name and place
+    // exactly as the retirement report recognizes it; it must link the
+    // canonical definitions it explains.
+    else if (isGroupedVocabularyArticle(relative, wikiRelative) && !markdownLinkTargets(content).some((link) => linkResolvesToRootControl(root, file, link, GLOSSARY_FILE))) {
+      findings.push(finding('invalid-note', `${relative} is a grouped vocabulary article and must link its canonical definitions in ${GLOSSARY_FILE} at the room root`, { note: relative }));
     }
     if (inDrafts) findings.push(...draftArticleFindings(relative, path.relative(draftRoot, file).split(path.sep), data, body));
     const inFeatures = file.startsWith(features + path.sep);

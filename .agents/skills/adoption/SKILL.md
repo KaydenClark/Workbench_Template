@@ -3,13 +3,15 @@ name: adoption
 description: Migrate an existing project into the Workbench once while preserving its code, history, project truth, and remote recovery point.
 ---
 
+Inherit both mandatory owner judgments under [authority and continuation](../implement/execution-authority.md): explicit confirmation before leaving Explore and explicit execution approval before leaving Prepare. Reuse their sources within scope; delegation and this skill grant neither.
+
 Use Adoption only when an existing project is joining the Workbench for the
 first time. An already-adopted room that still sits on a v2 root moves onto the
-v3 support root through `/update-harness`, which runs
+v3 support root by calling the Skill tool for `update-harness`, which runs
 `node tools/workbench-upgrade.mjs upgrade --layout-only` and records
 `provenance.lifecycle: upgrade`; do not rerun Adoption for it, because a second
 `adoption` record contradicts its first. A routine harness update also uses
-`/update-harness`.
+`update-harness`.
 
 First [recover the release source](../genesis/SKILL.md#recover-the-release-source)
 for the installed setup procedure; its source checkout owns classification and
@@ -23,8 +25,8 @@ the Adoption protocol.
    - Ask the room which route its contents support, from the Workbench release
      checkout; this reads and writes nothing:
      `node tools/workbench-classify.mjs classify --project [ABSOLUTE_PROJECT_PATH]`.
-     Continue only on `adoption`. Route `upgrade` to `/update-harness` and
-     `genesis` to `/genesis`; for `unclassifiable`, establish the answer from
+     Continue only on `adoption`. For `upgrade`, call the Skill tool for `update-harness`; for
+     `genesis`, call the Skill tool for `genesis`; for `unclassifiable`, establish the answer from
      the room's history, remote or owner instead of guessing. The verdict is
      evidence, not authorization.
    - Take the code baseline: run the existing test/build commands green as
@@ -42,13 +44,15 @@ the Adoption protocol.
 3. Read `templates/ADOPTION.md` in the canonical Workbench source named by the
    workspace controls completely, and follow its one-time inventory,
    provenance, migration, verification, and handoff phases. After reconciling
-   the seven filled root controls, run from the release checkout:
+   the eight filled root controls (`GLOSSARY.md` and `ARCHITECTURE.md`, whose
+   codemap is drafted from the source and confirmed by grilling, in place of
+   the retired Lexicon), run from the release checkout:
 
    ```bash
    node tools/workbench-adoption.mjs migrate \
      --project [ABSOLUTE_PROJECT_PATH] \
      --home [USER_HOME] \
-     --version v3.2.1
+     --version v3.2.2
    ```
 
    The helper moves only unambiguous durable v2 lanes, including a legacy root
@@ -56,7 +60,7 @@ the Adoption protocol.
    lanes and collections, preserves a project-local `skills/` folder under
    `workbench/sessions/recovery/`, installs the receipt-backed runtime
    tools into `workbench/tools/`, lays the core skills into the room's own
-   `workbench/skills` lane with a receipt and discovery adapters (it never
+   `.agents/skills` lane with a receipt and discovery adapters (it never
    reads or writes a skill in `[USER_HOME]`, although `--home` is still a
    required argument), declares `git.integrationBranch` by the
    exact case of an existing integration-named branch, creates a missing local
@@ -68,7 +72,7 @@ the Adoption protocol.
    Workbench line-ending block to `.gitattributes` after the project's own
    rules (Workbench-owned paths only; commit it so a Windows
    `core.autocrlf=true` clone keeps the receipt hashes, staging with
-   `git add --renormalize -- workbench` and the seven controls after
+   `git add --renormalize -- workbench` and the installed root controls after
    `git add -A` so a control already committed with CRLF is stored as LF, and
    enable `core.symlinks` there for the skill adapters), renders the
    projections, and runs doctor. An existing support root (including a room
@@ -76,6 +80,13 @@ the Adoption protocol.
    blocker to reconcile before retrying; never overwrite it,
    and never touch an application's root `tools/`. Afterwards use the
    project's own `node workbench/tools/spec-workbench.mjs ...` copies.
+   Offer optional skills from the same source checkout using
+   `node tools/workbench-optional-skills.mjs list`; consult its
+   `workbench/optional-skills/README.md` for the choices. After core setup,
+   install only owner-selected choices with
+   `node tools/workbench-optional-skills.mjs install --project PATH --skill NAME`
+   and retain its source identity and content hash with setup proof. No
+   selection changes nothing; an existing optional copy is preserved.
 4. Preserve project behavior and history. Port live truth into the existing
    Workbench owners, archive retired control documents, and do not perform an
    unrelated product cleanup or create another tracker.

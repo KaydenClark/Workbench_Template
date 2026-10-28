@@ -5,6 +5,8 @@ description: Operate as the assigned Dispatcher for one Spec and its branch with
 
 # Dispatcher
 
+Inherit both mandatory owner judgments under [authority and continuation](../implement/execution-authority.md): explicit confirmation before leaving Explore and explicit execution approval before leaving Prepare. Reuse their sources within scope; delegation and this skill grant neither.
+
 ## Purpose
 
 Coordinate planning, bounded Task delivery and assembled verification for one assigned Spec. Hand the Director an immutable candidate with evidence and gaps. The role never grants, removes, or transfers authority; the request and controls establish it. A stance changes the job, not the scope; changing stance alone creates no handoff.

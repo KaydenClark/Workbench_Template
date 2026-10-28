@@ -116,7 +116,7 @@ function claimsFromTips(states, baseRef, tips, local = new Map()) {
 }
 
 // Task status per `SPEC-ID/TK-ID` at each ref, from Task records and the
-// slice rows of table-backed Specs, read across every ref at once.
+// slice rows of table-backed Specs, read across every ref in bounded batches.
 // S-003Z TK-008G: with `landmarksPrefix`, a landmark-direct Task record keys
 // as `LMK-ID/TK-ID` from its `**Landmark ID:**` field.
 export function readTaskStatusesAt(root, refs, specsPrefix, landmarksPrefix = null) {
@@ -137,7 +137,16 @@ export function readTaskStatesAt(root, refs, specsPrefix, landmarksPrefix = null
     const ref = byLength.find((candidate) => line.startsWith(`${candidate}:`));
     return ref ? { ref, rest: line.slice(ref.length + 1) } : null;
   };
-  const read = (pattern, pathspecs) => grepLines(root, ['-I', '-E', pattern, ...refs, '--', ...pathspecs], locate, 'Cannot read remote claims');
+  // Many recovery refs can exceed spawnSync's output limit in one grep.
+  // Bound each Git read without filtering refs or changing their output order.
+  const read = (pattern, pathspecs) => {
+    const lines = [];
+    for (let start = 0; start < refs.length; start += 16) {
+      const batch = refs.slice(start, start + 16);
+      for (const line of grepLines(root, ['-I', '-E', pattern, ...batch, '--', ...pathspecs], locate, 'Cannot read remote claims')) lines.push(line);
+    }
+    return lines;
+  };
   return taskStates(read(STATUS_PATTERN, lanes(specsPrefix, landmarksPrefix)), read(RUN_PATTERN, taskRecords(specsPrefix, landmarksPrefix)));
 }
 

@@ -14,18 +14,25 @@ candidate need not equal HEAD. Its content digest binds the assembled Spec and
 live/retired Task records; a changed candidate needs a fresh review. A Dispatcher
 or implementer cannot supply independent approval.
 
-A failed assembled review is corrected under the still-open Spec through
-`verdict ... --result fail`. Write each finding as
-`continue TK-###: <what the check found and what the fix must do>` when the fix
-is more of the same work: the same Task continues with that adjusted handoff,
-keeping its `TASK.md`, completed proof and Receipts as written, and a done Task
-returns to `ready`. Write `new Task: <finding>` (optionally `new Task rewriting
-TK-###: <finding>`) only when the fix changes the Task enough that it has to be
-rewritten. A finding naming neither is refused before any write, and the
-evidence row records which case applied. `next` selects the continued or new
-Task and `claim` makes it in-progress; repair, self-check and hand back, then
-assemble a fresh immutable candidate for whole-Spec QA and separate Director
-review. Never clear a failed verdict with a green test.
+A failed assembled review stays under the still-open Spec. Reconcile the
+finding, reviewed candidate, proof and remaining acceptance into that Spec
+before another implementor run. With `verdict ... --result fail`, write each
+finding as `new Task: <finding>` or `new Task rewriting TK-###: <finding>` when
+linking the correction to an earlier assignment. The runtime allocates a fresh
+Task ID; give it one run's scope and verification. The original Task records,
+IDs, proof and Receipts remain unchanged. `next` selects the new Task and
+`claim` makes it in-progress. Repair, self-check and hand back, then assemble
+a fresh immutable candidate for whole-Spec QA and separate Director review.
+
+`continue TK-###: <what the check found and what the fix must do>` remains a
+runtime compatibility disposition that may reopen a retained record; it is
+not the dispatch route for a new implementor run. A finding naming neither
+supported disposition is refused before any write. Preserve existing runtime
+guards and references: no incomplete claim is falsely closed and no old record
+is manually discarded. If those guards prevent a safe new assignment, record
+the lifecycle gap under the Spec; this guidance adds no migration command.
+Follow [single-run reconciliation](../to-tasks/sizing.md). Never clear a failed
+verdict with a green test.
 
 Jot each failed verdict's finding and check it for a repeat through the
 `improve-harness` skill's [Repeated Review findings](../improve-harness/SKILL.md#repeated-review-findings);
@@ -64,17 +71,14 @@ write. Receipt runs and administrative headers are excluded narrowly; checked
 acceptance, Task status/proof and decisions remain bound. A green test or a
 Dispatcher's self-review cannot substitute for independent review.
 
-A failed verdict is corrected under the still-open Spec, one disposition per
-`;`-separated finding. `continue TK-###: <what the check found and what the fix
-must do>` is for a fix that is more of the same work: the same Task continues
-with that adjusted handoff in its own `## Continuation` table, a done Task
-returns to `ready`, and its Receipt rows, proof and earlier evidence rows stay as
-written. `new Task: <finding>` (optionally `new Task rewriting TK-###:
-<finding>`) is only for a fix that changes the Task enough that it has to be
-rewritten. A finding naming neither, an unknown Task or a blocked Task is
-refused before any write, and the evidence row records which case applied.
-Select and claim the continued or new Task, repair it, self-check and hand back
-(a continued Task's later close appends `Task closed (run N)`), then rerun
+A failed verdict uses one `;`-separated new-Task disposition per finding, under
+the same Spec. Read the [corrective-return procedure](assembled-review.md#assembled-review-and-corrective-return):
+reconcile evidence, create a fresh single-run assignment with `new Task:` or
+`new Task rewriting TK-###:`, and preserve the earlier assignment and proof.
+The retained `continue`/Continuation-table and repeated-close mechanics describe
+runtime compatibility, not the current recipe for dispatching another run.
+Malformed dispositions or invalid referenced Tasks are refused before any
+write. Claim the new Task, repair, self-check and hand back, then rerun
 whole-Spec QA and obtain fresh separate review of the new immutable candidate.
 Do not reuse the earlier PASS for changed content. A verdict against a complete,
 superseded or retired Spec is refused; see the later-gap route in the

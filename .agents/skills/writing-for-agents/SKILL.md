@@ -7,10 +7,12 @@ description: Write concise agent artifacts. Use when creating or editing skills,
 
 Make the needed action predictable with the fewest words and routes. Keep authority and accepted requirements intact. Use the [full writing reference](REFERENCE.md) for definitions, examples, and pruning guidance; when authoring a skill, use [skill mechanics](SKILL-MECHANICS.md) for frontmatter and invocation.
 
+For cross-skill calls, follow the [explicit invocation convention and host fallback](INVOCATION.md).
+
 ## Set a word budget
 
 - `AGENTS.md`: at most 500 words. `BLUEPRINT.md`: budget 250–400 words when complete; shorter is fine.
-- `RUNBOOK.md`: at most 400 words; follow accepted workflow semantics and chosen structure, placing task-specific procedural detail behind on-demand links.
+- `RUNBOOK.md`: under 450 words; follow accepted workflow semantics and chosen structure, placing task-specific procedural detail behind on-demand links.
 - Skill entrypoints: at most 400 words; disclose branch-specific detail in linked references.
 
 Treat these as ceilings. Do not pad an adequate shorter entry. Keep required controls and routes; reduce repetition or disclose reference before cutting a requirement.

@@ -21,7 +21,7 @@ import { assertSafeReadPath, assertSafeWritePath, writeSafeFile, collectionPath,
 import { LANDMARK_LIFECYCLE_FOLDERS, LANDMARK_PREFIX, findLandmark, landmarkFindings, landmarkHistoricalRoute, landmarkSpecHomes, loadLandmarks, loadReadableLandmarks, loadRetiredLandmarks, publicLandmark } from './landmark-artifact.mjs';
 import { parseFrontmatter, planReferenceRewrite, splitEvidenceSection, validateAdrs, writeDecisionRegisters } from './adr.mjs';
 import { validateWiki } from './wiki.mjs';
-import { readJots } from './jot.mjs';
+import { ignoredJotPage, parseJotEntries, readJots } from './jot.mjs';
 import { ARTIFACT_ID_MIN_WIDTH, allocateArtifactId, compareVisibleIds, visibleIdKey, visibleIdParts } from './visible-ids.mjs';
 import { TASK_LIFECYCLE_FOLDERS, TASK_STATUSES, formatTaskRecord, listRetiredTaskRecords, listTaskRecords, parseFormerId, parseTaskRecord, readTaskRecord, taskStatus, unmetBlockers, updateTaskFields, withClaimant } from './task-record.mjs';
 import { appendReceiptRow, appendReceiptRowToContent, readGitFacts, readReceipt, readReceiptFromFile } from './task-receipt.mjs';
@@ -41,8 +41,6 @@ export { TASK_STATUSES };
 export { TASK_LIFECYCLE_FOLDERS };
 
 const SPEC_STATUSES = new Set(['planned', 'active', 'blocked', 'needs-review', 'complete', 'superseded']);
-const CATALOG_START = '<!-- spec-catalog:start -->';
-const CATALOG_END = '<!-- spec-catalog:end -->';
 const HOT_START = '<!-- hot-specs:start -->';
 const HOT_END = '<!-- hot-specs:end -->';
 
@@ -267,7 +265,7 @@ export function showSpec(rootDir, id) {
   const body = spec.lifecycleFolder
     ? `Retired: ${spec.relativePath} (historical route; out of ordinary discovery, reachable only by this explicit lookup)\n\n${spec.content}`
     : spec.content;
-  return { ...publicSpec(spec), body };
+  return { ...publicSpec(spec), authority: executionAuthority(spec), body };
 }
 
 export function nextIdentity(rootDir, specId, options = {}) {
@@ -434,19 +432,9 @@ function claimInTree(rootDir, id, options, remoteClaims) {
   // cannot establish is routed to blocked on its own record, naming the
   // capability, rather than skipped silently; the claim then takes the next
   // Task the session can do, or refuses naming what it routed.
-  const routed = [];
-  for (const entry of capabilityBlocked) {
-    if (entry.recorded) continue;
-    const slice = slices.find((item) => item.id === entry.taskId);
-    writeTaskStatus(slice.record, { Status: 'blocked', 'Missing capabilities': entry.missing.join(', ') });
-    routed.push({ taskId: entry.taskId, missing: entry.missing });
-  }
-  const withRouting = (result) => ({ result: routed.length > 0 ? { ...result, capabilityRouted: routed } : result, specId: id, taskId: task.id, remoteClaimed });
   const task = slices.find((item) => item.id === candidate?.taskId);
-  if (!task) {
-    if (routed.length > 0) {
-      throw new Error(`${id} has no eligible ready task to claim; routed to blocked for missing optional capabilities: ${routed.map((item) => `${item.taskId} (${item.missing.join(', ')})`).join(', ')}`);
-    }
+  const pendingRoutes = capabilityBlocked.filter((entry) => !entry.recorded);
+  if (!task && pendingRoutes.length === 0) {
     // `blocked-slice` names the one shape doctor also reports: a slice that
     // declares itself ready while its blockers are unmet. A slice that
     // declares itself blocked is ordinary sequencing on both sources, so it
@@ -459,6 +447,25 @@ function claimInTree(rootDir, id, options, remoteClaims) {
     if (remoteClaimed.length > 0) throw new Error(`${id} has no eligible ready task to claim; claimed on a remote tip: ${remoteClaimed.map((item) => `${item.taskId} (${item.refs.join(', ')})`).join(', ')}`);
     throw new Error(`${id}${taskId ? `/${taskId}` : ''} has no eligible ready task to claim`);
   }
+  // S-006J TK-008R: execution entry needs both recorded owner judgments.
+  // Selection refusals above write nothing; every write below follows this.
+  if (!landmark) requireExecutionAuthority(spec, 'claim');
+  // S-006K TK-00B5: Complete (Deliver -> Cleanup) follows Judge. A
+  // post-delivery Task is claimable only once a passed review verdict and an
+  // owner approval bind the Spec's current content; still before any write.
+  if (!landmark && task?.record?.phase === 'post-delivery') {
+    const judged = assembleSpecReport(rootDir, id);
+    const reason = reviewGapReason(judged) ?? approvalGapReason(judged);
+    if (reason) throw new Error(`${id}/${task.id} is a post-delivery Task; Deliver and Cleanup wait for Review, Verify and Approve of the current content: ${reason}`);
+  }
+  const routed = [];
+  for (const entry of pendingRoutes) {
+    const slice = slices.find((item) => item.id === entry.taskId);
+    writeTaskStatus(slice.record, { Status: 'blocked', 'Missing capabilities': entry.missing.join(', ') });
+    routed.push({ taskId: entry.taskId, missing: entry.missing });
+  }
+  if (!task) throw new Error(`${id} has no eligible ready task to claim; routed to blocked for missing optional capabilities: ${routed.map((item) => `${item.taskId} (${item.missing.join(', ')})`).join(', ')}`);
+  const withRouting = (result) => ({ result: routed.length > 0 ? { ...result, capabilityRouted: routed } : result, specId: id, taskId: task.id, remoteClaimed });
   // A record-backed Spec's state lives on the record. It is written first so
   // a failure
   // while updating the header cannot leave the Spec announcing a claim that
@@ -479,14 +486,95 @@ function claimInTree(rootDir, id, options, remoteClaims) {
     });
   // A landmark's Owner is the Director holding its lane, not the Task's
   // claimant, so a landmark-direct claim records the claimant in the event.
+  // S-006K TK-00B5 (Codex review, PR #630): Owner is reviewed header content,
+  // so a post-delivery claim leaves an unassigned Owner as it was approved.
+  const postDeliveryClaim = !landmark && task.record?.phase === 'post-delivery';
   const updated = updateFields(content, {
-    ...(!landmark && spec.owner === 'unassigned' ? { Owner: options.agent } : {}),
+    ...(!landmark && !postDeliveryClaim && spec.owner === 'unassigned' ? { Owner: options.agent } : {}),
     Updated: date,
     'Latest event': `${task.id} claimed by ${options.agent}.`,
     'Next gate': `Close ${task.id} with verification and documentation proof.`
   });
   atomicWrite(spec.filePath, updated);
   return withRouting(showSpec(rootDir, id));
+}
+
+// S-006J TK-008R: the smallest record contract for the two owner judgments.
+// A Spec cites existing source-linked Jot entries; one entry may supply both:
+//   **Confirmation:** [JOT-ID](relative Wiki page link)
+//   **Execution approval:** [JOT-ID](relative Wiki page link)
+// Each cited entry must be on a shared (sensitivity: normal) Jot page inside
+// the room - ordinarily a Wiki topic page - and be a confirmed owner intent,
+// not be superseded by a later correction, and name this Spec ID (or its
+// validated Former ID after widen-id). The page is read only through an
+// ordinary, non-symlinked path inside the room that Git does not ignore (the
+// Jot reader's private-access rule). Activation
+// and claim refuse before any write while a gap remains; `show` reports the
+// same reading so a resuming reader can recover it. The check validates the
+// recorded evidence only: it cannot authenticate who wrote the words or judge
+// their English meaning, and it cannot stop a direct file write.
+const AUTHORITY_FIELDS = Object.freeze({ confirmation: 'Confirmation', approval: 'Execution approval' });
+const AUTHORITY_CITATION = /\[(JOT-[A-Za-z0-9_-]+)\]\(([^)\s]+)\)/g;
+export function executionAuthority(spec) {
+  const reading = { confirmation: [], approval: [], gaps: [] };
+  // A widened Spec is the same identity, so its validated Former ID also names it.
+  const spellings = [spec.id, ...(spec.formerId ? [spec.formerId] : [])].map(escapeRegExp).join('|');
+  const named = new RegExp(`(^|[^A-Za-z0-9-])(?:${spellings})(?![A-Za-z0-9])`);
+  for (const [key, field] of Object.entries(AUTHORITY_FIELDS)) {
+    const lines = [...spec.content.matchAll(new RegExp(`^\\*\\*${field}:\\*\\*[ \\t]*(.*)$`, 'gm'))];
+    if (lines.length === 0) { reading.gaps.push(`missing ${field}`); continue; }
+    if (lines.length > 1) { reading.gaps.push(`ambiguous: ${lines.length} ${field} fields`); continue; }
+    const value = lines[0][1].trim();
+    const citations = [...value.matchAll(AUTHORITY_CITATION)];
+    if (citations.length === 0 || value.replace(AUTHORITY_CITATION, '').replace(/[\s;,]/g, '') !== '') {
+      reading.gaps.push(`${field} must cite one or more [JOT-ID](Wiki page) links`);
+      continue;
+    }
+    for (const [, jotId, href] of citations) {
+      let target = href.split('#')[0];
+      try { target = decodeURIComponent(target); } catch { /* keep the literal link */ }
+      const absolute = path.resolve(path.dirname(spec.filePath), target);
+      const page = path.relative(spec.root, absolute).split(path.sep).join('/');
+      let ordinary = true;
+      try { assertSafeReadPath(spec.root, absolute); } catch { ordinary = false; }
+      if (!ordinary || !target || page.startsWith('..') || path.isAbsolute(page) || !page.endsWith('.md') || liveRecordPath(spec.root, page) || !fs.existsSync(absolute)) {
+        reading.gaps.push(`${field} ${jotId} cites ${page || href}, which is not a shared Jot page in this room`);
+        continue;
+      }
+      let local;
+      try { local = ignoredJotPage(spec.root, page); } catch { local = true; }
+      if (local) {
+        reading.gaps.push(`${field} ${jotId} cites ${page}, which is ignored local context, not shared authority`);
+        continue;
+      }
+      let entries;
+      try {
+        const text = fs.readFileSync(absolute, 'utf8');
+        if (parseFrontmatter(text).data?.sensitivity !== 'normal') throw new Error('not shared');
+        entries = parseJotEntries(text);
+      } catch {
+        reading.gaps.push(`${field} ${jotId} cites ${page}, which is not a shared Jot page with readable entries`);
+        continue;
+      }
+      const entry = entries.find((item) => item.id === jotId);
+      const correction = entries.find((item) => item.supersedes === jotId);
+      if (!entry) reading.gaps.push(`${field} ${jotId} is not on ${page}`);
+      else if (correction) reading.gaps.push(`${field} ${jotId} is superseded by ${correction.id}; return to the corrected boundary and cite current evidence`);
+      else if (entry.kind !== 'intent') reading.gaps.push(`${field} ${jotId} is a${/^[aeiou]/.test(entry.kind) ? 'n' : ''} ${entry.kind}, not an owner intent`);
+      else if (entry.state !== 'confirmed') reading.gaps.push(`${field} ${jotId} is ${entry.state}, not confirmed`);
+      else if (!named.test(entry.content)) reading.gaps.push(`${field} ${jotId} does not name ${spec.id}; it is outside this Spec's scope`);
+      else reading[key].push({ id: jotId, page, author: entry.author, source: entry.source, recorded: entry.at, scope: spec.id });
+    }
+  }
+  return { satisfied: reading.gaps.length === 0, ...reading };
+}
+
+function requireExecutionAuthority(spec, operation) {
+  const { gaps } = executionAuthority(spec);
+  if (gaps.length === 0) return;
+  const error = new Error(`execution-authority: ${spec.id} ${operation} refused before any write: ${gaps.join('; ')}. Record **Confirmation:** and **Execution approval:** as [JOT-ID](Wiki page) links to the owner's confirmed, current Jot entries naming ${spec.id}; one entry may supply both. Active state, a handoff or this command never supplies either judgment (.agents/skills/implement/execution-authority.md).`);
+  error.code = 'execution-authority';
+  throw error;
 }
 
 export function closeTask(rootDir, id, options) {
@@ -829,6 +917,7 @@ export function convertSpecSlices(rootDir, id, options = {}) {
     if (tasks.length === 0) {
       throw new Error(`${id} has no Task record under ${path.relative(root, tasksDir).split(path.sep).join('/')} to activate; write its first TASK.md record(s) with to-tasks, then run convert-tasks ${id} --activate`);
     }
+    requireExecutionAuthority(spec, 'activation');
     atomicWrite(spec.filePath, updateFields(spec.content, { Status: 'active' }));
     return {
       specId: id,
@@ -872,6 +961,9 @@ export function convertSpecSlices(rootDir, id, options = {}) {
     }
     return { row, filePath, content };
   });
+  // S-006J TK-008R: activation needs both recorded owner judgments; every
+  // structural refusal above and this one precede the first write.
+  if (activating) requireExecutionAuthority(spec, 'activation');
   const converted = [];
   for (const { filePath, content } of staged) {
     assertSafeWritePath(root, filePath);
@@ -898,6 +990,12 @@ export function completeSpec(rootDir, id, options = {}) {
   // Both sources are checked, not only the one selection reads: a Spec cannot
   // complete while a retained table row or a Task record is unfinished.
   const unfinished = [...slicesOf(spec).map((slice) => slice.declared), ...spec.rows.map((row) => row.status)];
+  // S-006K TK-00B5: a post-delivery obligation is named, so completion is
+  // seen to wait for the Deliver and Cleanup proof rather than a build slice.
+  const pendingPostDelivery = slicesOf(spec).filter((slice) => slice.record?.phase === 'post-delivery' && slice.declared !== 'done');
+  if (pendingPostDelivery.length > 0) {
+    throw new Error(`${id} has an unfinished slice: post-delivery ${pendingPostDelivery.map((slice) => `${slice.id} is ${slice.declared}`).join(', ')}; completion refuses until delivery and cleanup proof exist`);
+  }
   if (unfinished.some((status) => status !== 'done')) throw new Error(`${id} has an unfinished slice`);
   if (/^- \[ \]/m.test(section(spec.content, 'Acceptance Criteria'))) throw new Error(`${id} has unchecked acceptance criteria`);
   const completion = section(spec.content, 'Completion Result').trim();
@@ -911,6 +1009,12 @@ export function completeSpec(rootDir, id, options = {}) {
   // adopted here; complete's other checks stay as they were.
   if (report.decisionGaps.length > 0) {
     throw new Error(`${id} cannot complete: open Task decision gaps: ${report.decisionGaps.join('; ')}`);
+  }
+  // S-006K TK-00B5 (Codex review, PR #630): a post-delivery acceptance line was
+  // deferred when Review passed, so its checked verification promise is
+  // enforced here, after the delivery and cleanup closes it depends on.
+  if (report.postDeliveryVerificationGaps.length > 0) {
+    throw new Error(`${id} cannot complete: missing post-delivery verification: ${report.postDeliveryVerificationGaps.join('; ')}`);
   }
   // S-00J TK-004: complete refuses without a passed review verdict bound to
   // the Spec's current content digest (spec-report.mjs), naming exactly
@@ -1097,8 +1201,11 @@ export function gate(rootDir, options = {}) {
   let reason;
   if (!report.candidate.existsInRepository) {
     reason = `Candidate ${candidate} does not exist in this repository; a Spec candidate must bind to a real commit, never an invented or mistyped SHA.`;
-  } else if (!report.complete) {
-    reason = `${specId} is not complete: ${report.gaps.join('; ')}`;
+  } else if (!report.preDeliveryComplete) {
+    // S-006K TK-00B5: Verify is a pre-delivery gate. Post-delivery Tasks and
+    // acceptance lines (Deliver -> Cleanup) are not awaited here; with none
+    // declared, the pre-delivery gaps are exactly the full gaps.
+    reason = `${specId} is not complete: ${report.preDeliveryGaps.join('; ')}`;
   } else if (!report.candidate.matchesContent) {
     reason = `Candidate ${candidate} does not contain the reviewed committed content for ${specId}: ${report.candidate.contentError ?? `candidate digest ${report.candidate.contentDigest?.slice(0, 12)} differs from current digest ${report.specDigest.slice(0, 12)}`}.`;
   } else {
@@ -1111,6 +1218,8 @@ export function gate(rootDir, options = {}) {
     candidate,
     integrationBranch,
     specComplete: report.complete,
+    preDeliveryComplete: report.preDeliveryComplete,
+    postDelivery: report.postDelivery,
     specDigest: report.specDigest,
     latestVerdict: report.latestVerdict,
     latestOwnerApproval: report.latestOwnerApproval,
@@ -1177,19 +1286,8 @@ export function render(rootDir, options = {}) {
   const specs = loadSpecs(root);
   const retired = loadRetiredSpecs(root);
   const landmarks = loadLandmarkParents(root);
-  const blueprintPath = path.join(root, 'BLUEPRINT.md');
   const taskboardPath = path.join(root, 'TASKBOARD.md');
-  const blueprint = fs.readFileSync(blueprintPath, 'utf8');
   const taskboard = fs.readFileSync(taskboardPath, 'utf8');
-  if (blueprint.includes(CATALOG_START) || blueprint.includes(CATALOG_END)) {
-    // Legacy rooms keep their declared projection until an explicit rebuild.
-    atomicWrite(blueprintPath, replaceRegion(blueprint, CATALOG_START, CATALOG_END, renderCatalog(specs, retired)));
-  } else {
-    const catalogPath = path.join(resolveSpecsRoot(root).specsRoot, 'CATALOG.md');
-    assertSafeWritePath(root, catalogPath);
-    const relativeCatalog = laneCatalog(root, specs, retired);
-    writeSafeFile(root, catalogPath, `# Spec Catalog\n\nDerived from stable specs; includes completed history.\n\n${CATALOG_START}\n${relativeCatalog}\n${CATALOG_END}\n`);
-  }
   atomicWrite(taskboardPath, replaceRegion(taskboard, HOT_START, HOT_END, renderHotBoard(specs, retired, landmarks)));
   return { specs: specs.length, active: specs.filter((spec) => isHot(spec)).length, retired: retired.length };
 }
@@ -1326,12 +1424,9 @@ export function doctor(rootDir, options = {}) {
   const landmarks = readableLandmarkParents(root);
   issues.push(...packetFindings(specs, options, retired, root, landmarks));
   issues.push(...uncapturedCompleteFindings(root, specs.filter((spec) => !spec.sliceConflict)));
-  const blueprint = fs.existsSync(path.join(root, 'BLUEPRINT.md')) ? fs.readFileSync(path.join(root, 'BLUEPRINT.md'), 'utf8') : '';
-  if (blueprint.includes(CATALOG_START) || blueprint.includes(CATALOG_END)) checkRender(root, 'BLUEPRINT.md', CATALOG_START, CATALOG_END, renderCatalog(specs, retired), issues);
-  else checkRender(root, path.relative(root, path.join(resolveSpecsRoot(root).specsRoot, 'CATALOG.md')), CATALOG_START, CATALOG_END, laneCatalog(root, specs, retired), issues);
   checkRender(root, 'TASKBOARD.md', HOT_START, HOT_END, renderHotBoard(specs, retired, landmarks), issues);
   issues.push(...collectionFindings(root));
-  issues.push(...skillFindings(root));
+  issues.push(...skillFindings(root, options));
   issues.push(...gitFindings(root, specs, issues));
   issues.push(...remoteIdCollisionFindings(root, specs, retired, landmarks));
   issues.push(...readbackFindings(root));
@@ -2112,10 +2207,10 @@ function liveRecordCitations(spec) {
   return issues;
 }
 
-// Inspection reads the room's skills lane and discovery adapters; it never
-// reads the provider home and never writes (S-00V: skills ship in the room).
-function skillFindings(root) {
-  return inspectSkills(readManifest(root), root);
+// Inspection reads the room lane, its adapters and personal discovery roots.
+// The optional home override changes the read target; inspection never writes.
+function skillFindings(root, options = {}) {
+  return inspectSkills(readManifest(root), root, { home: options.home });
 }
 
 function gitFindings(root, specs, sourceFindings = []) {
@@ -2863,42 +2958,22 @@ export function specHomes(rootDir) {
   return [{ specsRoot, specsPrefix, landmarkId: null, landmarkLifecycleFolder: null }, ...landmarkSpecHomes(root)];
 }
 
-// The catalog as `CATALOG.md` prints it: links relative to the Blueprint-level
-// lane it lives in, so a nested Spec's link climbs out to its landmark home.
-function laneCatalog(root, specs, retired) {
-  const { specsPrefix } = resolveSpecsRoot(root);
-  let catalog = renderCatalog(specs, retired).replaceAll(`](${specsPrefix}/`, '](');
-  for (const spec of [...specs, ...retired]) {
-    if (spec.specsPrefix === specsPrefix) continue;
-    catalog = catalog.replaceAll(`](${spec.relativePath})`, `](${path.posix.relative(specsPrefix, spec.relativePath)})`);
-  }
-  return catalog;
+// Read the same manifest-resolved homes as selection and lifecycle operations.
+// Retired records are opt-in and never enter normal work selection.
+export function listSpecs(rootDir, options = {}) {
+  if (options.status !== undefined && !SPEC_STATUSES.has(options.status)) throw new Error(`Unknown Spec status: ${options.status}`);
+  const records = [...loadSpecs(rootDir), ...(options.all ? loadRetiredSpecs(rootDir) : [])];
+  const specs = records.filter(spec => options.status === undefined || spec.status === options.status)
+    .sort((a, b) => compareVisibleIds(a.id, b.id))
+    .map(spec => ({ id: spec.id, title: spec.title, description: spec.description,
+      status: spec.status, lifecycle: spec.lifecycleFolder ?? 'current',
+      path: spec.relativePath, landmarkId: spec.landmarkId ?? null }));
+  return { total: specs.length, specs };
 }
 
-// S-00I TK-003: `retired` (default `[]`) is what keeps `CATALOG.md`'s claim
-// to "include completed history" true once a completed Spec's directory
-// leaves the top level - `loadSpecs` never returns it, so the main table
-// above can no longer name it. A separate heading, populated only when a
-// room has actually retired something, names each one by its historical
-// route instead; an empty `retired` list renders no heading at all, so a
-// room that has never retired a Spec gets byte-identical output to before
-// this heading existed.
-function renderCatalog(specs, retired = []) {
-  const lines = [
-    '| Spec | Description | Status |',
-    '|---|---|---|'
-  ];
-  for (const spec of specs.sort((a, b) => compareVisibleIds(a.id, b.id))) {
-    lines.push(`| [${spec.id} - ${escapeCell(spec.title)}](${spec.relativePath}) | ${escapeCell(spec.description)} | ${escapeCell(spec.status)} |`);
-  }
-  if (specs.length === 0) lines.push('| none | No specs recorded yet. | n/a |');
-  if (retired.length > 0) {
-    lines.push('', '### Retired', '', 'Reconciled into durable owners and moved out of ordinary discovery; still reachable by their historical route.', '', '| Spec | Description | Historical route |', '|---|---|---|');
-    for (const spec of retired.slice().sort((a, b) => compareVisibleIds(a.id, b.id))) {
-      lines.push(`| ${spec.id} - ${escapeCell(spec.title)} | ${escapeCell(spec.description)} | [${spec.relativePath}](${spec.relativePath}) |`);
-    }
-  }
-  return lines.join('\n');
+function formatSpecList(result) {
+  return [...result.specs.map(spec => `${spec.id} - ${spec.title}\t${spec.status}\t${spec.lifecycle}\t${spec.path}`),
+    `Total: ${result.total}`].join('\n');
 }
 
 // S-003Z TK-008G: `landmarks` (the landmark parents, `loadLandmarkParents`)
@@ -3081,8 +3156,13 @@ export function findSpec(rootDir, selector) {
 // caller is handling separately (the Spec directory that is itself moving).
 function collectSpecReferenceFiles(root, excludeDir) {
   const files = [];
-  for (const name of ['AGENTS.md', 'RUNBOOK.md', 'LEXICON.md', 'BLUEPRINT.md', 'TASKBOARD.md', 'README.md', 'CLAUDE.md']) {
+  // ARCHITECTURE.md carries the routes the retiring Lexicon held and links
+  // records; a room the update has not reached still carries `LEXICON.md`, and
+  // every name is read only if present. Valid Glossary definitions may link
+  // records, so lifecycle operations repair those references as well.
+  for (const name of ['AGENTS.md', 'RUNBOOK.md', 'GLOSSARY.md', 'ARCHITECTURE.md', 'LEXICON.md', 'BLUEPRINT.md', 'TASKBOARD.md', 'README.md', 'CLAUDE.md']) {
     const file = path.join(root, name);
+    if (name === 'GLOSSARY.md' && fs.existsSync(file)) assertSafeReadPath(root, file);
     if (fs.existsSync(file) && fs.statSync(file).isFile()) files.push(file);
   }
   const walk = (dir, match, ordinaryOnly = false) => {
@@ -3754,7 +3834,7 @@ function recoverTaskCollision(rootDir, specId, taskId, folder, options) {
     assertSafeReadPath(root, path.join(root, file));
     if (fs.readFileSync(path.join(root, file), 'utf8').includes(relative(oldDir))) fail(`unhandled JSON path reference in ${file}; reconcile its owner first`);
   }
-  const projections = [path.join(root, 'BLUEPRINT.md'), path.join(root, 'TASKBOARD.md'), path.join(resolveSpecsRoot(root).specsRoot, 'CATALOG.md')];
+  const projections = [path.join(root, 'TASKBOARD.md')];
   for (const collection of ['adr', 'ddr']) {
     if (fs.existsSync(collectionPath(root, collection))) projections.push(...['REGISTER.md', 'HISTORY.md'].map(name => path.join(collectionPath(root, collection), name)));
   }
@@ -4101,7 +4181,7 @@ function durableOwnerRefusal(root, specId, historicalRoute, noteAbsolute, { feat
   }
   // Review corrective (Low, S-00I TK-005): a note can satisfy every property
   // check above and still be unreachable from a cold-start agent's actual
-  // entry point. `MEMORY.md` is the one router `SCHEMA.md`/`LEXICON.md` name.
+  // entry point. `MEMORY.md` is the one router `SCHEMA.md`/`ARCHITECTURE.md` name.
   const memoryPath = path.join(wikiRoot, 'MEMORY.md');
   const memoryContent = fs.existsSync(memoryPath) ? fs.readFileSync(memoryPath, 'utf8') : '';
   const noteRelativeToWikiRoot = path.relative(wikiRoot, noteAbsolute).split(path.sep).join('/');
@@ -4636,9 +4716,7 @@ function preflightDiscardRender(root, { specId, taskId } = {}) {
   });
   const specs = prospective(loadSpecs(root));
   const retired = prospective(loadRetiredSpecs(root));
-  const blueprint = fs.readFileSync(path.join(root, 'BLUEPRINT.md'), 'utf8');
   const board = fs.readFileSync(path.join(root, 'TASKBOARD.md'), 'utf8');
-  if (blueprint.includes(CATALOG_START) || blueprint.includes(CATALOG_END)) replaceRegion(blueprint, CATALOG_START, CATALOG_END, renderCatalog(specs, retired));
   replaceRegion(board, HOT_START, HOT_END, renderHotBoard(specs, retired, loadLandmarkParents(root)));
 }
 
@@ -5230,8 +5308,12 @@ function localLinks(content) {
 // rename discipline rather than a second write path.
 export function atomicWrite(filePath, content) {
   const temporary = `${filePath}.tmp-${process.pid}`;
-  fs.writeFileSync(temporary, content.endsWith('\n') ? content : `${content}\n`);
-  fs.renameSync(temporary, filePath);
+  try {
+    fs.writeFileSync(temporary, content.endsWith('\n') ? content : `${content}\n`);
+    fs.renameSync(temporary, filePath);
+  } finally {
+    fs.rmSync(temporary, { force: true });
+  }
 }
 
 function validDate(value) {
@@ -5280,7 +5362,13 @@ export function formatDoctorReport(findings) {
     const members = findings.filter((item) => group.effects.includes(item.blocks));
     if (members.length === 0) continue;
     lines.push(`${group.name} (${members.length}) - ${group.consequence}`);
-    for (const item of members) lines.push(`  ${item.code} [blocks ${item.blocks}, ${item.severity}]: ${item.message}`);
+    for (const item of members) {
+      lines.push(`  ${item.code} [blocks ${item.blocks}, ${item.severity}]: ${item.message}`);
+      // The repair for CRLF drift is two steps; --json carries it under
+      // drift[].remedy, and the plain report prints it once per finding.
+      const crlf = Array.isArray(item.drift) ? item.drift.find((entry) => entry.state === 'line-endings') : null;
+      if (crlf?.remedy) lines.push(`    line-endings repair: ${crlf.remedy}`);
+    }
   }
   if (!blocksSelection(findings)) lines.push('ok - no blocking finding; attention and slice findings above stay visible');
   return lines.join('\n');
@@ -5295,6 +5383,8 @@ export function parseCliArgs(argv) {
   for (let optionIndex = 0; optionIndex < rest.length; optionIndex += 1) {
     const arg = rest[optionIndex];
     if (arg === '--json') options.json = true;
+    else if (arg === '--all') options.all = true;
+    else if (arg === '--count') options.count = true;
     else if (arg === '--host') options.host = true;
     else if (arg === '--activate') options.activate = true;
     else if (arg === '--local') options.local = true;
@@ -5326,6 +5416,11 @@ async function main() {
   let doctorRun;
   let coordination = null;
   if (command === 'next') ({ result, coordination } = nextSelection(root, { capabilities: options.capabilities, local: options.local, review: options.review }));
+  else if (command === 'list') {
+    if (id) throw new Error('list takes no Spec identity; use show ID');
+    if ('status' in options && options.status === undefined) throw new Error('--status requires a Spec status');
+    result = listSpecs(root, options);
+  }
   else if (command === 'next-id') result = nextIdentity(root, id, options);
   else if (command === 'show') result = showSpec(root, id);
   else if (command === 'claim') result = claimWork(root, id, { ...options, capabilityProbes: undefined });
@@ -5387,9 +5482,11 @@ async function main() {
     result = doctorRun.json;
     process.exitCode = doctorRun.exitCode;
   } else {
-    throw new Error('Usage: spec-workbench.mjs next|next-id|show|claim|close|receipt|record-landing|complete|convert-tasks|report|verdict|verify|gate|approve|move-spec|move-task|widen-id|retire-spec|retire-landmark|discard|render|doctor [S-###] [options] (show|claim|close|receipt|move-task LMK-### for a Task directly under a landmark; report|verdict|verify|approve LMK-### for the whole-landmark review; retire-landmark LMK-### --wiki PAGE; move-spec S-### --to retired|--landmark LMK-###|none; gate --task TK-### --spec S-###|--landmark LMK-###; widen-id S-###|TK-### [--spec S-###]; discard S-### [--task TK-###]; doctor [--host] [--map RECORD [--base REF]]; next|claim|close [--capabilities a,b]; next|claim [--local]; claim [--branch NAME]; close --agent NAME [--on-behalf-of CLAIMANT])');
+    throw new Error('Usage: spec-workbench.mjs list|next|next-id|show|claim|close|receipt|record-landing|complete|convert-tasks|report|verdict|verify|gate|approve|move-spec|move-task|widen-id|retire-spec|retire-landmark|discard|render|doctor [S-###] [options] (list [--all] [--status STATUS] [--count] [--json]; show|claim|close|receipt|move-task LMK-### for a Task directly under a landmark; report|verdict|verify|approve LMK-### for the whole-landmark review; retire-landmark LMK-### --wiki PAGE; move-spec S-### --to retired|--landmark LMK-###|none; gate --task TK-### --spec S-###|--landmark LMK-###; widen-id S-###|TK-### [--spec S-###]; discard S-### [--task TK-###]; doctor [--host] [--map RECORD [--base REF]]; next|claim|close [--capabilities a,b]; next|claim [--local]; claim [--branch NAME]; close --agent NAME [--on-behalf-of CLAIMANT])');
   }
-  if (options.json) console.log(JSON.stringify(result, null, 2));
+  if (command === 'list' && options.count) console.log(result.total);
+  else if (options.json) console.log(JSON.stringify(result, null, 2));
+  else if (command === 'list') console.log(formatSpecList(result));
   else if (command === 'show') console.log(result.body);
   else if (command === 'doctor') console.log(doctorRun.text);
   else if (command === 'report') console.log(result.kind === 'landmark' ? formatLandmarkReport(result) : formatSpecReport(result));

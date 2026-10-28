@@ -5,6 +5,8 @@ description: Adopt the assigned Spec Manager stance for one Workbench Spec durin
 
 # Spec Manager
 
+Inherit both mandatory owner judgments under [authority and continuation](../implement/execution-authority.md): explicit confirmation before leaving Explore and explicit execution approval before leaving Prepare. Reuse their sources within scope; delegation and this skill grant neither.
+
 ## Purpose
 
 Dispatch and monitor Workers on the planned Tasks of the one assigned Spec,
@@ -31,8 +33,8 @@ states, dependencies and the branch scope, resolved through
 
 Dispatch Workers only to ready Tasks whose files do not conflict, within a
 small named concurrency: one Task scope and claim at a time per Worker. A
-whole-Spec correction pass may use one Worker across explicitly named Task
-scopes in sequence; preserve each Task's ownership and serialize claims. Quote the
+whole-Spec correction pass may reuse one Worker in successive runs, each with
+one newly bounded Task; preserve ownership and serialize claims. Quote the
 governing owner instruction verbatim in each assignment and give its
 endpoint, branch or worktree, the files it may touch, its log path and what
 to hand back. Hold a Task whose writes conflict with a running one, naming
@@ -43,12 +45,15 @@ and the hand-back, not the Worker's word.
 
 Assess each hand-back (exact commit SHA, proof, docs status, remaining gap)
 by checking the evidence against the named commit. Rerun missing, doubtful
-or affected checks; reuse valid evidence for unchanged content and dependencies. Preserve the completed attempt; a fresh correction
-assignment names its Task scope and remaining gap. Its pushed Task branch is Dispatcher input: incomplete or failing work
-gets a new attempt of the same Task (same Task ID and branch, with the returning
-implementing Worker or a newly delegated Worker)
-with the remaining gap named, and a new Task only when review finds work
-outside that Task's acceptance. The Dispatcher coordinates that correction;
+or affected checks; reuse valid evidence for unchanged content and dependencies.
+Before another implementor run, reconcile the completed run into the Spec:
+candidate, proof, defects and remaining acceptance. Give the returning or new
+Worker a fresh single-run Task with a new ID and isolated writer/branch lane.
+Keep existing Task IDs, branches, records and Receipts as evidence; follow
+[reconciliation and retention](../to-tasks/sizing.md). A blocking old claim or
+reference remains an explicit lifecycle gap, never a false close or manual
+deletion. Its pushed branch is Dispatcher input, not a standing assignment for
+later runs. The Dispatcher coordinates that correction;
 changing stance does not make it the implementing Worker. Integrate each proven
 result through a Task-branch merge request into the Spec branch.
 

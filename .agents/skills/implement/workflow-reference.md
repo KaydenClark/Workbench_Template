@@ -1,18 +1,34 @@
 # Workflow reference
 
-Read only the named operation needed by your assignment. Return to the assigned work owner after following its procedure. Definitions remain in the room Lexicon.
+Read only the named operation needed by your assignment. Return to the assigned work owner after following its procedure. Definitions remain in the room Glossary.
 
 ## Workflows
 
 Look up a workflow verb by name below. Each entry links the verb's definition,
 lists its steps in order with the skill or command that carries each, and says
 where the workflow loops when a step fails or comes back "not yet". The diagram
-maps how the five parent workflows connect; [Prototype](#prototype) sits
-outside it. The entries add no authority and replace no safeguard: the linked
-skills and commands carry the procedures.
+maps how the six workflows connect; [Prototype](#prototype) sits outside it.
+The entries add no authority and replace no safeguard: the linked skills and
+commands carry the procedures.
 
 Maintain these entries with the project's confirmed workflows. When a confirmed
 workflow or a verb changes, update its entry here.
+
+| Workflow | Verbs |
+|---|---|
+| Explore | Idea -> Align -> Confirm |
+| Promote | Record -> Publish |
+| Prepare | Map -> Plan |
+| Journey | Implement -> Check -> QA -> Submit |
+| Judge | Review -> Verify -> Approve |
+| Complete | Deliver -> Cleanup |
+
+Confirmed means Human Verified Intent; Approved means Human Reviewed Work. Two
+owner judgments sit between workflows rather than inside them: the scoped
+execution approval that leaves Prepare, and “Ship it”, the permission to deliver
+the specific work under discussion. Neither is a stage, and neither substitutes
+for Confirm or Approve. The owner takes part through these same verbs; Human QA
+is how the owner performs Approve, not an extra stage.
 
 Publication applies around the workflow, without repeated boxes in the map.
 Each completed authorized step leaves a durable checkpoint through a PR to
@@ -30,32 +46,40 @@ flowchart TB
   subgraph Promote
     record("Record")
   end
-  map("Map") --> plan("Plan") --> approve("Approve")
+  subgraph Prepare
+    direction LR
+    map("Map") --> plan("Plan")
+  end
+  execution{{"Execution approval"}}
   subgraph Journey
     direction LR
     implement("Implement") --> check("Check") --> qa("QA") --> submit("Submit")
   end
   subgraph Judge
     direction LR
-    review("Review") --> verify("Verify")
+    review("Review") --> verify("Verify") --> approve("Approve")
   end
   subgraph Complete
     direction LR
-    ship("Ship") --> delivered("Delivered") --> cleanup("Clean Up")
+    deliver("Deliver") --> cleanup("Cleanup")
   end
   confirm -->|Decision publication requested| record
   confirm -->|Capability preparation requested| map
   record -->|Capability preparation also requested| map
-  approve -->|Journey approved| implement
+  plan --> execution
+  execution -->|Journey approved| implement
+  check -->|Fail: same Task| implement
+  qa -->|Fail: same Task| implement
   submit --> review
   review -->|Fail: revise affected Map and Plan| map
-  verify -->|Human QA passes and owner says Ship it| ship
-  verify -->|Owner sends back| align
+  approve -->|Owner finding: corrective Task| map
+  approve -->|Owner says Ship it| deliver
+  approve -->|Destination changed| align
 ```
 
 ### Align
 
-Defined in the [Lexicon](../../../LEXICON.md) row **Align**.
+Defined in the [Glossary](../../../GLOSSARY.md) term **Align**.
 
 **Steps:** ask the most consequential open question with a recommended answer
 ([grilling](../grilling/SKILL.md#each-decision-in-order)) ->
@@ -71,17 +95,24 @@ at the scope it implicates.
 
 ### Approve
 
-Defined in the [Lexicon](../../../LEXICON.md) row **Approve**.
+Defined in the [Glossary](../../../GLOSSARY.md) term **Approve**.
 
-**Steps:** Record the owner's permission and its stated scope in the existing work owner -> proceed with that work, including [Journey](#journey) when authorized
-([implement](../implement/SKILL.md#work-selection-and-lifecycle)).
-Confirmation and approval may occur together; reuse authority already given.
+**Steps:** After [Verify](#verify), the owner inspects the integrated candidate
+-> record the judgment with `approve S-### --candidate SHA --owner NAME`, or
+a finding with `--finding TEXT`
+([director](../director/SKILL.md#owner-human-qa-and-main-before-complete)).
+The approval binds the same content digest as the passed Review, so
+post-delivery bookkeeping keeps it current.
 
-**Loop:** If permission for the next action is absent or the scope changes, preserve the prepared work and resolve that boundary. Ordinary approval stops before main; main delivery requires [Ship](#ship).
+**Loop:** A finding returns corrective Tasks under the open Spec, and the next
+candidate needs a fresh Review and approval; a destination change returns to
+[Align](#align). Approval grants no delivery: main delivery requires the
+owner's Ship it ([Ship](../../../GLOSSARY.md)). It is not the execution
+approval that leaves [Prepare](#prepare).
 
 ### Check
 
-Defined in the [Lexicon](../../../LEXICON.md) row **Check**.
+Defined in the [Glossary](../../../GLOSSARY.md) term **Check**.
 
 **Steps:** Choose checks for the changed behavior and the claim -> run them -> read failures -> [Implement](#implement) the correction -> rerun the affected checks
 ([implement](../implement/SKILL.md#engineering-and-verification)).
@@ -97,35 +128,46 @@ Review finding seen twice becomes a new check through
 
 **Loop:** A failure stays in the same Task when fixing it serves the same outcome. Preserve partial progress in a PR with failed or missing checks stated; landing waits for its required checks. Reuse evidence only for the candidate and dependencies it covers.
 
-### Clean Up
+### Cleanup
 
-Defined in the [Lexicon](../../../LEXICON.md) row **Clean Up**.
+The last step of [Complete](#complete) in the [workflow map](#workflows),
+performing the Glossary's **Clean Up** after [Deliver](#deliver).
 
-**Steps:** write and validate the capability's Wiki feature article and
-reconcile surviving claims into their owners
+**Steps:** Remove the delivery's attributable temporary branches and worktrees
+with expected-tip guards, then close the post-delivery cleanup Task with that
+proof -> `complete S-###` -> update and validate the capability's Wiki feature
+article and reconcile surviving claims into their owners
 ([director](../director/SKILL.md#documentation-feature-capture-retirement-and-recovery))
 -> `retire-spec S-### --wiki PATH` -> once the retired directory is on main,
 `discard S-###` when nothing still references it.
 
-**Loop:** a missing, invalid or unrouted feature article blocks `retire-spec`
-and `discard` until it is written; a current reference or a directory not yet
-on main blocks `discard`. A later gap against delivered work is a new Spec,
-never a revived one.
+**Loop:** `complete` refuses, leaving state untouched, while any post-delivery
+Task or acceptance line is unfinished. A missing, invalid or unrouted feature
+article blocks `retire-spec` and `discard`; a current reference or a directory
+not yet on main blocks `discard`. A later gap against delivered work is a new
+Spec, never a revived one.
 
 ### Complete
 
-Defined in the [Lexicon](../../../LEXICON.md) row **Complete**.
+Defined in the [Glossary](../../../GLOSSARY.md) term **Complete**.
 
-**Steps:** [Ship](#ship) -> [Delivered](#delivered) -> [Clean Up](#clean-up)
+**Steps:** [Deliver](#deliver) -> [Cleanup](#cleanup)
 ([director](../director/SKILL.md#owner-closure-and-reconciliation)).
 
-**Loop:** `complete` refuses, leaving state untouched, until the approved
-content is unchanged on `origin/main`; Clean Up waits for completion. A later
-gap is a new Spec under its landmark or the Blueprint.
+A Spec records real delivery and cleanup work as Task records carrying
+`**Phase:** post-delivery` and acceptance lines under
+`### Post-delivery acceptance`
+([to-tasks](../to-tasks/SKILL.md#process)). The Spec gate, Review and Approve
+do not wait for them; `complete` does.
+
+**Loop:** `complete` refuses, leaving state untouched, until every post-delivery
+Task is done with proof, every acceptance line is checked and the approved
+content is unchanged on `origin/main`. A later gap is a new Spec under its
+landmark or the Blueprint.
 
 ### Confirm
 
-Defined in the [Lexicon](../../../LEXICON.md) row **Confirm**.
+Defined in the [Glossary](../../../GLOSSARY.md) term **Confirm**.
 
 **Steps:** Read back the concept, meaning and intended endpoint
 ([grilling](../grilling/SKILL.md#finishing-honestly)) -> record the owner's
@@ -135,29 +177,36 @@ capability preparation or approved implementation
 
 **Loop:** A correction gets a revised readback; silence never confirms. Confirm ends [Explore](#explore) and establishes understanding. It grants neither implementation permission nor proof of delivery.
 
-### Delivered
+### Deliver
 
-Defined in the [Lexicon](../../../LEXICON.md) row **Delivered**.
+Defined in the [Glossary](../../../GLOSSARY.md) term **Deliver**.
 
-**Steps:** After the owner-authorized [Ship](#ship), fetch main -> verify the authorized content and required checks -> `complete S-###` -> `render` and `doctor`
+**Steps:** Read the owner's Ship it for the specific approved candidate ->
+claim the post-delivery Task, which refuses unless a passed Review and the
+owner's approval bind the current content -> perform only that authorized main
+action -> fetch main and verify the approved content and required checks
 ([director](../director/SKILL.md#owner-human-qa-and-main-before-complete)).
 
-**Loop:** `complete` refuses until its Task, acceptance, review, Human QA and main-containment gates pass. Integration landing alone does not complete the Spec or authorize main.
+**Loop:** Without Ship it, stop at integration with the approved candidate
+held. A changed candidate or failed required check returns to the affected
+work and needs fresh Review and approval. Integration landing alone is not
+delivery; “Ship it” authorizes the specific work, not unrelated integration
+content.
 
 ### Explore
 
-Defined in the [Lexicon](../../../LEXICON.md) row **Explore**.
+Defined in the [Glossary](../../../GLOSSARY.md) term **Explore**.
 
 **Steps:** [Idea](#idea) -> [Align](#align) -> [Confirm](#confirm)
 ([grilling](../grilling/SKILL.md)).
 
-**Loop:** until the owner confirms, Explore keeps aligning, and a correction or
+**Loop:** Before leaving Explore, obtain explicit owner confirmation of the readback, scope, constraints and endpoint. Until the owner confirms, Explore keeps aligning, and a correction or
 a changed premise goes back into Align. Confirm ends Explore; the request determines whether [Promote](#promote),
 [Prepare](#prepare) or a nearer endpoint follows.
 
 ### Idea
 
-Defined in the [Lexicon](../../../LEXICON.md) row **Idea**.
+Defined in the [Glossary](../../../GLOSSARY.md) term **Idea**.
 
 **Steps:** take the owner's thought in the owner's words -> explore it in
 conversation until it is clear enough to align -> open [Align](#align)
@@ -168,7 +217,7 @@ it says is settled until [Confirm](#confirm).
 
 ### Implement
 
-Defined in the [Lexicon](../../../LEXICON.md) row **Implement**.
+Defined in the [Glossary](../../../GLOSSARY.md) term **Implement**.
 
 **Steps:** situate with `doctor`, `next --json` and `show S-###`
 ([implement](../implement/SKILL.md#1-situate-the-slice)) ->
@@ -183,7 +232,7 @@ the Task and stop.
 
 ### Jot
 
-Defined in the [Lexicon](../../../LEXICON.md) row **Jot**.
+Defined in the [Glossary](../../../GLOSSARY.md) term **Jot**.
 
 **Steps:** capture a useful discovery or owner confirmation, approval or correction
 as it arrives, before the next dependent action, in its shared Wiki topic
@@ -199,7 +248,7 @@ route; private-to-tracked migration requires specific exposure approval.
 
 ### Journey
 
-Defined in the [Lexicon](../../../LEXICON.md) row **Journey**.
+Defined in the [Glossary](../../../GLOSSARY.md) term **Journey**.
 
 **Steps:** [Implement](#implement) -> [Check](#check) -> [QA](#qa) ->
 [Submit](#submit)
@@ -215,21 +264,25 @@ a new Journey.
 
 ### Judge
 
-Defined in the [Lexicon](../../../LEXICON.md) row **Judge**.
+Defined in the [Glossary](../../../GLOSSARY.md) term **Judge**.
 
-**Steps:** [Review](#review) -> [Verify](#verify)
+**Steps:** [Review](#review) -> [Verify](#verify) -> [Approve](#approve)
 ([code-review](../code-review/SKILL.md#independent-review-boundaries),
-[dispatcher](../dispatcher/SKILL.md#dispatcher-and-separate-director-assembled-review)).
+[dispatcher](../dispatcher/SKILL.md#dispatcher-and-separate-director-assembled-review),
+[director](../director/SKILL.md#owner-human-qa-and-main-before-complete)).
 
-The owner evaluates the result in Human QA. The legacy `approve S-###
---candidate SHA --owner NAME` command records that content judgment
-([director](../director/SKILL.md#owner-human-qa-and-main-before-complete)).
+Judge binds the frozen pre-delivery artifact. Post-delivery Tasks and
+acceptance may still be open; their bookkeeping leaves the review and approval
+current, while any substantive change to the Spec or a Task voids both.
 
-**Loop:** A failed Review returns to the affected Map, Plan and Journey under the open Spec. Human QA findings stay open until resolved; a destination change returns to Align. A passing judgment grants no main authority; [Ship](#ship) needs the owner's explicit permission.
+**Loop:** A failed Review returns to the affected Map, Plan and Journey under
+the open Spec. Owner findings stay open until resolved; a destination change
+returns to Align. A passing judgment grants no main authority; [Deliver](#deliver)
+needs the owner's explicit Ship it.
 
 ### Lane Sweep
 
-Defined in the [Lexicon](../../../LEXICON.md) row **Lane Sweep**.
+Defined in the [Glossary](../../../GLOSSARY.md) term **Lane Sweep**.
 
 Run it at boundaries that already exist: the start of a Director or Dispatcher
 session, before and after a Workbench update, before a Spec's assembly, and
@@ -251,7 +304,7 @@ Limitations and sweep again once `gh` works.
 
 ### Map
 
-Defined in the [Lexicon](../../../LEXICON.md) row **Map**.
+Defined in the [Glossary](../../../GLOSSARY.md) term **Map**.
 
 **Steps:** read the published decision owners and live Actuality -> reuse the
 owning Spec, or take a new ID from `next-id --prefix S --json` -> write the
@@ -268,26 +321,31 @@ before Plan and Journey run again.
 
 ### Plan
 
-Defined in the [Lexicon](../../../LEXICON.md) row **Plan**.
+Defined in the [Glossary](../../../GLOSSARY.md) term **Plan**.
 
 **Steps:** Read the Spec and live source and tests -> choose the smallest coherent Task set, often one Task -> write each `TASK.md` with its outcome and planned verification -> keep the prepared Spec at `planned` unless implementation is approved -> `render` and `doctor`
 ([to-tasks](../to-tasks/SKILL.md#process)).
+
+Mark each Task that delivers or cleans up after Judge with
+`**Phase:** post-delivery`, and put its acceptance under
+`### Post-delivery acceptance`, so Review and Approve can bind the pre-delivery
+work while delivery is pending.
 
 **Loop:** An unanswered scope decision stays in its owner. Prepared work stays available without starting Journey. When implementation is approved, activate explicitly; a necessary repair within the outcome continues the same Task.
 
 ### Prepare
 
-Defined in the [Lexicon](../../../LEXICON.md) row **Prepare**.
+Defined in the [Glossary](../../../GLOSSARY.md) term **Prepare**.
 
 **Steps:** [Map](#map) -> [Plan](#plan)
 ([to-spec](../to-spec/SKILL.md),
 [to-tasks](../to-tasks/SKILL.md#process)).
 
-**Loop:** Preserve and publish each completed result under the shared publication rule. Reuse an adequate existing Map or Plan. Stop at prepared work unless Journey is already approved.
+**Loop:** Preserve and publish each completed result under the shared publication rule. Reuse an adequate existing Map or Plan. Before leaving Prepare, present the mapped and planned work, proof and limits and obtain the owner's explicit, scoped execution approval; it is distinct from the later [Approve](#approve) inside Judge. Stop at prepared work unless that approval already covers Journey. One response may satisfy both judgments; [recover sources](execution-authority.md) rather than infer permission.
 
 ### Promote
 
-Defined in the [Lexicon](../../../LEXICON.md) row **Promote**.
+Defined in the [Glossary](../../../GLOSSARY.md) term **Promote**.
 
 **Steps:** [Record](#record) -> [Publish](#publish)
 ([to-docs](../to-docs/SKILL.md),
@@ -297,7 +355,7 @@ Defined in the [Lexicon](../../../LEXICON.md) row **Promote**.
 
 ### Prototype
 
-Defined in the [Lexicon](../../../LEXICON.md) row **Prototype**. Outside the diagram: it fits before [Confirm](#confirm) or between Confirm and [Plan](#plan).
+Defined in the [Glossary](../../../GLOSSARY.md) term **Prototype**. Outside the diagram: it fits before [Confirm](#confirm) or between Confirm and [Plan](#plan).
 
 **Steps:** name the one question it answers -> build a throwaway that starts
 with one command and shows its state
@@ -312,7 +370,7 @@ the owner. Prototype code reaches the product only through an ordinary
 
 ### Publish
 
-Defined in the [Lexicon](../../../LEXICON.md) row **Publish**.
+Defined in the [Glossary](../../../GLOSSARY.md) term **Publish**.
 
 **Steps:** Commit meaningful progress -> push and open or update its PR to integration -> run checks appropriate to its content and required review at the assembled capability boundary -> merge when eligible -> fetch integration, prove containment and read the changed owners back
 ([implement](../implement/SKILL.md#branch-completion)).
@@ -321,7 +379,7 @@ Defined in the [Lexicon](../../../LEXICON.md) row **Publish**.
 
 ### QA
 
-Defined in the [Lexicon](../../../LEXICON.md) row **QA**.
+Defined in the [Glossary](../../../GLOSSARY.md) term **QA**.
 
 **Steps:** compare the scoped diff with the Task's outcome and acceptance ->
 exercise the real behavior the Task asked for, past what Check proved ->
@@ -335,7 +393,7 @@ second merge answer as more needed or a new Task.
 
 ### Record
 
-Defined in the [Lexicon](../../../LEXICON.md) row **Record**.
+Defined in the [Glossary](../../../GLOSSARY.md) term **Record**.
 
 **Steps:** Identify the claim's proper existing owner -> preserve intent, knowledge, decisions, progress or evidence with its source, status and history -> check fidelity and links
 ([to-docs](../to-docs/SKILL.md)). Text that carries an owner-confirmed readback first records it verbatim as a shared confirmed-intent jot, then wraps the text in `<!-- readback: WIKI_PAGE#JOT-ID -->` and `<!-- /readback -->` lines ([promote](../promote/SKILL.md)); plain `doctor` reports `readback-mismatch` when the region drifts from the entry.
@@ -344,7 +402,7 @@ Defined in the [Lexicon](../../../LEXICON.md) row **Record**.
 
 ### Review
 
-Defined in the [Lexicon](../../../LEXICON.md) row **Review**.
+Defined in the [Glossary](../../../GLOSSARY.md) term **Review**.
 
 **Steps:** pin the immutable assembled candidate
 ([code-review](../code-review/SKILL.md#1-pin-the-review)) ->
@@ -369,21 +427,13 @@ no gap and imposes no new per-Task Full-suite requirement.
 through [Map](#map) and [Plan](#plan) under the still-open Spec, and the next
 candidate gets a fresh Review
 ([corrective return](../dispatcher/SKILL.md#assembled-review-and-corrective-return));
-a pass merges to integration for [Verify](#verify). The same Review failure
+a pass merges to integration for [Verify](#verify). Post-delivery Tasks may
+still be open when Review passes. The same Review failure
 twice, or three attempts with no real progress, blocks and escalates.
-
-### Ship
-
-Defined in the [Lexicon](../../../LEXICON.md) row **Ship**.
-
-**Steps:** Read the owner's explicit permission for the specific main delivery -> verify its candidate, required checks and integration state -> perform only that authorized main action -> verify main containment
-([director](../director/SKILL.md#owner-human-qa-and-main-before-complete)).
-
-**Loop:** Without explicit main authority, stop at integration. A changed candidate or failed required check returns to the affected work. “Ship it” authorizes the specific work under discussion, not unrelated integration content.
 
 ### Submit
 
-Defined in the [Lexicon](../../../LEXICON.md) row **Submit**.
+Defined in the [Glossary](../../../GLOSSARY.md) term **Submit**.
 
 **Steps:** record the `receipt`, then commit and push the candidate ->
 `close S-### --agent NAME`, `render` and `doctor`, and push that evidence
@@ -393,8 +443,9 @@ the two [merge answers](../implement/SKILL.md#4-review-at-the-relevant-boundary)
 
 **Loop:** the Dispatcher, Director or next agent in the Spec validates the
 answers against the diff and merges when they hold and the merge is green;
-otherwise the same Task continues with an adjusted handoff, or a new Task is
-named. Several validated Task PRs land one at a time through the merge train
+otherwise the current run fixes its assignment or hands the remaining gap to
+the Spec's orchestrator for a new single-run Task, after
+[reconciliation](../to-tasks/sizing.md). Several validated Task PRs land one at a time through the merge train
 in [Branch completion](../implement/SKILL.md#branch-completion):
 each is brought onto the integration tip at its turn without a force-push,
 its diff checked unchanged and its suite run on that head before it merges. A
@@ -403,11 +454,77 @@ own.
 
 ### Verify
 
-Defined in the [Lexicon](../../../LEXICON.md) row **Verify**.
+Defined in the [Glossary](../../../GLOSSARY.md) term **Verify**.
 
-**Steps:** Check the assembled candidate's gate and merge eligibility -> land it on integration -> fetch and prove the reviewed commit is contained -> check the landed result
+**Steps:** Check the assembled candidate's gate, which awaits every pre-delivery Task and acceptance line but no post-delivery one, and merge eligibility -> land it on integration -> fetch and prove the reviewed commit is contained -> check the landed result
 ([dispatcher](../dispatcher/SKILL.md#dispatcher-and-separate-director-assembled-review),
 [implement](../implement/SKILL.md#branch-completion)).
 
-**Loop:** A changed candidate needs the applicable fresh Review before landing. A failure returns to the affected work. Main verification comes after explicit [Ship](#ship) authorization; integration verification does not provide it.
+**Loop:** A changed candidate needs the applicable fresh Review before landing. A failure returns to the affected work. [Approve](#approve) follows; main verification belongs to [Deliver](#deliver) after the owner's Ship it, and integration verification does not provide it.
 
+## Workspace closeout
+
+Use this at Publish, pause, blocked publication, handoff and end-of-assignment,
+and recheck the selected work before main delivery. It accounts for the current
+assignment even when its code cannot land. It does not complete a Spec or grant
+removal, publication or main authority.
+
+1. At the claimed assignment's start, resolve the existing Spec/Task and private
+   recovery collection through the manifest. Capture the starting inventory:
+
+   ```bash
+   node workbench/tools/workspace-closeout.mjs snapshot --project . --spec S-### --task TK-### --owner NAME --ignored RELATIVE_PRIVATE_PATH > "$CLOSEOUT_START"
+   ```
+
+   Repeat `--ignored` for relevant ignored evidence. Keep the snapshot in approved
+   private recovery outside any checkout selected for removal; it contains local
+   paths and hashes. Record its returned `digest` as `Workspace baseline
+   sha256:DIGEST` in the existing Task Receipt, commit that owner record and retain
+   its immutable commit as `CLOSEOUT_BASE`. The snapshot is evidence from its
+   observer, not authenticated history. A missing starting inventory leaves the
+   pre-existing boundary unverified; do not reconstruct it as a fresh start.
+
+2. Compare ending state with that inventory. Preserve inherited work. Give every
+   owned path, staged version, ref and stash a disposition in the existing
+   work owner: integrated; pushed pending with a routed continuation; private
+   local-only recovery; or blocked with its retained bytes and reason. Reconcile
+   useful intent and knowledge through `jot` and `to-docs`. Review privacy before
+   publishing; snapshots and raw private recovery stay private.
+
+3. Put the corresponding check inputs in an ordinary local JSON artifact,
+   `{ "schemaVersion": 1, "items": [...] }`. Entries name `kind` (`path`, `index`,
+   `ref`, `stash` or `worktree`), `path` or source identity, and `state`. Integrated/pending
+   entries name the exact `commit` and pending `ref` (`refs/heads/...`); a ref or
+   stash entry uses `source` for its original ref or stash commit. A local-only
+   path names an independent `copy` outside the removable checkout and a
+   `reason`; blocked paths name their reason. An added or changed foreign
+   worktree needs a retained disposition with its actual `expectedHead` and
+   purpose; the checker preserves its activity boundary. These inputs declare claims;
+   the checker compares actual bytes, modes, objects and live remote tips.
+
+4. Fetch the required existing refs through the room's Git procedure, then run:
+
+   ```bash
+   node workbench/tools/workspace-closeout.mjs check --project . --baseline "$CLOSEOUT_START" --baseline-commit "$CLOSEOUT_BASE" --dispositions "$CLOSEOUT_DISPOSITIONS"
+   ```
+
+   Pending work needs exact remote bytes plus an integration-published route
+   from the ordinary entry to its owner, with candidate/ref, checks, authority
+   and next action. Publish that safe owner record independently of failing
+   code. Git records executable/link mode, not arbitrary filesystem permissions;
+   regular modes other than 0644/0755 need private recovery and remain local-only.
+   Links use the local host default (observed 0755 on macOS); native Windows
+   permission behavior remains unverified. Staged-only local
+   copy claims stay unsupported until verified through a named Git candidate.
+   Local-only, missing, changed, unexplained or unavailable evidence stays
+   incomplete. Correct the cause and rerun; never weaken the check or discard
+   evidence. Record the result and limits in the existing Spec/Task.
+
+5. Keep accounting, remote recovery and workspace release distinct. The checker
+   observes Git state, leaves host activity unverified and never removes work.
+   Obtain the current named-writer handback and inspect the owning host's active
+   use before release. Unknown or active use retains the checkout. Preserve all
+   necessary ignored bytes first. Use the app lifecycle for managed worktrees;
+   for project worktrees use Git worktree operations. Retain unmerged recovery
+   branches, recheck expected tips before any allowed merged-branch deletion,
+   and verify actual removal separately. Main permission remains unchanged.

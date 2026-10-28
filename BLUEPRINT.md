@@ -28,7 +28,7 @@ differences while exposing compatibility and unresolved acceptance honestly.
 One local command explains the room. The tour is an orientation aid checked
 against the manifest, not a second authority or an application to impose on every
 future project. Agents enter through AGENTS and STARTUP, then the assigned Spec
-and Task; the Runbook and Lexicon route needed procedures and meanings. They
+and Task; the Runbook, Architecture and Glossary route needed procedures, owners and meanings. They
 preserve the scope of ordinary requests and capture significant fresh context,
 decisions and corrections as source-linked Wiki jots before dependent output.
 Legacy JSON notes remain readable; a recipient-specific handoff is Markdown.
@@ -36,14 +36,14 @@ A specification-only request produces specification work only.
 
 ## Integrated System Design
 
-Seven root controls separate behavior, destination, vocabulary, procedures, work
-projection and human orientation. The manifest declares installed support paths.
+Eight root controls separate behavior, destination, vocabulary, ownership routes,
+procedures, work projection and human orientation. The manifest declares installed support paths.
 Stable specs retain scoped requirements and evidence; accepted active ADRs retain
 architectural decisions, with explicit history views for retired decisions. The
-Lexicon routes to the complete spec catalog and the room Wiki. The installed
+Architecture routes to the complete spec catalog and the room Wiki. The installed
 runtime operates locally. Managed core skills are tracked in this room's
-`workbench/skills/` lane with a source receipt; `.agents/skills` and
-`.claude/skills` are discovery adapters into that lane. A fresh clone can
+`.agents/skills/` lane with a source receipt, beside the optional skills this
+room selected; `.claude/skills` is one relative link into that lane. A fresh clone can
 recover those files without a provider-home installation, while actual host
 invocation remains separately verifiable.
 

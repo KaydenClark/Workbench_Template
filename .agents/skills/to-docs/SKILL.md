@@ -21,7 +21,11 @@ lanes; do not create a root `specs/`, project-local `skills/` core shadow, or pa
 truth store. Authorized room-local extensions follow the
 [`workbench-runtime` skill](../workbench-runtime/SKILL.md#room-local-skills).
 
-- accepted shared definitions -> `LEXICON.md`;
+- explicitly confirmed definitions are written during modeling or grilling through
+  [domain-modeling](../domain-modeling/SKILL.md#update-glossarymd-on-confirmation),
+  without another promotion approval; other accepted shared definitions -> `GLOSSARY.md`, with fuller explanation in
+  its Wiki lexicon article; which artifact owns a kind of truth, its routes
+  and invariants -> `ARCHITECTURE.md`;
 - what the product is, who it serves, its promised outcomes and its
   non-goals (the Blueprint's four parts) -> `BLUEPRINT.md`;
 - capability requirements, decisions, acceptance, proof, or completion -> the
@@ -48,9 +52,17 @@ truth store. Authorized room-local extensions follow the
   changes or contradicts the Blueprint, and never the Wiki. One decision that
   needs both records gets both, linked rather than merged.
 
+For capability knowledge, read the existing Feature catalog article under the
+manifest-declared `features` collection and reconcile new understanding there.
+Several Specs can contribute to one maintained article. A Spec closure, chat,
+report or correction does not justify another article for the same subject.
+Keep history, progress explanations and lessons in that article with dated
+sources, while live assignments and proof retain their owners. List Specs on
+demand; do not save a parallel roster or copy its rows into the Wiki.
+
 Route each claim once. Split a mixed finding into its claims and give each
 exactly one owner by its job: a procedure step to its operational owner, a
-definition to the Lexicon, a requirement or proof to the Spec, an explanation
+definition to the glossary, a requirement or proof to the Spec, an explanation
 to the Wiki. When another owner needs the claim, link to the owner that holds
 it rather than copy it; a Wiki reference article explains why and links the
 procedure instead of restating its steps. Never paste the whole finding into
@@ -66,7 +78,7 @@ live path such as a note, handoff or recovery file. Update Spec state at
 meaningful transitions and append evidence rows; do not copy conversation,
 working notes or superseded interim states into permanent Spec history.
 
-If capability truth needs a new spec and none is assigned, route to `/to-spec`.
+If capability truth needs a new spec and none is assigned, call the Skill tool for `to-spec`.
 Do not create an ad hoc document or another truth store. Preserve append-only
 evidence and completed spec history.
 
@@ -80,7 +92,7 @@ touched pages). For a spec-backed change, finish with
 
 ## Finding the owner of a question
 
-1. Use [LEXICON -> Artifact Ownership Schema](../../../LEXICON.md#artifact-ownership-schema)
+1. Use [ARCHITECTURE -> Ownership](../../../ARCHITECTURE.md#ownership)
    to identify the job: permission, meaning, destination, work state, proof,
    procedure, recovery or another listed responsibility.
 2. Follow the named owner and resolve installed paths through the manifest.
@@ -191,7 +203,7 @@ Each move leaves and counts references inside append-only evidence
 sections, regenerates both registers and stages the result. A refused move
 writes nothing. No separate approval ceremony is added.
 
-Both kinds answer the five read words the Lexicon defines, and reads never
+Both kinds answer the five read words the glossary defines, and reads never
 write. `list` gives the records that exist (both kinds unless `--kind` narrows
 it, optionally one `--status`), one tab-separated line each with identifier,
 status, date, title, path and, for a superseded record, its successor.
@@ -270,7 +282,7 @@ Lint is a reading job an agent performs; no command does it, and
 [`workbench-runtime` skill's Wiki Validation](../workbench-runtime/SKILL.md#wiki-validation))
 keeps running on every change without replacing it. The obligation and its two
 cadences are owned by [`AGENTS.md`](../../../AGENTS.md#dev-environment-tips)
-and [`workbench/wiki/SCHEMA.md`](../../wiki/SCHEMA.md#lint); this section
+and [`workbench/wiki/SCHEMA.md`](../../../workbench/wiki/SCHEMA.md#lint); this section
 is the checklist, not a second statement of them.
 
 **Small lint, at the end of every Wiki update, on the pages it touched:**
@@ -283,14 +295,14 @@ is the checklist, not a second statement of them.
 3. Every claim still has its source. A claim checked in this operation is
    stated plainly; an inferred claim says `Inference:`; a dated one says its
    date. `last_verified` moved only for facts actually checked
-   ([SCHEMA Update](../../wiki/SCHEMA.md#update)).
+   ([SCHEMA Update](../../../workbench/wiki/SCHEMA.md#update)).
 4. The router `workbench/wiki/MEMORY.md` links the page with a one-line
    summary, and the summary still says what the page now says.
 5. Every identifier on the page carries the artifact's name and a little
    context. Add what is missing; never strip an identifier.
 6. Each truth lives once: the page links to its owner (Spec, decision record,
-   Lexicon, Runbook) instead of restating it, and copies no live task state.
-7. No concept the page mentions lacks a page or a Lexicon row it should have.
+   `GLOSSARY.md`, `ARCHITECTURE.md`, Runbook) instead of restating it, and copies no live task state.
+7. Project vocabulary has its canonical `GLOSSARY.md` entry and richer Wiki explanation when needed; general reference concepts may remain Wiki-only. Ownership and navigation follow `ARCHITECTURE.md`.
 8. An article in `design-concepts/` or `features/` has its `History` line for
    this operation, and a design concept's `authorized_by` names it.
 

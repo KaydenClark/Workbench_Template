@@ -43,7 +43,7 @@ A sound tracer bullet:
 - **Demoable alone** — its proof is a check the owner can run in under a minute.
 - **One context** — fits the context unit declared in `workbench/manifest.json`;
   when it will not, cut a thinner behavior, not a horizontal shard.
-- **Real seam** — verified at a public seam, the way `/tdd` and `/implement`
+- **Real seam** — verified at a public seam, the way `tdd` and `implement`
   drive behavior, not at internal wiring.
 
 ## 3. Order by dependency, first bullet independent
@@ -56,9 +56,9 @@ is unused.
 
 ## 4. Scope and assign
 
-Hand these ordered slices to `/to-tasks` to write as Task records (or into the
+Call the Skill tool for `to-tasks` to write these ordered slices as Task records (or into the
 assigned spec's `Vertical Implementation Slices` table when it is not yet
-record-backed), or to `/to-spec` when the spec itself is still being written.
+record-backed), or call the Skill tool for `to-spec` when the spec itself is still being written.
 Assign one slice to one durable Engineer writer at the
 lowest capable tier, each with explicit blockers. When a proposed slice names a
 single layer, re-cut it into a complete path before it is assigned. The

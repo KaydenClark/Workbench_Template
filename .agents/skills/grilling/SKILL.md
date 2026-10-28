@@ -3,10 +3,13 @@ name: grilling
 description: Grill the user relentlessly about a plan, decision, or idea, one question at a time, reading back each answer for confirmation before moving on, until a confirmed shared concept. Composes Wiki jot when the session needs saved context. A reusable primitive with separate preserve, promote, specification, handoff and execution exits. Use when the user wants to stress-test thinking or uses any 'grill' trigger phrase.
 ---
 
+Inherit both mandatory owner judgments under [authority and continuation](../implement/execution-authority.md): explicit confirmation before leaving Explore and explicit execution approval before leaving Prepare. Reuse their sources within scope; delegation and this skill grant neither.
+
 This is the core interview primitive. It asks, investigates, challenges and
-synthesizes until we share one understanding, then stops. It never writes
-canonical files during the interview. Core `promote` owns reconciliation after
-the user selects that endpoint; execution is separate.
+synthesizes until we share one understanding, then stops. Pending answers never
+enter canonical files during the interview. For explicitly confirmed vocabulary, call the Skill tool for [domain-modeling](../domain-modeling/SKILL.md#update-glossarymd-on-confirmation)
+to write it to the vocabulary owner in the same session. Core `promote` owns
+other reconciliation after the user selects that endpoint; execution is separate.
 
 Grill the user relentlessly about every aspect of this until we reach a shared
 understanding. Walk down each branch of the decision tree, resolving dependencies
@@ -36,7 +39,8 @@ to me and wait for my answer.
    and wait again. Only my explicit confirmation, in ordinary words, locks the
    decision; there is no special command to learn.
 5. **Lock, update the map, continue.** After confirmation, lock the decision,
-   update the decision map, and only then ask the next question.
+   update the decision map, write any explicitly confirmed vocabulary through
+   `domain-modeling`, and only then ask the next question.
 
 A batch of answers gets the same readback. When I answer several questions at
 once, read every answer back as pending in one reply and lock none of them
@@ -72,15 +76,17 @@ Question / Answer / Why / Impact form covering: the problem, the intended user
 and experience, scope and exclusions, the important concepts and boundaries,
 the consequential tradeoffs, and one concrete scenario. Name any unresolved
 choice or missing evidence that could still change the concept. Do not act on it until I confirm we have reached a shared understanding, and do
-not touch canonical files during the interview.
+keep other canonical changes at their selected endpoint; confirmed vocabulary
+follows the narrow glossary-write rule above.
 
-Lexicon supplies accepted meanings, and the `domain-modeling` and `wayfinder`
-skills may challenge a concept or narrow an oversized inquiry, all within the
-caller's authorization. A settled term does not authorize a Canon write.
+The vocabulary owner `ARCHITECTURE.md` routes to supplies accepted meanings, and
+the `domain-modeling` and `wayfinder` skills may challenge a concept or narrow
+an oversized inquiry, all within the caller's authorization. Explicit confirmation of a definition authorizes its vocabulary write, not
+implementation, other Canon changes or publication.
 
 ## Saved context (composed, not built in)
 
-Compose [`jot`](../jot/SKILL.md) when losing meaningful interview context would
+Call the Skill tool for [`jot`](../jot/SKILL.md) when losing meaningful interview context would
 impair continuation, following AGENTS Session Records. Resolve the Wiki lane through
 `workbench/manifest.json`. Capture a small sourced
 claim in the existing Wiki topic while it is fresh, then continue. New project
@@ -143,18 +149,17 @@ An explicit user direction to pause, preserve, promote, specify, hand off or
 execute ends or changes the interview; no magic slash command is required.
 A passing mention does not. Never continue questioning after Stop.
 
-- Preserve or pause: compose `jot`; keep open questions and next action.
-- Promote settled claims only: compose `promote` within that endpoint.
+- Preserve or pause: call the Skill tool for `jot`; keep open questions and next action.
+- Promote settled claims only: call the Skill tool for `promote` within that endpoint.
 - Promote a confirmed decision in the LLM Workbench: after the session's final
-  confirmed readback, hand its source, ID and confirmed revision to
-  `promote-decision`, reached through the room's `AGENTS.md` Skill Map. Run each decision
+  confirmed readback, call the Skill tool for `promote-decision` with its source, ID and confirmed revision, reached through the room's `AGENTS.md` Skill Map. Run each decision
   separately; its nearer endpoint stays narrow and pending answers stay pending.
   This maintainer operation is available only where the manifest declares it.
-- Create specifications only: compose `to-spec` within that endpoint, after the
+- Create specifications only: call the Skill tool for `to-spec` within that endpoint, after the
   confirmed final concept readback.
-- Prepare another agent's continuation: compose `handoff` as Markdown, with
+- Prepare another agent's continuation: call the Skill tool for `handoff` as Markdown, with
   the exact requested job and retained correction context.
-- Build the agreed scope: compose `make-it-so` or `carry` only within the
+- Build the agreed scope: call the Skill tool for `make-it-so` or `carry` only within the
   execution actually authorized by the user.
 
 Before a voluntary exit from a saved session, validate and read back the

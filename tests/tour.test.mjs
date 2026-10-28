@@ -55,15 +55,25 @@ test('every collection the manifest declares is explained', () => {
   }
 });
 
-test('the seven root controls are present and all seven are explained', () => {
-  const controls = ['AGENTS.md', 'BLUEPRINT.md', 'LEXICON.md', 'RUNBOOK.md', 'TASKBOARD.md', 'CLAUDE.md', 'README.md'];
+test('the eight root controls are present and all eight are explained', () => {
+  const controls = ['AGENTS.md', 'BLUEPRINT.md', 'GLOSSARY.md', 'ARCHITECTURE.md', 'RUNBOOK.md', 'TASKBOARD.md', 'CLAUDE.md', 'README.md'];
   for (const control of controls) {
     assert.ok(fs.existsSync(path.join(root, control)), `root control ${control} is missing`);
     assert.ok(described.has(control), `root control ${control} is not explained by the tour`);
   }
   const rootZone = PLACES.filter((place) => place.zone === 'Root controls').map((place) => place.path).sort();
   assert.deepEqual(rootZone, [...controls].sort(),
-    'the root-controls zone must be exactly the seven controls — no more, no fewer');
+    'the root-controls zone must be exactly the eight controls — no more, no fewer');
+  assert.ok(!described.has('LEXICON.md'), 'the retired Lexicon is not a current root control');
+});
+
+test('the skills lane is the tracked .agents/skills directory with one Claude link into it', () => {
+  assert.equal(manifest.lanes.skills, '.agents/skills');
+  const lane = path.join(root, '.agents/skills');
+  assert.ok(fs.lstatSync(lane).isDirectory() && !fs.lstatSync(lane).isSymbolicLink(), '.agents/skills must be a real directory');
+  assert.equal(fs.readlinkSync(path.join(root, '.claude/skills')), '../.agents/skills');
+  assert.ok(!fs.existsSync(path.join(root, 'workbench/skills')), 'the retired workbench/skills lane must not remain');
+  assert.ok(fs.existsSync(path.join(lane, '.workbench-skills.json')), 'the skills lane carries its receipt');
 });
 
 test('the Claude bridge carries no rules of its own', () => {
@@ -151,7 +161,7 @@ test('configured-host guidance pins the expected producer identity before execut
 });
 
 test('the v3.2 room has a stable identity distinct from its artifact identifiers', () => {
-  assert.equal(manifest.workbenchVersion, 'v3.2.1');
+  assert.equal(manifest.workbenchVersion, 'v3.2.2');
   assert.match(manifest.workbenchId, /^WB-[0-9A-Za-z]{22}$/);
   assert.ok(manifest.collections['notepad-templates'].startsWith(manifest.collections.notepads + '/'));
 });
@@ -191,7 +201,7 @@ test('the Blueprint disposition preserves its exact source and relocated decisio
 
 
 test('version-bearing root controls match the installed room version', () => {
-  for (const file of ['AGENTS.md', 'LEXICON.md', 'RUNBOOK.md', 'TASKBOARD.md', 'README.md']) {
+  for (const file of ['AGENTS.md', 'GLOSSARY.md', 'ARCHITECTURE.md', 'RUNBOOK.md', 'TASKBOARD.md', 'README.md']) {
     const text = fs.readFileSync(path.join(root, file), 'utf8');
     assert.ok(text.includes(`Generated from LLM Workbench ${manifest.workbenchVersion}`), file);
   }

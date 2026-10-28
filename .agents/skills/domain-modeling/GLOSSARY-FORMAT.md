@@ -2,16 +2,14 @@
 > `GLOSSARY-FORMAT.md` from `mattpocock/skills` at
 > `d81f3a183412e71a5b1e84ca21bc1a35eea03a60`, kept byte for byte (MIT;
 > [NOTICE.md](NOTICE.md) beside this file carries the copyright and permission
-> notice). In a Workbench room the entry format and its rules apply unchanged;
-> only who writes the file differs. The `domain-modeling` skill never creates
-> or edits `GLOSSARY.md` itself: confirmed vocabulary reaches it through
-> promotion (the `promote` skill), and a room with no `GLOSSARY.md` yet keeps
-> its current `LEXICON.md` as the vocabulary owner. So the upstream rule below
-> to create a root `GLOSSARY.md` lazily when the first term is resolved does
-> not apply here: promotion creates or updates the owner, not this skill. A
-> `GLOSSARY-MAP.md` is read when one already exists; it is never inferred or
-> created from this format, and an apparent second context is a question for
-> the owner.
+> notice). In a Workbench room the entry format and its rules apply unchanged.
+> The domain-modeling skill updates the existing vocabulary owner on explicit confirmation
+> and reads the saved entry back. A room with no `GLOSSARY.md` yet keeps its
+> current `LEXICON.md` as the vocabulary owner. The upstream rule below to
+> create a root `GLOSSARY.md` lazily when the first term is resolved does not apply
+> to an unmigrated room: do not create competing owners. A `GLOSSARY-MAP.md`
+> is read when one already exists; it is never inferred or created from this
+> format, and an apparent second context is a question for the owner.
 
 ---
 

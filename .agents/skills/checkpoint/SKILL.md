@@ -10,14 +10,14 @@ Read `workbench/manifest.json` and
 below. Existing records in
 `workbench/sessions/checkpoints/` remain frozen with their citations intact.
 
-For an authorized save-for-later request, use the core `jot` workflow to
+For an authorized save-for-later request, call the Skill tool for `jot` to
 retain current state, unresolved material and the next action locally. On resume,
 verify current controls and source state before continuing. Do not copy a raw
 note or handoff into Git, assert cross-device recovery from a local save, or
 modify a historical record merely to mark it PAUSED.
 
 New durable claims use `sessions.mjs promote` under existing authorization with
-privacy, owner validation and byte read-back. `/make-it-so` may compose that
+privacy, owner validation and byte read-back. `make-it-so` may compose that
 work when the user authorizes execution. The old command
 `node workbench/tools/sessions.mjs checkpoint` returns a nonzero explanatory
 refusal and writes nothing. Operational recovery is a separate collection.
@@ -32,8 +32,8 @@ in the separate ignored `sessions/recovery/` collection, outside note discovery.
 A preserved historical copy is not blanket promotion of its claims.
 
 Existing `sessions/checkpoints/` files and citations remain unchanged.
-The legacy `sessions.mjs checkpoint` command refuses new copies. New selected
-claims follow direct owner promotion in the `promote` skill. Operational receipts and backups
+The legacy `sessions.mjs checkpoint` command refuses new copies. For new selected
+claims, call the Skill tool for `promote` for direct owner promotion. Operational receipts and backups
 use the ignored `sessions/recovery/` collection declared by the manifest;
 notepad discovery excludes it. Preserve old recovery references, and restore
 from the recorded Git SHA or explicit backup with byte read-back before claiming

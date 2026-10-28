@@ -5,14 +5,21 @@ description: Reconcile selected supported Workbench working material into its au
 
 # Promote
 
+Inherit both mandatory owner judgments under [authority and continuation](../implement/execution-authority.md): explicit confirmation before leaving Explore and explicit execution approval before leaving Prepare. Reuse their sources within scope; delegation and this skill grant neither.
+
 Promote only selected material whose authority and evidence already exist.
 This primitive works with sourced Wiki claims or preserved legacy notes;
 `make-it-so` can compose it before implementation. It does not start an
 interview, implement tasks, grant permission or infer invocation from a
 passing mention. Read the Contract, manifest and assigned owner first.
 
+Explicitly confirmed vocabulary is written during modeling or grilling through
+[domain-modeling](../domain-modeling/SKILL.md#update-glossarymd-on-confirmation).
+That scoped write needs no separate invocation of this skill. Other Canon
+changes retain their selected promotion endpoint.
+
 1. Resolve the named source and exact selection. Read its compact current
-   claims, sources and linked corrections using `jot`; use `notepad` for a
+   claims, sources and linked corrections by calling the Skill tool for `jot`; call the Skill tool for `notepad` for a
    legacy source and its current view/dependencies.
    Follow pagination and inspect related rulings that could supersede it.
    A locked label is neither proof nor authority. Preserve open, tentative,
@@ -24,7 +31,7 @@ passing mention. Read the Contract, manifest and assigned owner first.
    readback is still listed in `current.unresolved` is pending, not supported,
    however settled it sounds, and only a `decision` entry records a confirmed
    owner answer. A mixed note promotes its confirmed claims and leaves the rest.
-2. Use `to-docs` to choose exactly one durable owner for each accepted claim;
+2. Call the Skill tool for `to-docs` to choose exactly one durable owner for each accepted claim;
    when another owner needs it, link to it rather than copy it. Requirements
    and proof belong to the assigned spec, operating rules to their owning control,
    durable knowledge to the manifest Wiki. Decision rationale belongs in
@@ -75,7 +82,7 @@ per note and owner is required; revision/hash checks are not concurrent locks.
    the `notepad` trim/delete public seam
    only once that material is reconciled and no retained context still needs it. Existing
    frozen checkpoints remain unchanged; no routine archive or copy is created.
-6. Compose `save` for the achieved changes under the same scope. Pass the
+6. Call the Skill tool for `save` for the achieved changes under the same scope. Pass the
    already-promoted result so save does not promote it again. Report the
    destination, verified selection and hashes, checks, remaining source context
    and actual recovery boundary. Stop after promotion/persistence unless the
@@ -113,13 +120,17 @@ authored documents, not new notepad records; keep them ignored until deliberatel
 reconciled. The command requires every selected entry, carries its corrections
 and dependencies, refuses private material, stale inputs and ignored-note
 citations, and validates the proposed owner before writing. Existing controls,
-specs, ADRs, Wiki and docs/feedback Markdown owners are supported; create new
-owners through their ordinary authorized workflow first.
+the root `GLOSSARY.md`, specs, ADRs, Wiki and docs/feedback Markdown owners are
+supported; create new owners through their ordinary authorized workflow first.
+A glossary promotion selects only `decision` entries, so a pending
+`source_record` or `proposal` stays in the notepad; no capture path writes the
+glossary.
 
 Spec checks reuse lifecycle diagnostics and preserve existing append-only rows;
-ADR and Wiki checks reuse their validators. Controls receive heading and placeholder checks; other documents receive a
-heading check. These are not semantic policy audits. Run the owner's normal
-checks too. Successful output names source selection/context, old/new hashes and
+ADR and Wiki checks reuse their validators. Controls receive heading and
+placeholder checks, and the glossary also keeps its `## Language` section;
+other documents receive a heading check. These are not semantic policy audits.
+Run the owner's normal checks too. Successful output names source selection/context, old/new hashes and
 verified destination bytes. Reconcile remaining source dependencies before a
 separate notepad trim; unchanged source and draft do not prove cleanup is safe.
 

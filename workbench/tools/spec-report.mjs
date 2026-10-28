@@ -75,7 +75,29 @@ export function assembleSpecReport(rootDir, specId, options = {}) {
   // separately as `decisionGaps` too so `completeSpec` can refuse exactly it
   // without adopting every other report gap as a new closure rule.
   const decisionGaps = collectDecisionGaps(tasks);
-  const gaps = [...collectGaps({ tasks, acceptance, completionResult, evidence }), ...decisionGaps];
+  const postDeliveryTaskIds = new Set(tasks.filter((task) => task.phase === 'post-delivery').map((task) => task.id));
+  const gaps = [...collectGaps({ tasks, acceptance, completionResult, evidence, postDeliveryTasks: postDeliveryTaskIds }), ...decisionGaps];
+  // S-006K TK-00B5: Judge (Review -> Verify -> Approve) binds the frozen
+  // pre-delivery artifact while Complete (Deliver -> Cleanup) is pending.
+  // Post-delivery Tasks and acceptance lines are named separately, and the
+  // pre-delivery gaps omit only them; `complete` still requires every one.
+  const postDelivery = {
+    tasks: [...postDeliveryTaskIds],
+    acceptance: acceptance.flatMap((line, index) => (line.phase === 'post-delivery' ? [index + 1] : []))
+  };
+  const preDeliveryGaps = [
+    ...collectGaps({
+      tasks: tasks.filter((task) => task.phase !== 'post-delivery'),
+      acceptance: acceptance.map((line) => (line.phase === 'post-delivery' ? { ...line, checked: true, deferred: true } : line)),
+      completionResult,
+      evidence,
+      postDeliveryTasks: postDeliveryTaskIds
+    }),
+    ...decisionGaps
+  ];
+  // Deferred from the pre-delivery Review, so `complete` enforces them.
+  const postDeliveryVerificationGaps = collectVerificationGaps(
+    acceptance.map((line) => (line.phase === 'post-delivery' ? line : { ...line, deferred: true })), evidence, postDeliveryTaskIds);
 
   // S-00J TK-002N: which ref integration containment resolves against
   // (`origin/<branch>` when it exists, else the local branch) and the SHA it
@@ -115,7 +137,11 @@ export function assembleSpecReport(rootDir, specId, options = {}) {
     decisionCoverage: decisionCoverageOf(tasks),
     decisionGaps,
     gaps,
-    complete: gaps.length === 0
+    complete: gaps.length === 0,
+    postDelivery,
+    preDeliveryGaps,
+    preDeliveryComplete: preDeliveryGaps.length === 0,
+    postDeliveryVerificationGaps
   };
 }
 
@@ -188,7 +214,7 @@ export function computeSpecDigest(root, spec, candidate = null) {
   }
   if (candidate) relativeDir = committedSpecDirectory(root, spec, candidate, relativeDir, committed);
   const specContent = candidate ? committed(['show', `${candidate}:${relativeDir}/SPEC.md`]) : spec.content;
-  addEntry('SPEC.md', stripVolatileSpecFields(stripEvidenceRows(specContent)));
+  addEntry('SPEC.md', stripPostDeliveryAcceptanceState(stripVolatileSpecFields(stripEvidenceRows(specContent))));
   let taskNames;
   if (candidate) {
     taskNames = committed(['ls-tree', '-r', '--name-only', '-z', candidate, '--', `${relativeDir}/tasks/`])
@@ -207,7 +233,7 @@ export function computeSpecDigest(root, spec, candidate = null) {
   }
   for (const name of taskNames.filter((name) => /^tasks\/(?:retired\/)?[^/]+\/TASK\.md$/.test(name)).sort()) {
     const content = candidate ? committed(['show', `${candidate}:${relativeDir}/${name}`]) : fs.readFileSync(path.join(specDir, name), 'utf8');
-    addEntry(name, stripReceiptSection(content));
+    addEntry(name, stripPostDeliveryTaskState(stripReceiptSection(content)));
   }
   return hash.digest('hex');
 }
@@ -300,7 +326,46 @@ function stripVolatileSpecFields(content) {
     .replace(/^\*\*Status:\*\* (?:complete|needs-review)$/m, '**Status:** active')
     .replace(/^\*\*Updated:\*\*.*$/m, '**Updated:**')
     .replace(/^\*\*Latest event:\*\*.*$/m, '**Latest event:**')
-    .replace(/^\*\*Next gate:\*\*.*$/m, '**Next gate:**');
+    .replace(/^\*\*Next gate:\*\*.*$/m, '**Next gate:**')
+    // S-006J TK-008R: the cited Jot identities bind; the relative route a
+    // lifecycle move rewrites does not.
+    .replace(/^(\*\*(?:Confirmation|Execution approval):\*\*).*$/gm, (line, field) => {
+      const ids = [...line.matchAll(/\[(JOT-[A-Za-z0-9_-]+)\]\([^)\s]+\)/g)].map((match) => match[1]);
+      return ids.length > 0 ? `${field} ${ids.join('; ')}` : line;
+    });
+}
+
+// S-006K TK-00B5: a post-delivery Task's ordinary lifecycle bookkeeping -
+// claim, block, close and its proof - is Deliver/Cleanup progress, never a
+// change to the artifact Review and Approve judged. Only those
+// lifecycle-owned field lines are removed, and only from a record that
+// declares `**Phase:** post-delivery`; its slice, destination, planned
+// verification, body, Decisions and the Phase line itself still bind, so
+// rewording the obligation or moving a Task between phases moves the digest.
+const POST_DELIVERY_PHASE = /^\*\*Phase:\*\*[ \t]*post-delivery[ \t]*$/m;
+const POST_DELIVERY_LIFECYCLE_FIELDS = /^\*\*(?:Status|Blockers|Proof|Claimed by|Current claimant|Missing capabilities|Close pending):\*\*.*(?:\r?\n|$)/gm;
+function stripPostDeliveryTaskState(content) {
+  if (!POST_DELIVERY_PHASE.test(content)) return content;
+  return content.replace(POST_DELIVERY_LIFECYCLE_FIELDS, '');
+}
+
+// S-006K TK-00B5: acceptance lines under `### Post-delivery acceptance`
+// inside `## Acceptance Criteria` are checked after delivery and cleanup.
+// Their checkbox state is normalized for the digest; their text still binds.
+const POST_DELIVERY_ACCEPTANCE_HEADING = /^### Post-delivery acceptance[ \t]*$/;
+function stripPostDeliveryAcceptanceState(content) {
+  const marker = /^## Acceptance Criteria[ \t]*$/m;
+  const match = marker.exec(content);
+  if (!match) return content;
+  const bodyStart = match.index + match[0].length;
+  const nextHeading = content.indexOf('\n## ', bodyStart);
+  const bodyEnd = nextHeading < 0 ? content.length : nextHeading;
+  let inPostDelivery = false;
+  const body = content.slice(bodyStart, bodyEnd).split('\n').map((line) => {
+    if (/^### /.test(line)) inPostDelivery = POST_DELIVERY_ACCEPTANCE_HEADING.test(line);
+    return inPostDelivery ? line.replace(/^- \[[xX]\]/, '- [ ]') : line;
+  }).join('\n');
+  return content.slice(0, bodyStart) + body + content.slice(bodyEnd);
 }
 
 // Strips a Task record's entire `## Receipt` section - heading and body -
@@ -425,7 +490,8 @@ export function recordReviewVerdict(rootDir, specId, options = {}) {
   // gap. Keep failed corrective verdicts available and do not promote other
   // diagnostic gaps into verdict gates. No mutation has occurred here.
   if (result === 'pass') {
-    const verificationGaps = collectVerificationGaps(parseAcceptance(spec.content), parseEvidence(spec.content));
+    const postDeliveryTasks = new Set(mergedTasks(spec).filter((task) => task.phase === 'post-delivery').map((task) => task.id));
+    const verificationGaps = collectVerificationGaps(parseAcceptance(spec.content), parseEvidence(spec.content), postDeliveryTasks);
     if (verificationGaps.length > 0) {
       throw new Error(`A pass on ${specId} refuses a checked verification evidence gap: ${verificationGaps.join('; ')}. Record the post-close candidate/check evidence before requesting a new pass.`);
     }
@@ -475,32 +541,12 @@ export function recordReviewVerdict(rootDir, specId, options = {}) {
   const cells = [date, 'review', `Review verdict: ${result} at ${candidate} [${digest12}] #${ordinal}`, findings, reviewer, remainingGap];
   const row = `| ${cells.map(escapeMarkdownTableCell).join(' | ')} |`;
   const updated = appendEvidence(spec.content, row);
-  atomicWrite(spec.filePath, updated);
-
-  // S-00J TK-003: folded into this verb rather than a separate `correct`
-  // command, so a caller cannot record a failed verdict and forget the
-  // corrective-Task step - the handoff's "same call" design. The verdict
-  // row is written first (immediately above), so createCorrectiveTasks
-  // re-reads it from disk as the exact row it names in each Task's Planned
-  // verification, rather than a caller-supplied guess at its own position.
-  //
-  // Row-then-Tasks recovery: if the process dies in the gap between the
-  // atomicWrite above and the createCorrectiveTasks call below, the Spec's
-  // evidence log already durably carries the fail verdict row but no
-  // corrective Task exists for it yet - a state indistinguishable from a
-  // fail verdict recorded by some other path that never called this
-  // function through to the end. Recovery is simply calling
-  // createCorrectiveTasks(root, specId, { candidate, findings }) again (or
-  // re-running this same verdict command is not an option, since a second
-  // `verdict` call would append a second row - the recovery call is to the
-  // narrower seam): the duplicate-row check below finds no existing Task
-  // naming this row yet, so it proceeds exactly as if this call had reached
-  // it the first time.
-  let correctiveTasks;
-  let continuedTasks;
-  if (result === 'fail') {
-    ({ created: correctiveTasks, continued: continuedTasks } = createCorrectiveTasks(root, specId, { candidate, findings }));
-  }
+  // Keep the durable row while planning its corrections. A synchronous failure
+  // restores it only after every owned Task write has rolled back safely.
+  const correction = appendCorrectiveEvidence(root, spec, updated,
+    result === 'fail' ? () => createCorrectiveTasks(root, specId, { candidate, findings }) : null);
+  const correctiveTasks = correction?.created;
+  const continuedTasks = correction?.continued;
 
   return { specId: spec.id, candidate, result, findings, reviewer, date, remainingGap, digest, digest12, ordinal, row, ...(correctiveTasks ? { correctiveTasks, continuedTasks } : {}) };
 }
@@ -619,13 +665,11 @@ export function recordOwnerApproval(rootDir, specId, options = {}) {
   const cells = [date, 'owner-qa', `Owner QA: ${result} at ${candidate} [${digest12}] #${ordinal}`, findingsCell, owner, remainingGap];
   const row = `| ${cells.map(escapeMarkdownTableCell).join(' | ')} |`;
   const updated = appendEvidence(spec.content, row);
-  atomicWrite(spec.filePath, updated);
-
-  let correctiveTasks;
-  let continuedTasks;
-  if (result === 'finding' && !returnToAlign) {
-    ({ created: correctiveTasks, continued: continuedTasks } = createCorrectiveTasks(root, specId, { candidate, findings: findingsInput }));
-  }
+  const correction = appendCorrectiveEvidence(root, spec, updated,
+    result === 'finding' && !returnToAlign
+      ? () => createCorrectiveTasks(root, specId, { candidate, findings: findingsInput }) : null);
+  const correctiveTasks = correction?.created;
+  const continuedTasks = correction?.continued;
 
   return { specId: spec.id, candidate, owner, result, findings: findingsCell, date, remainingGap, digest, digest12, ordinal, row, integrationContainment, ...(correctiveTasks ? { correctiveTasks, continuedTasks } : {}) };
 }
@@ -784,28 +828,15 @@ export function createCorrectiveTasks(rootDir, specId, options = {}) {
     staged.push({ id, filePath, content, slice: entry.text });
   }
 
-  // Only once every record in the batch is already known good does the
-  // write loop run. A disk failure partway through THIS loop (as opposed to
-  // the row-then-Tasks gap `recordReviewVerdict` documents above) leaves a
-  // genuine partial set on disk with no automatic resume: the answered-row
-  // check above only refuses a second call once at least one matching Task
-  // or continuation has landed, so recovering from a partial batch means
-  // completing or removing the partial `tasks/<id>/` directories by hand
-  // before createCorrectiveTasks is called again for this same row.
-  const created = [];
-  for (const item of staged) {
-    assertSafeWritePath(root, item.filePath);
-    fs.mkdirSync(path.dirname(item.filePath), { recursive: true });
-    atomicWrite(item.filePath, item.content);
-    created.push({ id: item.id, filePath: path.relative(root, item.filePath).split(path.sep).join('/'), slice: item.slice });
-  }
-  const continued = [];
-  for (const [id, content] of continuedContent) {
+  const continuedWrites = [...continuedContent].map(([id, content]) => {
     const record = existingRecords.find((task) => task.id === id);
-    assertSafeWritePath(root, record.filePath);
-    atomicWrite(record.filePath, content);
-    continued.push(...continuedRuns.filter((entry) => entry.id === id));
-  }
+    return { filePath: record.filePath, content, originalContent: record.content };
+  });
+  writeCorrectiveBatch(root, [...staged, ...continuedWrites]);
+  const created = staged.map(({ id, filePath, slice }) => ({
+    id, filePath: path.relative(root, filePath).split(path.sep).join('/'), slice
+  }));
+  const continued = continuedRuns;
 
   return { specId, candidate, verdictRow: { ordinal: rowOrdinal, date: verdictDate }, created, continued };
 }
@@ -879,6 +910,171 @@ function planCorrectiveFindings(root, spec, items) {
     if (entry.rewrites && !find(entry.rewrites)) throw new Error(`${spec.id} holds no Task record ${entry.rewrites} to rewrite; name a Task the Spec holds, or write the finding as "new Task: <finding>".`);
     return entry;
   });
+}
+
+// Roll back only writes this call still owns. Validate the complete write set
+// before deleting anything; concurrent edits keep the partial state and anchor.
+// This handles synchronous failures, not process death or a filesystem transaction.
+function writeCorrectiveBatch(root, staged) {
+  const directories = [];
+  const files = [];
+  const sameIdentity = (stat, identity) => stat.dev === identity.dev && stat.ino === identity.ino;
+  for (const item of staged) {
+    assertSafeWritePath(root, item.filePath);
+    if (item.originalContent === undefined && fs.existsSync(path.dirname(item.filePath))) {
+      throw new Error(`Corrective Task destination already exists: ${item.filePath}`);
+    }
+  }
+  try {
+    for (const item of staged) {
+      const missing = [];
+      let directory = path.dirname(item.filePath);
+      while (!fs.existsSync(directory)) { missing.push(directory); directory = path.dirname(directory); }
+      for (const name of missing.reverse()) {
+        fs.mkdirSync(name);
+        directories.push({ path: name, identity: fs.lstatSync(name) });
+      }
+      assertSafeWritePath(root, item.filePath);
+      const temporary = `${item.filePath}.tmp-${process.pid}`;
+      if (fs.existsSync(temporary)) throw new Error(`Corrective temporary destination already exists: ${temporary}`);
+      const expectedContent = item.content.endsWith('\n') ? item.content : `${item.content}\n`;
+      const original = item.originalContent === undefined ? null : {
+        content: item.originalContent, identity: fs.lstatSync(item.filePath)
+      };
+      if (original) {
+        if (!original.identity.isFile() || original.identity.nlink !== 1
+          || fs.readFileSync(item.filePath, 'utf8') !== original.content) {
+          throw new Error(`Corrective continuation changed before publication: ${item.filePath}`);
+        }
+      } else if (fs.existsSync(item.filePath)) {
+        throw new Error(`Corrective destination became occupied: ${item.filePath}`);
+      }
+      const published = { path: item.filePath, expectedContent, original, identity: null };
+      const temporaryFile = { path: temporary, expectedContent, original: null, identity: null };
+      files.push(published, temporaryFile);
+      publishCorrectiveFile(item.filePath, item.content, (identity) => {
+        temporaryFile.identity = identity;
+        published.identity = identity;
+      }, original);
+      assertSafeWritePath(root, item.filePath);
+      published.identity = temporaryFile.identity;
+      const stat = fs.lstatSync(item.filePath);
+      if (!stat.isFile() || stat.nlink !== 1 || !sameIdentity(stat, published.identity)
+        || fs.readFileSync(item.filePath, 'utf8') !== expectedContent) {
+        throw new Error(`Corrective file changed during publication: ${item.filePath}`);
+      }
+    }
+  } catch (error) {
+    try {
+      for (const directory of directories) {
+        const stat = fs.lstatSync(directory.path);
+        if (!stat.isDirectory() || !sameIdentity(stat, directory.identity)) {
+          throw new Error(`Corrective rollback directory changed: ${directory.path}`);
+        }
+      }
+      const rollback = [];
+      for (const file of files) {
+        let stat;
+        try { stat = fs.lstatSync(file.path); }
+        catch (missing) { if (missing.code === 'ENOENT' && !file.original) continue; throw missing; }
+        assertSafeWritePath(root, file.path);
+        const content = fs.readFileSync(file.path, 'utf8');
+        // A failed atomic rename leaves an existing continuation untouched.
+        const unchanged = file.original && sameIdentity(stat, file.original.identity)
+          && content === file.original.content;
+        if (!stat.isFile() || stat.nlink !== 1 || (!unchanged
+          && (!file.identity || !sameIdentity(stat, file.identity) || content !== file.expectedContent))) {
+          throw new Error(`Corrective rollback file changed: ${file.path}`);
+        }
+        if (!unchanged) rollback.push(file);
+      }
+      for (const file of rollback.reverse()) {
+        if (file.original) {
+          const temporary = `${file.path}.tmp-${process.pid}`;
+          fs.writeFileSync(temporary, file.original.content, { flag: 'wx' });
+          fs.renameSync(temporary, file.path);
+        } else fs.unlinkSync(file.path);
+      }
+      for (const directory of directories.reverse()) fs.rmdirSync(directory.path);
+    } catch (rollbackError) {
+      const failure = new AggregateError([error, rollbackError],
+        `Corrective batch failed (${error.message}); bounded rollback also failed (${rollbackError.message}). Preserve remaining artifacts for explicit recovery.`);
+      failure.correctiveRollbackIncomplete = true;
+      throw failure;
+    }
+    throw error;
+  }
+}
+
+function appendCorrectiveEvidence(root, spec, updated, createTasks) {
+  assertSafeWritePath(root, spec.filePath);
+  const temporary = `${spec.filePath}.tmp-${process.pid}`;
+  if (fs.existsSync(temporary)) throw new Error(`Corrective evidence temporary destination already exists: ${temporary}`);
+  const original = { identity: fs.lstatSync(spec.filePath), content: spec.content };
+  let temporaryIdentity;
+  try {
+    publishCorrectiveFile(spec.filePath, updated, (identity) => { temporaryIdentity = identity; }, original);
+    return createTasks ? createTasks() : undefined;
+  } catch (error) {
+    if (error.correctiveRollbackIncomplete) throw error;
+    try {
+      assertSafeWritePath(root, spec.filePath);
+      const current = fs.readFileSync(spec.filePath, 'utf8');
+      const stat = fs.lstatSync(spec.filePath);
+      const identity = current === spec.content ? original.identity : temporaryIdentity;
+      if (!identity || !stat.isFile() || stat.nlink !== 1
+        || stat.dev !== identity.dev || stat.ino !== identity.ino
+        || (current !== spec.content && current !== updated && current !== `${updated}\n`)) {
+        throw new Error('Spec changed during corrective evidence rollback');
+      }
+      if (fs.existsSync(temporary)) {
+        assertSafeWritePath(root, temporary);
+        const stat = fs.lstatSync(temporary);
+        const expected = updated.endsWith('\n') ? updated : `${updated}\n`;
+        if (!stat.isFile() || stat.nlink !== 1 || !temporaryIdentity
+          || stat.dev !== temporaryIdentity.dev || stat.ino !== temporaryIdentity.ino
+          || fs.readFileSync(temporary, 'utf8') !== expected) {
+          throw new Error('Corrective evidence temporary file changed during rollback');
+        }
+        fs.unlinkSync(temporary);
+      }
+      if (current !== spec.content) {
+        // Restore exact bytes, including a missing final newline.
+        fs.writeFileSync(temporary, spec.content, { flag: 'wx' });
+        fs.renameSync(temporary, spec.filePath);
+      }
+    } catch (rollbackError) {
+      throw new AggregateError([error, rollbackError],
+        `Corrective evidence failed (${error.message}); bounded rollback also failed (${rollbackError.message}). Preserve remaining evidence for explicit recovery.`);
+    }
+    throw error;
+  }
+}
+
+// The batch owns temporary cleanup. The shared atomic writer removes its
+// temporary in finally, which would erase a concurrent edit before rollback
+// could check ownership.
+function publishCorrectiveFile(filePath, content, rememberTemporary, original = null) {
+  const temporary = `${filePath}.tmp-${process.pid}`;
+  const descriptor = fs.openSync(temporary, 'wx');
+  try {
+    // Capture the created inode before publication can fail or another actor
+    // can replace the path with equal bytes. Contents alone prove no ownership.
+    rememberTemporary(fs.fstatSync(descriptor));
+    fs.writeFileSync(descriptor, content.endsWith('\n') ? content : `${content}\n`);
+  } finally {
+    fs.closeSync(descriptor);
+  }
+  if (original) {
+    const stat = fs.lstatSync(filePath);
+    if (!stat.isFile() || stat.nlink !== 1 || stat.dev !== original.identity.dev
+      || stat.ino !== original.identity.ino || fs.readFileSync(filePath, 'utf8') !== original.content) {
+      throw new Error(`Corrective destination changed before publication: ${filePath}`);
+    }
+  } else if (fs.existsSync(filePath)) {
+    throw new Error(`Corrective destination became occupied: ${filePath}`);
+  }
+  fs.renameSync(temporary, filePath);
 }
 
 function requiredString(value, message) {
@@ -1108,6 +1304,7 @@ function retiredTaskEntry(task) {
     proof: task.proof ?? null,
     source: 'retired-record',
     history: true,
+    phase: task.phase ?? 'pre-delivery',
     plannedVerification: task.plannedVerification ?? null,
     decisions: taskDecisions(task.content)
   };
@@ -1130,6 +1327,8 @@ function taskEntry(slice) {
     blockers: slice.blockers,
     proof: slice.proof ?? null,
     source: slice.source,
+    // S-006K TK-00B5: only a Task record can declare a post-delivery phase.
+    phase: slice.record?.phase ?? 'pre-delivery',
     // S-00J TK-01R: a table-row Task has no body, so its decision coverage
     // is unknown; a record's is read from its own `## Decisions` section.
     decisions: slice.source === 'record' ? taskDecisions(slice.record.content) : unknownDecisions()
@@ -1157,6 +1356,7 @@ function historyTaskEntry(row) {
     proof: row.proof ?? null,
     source: 'row',
     history: true,
+    phase: 'pre-delivery',
     decisions: unknownDecisions()
   };
 }
@@ -1167,8 +1367,13 @@ function historyTaskEntry(row) {
 function parseAcceptance(content) {
   const body = section(content, 'Acceptance Criteria');
   const lines = [];
-  for (const match of body.matchAll(/^- \[([ xX])\]\s*(.*)$/gm)) {
-    lines.push({ checked: match[1].toLowerCase() === 'x', text: match[2].trim() });
+  // S-006K TK-00B5: a `### Post-delivery acceptance` subsection holds the
+  // lines Deliver and Cleanup satisfy; any other `###` heading ends it.
+  let phase = 'pre-delivery';
+  for (const line of body.split('\n')) {
+    if (/^### /.test(line)) phase = POST_DELIVERY_ACCEPTANCE_HEADING.test(line) ? 'post-delivery' : 'pre-delivery';
+    const match = line.match(/^- \[([ xX])\]\s*(.*)$/);
+    if (match) lines.push({ checked: match[1].toLowerCase() === 'x', text: match[2].trim(), phase });
   }
   return lines;
 }
@@ -1189,7 +1394,7 @@ function parseEvidence(content) {
   return { header, rows };
 }
 
-function collectGaps({ tasks, acceptance, completionResult, evidence }) {
+function collectGaps({ tasks, acceptance, completionResult, evidence, postDeliveryTasks = new Set() }) {
   const gaps = [];
   for (const task of tasks) {
     if (task.status !== 'done') gaps.push(`Task ${task.id} is ${task.status}, not done`);
@@ -1205,7 +1410,7 @@ function collectGaps({ tasks, acceptance, completionResult, evidence }) {
     const named = evidence.rows.some((row) => row.cells.some((cell) => cell.includes(id)));
     if (!named) gaps.push(`Evidence log names no row for done Task ${id}`);
   }
-  gaps.push(...collectVerificationGaps(acceptance, evidence));
+  gaps.push(...collectVerificationGaps(acceptance, evidence, postDeliveryTasks));
   return gaps;
 }
 
@@ -1252,16 +1457,24 @@ function recordsCheckResult(cell, promise) {
   });
 }
 
-function collectVerificationGaps(acceptance, evidence) {
+function collectVerificationGaps(acceptance, evidence, postDeliveryTasks = new Set()) {
   // The existing six-cell log contract puts Event and Verification in cells
   // 2 and 3 (the same positions as the native close/verdict writers). Only
   // an exact native close event establishes the boundary; row order wins
   // over dates, including a continued Task closed (run N) on the same day.
-  const lastClose = evidence.rows.findLastIndex((row) => /^Task closed(?: \(run \d+\))?$/.test(row.cells[2] ?? ''));
-  if (lastClose < 0) return [];
-  const later = evidence.rows.slice(lastClose + 1);
+  // S-006K TK-00B5: a pre-delivery line is bounded by the last
+  // pre-delivery close, so a later Deliver/Cleanup close cannot reopen a
+  // verified pre-delivery line; a post-delivery line by the last close of any
+  // Task. A line deferred to post-delivery has nothing to verify yet.
+  const isClose = (row) => /^Task closed(?: \(run \d+\))?$/.test(row.cells[2] ?? '');
+  const lastPreClose = evidence.rows.findLastIndex((row) => isClose(row) && !postDeliveryTasks.has((row.cells[1] ?? '').trim()));
+  const lastAnyClose = evidence.rows.findLastIndex(isClose);
   const gaps = [];
   acceptance.forEach((line, index) => {
+    if (line.deferred) return;
+    const lastClose = line.phase === 'post-delivery' ? lastAnyClose : lastPreClose;
+    if (lastClose < 0) return;
+    const later = evidence.rows.slice(lastClose + 1);
     const promise = line.checked ? verificationPromise(line.text) : null;
     if (promise && !later.some((row) => recordsCheckResult(row.cells[3] ?? '', promise))) {
       gaps.push(`Acceptance line ${index + 1} is checked but no evidence row after the last Task close records its verification`);
@@ -1443,13 +1656,21 @@ export function formatSpecReport(report) {
   for (const task of report.tasks) {
     const runs = task.receipt ? `, runs ${task.receipt.runCount}` : '';
     const history = task.history ? ' [history]' : '';
-    lines.push(`  ${task.id} ${task.status} (source: ${task.source}${runs})${history}`);
+    const phase = task.phase === 'post-delivery' ? ' [post-delivery]' : '';
+    lines.push(`  ${task.id} ${task.status} (source: ${task.source}${runs})${history}${phase}`);
   }
   if (report.decisionCoverage.unknown.length > 0) {
     lines.push(`Decision coverage unknown: ${report.decisionCoverage.unknown.join(', ')} (no ## Decisions section; informational, not a gap)`);
   }
   lines.push(`Gaps (${report.gaps.length}):`);
   for (const gap of report.gaps) lines.push(`  - ${gap}`);
+  // S-006K TK-00B5: shown only when the Spec declares post-delivery work, so
+  // a reviewer sees what the pre-delivery Judge binds versus what Complete owes.
+  if (report.postDelivery && (report.postDelivery.tasks.length > 0 || report.postDelivery.acceptance.length > 0)) {
+    lines.push(`Post-delivery (Deliver -> Cleanup): Tasks ${report.postDelivery.tasks.join(', ') || 'none'}; acceptance lines ${report.postDelivery.acceptance.join(', ') || 'none'}`);
+    lines.push(`Pre-delivery gaps (${report.preDeliveryGaps.length}):`);
+    for (const gap of report.preDeliveryGaps) lines.push(`  - ${gap}`);
+  }
   return lines.join('\n');
 }
 
@@ -1770,16 +1991,11 @@ export function recordLandmarkVerdict(rootDir, landmarkId, options = {}) {
       reached = true;
     }
   }
-  atomicWrite(parent.filePath, content);
+  const correction = appendCorrectiveEvidence(root, parent, content,
+    result === 'fail' ? () => createCorrectiveTasks(root, parent.id, { candidate, findings }) : null);
+  const correctiveTasks = correction?.created;
+  const continuedTasks = correction?.continued;
 
-  // Row-then-Tasks, exactly as `recordReviewVerdict`: the row is durable
-  // first, and `createCorrectiveTasks(root, LMK-###, ...)` is the recovery
-  // call if the process stops between the two.
-  let correctiveTasks;
-  let continuedTasks;
-  if (result === 'fail') {
-    ({ created: correctiveTasks, continued: continuedTasks } = createCorrectiveTasks(root, parent.id, { candidate, findings }));
-  }
   return {
     landmarkId: parent.id, candidate, result, findings, reviewer, date, remainingGap, digest, digest12, ordinal, row,
     ...(result === 'pass' ? { reached, notReached } : {}),

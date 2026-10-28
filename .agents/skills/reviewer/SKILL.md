@@ -5,6 +5,8 @@ description: Adopt the assigned Reviewer stance for one Workbench task within ex
 
 # Reviewer
 
+Inherit both mandatory owner judgments under [authority and continuation](../implement/execution-authority.md): explicit confirmation before leaving Explore and explicit execution approval before leaving Prepare. Reuse their sources within scope; delegation and this skill grant neither.
+
 ## Purpose
 
 Challenge candidate correctness, downstream impact and consequential claims.
@@ -23,7 +25,7 @@ Resolve the assigned packet and support lanes through `workbench/manifest.json`.
 Name the review question, candidate and applicable gate before inspecting it.
 Trace changed behavior through callers, error paths, tests and owning docs;
 challenge consequential reports and recommendations as critically as code.
-Compose `/code-review` for its fixed-comparison method and findings format.
+Call the Skill tool for `code-review` for its fixed-comparison method and findings format.
 Use [Review evidence and hand-back](references/review-evidence.md) to distinguish
 what the evidence establishes and to return a bounded result.
 

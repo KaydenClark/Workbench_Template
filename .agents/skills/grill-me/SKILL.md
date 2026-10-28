@@ -4,8 +4,8 @@ description: Start a saved design inquiry, keeping sourced answers, pending read
 disable-model-invocation: true
 ---
 
-`grill-me` composes [`grilling`](../grilling/SKILL.md) for the interview and
-[`jot`](../jot/SKILL.md) for continuity. Read both before asking the first
+Call the Skill tool for [`grilling`](../grilling/SKILL.md) for the interview and
+call the Skill tool for [`jot`](../jot/SKILL.md) for continuity. Read both before asking the first
 question. This entry adds no authority or new knowledge store.
 
 ## Bind the topic
@@ -49,8 +49,8 @@ This final check complements timely capture.
 For authorized decision publication in LLM Workbench, use the confirmed
 settled-decision readback and the owner's publication request. Preserve each
 decision's question ID, exact source, revision, rationale, corrections and
-endpoint in its Wiki topic. The assigned agent may carry out
-one `promote-decision` run per decision directly or delegate using those pointers
+endpoint in its Wiki topic. The assigned agent may call the Skill tool for
+`promote-decision` once per decision directly or delegate using those pointers
 and the project root through the `AGENTS.md` Skill Map route. It stops after
 Record and checked integration publication. Prepare a capability through Map
 and Plan only when that separate endpoint is requested; start Journey only

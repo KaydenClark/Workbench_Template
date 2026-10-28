@@ -5,20 +5,22 @@ description: Persist already-authorized Workbench work in its existing owner, pr
 
 # Save
 
+Inherit both mandatory owner judgments under [authority and continuation](../implement/execution-authority.md): explicit confirmation before leaving Explore and explicit execution approval before leaving Prepare. Reuse their sources within scope; delegation and this skill grant neither.
+
 Save completed work and the context needed to continue it. This skill adds no
 authority, authoring assignment, implementation loop or publication permission.
 Read the current Contract and `workbench/manifest.json`; resolve scope and
 owners before writing. Governance roles are relative to the target; distinguish governing claims,
 evidence, rationale and proposals within their maintained owner.
 
-1. Inventory only the work already authorized. Use `jot` for meaningful
+1. Inventory only the work already authorized. Call the Skill tool for `jot` for meaningful
    unresolved context, corrections and the next executable action in its Wiki
    topic. Preserve claim status, sources and history. New project context is shared
    by default; include its page and route in authorized publication. Review sources
    and exposure. Explicit private capture, legacy notes and handoffs stay ignored;
    this save grants no private-to-tracked transfer.
-2. Route supported durable truth through `to-docs` to the existing owner.
-   When selected Wiki or legacy note material needs promotion, compose `promote` within
+2. Call the Skill tool for `to-docs` to route supported durable truth to the existing owner.
+   When selected Wiki or legacy note material needs promotion, call the Skill tool for `promote` within
    the same authorization. Do not create an owner, decision or assignment
    merely to have something to save. An ADR in `workbench/docs/adr/` retains
    rationale and active accepted architectural decisions;
@@ -51,15 +53,17 @@ and next action. Finishing a Task is not reconciliation: its notes stay
 available until their unresolved context reaches a durable owner.
 Do not make an ordinary local save wait for optional network access. Never
 copy raw working context into a tracked checkpoint. Preserve existing frozen
-checkpoints and unresolved/correction/handoff dependencies; cleanup composes
+checkpoints and unresolved/correction/handoff dependencies; for cleanup, call the Skill tool for
 `notepad` only for legacy cleanup after verified reconciliation; keep Wiki
-claim history and correct it through `jot`.
+claim history; call the Skill tool for `jot` to correct it.
 
 At checkpoint, handoff or yield, update existing source owners first and follow
 [STARTUP reconciliation](../../../STARTUP.md#reconcile). Only its named writer
 updates the shared view; other lanes submit source changes and proposed summaries.
 Verify source freshness on resume and distinguish local, pushed and fetched
 integration state. An unreconciled scaffold grants no authority.
+
+Before yielding, call the shared [workspace closeout procedure](../implement/workflow-reference.md#workspace-closeout), including when publication is blocked.
 
 ## Publication
 
@@ -103,7 +107,7 @@ continuation through `jot` or a referenced legacy note, and reports the recovery
 verified. `promote` distills selected supported material, including corrections,
 through authorized `to-docs` edits for Wiki claims or the direct owner promotion
 command for legacy JSON in the [`promote` skill](../promote/SKILL.md#command-reference),
-then composes `save` for the
+then calls the Skill tool for `save` for the
 already-promoted result. Neither starts implementation or grants broader scope.
 Explicit invocation and composition are distinct from mention. A promotion that
 was already performed must not be recursively promoted by save.

@@ -7,10 +7,14 @@ import { pathToFileURL } from 'node:url';
 
 export const SCHEMA_VERSION = 2;
 // S-00V TK-001: `skills` is the seventh lane. Every room carries the core
-// skills it needs at `workbench/skills`, owned and versioned by LLM Workbench
-// and replaced by the ordinary Workbench update, so a fresh clone discovers
-// them without a provider home. Rooms stamped before the lane existed still
-// declare the six-lane shape below; `validateManifest` reads both.
+// skills it needs, owned and versioned by LLM Workbench and replaced by the
+// ordinary Workbench update, so a fresh clone discovers them without a
+// provider home. S-006I TK-00BQ (ADR-001M): the lane is the host discovery
+// directory `.agents/skills` itself, and `.claude/skills` is one relative link
+// to it, so each skill name has one copy. Rooms stamped before the lane
+// existed declare the six-lane shape below, and rooms on the retired
+// `workbench/skills` lane declare LEGACY_SKILLS_LANES; `validateManifest`
+// reads all three until the managed update migrates them.
 export const LANES = Object.freeze({
   docs: 'workbench/docs',
   specs: 'workbench/specs',
@@ -18,8 +22,16 @@ export const LANES = Object.freeze({
   sessions: 'workbench/sessions',
   feedback: 'workbench/feedback',
   tools: 'workbench/tools',
-  skills: 'workbench/skills'
+  skills: '.agents/skills'
 });
+export const SKILLS_LANE = LANES.skills;
+export const LEGACY_SKILLS_LANE = 'workbench/skills';
+export const LEGACY_SKILLS_LANES = Object.freeze({ ...LANES, skills: LEGACY_SKILLS_LANE });
+// The only two places a skills lane may be declared: the current discovery
+// directory, or the retired lane a v3.2.1 room still carries.
+export function isSkillsLane(value) {
+  return value === SKILLS_LANE || value === LEGACY_SKILLS_LANE;
+}
 export const SIX_LANES = Object.freeze(Object.fromEntries(Object.entries(LANES).filter(([name]) => name !== 'skills')));
 export const COLLECTIONS = Object.freeze({
   adr: 'workbench/docs/adr',
@@ -142,7 +154,7 @@ export function findRoot(start = process.cwd()) {
 export function laneRelative(root, name) {
   if (!Object.hasOwn(LANES, name)) throw new Error(`unknown lane: ${name}`);
   const declared = readManifest(root)?.lanes?.[name];
-  if (declared !== undefined && !isSafeRelative(declared)) {
+  if (declared !== undefined && !(name === 'skills' ? isSkillsLane(declared) : isSafeRelative(declared))) {
     const failure = new Error(`manifest lane ${name} is unsafe: ${declared}`);
     failure.code = 'invalid-lane';
     throw failure;

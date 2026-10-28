@@ -1,6 +1,6 @@
 ---
 name: domain-modeling
-description: Build and sharpen a room's domain model while choices are still upstream - challenge conflicting and overloaded terms, probe boundaries with concrete scenarios, check claims against source, and trace what a proposed name, boundary or relationship would touch before it settles. Captures labeled pending meaning in the topic Wiki and hands confirmed meaning to promotion; offers an ADR or DDR only when it qualifies. Use when reworking terminology or a concept, often beside grilling.
+description: Build and sharpen a room's domain model while choices are still upstream - challenge conflicting and overloaded terms, probe boundaries with concrete scenarios, check claims against source, and trace what a proposed name, boundary or relationship would touch before it settles. Captures labeled pending meaning in the topic Wiki and writes confirmed vocabulary into the glossary during the session; offers an ADR or DDR only when it qualifies. Use when reworking terminology or a concept, often beside grilling.
 ---
 
 # Domain Modeling
@@ -8,7 +8,7 @@ description: Build and sharpen a room's domain model while choices are still ups
 Actively build and sharpen the project's domain model as you design. This is
 the *active* discipline: challenging terms, inventing edge-case scenarios,
 tracing what a choice will touch while it is still cheap to change, and
-capturing what crystallises so it can be promoted. (Merely *reading* the
+writing confirmed glossary definitions as they crystallise. (Merely *reading* the
 vocabulary is not this skill: that's a one-line habit any skill can do. This
 skill is for when you're changing the model, not just consuming it.)
 
@@ -93,25 +93,34 @@ including a later one that lists owners an earlier turn already named. This is
 a bounded trace of the owners the choice reaches, not an audit of the whole
 room.
 
-### Capture, then promote
+### Update GLOSSARY.md on confirmation
 
-Matt's source updates the glossary inline the moment a term resolves; here
-there is no inline write. While the concept is being aligned, intent, pending
-interpretations, corrections and proposed vocabulary go into the objective's
-topic through the [`jot` skill](../jot/SKILL.md), with the owners each
-would reach. Don't batch these up: capture them as they happen. Saving is not
-settling: only the owner's explicit confirmation
-settles a meaning, and an unresolved contradiction stays recorded as
-unresolved.
+Before confirmation, call the Skill tool for `jot` to keep pending
+interpretations, proposed terms and linked corrections in the topic Wiki
+([capture procedure](../jot/SKILL.md)).
+Don't batch these up: capture them as they happen. Saving is not settling:
+only the owner's explicit confirmation settles a meaning. An agent's
+recommendation, silence or an unresolved contradiction is not confirmation.
 
-Settled meaning reaches its owner through the ordinary promotion route (the
-[`promote` skill](../promote/SKILL.md), or `to-docs` within an authorized
-documentation pass): confirmed canonical vocabulary to `GLOSSARY.md`, or to
-`LEXICON.md` where the room has no glossary yet; capability requirements to
-their Spec; richer explanation to the Wiki. No inline glossary, Lexicon, Spec,
-control or decision-record write happens while aligning. Wiki knowledge stays
-labeled and source-linked; private capture stays ignored, and shared capture
-requires deliberate exposure review.
+When the owner explicitly confirms a term's definition, update `GLOSSARY.md`
+right there, using [GLOSSARY-FORMAT.md](GLOSSARY-FORMAT.md).
+Do not ask for a separate promotion approval or wait for the interview to end. This scoped glossary write is authorized by
+confirmation of that definition. Confirmation of a different claim does not
+settle a term the agent inferred from it.
+
+Read the current vocabulary owner before editing; preserve unrelated entries
+and concurrent changes. In an unmigrated room without a glossary, update its
+existing `LEXICON.md` vocabulary owner in its current format rather than create
+a competing glossary. Read back the saved entry and check its format and
+relevant links. Keep the sourced confirmation and superseded wording in Jot;
+private capture stays ignored and private source content needs specific
+exposure approval before a shared write. If the write fails, retain the
+confirmed claim and report the unsaved entry instead of claiming success.
+
+This writes vocabulary only. Confirmation does not authorize implementation,
+a Spec requirement change, a control change, acceptance of a decision record,
+publication or a merge. Those follow their own scoped procedures, including
+[`promote`](../promote/SKILL.md) and [`to-docs`](../to-docs/SKILL.md).
 
 `GLOSSARY.md` should be totally devoid of implementation details. Do not treat
 `GLOSSARY.md` as a spec, a scratch pad, or a repository for implementation
@@ -132,9 +141,9 @@ If any of the three is missing, skip the record and say which test failed.
 Choose the kind by the scope test: would the choice still hold if the
 architecture were rebuilt differently? Yes selects a DDR, a destination choice
 about what the product must be or do; no selects an ADR, an architectural
-choice. Offering is not writing. An accepted offer is written at Map through
-`to-docs` with the manifest-aware `adr.mjs` (the
-[decision-record procedure](../to-docs/SKILL.md#decision-records)), into the
+choice. Offering is not writing. For an accepted offer at Map, call the Skill tool for `to-docs`
+to write it with the manifest-aware `adr.mjs` (the
+[decision-record procedure](../to-docs/SKILL.md#decision-records)) in the
 `adr` or `ddr` collection `workbench/manifest.json` declares (by default
 `workbench/docs/adr` and `workbench/docs/ddr`).
 
@@ -144,16 +153,16 @@ Each change from the upstream source, and why:
 
 - **Description and trigger** rewritten around changing the model beside
   grilling, dropping upstream's "writing or editing a GLOSSARY.md, or recording
-  or editing an ADR" trigger, because this skill never writes the glossary or a
-  decision record itself.
+  or editing an ADR" trigger, because this skill writes explicitly confirmed vocabulary during modeling
+  and offers decision records through the room’s existing procedure.
 - **Upstream consequence trace** added, in the opening and its own section,
   because the owner's use of this skill is to see the downstream impact of a
   name or boundary while still upstream.
-- **Capture in the Wiki and promotion** replace the inline glossary update
-  and the opening's "writing the glossary and decisions down the moment they
-  crystallise", because a Workbench answer does not enter Canon inline:
-  confirmation settles meaning and promotion writes the owner. Upstream's
-  timing is kept: items are captured as they happen, never batched.
+- **Capture in the Wiki and confirmed glossary writes** qualify upstream's
+  inline update, because the owner requires explicit confirmation before a
+  definition enters Canon. Pending meaning and corrections are captured as
+  they happen; the confirmed definition is written during the same session,
+  without a second promotion approval.
 - **Vocabulary owner routing** replaces upstream's file-structure trees: it
   reads `GLOSSARY.md` when present and the current `LEXICON.md` otherwise, and
   names the Spec, Wiki and decision-record owners, because the glossary
@@ -162,8 +171,8 @@ Each change from the upstream source, and why:
   glossary challenge reads "the vocabulary owner" where upstream names
   `GLOSSARY.md`, and the link to the glossary format moves into this section.
 - **No lazy file creation**: upstream's rule to create a glossary or ADR
-  directory when first needed is dropped, because promotion creates or updates
-  an owner and this skill writes none.
+  directory when first needed is dropped, because an unmigrated room already has a vocabulary owner; this skill
+  updates that owner rather than create a glossary beside it.
 - **One question at a time inside grilling's rhythm** added, because stacked
   challenges break the question and pending-readback rhythm the owner answers
   in.

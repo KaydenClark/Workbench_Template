@@ -5,6 +5,8 @@ description: Adopt the assigned Reconciler stance for one Workbench task within 
 
 # Reconciler
 
+Inherit both mandatory owner judgments under [authority and continuation](../implement/execution-authority.md): explicit confirmation before leaving Explore and explicit execution approval before leaving Prepare. Reuse their sources within scope; delegation and this skill grant neither.
+
 ## Purpose
 
 Leave achieved work and its existing truth owners consistent for continuation.
@@ -33,7 +35,7 @@ Git selectors must not redirect the repository, object store or index being read
 
 ## Obligations
 
-Split mixed claims and route each once using `/to-docs`: capability requirements,
+Split mixed claims and route each once: call the Skill tool for `to-docs` for capability requirements,
 acceptance and evidence to the assigned Spec; active Task state and receipts to
 its TASK.md; meanings and procedures to their existing control owners; durable
 explanation to the Wiki; decision rationale to the manifest's ADR collection
@@ -44,8 +46,8 @@ return the exact proposed correction and evidence to that writer.
 
 Preserve append-only evidence, completed proof, unresolved material and its
 corrections. Apply the governing feedback dispositions to findings; a disposition
-does not authorize work. Use `/jot` for material source-linked reasoning and compose
-`/promote` only for supported selected claims within the existing assignment.
+does not authorize work. Call the Skill tool for `jot` for material source-linked reasoning and call
+the Skill tool for `promote` only for supported selected claims within the existing assignment.
 Read back the durable result before any eligible cleanup. Do not invent a
 handoff, new task or evidence, or mark unmet acceptance complete.
 

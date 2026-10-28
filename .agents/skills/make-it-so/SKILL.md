@@ -3,6 +3,8 @@ name: make-it-so
 description: Carry the specific settled work the user approves through its requested endpoint, composing promotion, specification and implementation only where authorized. Use an explicit invocation; a passing mention grants nothing.
 ---
 
+Inherit both mandatory owner judgments under [authority and continuation](../implement/execution-authority.md): explicit confirmation before leaving Explore and explicit execution approval before leaving Prepare. Reuse their sources within scope; delegation and this skill grant neither.
+
 Resolve the particular settled work and the user's endpoint before composing
 helpers. The current request controls every step. A specification-only,
 promotion-only or handoff-only request remains exactly that scope, even when
@@ -11,24 +13,24 @@ choices or as permission supplied by a notepad. Without a narrower endpoint,
 explicit approval to build includes the agreed implementation and authorized
 recovery under the project Contract; main publication stays owner-controlled.
 
-Read the Contract and `workbench/manifest.json`. Compose `jot` to recover the relevant topic Wiki and referenced legacy note for the matching
+Read the Contract and `workbench/manifest.json`. Call the Skill tool for `jot` to recover the relevant topic Wiki and referenced legacy note for the matching
 objective, verify live state and retrieve decisions with their corrections.
 Preserve original wording, lineage and open/tentative status. A stale note or
 compacted chat is evidence to reconcile; neither outranks the current request.
 If only conversation context exists, save material context before it can be lost.
 
 1. State the settled scope, excluded actions and endpoint.
-2. Compose `promote` and `to-docs` for supported claims into the existing
+2. Call the Skill tool for `promote` and call the Skill tool for `to-docs` to route supported claims into the existing
    authorized owners. Promotion may complete the request without implementation.
-3. Compose `to-spec` for required capability specifications and `to-tasks`
+3. Call the Skill tool for `to-spec` for required capability specifications and call the Skill tool for `to-tasks`
    only for their authorized delivery slices. Use the existing owner rather
    than restarting settled decisions or manufacturing work.
-4. Verify and persist the achieved documents with `save` under the authorized
-   recovery boundary. A requested handoff composes `handoff` as Markdown and
+4. Verify and persist the achieved documents by calling the Skill tool for `save` under the authorized
+   recovery boundary. For a requested handoff, call the Skill tool for `handoff` to author Markdown that
    carries the same scope. Stop here when this is the requested endpoint.
-5. Only where implementation is authorized, compose `carry` within the assigned
+5. Only where implementation is authorized, call the Skill tool for `carry` within the assigned
    role: Director coordinates Dispatchers, Dispatcher coordinates Workers, and
-   Workers compose `implement` for the selected Tasks. Keep one lead responsible for evidence and docs;
+   Workers call the Skill tool for `implement` for the selected Tasks. Keep one lead responsible for evidence and docs;
    verify, write each Task's merge answers, obtain the assembled Spec's independent
    Verify review and prove remote containment
    before claiming delivery. Continue independent authorized slices if another
@@ -44,6 +46,7 @@ must not be converted into new authority by a helper.
 
 After resolving the requested scope, compose the smallest behavior already
 authorized by ordinary language; do not wait for a second skill invocation.
+Call the Skill tool for each selected behavior within that endpoint.
 Answer a question about whether an action is possible or reasonable at that
 endpoint. It assigns neither the action nor an additional readiness audit.
 

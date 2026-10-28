@@ -25,7 +25,7 @@
 // instead of reading it as a Task directory.
 //
 // TT-Q10 (the new-identifier form) is settled: Task identifiers keep the
-// existing `TK-###` form (LEXICON and the grilling destination ledger), and
+// existing `TK-###` form (the glossary's Task entry and the grilling destination ledger), and
 // this reader introduces no other prefix.
 
 import fs from 'node:fs';
@@ -35,6 +35,16 @@ import { parseCapabilityList } from './optional-capabilities.mjs';
 import { escapeMarkdownTableCell, parseMarkdownTableRow } from './markdown-table.mjs';
 
 export const TASK_STATUSES = Object.freeze(['ready', 'in-progress', 'blocked', 'needs-review', 'done', 'deferred']);
+
+// S-006K TK-00B5: the workflow phase a Task serves. Judge (Review -> Verify
+// -> Approve) binds the pre-delivery artifact; Complete (Deliver -> Cleanup)
+// runs after it. An absent field is `pre-delivery`, so every existing record
+// keeps its meaning. A `post-delivery` Task carries a delivery or cleanup
+// obligation: the Spec gate does not wait for it, its claim waits for a
+// passed review and owner approval of the current content, its lifecycle
+// bookkeeping does not move the reviewed digest, and `complete` refuses
+// until it is done.
+export const TASK_PHASES = Object.freeze(['pre-delivery', 'post-delivery']);
 
 // S-00I TK-004: the closed set of lifecycle subfolders a Task directory may
 // move into, beneath its owning Spec's `tasks/` directory (the active
@@ -127,6 +137,10 @@ export function parseTaskRecord(content, filePath, root) {
   if (missingCapabilities.length > 0 && fields.Status !== 'blocked') {
     throw new Error(`${id} records a missing capability but its Status is ${fields.Status}, not blocked`);
   }
+  const phase = fields.Phase ?? 'pre-delivery';
+  if (!TASK_PHASES.includes(phase)) {
+    throw new Error(`${id} has an invalid Phase "${phase}"; the closed set is ${TASK_PHASES.join(', ')}`);
+  }
   const claimedBy = parseClaimedBy(fields['Claimed by'], id);
   let currentClaimant = null;
   if (/^\*\*Current claimant:\*\*/m.test(content)) {
@@ -150,6 +164,7 @@ export function parseTaskRecord(content, filePath, root) {
     landmarkId,
     slice: fields.Slice,
     status: fields.Status,
+    phase,
     blockers: parseBlockers(fields.Blockers, id),
     destination: parseDestination(fields.Destination, id),
     capabilities,

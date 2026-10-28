@@ -11,7 +11,7 @@ Operate the Workbench runtime tools the room has installed in its
 manifest-declared tools lane (`workbench/tools/`): read what a finding means and
 what it blocks, repair the installed state the harness wrote, allocate visible
 identifiers, keep the room's connection identity, check what a configured host
-can do, and add a room-local skill to the `workbench/skills` lane. Each
+can do, and add a room-local skill to the `.agents/skills` lane. Each
 section below carries one operation's procedure.
 
 ## Method
@@ -27,8 +27,8 @@ A tool reports without manufacturing authority. Act on a finding's registered
 blocking effect, never on a guess about it, and do not invent a command, a
 finding code or an effect the installed runtime does not have. Repair only with
 the command a section names, within the current assignment; read-only
-validation never repairs. Decision records (the ADR collection in
-`workbench/docs/adr/` and its destination sibling) follow the `to-docs` skill.
+validation never repairs. For decision records (the ADR collection in
+`workbench/docs/adr/` and its destination sibling), call the Skill tool for `to-docs`.
 
 ## Completion
 
@@ -48,7 +48,7 @@ spec, manifest, or projection can choose whether its own finding blocks.
 | `all` | `doctor` exits 1; `next` and `claim` refuse to read the layout | `invalid-manifest`, `upgrade-required`, `invalid-lane`, `unsafe-lane`, `invalid-collection`, `missing-collection`, `invalid-skill-policy`, `invalid-wiki-profile`, `sessions-not-ignored`, `tools-receipt-missing`, `tools-receipt-drift`, and the Genesis readiness codes |
 | `selection` | `doctor` exits 1 until repaired; selection is unsafe | `malformed-spec`, `duplicate-id`, `invalid-state`, `contradictory-state`, `unstable-path`, `missing-evidence`, `render-drift`, `broken-render-target`, `row-record-collision`, `receipt-corrupt` |
 | `selected-slice` | `doctor` reports it and exits 0; `next` excludes the slice; `claim` refuses it by name | `blocked-slice` |
-| `none` (attention) | reported, exit 0, never hides work | `stale-claim`, `broken-link`, `complete-on-integration`, `stale-register`, `stale-note`, `stale-skill`, `skill-generation-unknown`, `room-brain-unrouted`, `stale-stamp`, `stale-seed`, `unverified-provenance`, `legibility-undeclared` and `legibility-unconfirmed` (scope `manifest`), `detached-head` and `untracked-controls` (scope `git`), and the ADR and wiki findings until their tools ship |
+| `none` (attention) | reported, exit 0, never hides work | `stale-claim`, `broken-link`, `complete-on-integration`, `stale-register`, `retired-owner-unverified`, `stale-note`, `stale-skill`, `skill-generation-unknown`, `room-brain-unrouted`, `stale-stamp`, `stale-seed`, `unverified-provenance`, `legibility-undeclared` and `legibility-unconfirmed` (scope `manifest`), `detached-head` and `untracked-controls` (scope `git`), and the ADR and wiki findings until their tools ship |
 
 `legibility-undeclared` names missing, empty or bracketed-placeholder entries
 in the manifest's runtime surface. `legibility-unconfirmed` reports its
@@ -80,9 +80,10 @@ the top: `blocking (N)` first (effects `all` and `selection`), then
 Grouping is presentation: an `error` under `informational` is still an `error`
 in the registry and in `--json`; it simply stops nothing.
 
-The `skills` scope reads the room's `workbench/skills` lane and its
-`.agents/skills` and `.claude/skills` adapters; the retired `--home` option
-is ignored, and doctor never reads or writes a provider home.
+The `skills` scope reads the room's `.agents/skills` lane and its
+`.agents/skills` and `.claude/skills` adapters. Doctor reads personal discovery
+roots for conflicts without writing; `--home PATH` selects an alternate home
+for that read-only check.
 `skill-lane-missing` and `skill-lane-unreadable` are errors with effect
 `none` (repair them with the release checkout's `workbench-skills.mjs install`
 or `update --explicit-update`; the Genesis readiness gate fails closed on
@@ -159,7 +160,10 @@ frontmatter, a retired `authority` property, an enum outside `type`,
 absolute or traversing `source_paths` entry, a duplicated note basename, and a
 `design-concepts/` article that lacks `type: design-concept`,
 `authorized_by`, `parent`, or its `Evidence and Sources` and `History`
-sections. `copied-task-state` flags generated-region markers or task rows
+sections, and a lexicon article (a note declaring `glossary_term:`) whose term
+is not a `**Term**:` entry in the root `GLOSSARY.md`, that does not link that
+file, or that sits in a room with no `GLOSSARY.md`; a page declaring no term
+needs no glossary entry. `copied-task-state` flags generated-region markers or task rows
 copied into a note; `secret-like-content` flags key blocks, tokens,
 credential assignments, absolute home paths, host temp handoff lanes, and
 email addresses in a `normal` note (the shared `workbench/tools/privacy.mjs`
@@ -228,7 +232,16 @@ themselves live in `workbench-layout.mjs`, which owns seeding and provenance.
 ```bash
 node workbench/tools/workbench-layout.mjs seed-documents --project /absolute/project
 node workbench/tools/workbench-layout.mjs record-source --project /absolute/project
+node workbench/tools/workbench-layout.mjs retire-lexicon --project /absolute/project
 ```
+
+`retire-lexicon` is the explicit operator step that deletes a room's archived
+`LEXICON.md`: `migrate` and Adoption never delete it, they report it
+`archived` once every line has landed (owner decision, PR431 comment
+6270358739). The command reruns that report, requires `wiki.mjs validate` to
+report no error, backs the file up in the recovery collection, removes it and
+reports `retired`; any finding reports `refused` and changes nothing. The
+[update-harness skill](../update-harness/SKILL.md) carries the procedure.
 
 `seed-documents` copies the seeded lane documents this release carries
 (currently `workbench/feedback/REPORT_FORMAT.md`) and records the generation of
@@ -250,6 +263,14 @@ and writes nothing, and nothing else in the manifest changes.
 `unverified-provenance` (attention, scope `manifest`) reports a manifest with no
 `provenance.source`, a commit that is not a full 40-character SHA, an empty
 repository, or a `release` that disagrees with `workbenchVersion`.
+
+## Spec Discovery
+
+List Spec records with `node workbench/tools/spec-workbench.mjs list`.
+`--all` includes retired records; `--status STATUS`, `--count` and `--json`
+narrow the output. This reads recorded state; delivery needs source and Git
+proof. Maintained capability knowledge belongs in the existing Wiki Feature
+catalog articles.
 
 ## Visible Identifiers
 
@@ -375,7 +396,7 @@ explicit skill-path invocation alone does not prove automatic discovery.
 
 ## Room-Local Skills
 
-The core skills live in this room's `workbench/skills` lane, laid down from
+The core skills live in this room's `.agents/skills` lane, laid down from
 the LLM Workbench release with a receipt (`.workbench-skills.json`) naming the
 source release, commit and a hash per skill. The tracked `.agents/skills`
 (Codex) and `.claude/skills` (Claude Code) links resolve into the lane, so a
@@ -387,7 +408,7 @@ without repairing them, and `skill-pointer-dangling` for an `AGENTS.md`
 Skill Map entry that names a skill the lane lacks.
 
 For an authorized room-specific extension, keep its sole source in the lane at
-`workbench/skills/NAME/SKILL.md`. Choose a name absent from required core;
+`.agents/skills/NAME/SKILL.md`. Choose a name absent from required core;
 preserve any collision for explicit reconciliation. The tracked
 `.agents/skills` and `.claude/skills` adapters already resolve into the lane,
 so both hosts discover the extension without a second copy or a per-skill
@@ -401,7 +422,7 @@ a resolving adapter alone do not prove native discovery or callability.
 Laying the lane down does not publish room-local source into a personal catalog.
 That acceptance is a separately authorized operation, and a personal catalog
 is never on the room's critical path. Doctor inspects the lane
-and its adapters from the room tree and never reads a provider home. A new
+and its adapters from the room tree, plus personal discovery roots read-only. A new
 room needs no local extension and no
 personal catalog for core save/promote/notepad operation. Genesis's prohibition
 on a root `skills/` core shadow does not prohibit this room-owned source route.
@@ -485,3 +506,26 @@ The sweep writes no file and deletes, merges, pushes, fetches, checks out or
 rewrites nothing; it runs neither a cleanup nor a jot command. A finding is a report row and changes no record by itself.
 Correct the owning Spec or Task record, or the lane, through that owner's
 ordinary work.
+
+## Personal discovery conflicts
+
+Each skill name has one owning scope. A name in the room lane must not also
+appear in `~/.agents/skills`, `~/.claude/skills`, `~/.codex/skills`,
+`~/.gemini/skills` or `~/.copilot/skills`, including links. Doctor reports
+`personal-skill-shadow` as attention with no blocking effect and names the
+paths and host consequences. Missing personal roots are normal; an unreadable
+root is `personal-skill-inspection-unavailable`, not proof of a clean catalog.
+
+Before authorized cleanup, preserve the full personal catalog, Git index,
+local changes and link targets outside scanned roots. Verify backup hashes,
+move only conflicting entries, and verify unrelated files and the index did
+not change. Never replace a personal conflict with a link into one room.
+Backups belong in unscanned storage or Git history and remotes. The personal
+catalog may publish names not owned by the room; `core-skill-installer.mjs`
+refuses personal core install and update. Legacy rollback remains an explicit
+recovery operation and can restore a conflict; rerun doctor afterwards.
+
+Doctor also reports `nested-skill-file`, `skill-file-link` and
+`lane-plugin-manifest` for discovery hazards. Keep exactly the two existing
+repository adapters. After cleanup start a fresh host catalog and verify its
+source paths. A current session may retain an earlier catalog.

@@ -16,11 +16,13 @@ Arrange separate-context review of each immutable assembled candidate and coordi
 
 Keep accepted decisions, progress, branch/candidate references and remaining gates in tracked owners on integration through reviewed changes. Allocate IDs only when the record using them is committed. Route implementation and corrections through the assigned Dispatcher to its Workers. Connected coordination stages may share one Director context; prior involvement still bars independent review. Keep PRs awaiting required review open. Main delivery requires the owner's explicit authority for that specific work and its required checks; out-of-scope work remains unassigned.
 
+Before exit, follow the shared [workspace closeout procedure](../implement/workflow-reference.md#workspace-closeout) for the coordination workspace and its retained work.
+
 At exit, record each Spec's endpoint in its owner: PR, merged SHA, review verdict and remaining gates, or the blocker. Report what landed, what remains and each open owner choice. This report does not claim owner approval.
 
 ## Role and stance coordination
 
-Roles scope assignments; stances supply their job. Follow the Lexicon before
+Roles scope assignments; stances supply their job. Follow the `GLOSSARY.md` role and stance definitions and the `ARCHITECTURE.md` ownership routes before
 assigning Director (project/integration), Dispatcher (one Spec/branch) or Worker
 (one Task). The owner remains the human above the Director, and occupying the
 integration branch adds no authority. Each Worker carries one assigned Task for
@@ -69,8 +71,8 @@ neither Task nor Spec. Run `render` and `doctor` after completion to remove
 the Spec from the hot board and keep outstanding diagnostics visible.
 
 After `complete`, capture current capability knowledge in the manifest-declared
-features collection before retirement or discard. Author a validated, routed
-Wiki feature article naming the Spec's historical route; this is ordinary
+features collection before retirement or discard. Update the existing owning
+Wiki feature article and retain each contributing Spec's historical route; this is ordinary
 documentation work, not a capture CLI command. `uncaptured-complete` reports
 missing capture while the Spec remains complete. Reconcile surviving claims
 into their durable owners before `retire-spec S-### --wiki PATH`; use the
@@ -95,6 +97,12 @@ Examples name S-001/TK-001; substitute the actual IDs and quoted values.
 Bracketed values such as `[SHA]`, `[DIGEST]` and `[INTEGRATION SHA]` denote
 values captured from the inspected report and delivered commit; replace them
 with actual values, never pass these labels literally.
+
+Approve is the last step of Judge: the owner's Human Reviewed Work after a
+passed Review and integration Verify of the same content. It grants no
+delivery; the owner's Ship it does. A post-delivery Task cannot be claimed until
+a passed verdict and this approval bind the current content, and its
+bookkeeping keeps them current.
 
 The owner chooses useful milestones, accumulated work, valued Specs, exhausted
 Specs or Director escalations for Human QA; version cadence is a default, not a
@@ -131,7 +139,8 @@ node workbench/tools/spec-workbench.mjs render
 node workbench/tools/spec-workbench.mjs doctor
 ```
 
-`complete` requires all Tasks done, checked acceptance, a real Completion Result,
+`complete` requires all Tasks done, including every post-delivery Deliver and
+Cleanup Task with its proof, checked acceptance, a real Completion Result,
 evidence, current passed review and owner approval. It verifies the approved
 candidate and unchanged assembled content on observed `origin/main`; a local
 main branch or integration merge is insufficient. Refusals leave state untouched.
@@ -141,13 +150,15 @@ board; outstanding diagnostics remain visible.
 
 ## Documentation: feature capture, retirement and recovery
 
-After complete, author capability knowledge in the manifest-declared `features`
-collection, route it from Wiki MEMORY.md and validate it with the Wiki schema.
+Read and update the existing capability article in the manifest-declared
+`features` collection when work changes its knowledge. After complete, author capability knowledge in that existing `features` article before retirement;
+create an article only when none owns the capability. Route it from Wiki
+MEMORY.md and validate it with the Wiki schema.
 There is no capture CLI. A feature article uses `type: feature`, active status,
 provenance and source_paths naming the Spec's eventual retired route; it explains
 What It Does, Why It Matters, Limits, and Evidence and Sources without copying
-active Task state. Follow [features](../../wiki/features/README.md) and
-[Wiki schema](../../wiki/SCHEMA.md). `uncaptured-complete` is attention while
+active Task state. Follow [features](../../../workbench/wiki/features/README.md) and
+[Wiki schema](../../../workbench/wiki/SCHEMA.md). `uncaptured-complete` is attention while
 the Spec stays complete; missing, invalid or unrouted capture blocks retirement
 and Task/Spec discard. Reconcile surviving claims into their existing owners.
 

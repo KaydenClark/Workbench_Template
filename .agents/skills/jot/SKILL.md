@@ -8,8 +8,10 @@ description: Capture meaningful fresh knowledge, intent, uncertainty or correcti
 Save a small source-linked claim as soon as a useful discovery, owner
 confirmation, approval or correction arrives, before the next dependent action.
 Preserve what a cold agent needs to continue. Verify the write succeeded, then
-continue authorized work. Use the existing topic Wiki page when
-suitable; a new topic uses a flat `context-TOPIC.md` page. A final
+continue authorized work. Resolve the existing article through the Wiki router
+first, including the Feature catalog for capability knowledge. Read and update
+that article with `--page`; a new Spec or chat is not a new topic. Create a flat
+`context-TOPIC.md` page only after checking that no active article owns the subject. A final
 completeness check complements capture while the context is fresh.
 
 Before the first dependent output, jot a source-backed discovery that could
@@ -42,8 +44,8 @@ node workbench/tools/jot.mjs add --topic TOPIC --kind intent --state unresolved 
   --source SAFE_SOURCE_REFERENCE --author AUTHOR --content "Meaningful claim and next relevant question"
 ```
 
-New project context defaults to shared capture: an existing topic page or
-`context-TOPIC.md` in the Wiki lane, eligible for project Git. Review the new
+New project context defaults to shared capture in its existing article, eligible
+for project Git. Search the relevant routes before choosing a new topic page. Review the new
 material and sources before capture. Secrets, raw transcripts and unrelated
 personal context never belong in a jot. Use a safe source reference when source
 contents cannot be shared. Explicit `--visibility private` keeps a permitted
@@ -73,8 +75,8 @@ continuation route. Keep the claim in its topic owner rather than a giant inbox.
 
 ## Publish shared context
 
-Include shared context and its relevant router link in the current authorized
-publication through [`save`](../save/SKILL.md#publication). Capture is immediate;
+For current authorized publication, call the Skill tool for
+[`save`](../save/SKILL.md#publication), including shared context and its relevant router link. Capture is immediate;
 Git publication follows the existing checked workflow, not a PR per jot. Publish
 confirmations and approvals as scoped records even when implementation remains
 unfinished; keep actual state and next action in their existing work owners.
@@ -84,7 +86,7 @@ publication. If blocked, preserve the candidate and state the pending boundary.
 
 ## Retrieve and continue
 
-Follow `AGENTS.md` -> Lexicon -> assigned Spec and Wiki `MEMORY.md`, then read
+Follow `AGENTS.md` -> the `ARCHITECTURE.md` routes -> assigned Spec and Wiki `MEMORY.md`, then read
 only the relevant linked page and source. If the route lacks the needed local
 context, search that topic; use `--include-private` only within unchanged local
 access. Read omitted relevant entries explicitly.
@@ -98,7 +100,7 @@ node workbench/tools/jot.mjs read --page WIKI_PAGE --limit 8 --max-chars 6000
 Read the kind, state, sources and supersession together. Recheck current
 controls and live state before relying on a claim. Load focused context rather
 than the Wiki corpus. Requirements, work state, accepted definitions and
-architectural decisions retain their established owners; compose `to-docs`
+architectural decisions retain their established owners; call the Skill tool for `to-docs`
 for a supported change to those owners. At closeout reconcile important
 unrecorded context, changed claims and current source fidelity; preserve history.
 

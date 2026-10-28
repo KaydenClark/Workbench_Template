@@ -34,9 +34,15 @@ export const PLACES = [
   },
   {
     zone: 'Root controls',
-    path: 'LEXICON.md',
-    owns: 'The accepted meaning of every shared project term.',
+    path: 'GLOSSARY.md',
+    owns: 'The accepted meaning of every shared project term, one `**Term**:` entry each, with deeper explanation linked in the Wiki.',
     why: 'Two agents using one word for two things is the cheapest way to produce contradictory work. Definitions get one address so a disagreement about meaning has somewhere to be resolved.',
+  },
+  {
+    zone: 'Root controls',
+    path: 'ARCHITECTURE.md',
+    owns: 'The ownership map: which file or lane owns each kind of truth, the routes an agent follows to reach it, and the invariants that keep owners apart.',
+    why: 'Knowing where a truth lives is a different question from what a word means or what to build. A routing map that binds nothing can change when a lane moves without touching any rule or definition.',
   },
   {
     zone: 'Root controls',
@@ -81,7 +87,7 @@ export const PLACES = [
     lane: 'docs',
     path: 'workbench/docs',
     owns: 'Long-form supporting documentation that is neither a root control nor a capability spec.',
-    why: 'The root is capped at seven controls on purpose. Material that would bloat one of them lands here instead of being wedged into a file whose job is something else.',
+    why: 'The root is capped at eight controls on purpose. Material that would bloat one of them lands here instead of being wedged into a file whose job is something else.',
   },
   {
     zone: 'The support root',
@@ -193,7 +199,7 @@ export const PLACES = [
     lane: 'feedback',
     path: 'workbench/feedback',
     owns: 'The return channel to the harness these controls came from.',
-    why: 'When a rule is wrong, the room needs somewhere to say so that is not the rule itself. It sits in a lane rather than at the root so the root keeps exactly seven controls.',
+    why: 'When a rule is wrong, the room needs somewhere to say so that is not the rule itself. It sits in a lane rather than at the root so the root keeps exactly eight controls.',
   },
   {
     zone: 'The support root',
@@ -205,8 +211,8 @@ export const PLACES = [
   {
     zone: 'The support root',
     lane: 'skills',
-    path: 'workbench/skills',
-    owns: 'The core Workbench skills, installed as copies with a receipt (`.workbench-skills.json`) that records the source release, commit and a hash per skill. `.agents/skills` and `.claude/skills` are the adapters agents discover them through.',
+    path: '.agents/skills',
+    owns: 'The core Workbench skills, installed as copies with a receipt (`.workbench-skills.json`) that records the source release, commit and a hash per skill, beside the optional skills this room selected. `.agents/skills` is the real tracked directory agents discover directly; `.claude/skills` is one relative link into it, so each skill name has one copy.',
     why: 'The room carries the skills its controls name, so a fresh clone works without a provider-home install. Like the tools lane, it changes only through an explicit update, and skills the room adds itself are left alone.',
   },
 
@@ -263,6 +269,10 @@ export const ROUTE = [
     detail: 'From a clean release checkout: `workbench-tools.mjs update --project PATH --home EXISTING_HOME --explicit-update`. The existing home owns the backup. It backs up the old lane and rewrites the receipt.',
   },
   {
+    step: 'Update the managed core skills',
+    detail: 'From the same release checkout: `workbench-skills.mjs update --project PATH --home EXISTING_HOME --explicit-update`. It replaces only changed core skills in `.agents/skills`, backs the old copies up and leaves room-added skills alone; a room still on the retired `workbench/skills` lane is relocated by the first `migrate`.',
+  },
+  {
     step: 'Preserve historical source identity',
     detail: 'Keep the original genesis/adoption `provenance.source`. The tools receipt and layout provenance name the new installed components; a version update does not change where this room began.',
   },
@@ -278,9 +288,9 @@ export const ROUTE = [
 
 const ZONE_BLURBS = {
   'Root controls':
-    'Seven files, always at the root, always the same seven. An agent reads these\n  on entry and nothing else is required to know how to behave here.',
+    'Eight files, always at the root, always the same eight. An agent reads these\n  on entry and nothing else is required to know how to behave here.',
   'The support root':
-    'Everything the harness manages lives under `workbench/`, declared by a manifest\n  rather than assumed by path. This is what makes a room portable and upgradable.',
+    'Everything the harness manages lives under `workbench/`, plus the skills lane at\n  `.agents/skills`, declared by a manifest rather than assumed by path. This is what\n  makes a room portable and upgradable.',
   'The product':
     'What this room actually builds. Every room has one; here it happens to be an\n  explanation of rooms.',
 };

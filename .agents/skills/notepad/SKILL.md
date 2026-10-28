@@ -3,7 +3,7 @@ name: notepad
 description: Read or maintain preserved legacy JSON notes and structured domain adapters, preserving revisions, history and private access; ordinary fresh context uses Wiki jot.
 ---
 
-For ordinary fresh capture and focused cold starts, compose [`jot`](../jot/SKILL.md).
+For ordinary fresh capture and focused cold starts, call the Skill tool for [`jot`](../jot/SKILL.md).
 The procedures below apply only to preserved legacy records or a domain adapter
 that still requires their schema. Preserve originals and access; this compatibility
 route does not authorize private-to-tracked migration or routine source deletion.
@@ -170,7 +170,7 @@ silently, so never report a partial read as the whole record.
 
 ## 4. Reconcile before cleanup, and preserve what is still needed
 
-Compose core `promote` for selected supported claims and core `save` for their
+Call the Skill tool for `promote` for selected supported claims and call the Skill tool for `save` for their
 actual persistence boundary. Promote into durable owners under existing
 authorization - the assigned spec, a decision record in `workbench/docs/adr`,
 the Wiki, a root control - and cite those owners, never the note. Then remove
@@ -189,8 +189,8 @@ already knew was wrong, with nothing marking it superseded. Trim both halves
 together once the correction has landed in its durable owner, or keep both.
 That refusal is the mechanism doing its job; do not work around it.
 
-Author a requested handoff separately as a Markdown file in
-`workbench/sessions/handoffs/`, using the `handoff` skill and its bundled `assets/HANDOFF.md`. It must be plain
+For a requested handoff, call the Skill tool for `handoff`; author its Markdown
+separately in `workbench/sessions/handoffs/` using the bundled `assets/HANDOFF.md`. It must be plain
 English another agent can follow or the owner can paste into a new chat: name
 the job, verified facts, one resume point, boundaries, and exact source paths.
 Confirm destination access and retain source context until the needed material
@@ -417,7 +417,7 @@ a reader; it never grants authority or verifies a claim.
    actual project state. File availability alone proves neither freshness nor
    successful recovery. Preserve significant work while it is underway.
 4. For a handoff requested by the owner or initiated within an assigned role,
-   author a destination-specific Markdown
+   call the Skill tool for `handoff` to author a destination-specific Markdown
    compaction from the selected material in `sessions/handoffs/`. State the job,
    verified facts, exact resume action, boundaries, and source paths in plain
    language. Include needed corrections and dependencies. Carry the selected

@@ -5,6 +5,8 @@ description: Adopt the assigned Auditor stance for one Workbench task within exi
 
 # Auditor
 
+Inherit both mandatory owner judgments under [authority and continuation](../implement/execution-authority.md): explicit confirmation before leaving Explore and explicit execution approval before leaving Prepare. Reuse their sources within scope; delegation and this skill grant neither.
+
 ## Purpose
 
 Determine whether named claims hold on the assigned target and evidence.
@@ -30,7 +32,7 @@ Resolve the assigned packet and support lanes through `workbench/manifest.json`.
 ## Obligations
 
 Remain read-only on the target. Run permitted checks, inspect the claimed
-proof and disclose sampling and environment limits. Compose `/code-review` for
+proof and disclose sampling and environment limits. Call the Skill tool for `code-review` for
 a fixed diff when applicable. A finding is evidence, not repair authorization.
 
 ## Completion / Exit Condition

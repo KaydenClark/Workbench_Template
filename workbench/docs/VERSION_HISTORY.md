@@ -379,3 +379,28 @@ were removed from the receipts before commit because they name a local
 temporary home, as the previous carry did. Component rollback from the receipt
 backups is therefore not established; whole-room Git recovery to the Template
 `integration` commit before this carry is the recovery route.
+
+## v3.2.2 assessment candidate (2026-10-28)
+
+The managed runtime, core skills and manifest now carry the **v3.2.2** label
+from LLM Workbench source `8f08f11165c043a581c3c7130cb7c813eeec4483`, installed
+on a `claude/` branch from Template `integration`
+`2f162c46afed6488862d2c3963b07bb0d905cabd` through the v3 update route
+recorded in [S-000E](../specs/S-000E-v3-2-2-harness-upgrade/SPEC.md).
+
+- The first `migrate` relocated the retired `workbench/skills` lane to the
+  real tracked `.agents/skills` directory, made `.claude/skills` one relative
+  link into it and appended the current line-endings block.
+- `migrate` installed `GLOSSARY.md`, `ARCHITECTURE.md` and the grouped Wiki
+  vocabulary articles. They are filled for this room; every Lexicon line has a
+  recorded landing or disposition, and `LEXICON.md` stays as an archived file
+  (see S-000E for why it is not retired).
+- Runtime tools and core skills were updated with receipts and backups; the
+  optional `diagnose-and-propose` and `grill-with-docs` skills were installed by
+  explicit selection.
+- Root controls, the tour and its tests now describe eight root controls and
+  the six confirmed workflows.
+
+This is an assessment candidate on integration, not a release: Template `main`
+remains v3.2.1 until an owner-approved promotion of the assessed revision.
+Historical genesis and layout provenance are unchanged.

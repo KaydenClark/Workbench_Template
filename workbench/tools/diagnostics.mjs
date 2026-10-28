@@ -134,6 +134,9 @@ const registry = Object.freeze({
   // blocking. Specs completed before the contract carry no main-verification
   // row and are not reported.
   'uncaptured-complete': entry('attention', 'specs', 'none', 'a Spec completed with main-verified closure has no captured features article; write it in the features collection before retirement or any record discard'),
+  // A retired owner (the Lexicon) named in canonicalized_in cannot be verified in a
+  // shallow or partial checkout: reported, never a silent pass or a failure.
+  'retired-owner-unverified': entry('attention', 'adr', 'none', 'a decision record names a retired owner whose acceptance cannot be verified in shallow or partial Git history; fetch full history'),
   'stale-register': entry('attention', 'adr', 'none', 'the derived ADR register is stale; run adr register'),
   // S-00I TK-002: lifecycle now comes from folder location (top level, or
   // ADR_LIFECYCLE_FOLDERS `proposed`/`archive`), not frontmatter `status`. A
@@ -207,7 +210,21 @@ const registry = Object.freeze({
   'skill-lane-unreadable': entry('error', 'skills', 'none', 'the skills lane or a required skill in it is not an ordinary readable directory'),
   'skill-adapter-missing': entry('attention', 'skills', 'none', 'a declared discovery root is absent, so that host cannot discover the lane'),
   'skill-adapter-broken': entry('attention', 'skills', 'none', 'a declared discovery root does not resolve into the skills lane'),
+  'personal-skill-shadow': entry('attention', 'skills', 'none', 'a room skill name also appears in a scanned personal root'),
+  'personal-skill-inspection-unavailable': entry('attention', 'skills', 'none', 'a personal discovery root could not be inspected'),
+  'nested-skill-file': entry('attention', 'skills', 'none', 'a nested SKILL.md creates an extra discovery entry'),
+  'skill-file-link': entry('attention', 'skills', 'none', 'a SKILL.md is itself a symbolic link'),
+  'lane-plugin-manifest': entry('attention', 'skills', 'none', 'plugin ancestry changes lane skill names'),
   'skill-duplicate-discovery': entry('attention', 'skills', 'none', 'a deprecated additional discovery entry duplicates the core catalog'),
+  // S-006I TK-00BQ (ADR-001M): the owner's condition is that no host sees a
+  // skill name twice, so a second copy inside the room fails doctor outright.
+  // The retired workbench/skills lane stays readable and is named for its
+  // managed migration without blocking.
+  'room-skill-duplicate': entry('error', 'skills', 'all', 'one skill name has more than one copy inside the room'),
+  'skill-lane-legacy': entry('attention', 'skills', 'none', 'the room still keeps its skills in the retired workbench/skills lane'),
+  // The relocation and its rollback refuse before any write; doctor never emits these.
+  'skills-relocation-collision': entry('error', 'skills', 'none', 'a skills directory or link is in the way of the lane relocation or its rollback'),
+  'skills-rollback-unavailable': entry('error', 'skills', 'none', 'the room is not on the .agents/skills lane that the skills-lane rollback restores from'),
   // S-004C TK-005E, moved by S-005K TK-009T: an AGENTS.md Skill Map entry that
   // names a skill the lane lacks is named in every doctor run and blocks
   // nothing; it binds no skill until the lane holds it or the entry changes.

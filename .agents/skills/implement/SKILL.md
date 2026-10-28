@@ -3,6 +3,8 @@ name: implement
 description: Implement one eligible Workbench task through verified remote recovery.
 ---
 
+Inherit both mandatory owner judgments under [authority and continuation](../implement/execution-authority.md): explicit confirmation before leaving Explore and explicit execution approval before leaving Prepare. Reuse their sources within scope; delegation and this skill grant neither.
+
 Implement one eligible task from the assigned stable `SPEC.md`. Stability names its identity, not a fixed folder;
 resolve its current route through the manifest and native lifecycle tools. One invocation
 owns one task and one durable writer lane.
@@ -29,8 +31,8 @@ working tree can be safely attributed. `next` supports owner-directed pickup;
 it does not override an explicit assignment. Use the stance assigned in SPEC
 and TASK, and investigate within that task without inventing another queue item.
 Resolve the Task's `TASK.md` through the Spec and manifest; read its destination,
-blockers and receipt rows, plus relevant topic Wiki context through `jot`
-(and a preserved legacy note when referenced). If already in progress,
+blockers and receipt rows. Call the Skill tool for `jot` to read relevant topic
+Wiki context (and a preserved legacy note when referenced). If already in progress,
 verify its owner, branch and achieved proof and resume without a second claim.
 For a planned or table-backed packet, follow the native activation and
 conversion route in
@@ -45,6 +47,11 @@ A ready slice must belong to this writer; claim it:
 ```bash
 node workbench/tools/spec-workbench.mjs claim S-### --agent NAME
 ```
+
+Claim refuses, before any write, a Spec whose recorded owner judgments are
+missing or out of scope; recover them from their source per
+[authority and continuation](execution-authority.md#continue-without-losing-authority),
+never by relabeling.
 
 The slice is situated when one eligible task, its acceptance boundary, its
 public testing seam, and its single writer are explicit.
@@ -83,7 +90,7 @@ node workbench/tools/spec-workbench.mjs render
 node workbench/tools/spec-workbench.mjs doctor
 ```
 
-Compose `/to-docs` for changed truth and [`save` publication](../save/SKILL.md#publication)
+Call the Skill tool for `to-docs` for changed truth and call the Skill tool for [`save` publication](../save/SKILL.md#publication)
 for durable PR progress and checked integration landing. Keep proof once at its
 owner and link it from summaries rather than hand-copying evidence.
 Create a truthful in-progress checkpoint: stage only this writer's named files,
@@ -129,9 +136,11 @@ S-###` reports the Task-PR form):
 1. **Can this merge into the branch it targets?** Name the target branch, the
    exact `BASE_SHA` and `HEAD_SHA`, the checks run and their results, conflict
    or rebase state, and what was not verified.
-2. **Did this complete the Task, or is more needed?** Answer complete, the same
-   Task continues with its adjusted handoff, or a new Task is needed with the
-   gap named.
+2. **Did this complete the Task, or is more needed?** Start with `Complete`
+   or `New Task is needed: GAP`, naming achieved work and unmet requirements.
+   `Task continues` names only repair within the current run. A later
+   implementor run gets a new bounded Task from the Spec's orchestrator after
+   [reconciliation](../to-tasks/sizing.md). Never call incomplete acceptance done.
 
 The Dispatcher, Director or next agent working in the Spec validates those
 answers against the diff and the merge checks, and merges when they hold and the
@@ -174,6 +183,8 @@ When integration is authorized, automated delivery stops at the declared
 integration branch after the
 repository's review gates pass. The owner controls promotion from that branch
 to the release branch.
+
+Follow the shared [workspace closeout procedure](workflow-reference.md#workspace-closeout) before completion, pause or a blocked hand-back.
 
 Report the authorized endpoint actually reached, accounted-for worktree state,
 exact candidate and recovery ref, checks, documentation, and next gate. A local
@@ -278,8 +289,8 @@ and `unknown-blocker-qualifier` rather than bypassing selection or claim.
 Examples name S-001/TK-001; substitute the actual IDs and quoted values.
 
 Ordinary entry is AGENTS -> STARTUP -> the assigned Spec and Task;
-use the Lexicon Task Routing definitions when needed. Verify root, branch, remote,
-upstream and dirty state first.
+use `ARCHITECTURE.md` Routes and `GLOSSARY.md` meanings when needed.
+Verify root, branch, remote, upstream and dirty state first.
 Preserve unrelated work and obey the assigned stance/file lane.
 
 For a setup-only Round One assignment, a fresh agent follows that route, checks
@@ -391,7 +402,7 @@ corrective Task anchored to a Wiki claim is retired.
 
 Commit and publish the closure evidence and projections too; verify the remote
 SHA. TASK.md owns Task state/proof, SPEC.md owns requirements/acceptance/evidence
-and its next gate, and generated TASKBOARD.md/CATALOG.md cannot satisfy either.
+and its next gate, and the generated Taskboard cannot satisfy either.
 
 ## Version-control procedures
 

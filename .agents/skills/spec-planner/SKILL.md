@@ -5,6 +5,8 @@ description: Adopt the assigned Spec Planner stance for one Workbench Spec withi
 
 # Spec Planner
 
+Inherit both mandatory owner judgments under [authority and continuation](../implement/execution-authority.md): explicit confirmation before leaving Explore and explicit execution approval before leaving Prepare. Reuse their sources within scope; delegation and this skill grant neither.
+
 ## Purpose
 
 Plan small Tasks and parallel vertical slices for the one assigned Spec from
@@ -38,7 +40,7 @@ and its dependencies on other Specs. Plan from what is verified now, not from
 the Spec's original assumptions; record what was inspected and at which commit.
 
 Prefer one coherent Task; split for independently checkable outcomes, real
-dependencies, writers or context size. Use `tracer-bullet` discipline: each
+dependencies, writers or context size. Call the Skill tool for `tracer-bullet` discipline: each
 Task pierces every layer its acceptance line needs and finishes in one Chat.
 Give every Task explicit acceptance (the Spec lines it satisfies), the proof it
 must produce, its dependencies (`Blockers` holds only `S-###`/`TK-###` ids)
@@ -46,7 +48,7 @@ and one named writer per shared file. State which groups may run concurrently
 within the Spec and which wait on others; serialize conflicting writes under
 the named writer rather than splitting one file between Tasks.
 
-Compose `to-tasks` for the record shape: each slice is a `tasks/TK-###/TASK.md`
+Call the Skill tool for `to-tasks` for the record shape: each slice is a `tasks/TK-###/TASK.md`
 with the title line, `**Stance:**`, `**Blockers:**`, `**Destination:**` and
 `**Planned verification:**` the parser requires. Allocate every identifier with
 `node workbench/tools/spec-workbench.mjs next-id S-### --prefix TK`, run

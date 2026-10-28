@@ -10,10 +10,13 @@ import { createHash } from 'node:crypto';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { finding } from './diagnostics.mjs';
+import { parseFrontmatter } from './adr.mjs';
+import { RETIRED_LEXICON_LANDING } from './lexicon-retirement-data.mjs';
 import { parseSpecPacket } from './spec-packet.mjs';
 import { allocateWorkbenchId, isWorkbenchId } from './visible-ids.mjs';
+import { canonicalRoomFile, isGroupedVocabularyArticle, linkResolvesToRootControl, parseGlossary } from './glossary-format.mjs';
 import { templatePlaceholders } from './template-placeholders.mjs';
-import { ADDITIVE_COLLECTIONS, COLLECTIONS, LANES, PRE_DDR_COLLECTIONS, PRE_FEATURE_COLLECTIONS, PRE_LANDMARK_COLLECTIONS, SIX_LANES, SCHEMA_VERSION, IGNORED_COLLECTIONS, WIKI_PROFILES, collectionRelative, declaredGit, laneRelative, assertSafeReadPath, assertSafeWritePath, writeSafeFile, isBranchName, isMainModule, isSafeRelative, trackerDeclaration } from './workbench-paths.mjs';
+import { ADDITIVE_COLLECTIONS, COLLECTIONS, LANES, PRE_DDR_COLLECTIONS, PRE_FEATURE_COLLECTIONS, PRE_LANDMARK_COLLECTIONS, SIX_LANES, LEGACY_SKILLS_LANE, LEGACY_SKILLS_LANES, SKILLS_LANE, isSkillsLane, SCHEMA_VERSION, IGNORED_COLLECTIONS, WIKI_PROFILES, collectionRelative, declaredGit, laneRelative, assertSafeReadPath, assertSafeWritePath, writeSafeFile, isBranchName, isMainModule, isSafeRelative, markdownLinkTargets, trackerDeclaration } from './workbench-paths.mjs';
 
 // Exported (not just used locally) so a test can build the exact historical
 // v3.0.0-v3.2.0 fixture rows from this frozen array directly, rather than
@@ -131,10 +134,28 @@ const priorWikiJotCoreSkills = [
   'director', 'dispatcher', 'spec-planner', 'spec-manager',
   'builder', 'auditor', 'reviewer', 'reconciler'
 ];
-const v321TransitionCoreSkills = [priorWikiJotCoreSkills, prior28CoreSkills, prior29PrCoreSkills, prior29DomainModelingCoreSkills, priorWritingRetroCoreSkills, priorPrDomainCoreSkills, priorPrWritingRetroCoreSkills];
+// S-006K TK-00B6: v3.2.2 stamps this exact 33-skill core. A literal, so later
+// Core growth needs a new label and never redefines it. Rooms built from
+// integration before the stamp carry the same lane policy under v3.2.1, so it
+// is also that label's last transition cohort and stays readable there.
+export const releasedV322CoreSkills = Object.freeze([
+  'adoption', 'checkpoint', 'code-review', 'genesis', 'grilling', 'implement',
+  'make-it-so', 'to-docs', 'to-spec', 'to-tasks', 'tracer-bullet', 'update-harness',
+  'carry', 'notepad', 'jot', 'save', 'promote', 'handoff', 'grill-me',
+  'workbench-runtime', 'improve-harness', 'domain-modeling', 'pr', 'writing-for-agents', 'retro',
+  'director', 'dispatcher', 'spec-planner', 'spec-manager',
+  'builder', 'auditor', 'reviewer', 'reconciler'
+]);
+const v321TransitionCoreSkills = [priorWikiJotCoreSkills, prior28CoreSkills, prior29PrCoreSkills, prior29DomainModelingCoreSkills, priorWritingRetroCoreSkills, priorPrDomainCoreSkills, priorPrWritingRetroCoreSkills, [...releasedV322CoreSkills]];
 export const lanes = LANES;
 export const collections = COLLECTIONS;
-export const controls = ['AGENTS.md', 'BLUEPRINT.md', 'LEXICON.md', 'RUNBOOK.md', 'TASKBOARD.md', 'CLAUDE.md', 'README.md'];
+// S-004O TK-009G: a room receives GLOSSARY.md and ARCHITECTURE.md from the
+// Template in place of the retired LEXICON.md (DDR-001E).
+export const controls = ['AGENTS.md', 'BLUEPRINT.md', 'GLOSSARY.md', 'ARCHITECTURE.md', 'RUNBOOK.md', 'TASKBOARD.md', 'CLAUDE.md', 'README.md'];
+// The two controls the update route installs from the Template when a room
+// still holds the Lexicon they replace, and the retired control itself.
+export const vocabularyControls = ['GLOSSARY.md', 'ARCHITECTURE.md'];
+export const RETIRED_LEXICON = 'LEXICON.md';
 // The spaced `grilling diary/` name is a legacy path a stale installed skill
 // may still write; denying it keeps a live notepad untrackable before the
 // checkpoint privacy scan runs. `validate` does not require the line.
@@ -151,6 +172,8 @@ export const LINE_ENDING_POLICY = [
   '# Workbench records, runtime tools and controls check out as LF on every',
   '# host, so receipt hashes and record parsing hold under core.autocrlf=true.',
   '/workbench/** text=auto eol=lf',
+  // S-006I TK-00BQ: the skills lane moved to .agents/skills with its receipt.
+  '/.agents/skills/** text=auto eol=lf',
   ...controls.map((control) => `/${control} text=auto eol=lf`),
   '# <<< LLM Workbench line endings',
   ''
@@ -190,6 +213,24 @@ const templateVocabulary = new Set(templatePlaceholders);
 // room is seeded with the collection's job and article shape, exactly as the
 // design-concepts README already is.
 export const wikiContractFiles = ['SCHEMA.md', 'AGENTS.md', 'design-concepts/README.md', 'features/README.md'];
+// S-004O TK-009G: the Template Wiki's grouped vocabulary articles (one per
+// glossary grouping) and its AI coding reference install flat beside the
+// router with the room's GLOSSARY.md, at init, adoption and the update route.
+// They are reported apart from the contract files (`articles`, not `written`).
+export const wikiVocabularyFiles = [
+  'ai-coding-reference.md',
+  'vocabulary-chats-and-roles.md',
+  'vocabulary-continuity-and-evidence-boundaries.md',
+  'vocabulary-continuity-terms.md',
+  'vocabulary-destination-and-direction.md',
+  'vocabulary-feedback-disposition.md',
+  'vocabulary-governance-core.md',
+  'vocabulary-specs-and-tasks.md',
+  'vocabulary-stance-terms.md',
+  'vocabulary-workbench-meanings-of-ai-coding-terms.md',
+  'vocabulary-workbench-room-and-artifacts.md',
+  'vocabulary-workflow-verbs.md'
+];
 // Seeded lane documents are the third class of installed state, beside runtime
 // tools and installed skills: the harness copies them out of the release to be
 // read and, unlike a runtime tool, sometimes locally adjusted. Their generation
@@ -200,6 +241,7 @@ export const SEED_SCHEMA_VERSION = 1;
 export const SEED_SOURCE = 'LLM Workbench seeded documents';
 export const seededLaneDocuments = [
   { lane: 'feedback', name: 'REPORT_FORMAT.md', template: 'feedback/REPORT_FORMAT.md' },
+  ...['WORKBENCH_STRUCTURE.md', 'ORGANIZATION.md'].map(name => ({ lane: 'docs', name, template: `docs/${name}` })),
   ...['notepad.schema.json', 'work.example.json', 'grilling.example.json'].map(name => ({
     lane: 'sessions', name: `notepads/templates/${name}`, template: `sessions/notepads/templates/${name}`
   }))
@@ -318,7 +360,9 @@ export function readRepositoryState(root, options = {}) {
         // Lanes are root-relative; porcelain paths are repository-relative.
         const relative = prefix && file.startsWith(prefix) ? file.slice(prefix.length) : (prefix ? null : file);
         if (relative === null) untrackedOther.push(file);
-        else if (controls.includes(relative)) untracked.controls.push(file);
+        // PR431 comment 4313162423: a retained Lexicon is still a root control
+        // for the Git-state inventory until it is retired.
+        else if (controls.includes(relative) || relative === RETIRED_LEXICON) untracked.controls.push(file);
         else if (within(relative, lanes.adr)) untracked.adr.push(file);
         else if (within(relative, lanes.specs)) untracked.specs.push(file);
         else untrackedOther.push(file);
@@ -586,14 +630,16 @@ export function validateManifest(project) {
   }
   // The seven-lane shape is current; the six-lane shape is what every room
   // declared before the skills lane and stays readable until it updates.
-  if (![lanes, SIX_LANES].some((shape) => JSON.stringify(manifest.lanes) === JSON.stringify(shape))) {
-    return fail('invalid-lane', 'Manifest lanes must exactly match the seven support lanes, or the six lanes declared before the skills lane.', { lanes: manifest.lanes });
+  // S-006I TK-00BQ: a room on the retired workbench/skills lane stays readable
+  // until `migrate` relocates it into .agents/skills.
+  if (![lanes, LEGACY_SKILLS_LANES, SIX_LANES].some((shape) => JSON.stringify(manifest.lanes) === JSON.stringify(shape))) {
+    return fail('invalid-lane', 'Manifest lanes must exactly match the seven support lanes, the retired workbench/skills lane layout, or the six lanes declared before the skills lane.', { lanes: manifest.lanes });
   }
   if (!allowedCollectionShapes.some(shape => JSON.stringify(manifest.collections) === JSON.stringify(shape))) {
     return fail('invalid-collection', `Manifest collections must match the current layout or a preserved earlier collection set; the additive features collection, when declared, is ${collections.features}.`, { collections: manifest.collections });
   }
-  for (const lane of Object.values(manifest.lanes)) {
-    if (!isSafeRelative(lane)) return fail('invalid-lane', `Manifest lane ${lane} is unsafe.`);
+  for (const [name, lane] of Object.entries(manifest.lanes)) {
+    if (!(name === 'skills' ? isSkillsLane(lane) : isSafeRelative(lane))) return fail('invalid-lane', `Manifest lane ${lane} is unsafe.`);
     if (!ordinaryDirectory(project, lane)) return fail('unsafe-lane', `Manifest lane ${lane} must be an ordinary directory.`);
   }
   for (const collection of Object.values(manifest.collections)) {
@@ -656,7 +702,7 @@ export function validateManifest(project) {
   // provider-home policy before the skills lane existed, and its
   // twenty-one-skill row stays exact now that `grill-me` grows the live
   // bundle (S-00Z).
-  const supportedLegacy = { 'v3.0.0': legacyCoreSkills, 'v3.1.0': legacyCoreSkills, 'v3.1.1': stanceRequired, 'v3.1.2': stanceRequired, 'v3.1.3': carryRequired, 'v3.1.4': notepadCoreSkills, 'v3.2.0': initialV32CoreSkills, 'v3.2.1': handoffCoreSkills };
+  const supportedLegacy = { 'v3.0.0': legacyCoreSkills, 'v3.1.0': legacyCoreSkills, 'v3.1.1': stanceRequired, 'v3.1.2': stanceRequired, 'v3.1.3': carryRequired, 'v3.1.4': notepadCoreSkills, 'v3.2.0': initialV32CoreSkills, 'v3.2.1': handoffCoreSkills, 'v3.2.2': [...releasedV322CoreSkills] };
   const legacyRequired = supportedLegacy[manifest.workbenchVersion];
   // Transition cohorts are accepted only at their stamped version and only at
   // the lane-install policy their rooms actually carry.
@@ -881,7 +927,7 @@ function runGit(project, args, input) {
 // `git ls-files -z -v -s` prints `TAG MODE SHA STAGE<TAB>PATH` per entry; read
 // as bytes so a path that is not valid UTF-8 is detected instead of mangled.
 function laneEntries(project) {
-  const listed = runGit(project, ['ls-files', '-z', '-v', '-s', '--', ':(literal)workbench']);
+  const listed = runGit(project, ['ls-files', '-z', '-v', '-s', '--', ':(literal)workbench', ':(literal).agents/skills']);
   if (listed.status !== 0) throw rewriteError('git-failed', `refused: git ls-files failed: ${listed.stderr.toString().trim()}. Nothing was changed.`);
   const entries = [];
   let start = 0;
@@ -917,7 +963,7 @@ export function rewriteRoomLaneCheckout(project) {
   const encoded = found((entry) => !entry.utf8);
   if (encoded.length) problems.push(`a path is not valid UTF-8: ${listPaths(encoded)}`);
   if (problems.length) throw rewriteError('rewrite-refused', `refused: ${problems.join('; ')}. Nothing was changed.`);
-  const unstaged = runGit(project, ['diff', '--name-only', '-z', '--', ':(literal)workbench']);
+  const unstaged = runGit(project, ['diff', '--name-only', '-z', '--', ':(literal)workbench', ':(literal).agents/skills']);
   if (unstaged.status !== 0) throw rewriteError('git-failed', `refused: git diff failed: ${unstaged.stderr.toString().trim()}. Nothing was changed.`);
   const edited = unstaged.stdout.toString('utf8').split('\0').filter(Boolean);
   if (edited.length) throw rewriteError('rewrite-refused', `refused: a tracked file under workbench/ has an unstaged change that the rewrite would discard (${listPaths(edited)}); commit, stage or back it up first. Nothing was changed.`);
@@ -963,6 +1009,26 @@ export function rewriteRoomLaneCheckout(project) {
   return result;
 }
 
+// Create `create(candidate)` under a fresh name beside the target and return
+// that name. EEXIST means the name was taken by a file this call did not
+// create, which is left untouched while another name is tried; any other
+// failure propagates (and a partial file the failed create left under a name
+// that was free is removed, since only this call could have created it).
+function createTemporary(target, create) {
+  for (let attempt = 0; attempt < 8; attempt += 1) {
+    const candidate = path.join(path.dirname(target), `.workbench-rewrite-${process.pid}-${crypto.randomBytes(6).toString('hex')}`);
+    try {
+      create(candidate);
+      return candidate;
+    } catch (error) {
+      if (error.code === 'EEXIST') continue;
+      fs.rmSync(candidate, { force: true });
+      throw error;
+    }
+  }
+  throw Object.assign(new Error('no free temporary name beside the target'), { code: 'EEXIST' });
+}
+
 // Replace one tracked file with the copy Git staged, atomically. Returns false
 // when the working-tree file already holds those bytes (or that link target).
 // The copy is made beside the target so the rename never crosses a filesystem,
@@ -977,17 +1043,20 @@ function replaceFromStage(source, target) {
   } else if (current?.isFile() && fs.readFileSync(source).equals(fs.readFileSync(target))) {
     return false;
   }
-  const temporary = path.join(path.dirname(target), `.workbench-rewrite-${process.pid}`);
+  // The name is unique per call and the copy is exclusive, so a file that
+  // already has a candidate name is never overwritten: a collision tries
+  // another name and leaves that file alone. `temporary` is set only once this
+  // call has created the file, so the cleanup removes nothing else.
+  let temporary = null;
   try {
-    if (wanted.isSymbolicLink()) {
-      fs.symlinkSync(fs.readlinkSync(source), temporary);
-    } else {
-      fs.copyFileSync(source, temporary, fs.constants.COPYFILE_EXCL);
-      fs.chmodSync(temporary, (current?.isFile() ? current : wanted).mode & 0o7777);
-    }
+    temporary = createTemporary(target, (candidate) => {
+      if (wanted.isSymbolicLink()) fs.symlinkSync(fs.readlinkSync(source), candidate);
+      else fs.copyFileSync(source, candidate, fs.constants.COPYFILE_EXCL);
+    });
+    if (!wanted.isSymbolicLink()) fs.chmodSync(temporary, (current?.isFile() ? current : wanted).mode & 0o7777);
     fs.renameSync(temporary, target);
   } catch (error) {
-    fs.rmSync(temporary, { force: true });
+    if (temporary) fs.rmSync(temporary, { force: true });
     throw error;
   }
   return true;
@@ -1009,6 +1078,13 @@ export function initialize(options) {
   if (ignored) return fail('attributes-ignored', ignored);
   const flagged = flaggedAttributesMessage(project);
   if (flagged) return fail('attributes-flagged', flagged);
+  // The append reads the existing file after the lanes are written, so an
+  // unreadable one would fail partway (identity-write-failed) and a rerun
+  // would duplicate the sessions-ignore block. Read it now, before any write.
+  if (lstatOrNull(path.join(project, ATTRIBUTES_FILE))) {
+    try { fs.readFileSync(path.join(project, ATTRIBUTES_FILE)); }
+    catch (error) { return fail('attributes-unreadable', `${ATTRIBUTES_FILE} exists but cannot be read (${error.code ?? error.message}), so the Workbench line-ending block cannot be appended; fix its permissions, then retry. Nothing was written.`); }
+  }
   const shape = validateManifestShape({ workbenchVersion: options['--version'], provenance: { lifecycle: options['--provenance'] }, wiki: { profile: options['--wiki-profile'] ?? 'project' } });
   if (shape) return shape;
   const declaration = gitDeclaration(project, options);
@@ -1019,7 +1095,7 @@ export function initialize(options) {
   }
   const source = sourceIdentity(options);
   if (source.status) return source;
-  const seedFailure = preflightSeedDocuments(project, { notepadOnly: true });
+  const seedFailure = preflightSeedDocuments(project, { setupOnly: true });
   if (seedFailure) return seedFailure;
   return withIdentityLock(project, () => {
     if (lstatOrNull(manifestPath)) return fail('manifest-exists', `${manifestPath} already exists.`);
@@ -1044,9 +1120,9 @@ export function initialize(options) {
     writeSessionsIgnore(project);
     if (!options.deferWikiSeed) ensurePrivateWikiIgnore(project);
     const attributes = { path: ATTRIBUTES_FILE, written: ensureLineEndingPolicy(project) };
-    const seeded = options.deferWikiSeed ? { wiki: false, reason: 'legacy wiki move pending' } : seedWiki(project, options);
+    const seeded = options.deferWikiSeed ? { wiki: false, reason: 'legacy wiki move pending' } : seedWiki(project, options, wikiContractFiles, wikiVocabularyFiles);
     fs.writeFileSync(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`);
-    const documents = writeSeedDocuments(project, { ...options, notepadOnly: true });
+    const documents = writeSeedDocuments(project, { ...options, setupOnly: true });
     return report('initialized', { manifestPath, manifest, seeded, documents, attributes });
   }, { initialize: true });
 }
@@ -1093,8 +1169,16 @@ function sourceIdentity(options) {
   return resolved;
 }
 
-export function seedWiki(project, options, files = wikiContractFiles) {
-  for (const relative of Object.values(collections).filter(value => value.startsWith(`${lanes.wiki}/`))) {
+export function seedWiki(project, options, files = wikiContractFiles, articles = []) {
+  const wikiCollections = Object.values(collections).filter(value => value.startsWith(`${lanes.wiki}/`));
+  // PR431 comment 4313464725: every component of the lane and its collections
+  // is an ordinary directory or absent before the first mkdir, so a linked
+  // lane never gains directories outside the room.
+  for (const relative of [lanes.wiki, ...wikiCollections]) {
+    try { assertSafeWritePath(project, path.join(project, relative, '.gitkeep')); }
+    catch (error) { return { wiki: false, reason: error.message }; }
+  }
+  for (const relative of wikiCollections) {
     fs.mkdirSync(path.join(project, relative), { recursive: true });
   }
   const templates = templateRoot();
@@ -1105,15 +1189,595 @@ export function seedWiki(project, options, files = wikiContractFiles) {
     '[PROJECT_NAME]': options['--name'] ?? path.basename(project)
   };
   // Ignore rules are project-owned privacy configuration, not stamped Markdown.
-  const written = ensurePrivateWikiIgnore(project) ? [`${lanes.wiki}/.gitignore`] : [];
-  for (const relative of files) {
+  const ignored = ensurePrivateWikiIgnore(project) ? [`${lanes.wiki}/.gitignore`] : [];
+  const write = (relative) => {
     const destination = path.join(project, lanes.wiki, relative);
-    if (lstatOrNull(destination)) continue;
+    if (lstatOrNull(destination)) return false;
     fs.mkdirSync(path.dirname(destination), { recursive: true });
     fs.writeFileSync(destination, fillTemplate(fs.readFileSync(path.join(templates, 'wiki', relative), 'utf8'), values));
-    written.push(`${lanes.wiki}/${relative}`);
+    return true;
+  };
+  const written = [...ignored, ...files.filter(write).map(relative => `${lanes.wiki}/${relative}`)];
+  if (!articles.length) return { wiki: true, written };
+  return { wiki: true, written, articles: articles.filter(write).map(relative => `${lanes.wiki}/${relative}`) };
+}
+
+// Retire only after each line has a public surviving home. Generic lines
+// use the frozen per-line census, including in shallow releases; generation
+// fidelity alone is never evidence. Term meanings and distinctions are scoped
+// to their own entry and linked Wiki explanation. Unfilled controls and unsafe
+// or ignored sources cannot authorize deletion. Retained Lexicons remain
+// authoritative while the room reconciles its successor controls.
+export function normalizeLandingText(text) {
+  return String(text).replace(/\s+/g, ' ').trim();
+}
+
+function landingExempt(text) {
+  const normalized = normalizeLandingText(text);
+  return !normalized;
+}
+
+// Evidence is a complete Markdown line, paragraph, sentence, clause or table
+// cell. A longer contradictory sentence is never evidence for its substring.
+// `textDir` and `expectedDir` are the room-relative directories of the files
+// holding each side, so link destinations compare as room routes; `cells`
+// admits table cells as units, which only a cell-shaped claim (a census-mapped
+// or term-row cell) needs. A prose claim never lands inside a table cell.
+// A list marker is presentation; a blockquote marker is not (PR431 comment
+// 4313542671): `> claim` quotes the claim and never asserts it, so the `>`
+// stays in the key on both sides.
+function completeClaim(text, expected, { textDir = '', expectedDir = '', cells = true } = {}) {
+  const key = (value, directory) => stripMarkup(value, directory).replace(/^\s*\|\s*|\s*\|\s*$/g, '').replace(/^\s*(?:[-+*]|\d+[.)])\s+/, '').replace(/[.;:]\s*$/, '').trim();
+  const wanted = key(expected, expectedDir);
+  if (!wanted) return false;
+  const paragraphs = String(text).split(/\r?\n\s*\r?\n|(?=^[-+*] \S)/m);
+  for (const line of String(text).split(/\r?\n/)) {
+    if (/^\s*\|.*\|\s*$/.test(line)) paragraphs.push(line, ...(cells ? line.split(/(?<!\\)\|/).slice(1, -1) : []));
   }
-  return { wiki: true, written };
+  const units = [...paragraphs];
+  for (const paragraph of paragraphs) {
+    const sentences = paragraph.split(/(?<=[.!?])\s+/);
+    units.push(...sentences);
+    const count = String(expected).split(/(?<=[.!?])\s+/).length;
+    for (let index = 0; count > 1 && index + count <= sentences.length; index++) units.push(sentences.slice(index, index + count).join(' '));
+    units.push(...paragraph.split(/(?<=[.!?;])\s+/));
+    const entry = paragraph.match(/^\*\*[^*]+\*\*:\s*\r?\n([\s\S]*)$/);
+    if (entry) units.push(entry[1]);
+  }
+  for (const line of String(text).split(/\r?\n/)) {
+    if (/^#{1,6} /.test(line)) units.push(line);
+    if (/^\s*\|.*\|\s*$/.test(line)) units.push(line, ...(cells ? line.split(/(?<!\\)\|/).slice(1, -1) : []));
+  }
+  return units.some(unit => key(unit, textDir) === wanted);
+}
+
+const escapeRegExp = (text) => text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+// The generic lines of the Template Lexicon: the one at the room's recorded
+// source commit when this release checkout holds it, and the one beside this
+// tool while the Template still ships it, or else the last one the release
+// history shipped before deleting it. Only the identity stamps (name,
+// version, review date, status) match any filled value; a line carrying any
+// other placeholder is a slot the room fills with its own content (a term
+// row): it matches only left unfilled, and its filled form is project-specific
+// and must land in the room.
+const LEXICON_STAMP_PLACEHOLDERS = ['[PROJECT_NAME]', '[HARNESS_VERSION]', '[YYYY-MM-DD]', '[active / partial / stale]'];
+
+function templateLexiconMatchers(templates, manifest) {
+  const release = path.dirname(templates);
+  const sources = [];
+  for (const commit of [manifest?.provenance?.source?.commit, manifest?.provenance?.layout?.source?.commit]) {
+    if (!/^[0-9a-f]{40}$/.test(commit ?? '')) continue;
+    const shown = spawnSync('git', ['show', `${commit}:templates/${RETIRED_LEXICON}`], { cwd: release, encoding: 'utf8' });
+    if (shown.status === 0) sources.push(shown.stdout);
+  }
+  const current = path.join(templates, RETIRED_LEXICON);
+  if (lstatOrNull(current)?.isFile()) sources.push(fs.readFileSync(current, 'utf8'));
+  else {
+    // Once the Template no longer ships the Lexicon, its last shipped text is
+    // the parent of the commit that deleted it in this release's history.
+    const relative = `${path.relative(release, templates).split(path.sep).join('/')}/${RETIRED_LEXICON}`;
+    const deleted = spawnSync('git', ['log', '-1', '--format=%H', '--diff-filter=D', 'HEAD', '--', relative], { cwd: release, encoding: 'utf8' });
+    const commit = deleted.status === 0 ? deleted.stdout.trim() : '';
+    if (/^[0-9a-f]{40}$/.test(commit)) {
+      const shown = spawnSync('git', ['show', `${commit}^:${relative}`], { cwd: release, encoding: 'utf8' });
+      if (shown.status === 0) sources.push(shown.stdout);
+    }
+  }
+  // Identity stamps are metadata even in a shallow release. Content is
+  // matched by the bundled, line-specific census below, never by generation.
+  sources.push('> Generated from LLM Workbench v[HARNESS_VERSION].\n**Last reviewed:** [YYYY-MM-DD]\n**Status:** [active / partial / stale]');
+  // Frozen Template heading scaffolding also works in history-free releases.
+  // A room-added classification is not in this list and must survive.
+  sources.push('# [PROJECT_NAME] - Lexicon\n## Task Routing\n## Ownership Rules\n## Artifact Ownership Schema\n### Responsibilities And Lookup\n### Artifact Boundaries\n## Workbench Terms\n### Priority And Value\n### Feedback Dispositions\n## AI Coding Terms\n## Continuity Terms\n## Stance Terms\n## Governance Core\n## Project Terms\n## Continuity And Evidence Boundaries');
+  const exact = new Set();
+  const patterns = [];
+  const headings = new Set();
+  for (const line of sources.flatMap(source => source.split(/\r?\n/))) {
+    const normalized = normalizeLandingText(line);
+    if (landingExempt(normalized)) continue;
+    const tokens = templatePlaceholders.filter(token => normalized.includes(token));
+    if (!tokens.length) { exact.add(normalized); if (/^#{1,6} /.test(normalized)) headings.add(normalized); continue; }
+    if (tokens.some(token => !LEXICON_STAMP_PLACEHOLDERS.includes(token))) { exact.add(normalized); continue; }
+    let pattern = escapeRegExp(normalized);
+    for (const token of tokens) pattern = pattern.split(escapeRegExp(token)).join('.+?');
+    patterns.push(new RegExp(`^${pattern}$`));
+  }
+  return { exact, patterns, headings, sources: sources.length, mapped: new Map(RETIRED_LEXICON_LANDING) };
+}
+
+// Git privacy policy applies to every surviving-home source, including the
+// root controls. Untracked public setup files remain eligible. Only Git's
+// explicit non-repository result permits the non-Git compatibility path;
+// including its two-line filesystem-boundary diagnostic. Missing Git, broken
+// repository metadata and failed ignore queries admit none.
+function publicLandingPaths(project, candidates) {
+  const repository = spawnSync('git', ['rev-parse', '--is-inside-work-tree'], {
+    cwd: project, encoding: 'utf8', env: { ...process.env, LC_ALL: 'C' }
+  });
+  if (repository.status === 0 && repository.stdout.trim() === 'true') {
+    const ignored = spawnSync('git', ['check-ignore', '--no-index', '-z', '--stdin'], {
+      cwd: project, encoding: 'utf8', input: candidates.join('\0') + (candidates.length ? '\0' : '')
+    });
+    if (ignored.error || ![0, 1].includes(ignored.status)) return [];
+    const ignoredPaths = new Set((ignored.stdout ?? '').split('\0').filter(Boolean));
+    if ([...ignoredPaths].some(file => !candidates.includes(file))) return [];
+    return candidates.filter(file => !ignoredPaths.has(file));
+  }
+  const nonRepository = repository.status === 128 && !repository.error
+    && /^(?:fatal: not a git repository \(or any of the parent directories\): \.git|fatal: not a git repository \(or any parent up to mount point [^\r\n]+\)\r?\nStopping at filesystem boundary \(GIT_DISCOVERY_ACROSS_FILESYSTEM not set\)\.)\s*$/.test(repository.stderr ?? '')
+    && !lstatOrNull(path.join(project, '.git')) && !process.env.GIT_DIR && !process.env.GIT_WORK_TREE;
+  return nonRepository ? candidates : [];
+}
+
+function roomLandingText(project, wikiLane) {
+  const files = new Map();
+  // One identity rule for every landing home, root control or Wiki article:
+  // the canonical room file at that path (`canonicalRoomFile`), inside the
+  // read boundary. A symlink, a shared hard link or a linked ancestor is not.
+  const ordinary = relative => {
+    if (relative.split('/').some(part => part.startsWith('.'))) return false;
+    try { assertSafeReadPath(project, path.join(project, relative)); } catch { return false; }
+    return canonicalRoomFile(project, relative).canonical;
+  };
+  const candidates = [...vocabularyControls];
+  // The Wiki archive collection is history the validator leaves alone (PR431
+  // comment 4313542661); a page there is never a term's current explanation.
+  let archive = `${wikiLane}/archive`;
+  try { archive = collectionRelative(project, 'archive'); } catch { /* the default collection path */ }
+  const walk = relative => {
+    if (relative === archive) return;
+    const directory = path.join(project, relative);
+    try { assertSafeReadPath(project, directory); } catch { return; }
+    const entry = lstatOrNull(directory);
+    if (!entry?.isDirectory() || entry.isSymbolicLink()) return;
+    let children;
+    try { children = fs.readdirSync(directory, { withFileTypes: true }); } catch { return; }
+    for (const child of children) {
+      if (child.name.startsWith('.')) continue;
+      const file = `${relative}/${child.name}`;
+      if (child.isDirectory()) walk(file);
+      else if (child.isFile() && child.name.endsWith('.md')) candidates.push(file);
+    }
+  };
+  walk(wikiLane);
+  // No candidate content is opened until ordinary-path and public-policy
+  // admission succeeds. All consumers, including readiness, reuse this map.
+  for (const relative of publicLandingPaths(project, candidates.filter(ordinary))) {
+    if (!ordinary(relative)) continue;
+    try { files.set(relative, fs.readFileSync(path.join(project, relative), 'utf8')); } catch { /* unreadable is not evidence */ }
+  }
+  const wiki = [...files].filter(([file]) => !vocabularyControls.includes(file));
+  // No aggregate corpus: every landing check names the file it reads, so a
+  // claim lands only in its designated owner (PR431 comment 4312977577).
+  return { project, wikiLane, glossary: files.get('GLOSSARY.md') ?? '', wiki, files };
+}
+
+// S-004O TK-009M: a generic Template Lexicon line has landed only where the
+// room's vocabulary homes carry the Template content: `GLOSSARY.md`,
+// `ARCHITECTURE.md` and the Template Wiki vocabulary articles each hold every
+// Template line that carries no placeholder, as they do when the update
+// installed them from the Template in this run. A home the room wrote itself
+// (a glossary started before the update, say) is named here, and the generic
+// lines must then land in the room like its own.
+function genericHomesMissing(templates, wikiLane, publicRoom) {
+  const homes = [...vocabularyControls.map(name => [name, name]), ...wikiVocabularyFiles.map(name => [`wiki/${name}`, `${wikiLane}/${name}`])];
+  const missing = [];
+  for (const [source, destination] of homes) {
+    const template = path.join(templates, source);
+    if (!lstatOrNull(template)?.isFile()) continue;
+    const required = fs.readFileSync(template, 'utf8').split(/\r?\n/).map(normalizeLandingText)
+      .filter(line => !landingExempt(line) && !templatePlaceholders.some(token => line.includes(token)));
+    const text = publicRoom.files.get(destination);
+    const room = text === undefined ? null : new Set(text.split(/\r?\n/).map(normalizeLandingText));
+    if (!room || required.some(line => !room.has(line))) missing.push(destination);
+  }
+  return missing;
+}
+
+// A link destination is part of a claim's identity (PR431 comment
+// 4312850585): the same label pointing elsewhere is a different route. It is
+// kept as a room-relative path resolved from the directory of the file that
+// holds the text, so one route reads the same from the root and from a Wiki
+// article; an absolute, scheme or anchor-only target is kept as written.
+function claimLinkTarget(destination, directory) {
+  const target = String(destination).trim().replace(/^<(.*)>$/, '$1').replace(/\s+(?:"[^"]*"|'[^']*')$/, '');
+  const [file, ...rest] = target.split('#');
+  const fragment = rest.length ? `#${rest.join('#')}` : '';
+  if (!file || path.posix.isAbsolute(file) || /^[a-z][a-z0-9+.-]*:/i.test(file)) return `${file}${fragment}`;
+  return `${skillsRoute(path.posix.normalize(path.posix.join(directory, file)))}${fragment}`;
+}
+
+// S-006I TK-00BQ: a skill route recorded under the retired workbench/skills
+// lane and the same route under .agents/skills name one skill file, so frozen
+// landing evidence keeps comparing equal after the lane moved.
+function skillsRoute(route) {
+  return route === LEGACY_SKILLS_LANE || route.startsWith(`${LEGACY_SKILLS_LANE}/`) ? `${SKILLS_LANE}${route.slice(LEGACY_SKILLS_LANE.length)}` : route;
+}
+
+// Rewrite a file's link destinations to room routes so its text can be joined
+// with text from other files and compared from the room root.
+function resolveClaimLinks(text, directory) {
+  return String(text).replace(/(!?\[[^\]]*\]\()([^)]*)(\))/g, (match, open, destination, close) => `${open}${claimLinkTarget(destination, directory)}${close}`);
+}
+
+// Markdown emphasis, code spans and link syntax reduced to their text, so a
+// definition reads the same in a table cell, the glossary and the Wiki; the
+// link's destination stays beside its label.
+function stripMarkup(text, directory = '') {
+  return normalizeLandingText(String(text)
+    .replace(/!?\[([^\]]*)\]\(([^)]*)\)/g, (match, label, destination) => `${label} <${claimLinkTarget(destination, directory)}>`)
+    // S-006I TK-00BQ: a frozen line naming the retired lane names the same
+    // skills directory its successor text calls .agents/skills.
+    .replaceAll(`${LEGACY_SKILLS_LANE}`, SKILLS_LANE)
+    .replace(/\*\*|__|`/g, '')
+    .replace(/(^|[^\w*])\*([^*\s][^*]*?)\*(?=[^\w*]|$)/g, '$1$2')
+    .replace(/(^|[^\w])_([^_\s][^_]*?)_(?=[^\w]|$)/g, '$1$2'));
+}
+
+// Evidence is scoped to the named entry and its linked explanation. A
+// definition repeated under a different term cannot replace this meaning.
+function glossaryBlock(name, room) {
+  const entries = [...room.glossary.matchAll(/^\*\*([^*]+)\*\*:\s*$/gm)];
+  const matches = entries.filter(entry => entry[1].trim().toLowerCase() === name.trim().toLowerCase());
+  if (matches.length !== 1) return null;
+  const entry = matches[0], next = entries[entries.indexOf(entry) + 1];
+  return room.glossary.slice(entry.index, next?.index ?? room.glossary.length).split(/^#{1,6} /m)[0];
+}
+
+// A term article declares its term in frontmatter, read by the same parser
+// `validateWiki` uses (PR431 comment 4313464718): a body line that happens to
+// read `glossary_term: X` declares nothing. An empty value declares nothing.
+function declaredGlossaryTerm(text) {
+  const value = parseFrontmatter(String(text)).data?.glossary_term;
+  return typeof value === 'string' ? value.replace(/^(['"])(.*)\1$/, '$2').trim() : '';
+}
+
+// A term's heading section is its explanation only in a grouped vocabulary
+// article (`isGroupedVocabularyArticle`, PR431 comment 4315959826); any other
+// page needs the frontmatter declaration.
+function termWikiText(name, room, onlyPath = null) {
+  const key = name.trim().toLowerCase();
+  return room.wiki.filter(([file]) => !onlyPath || file === onlyPath).flatMap(([file, text]) => {
+    // An article must link the canonical vocabulary. A source_paths string
+    // alone is not a link and an unrelated article is not this term's home.
+    // PR431 comment 4312687900: the link is resolved from the article itself
+    // and must reach the room-root GLOSSARY.md; a `../` count proves nothing.
+    const source = path.join(room.project, file);
+    if (!markdownLinkTargets(text).some(target => linkResolvesToRootControl(room.project, source, target, 'GLOSSARY.md'))) return [];
+    const declared = declaredGlossaryTerm(text);
+    const resolved = resolveClaimLinks(text, path.posix.dirname(file));
+    if (declared?.toLowerCase() === key) return [resolved];
+    if (!isGroupedVocabularyArticle(file, room.wikiLane)) return [];
+    const sections = [...resolved.matchAll(/^#{1,6} (.+)$/gm)];
+    return sections.filter(section => stripMarkup(section[1]).toLowerCase() === key).map(section => {
+      const next = sections[sections.indexOf(section) + 1];
+      return resolved.slice(section.index, next?.index ?? resolved.length);
+    });
+  }).join('\n\n');
+}
+
+// A standalone Lexicon line (not a term row) lands only in the successor its
+// Lexicon section designates (PR431 comment 4312977577): ownership and
+// navigation sections in ARCHITECTURE.md, term sections in GLOSSARY.md or a
+// declared term article (one that names a glossary_term and links the root
+// glossary). A line under a room-added heading, or before any heading, has no
+// designated owner and needs an explicit routed landing: a successor control,
+// or a Wiki page that a successor control links. A copy anywhere else is a
+// duplicate, not a home.
+const LEXICON_SECTION_OWNERS = new Map([
+  ['Task Routing', 'architecture'], ['Ownership Rules', 'architecture'], ['Artifact Ownership Schema', 'architecture'],
+  ['Responsibilities And Lookup', 'architecture'], ['Artifact Boundaries', 'architecture'],
+  ['Workbench Terms', 'glossary'], ['Priority And Value', 'glossary'], ['Feedback Dispositions', 'glossary'],
+  ['AI Coding Terms', 'glossary'], ['Continuity Terms', 'glossary'], ['Stance Terms', 'glossary'],
+  ['Governance Core', 'glossary'], ['Project Terms', 'glossary'], ['Continuity And Evidence Boundaries', 'glossary']
+]);
+
+function roomRoutes(room) {
+  if (room.routes) return room.routes;
+  const routed = new Set(), declared = new Set();
+  for (const name of vocabularyControls) {
+    for (const target of markdownLinkTargets(room.files.get(name) ?? '')) {
+      const resolved = claimLinkTarget(target, '').split('#')[0];
+      if (room.files.has(resolved) && !vocabularyControls.includes(resolved)) routed.add(resolved);
+    }
+  }
+  for (const [file, text] of room.wiki) {
+    const source = path.join(room.project, file);
+    if (declaredGlossaryTerm(text) && markdownLinkTargets(text).some(target => linkResolvesToRootControl(room.project, source, target, 'GLOSSARY.md'))) declared.add(file);
+  }
+  room.routes = { routed, declared };
+  return room.routes;
+}
+
+function standaloneLanded(normalized, owner, room) {
+  const { routed, declared } = roomRoutes(room);
+  const homes = [];
+  const control = name => { const text = room.files.get(name); if (text !== undefined) homes.push([text, '']); };
+  const pages = files => { for (const [file, text] of room.wiki) if (files.has(file)) homes.push([text, path.posix.dirname(file)]); };
+  if (owner === 'architecture') control('ARCHITECTURE.md');
+  else if (owner === 'glossary') { control('GLOSSARY.md'); pages(declared); }
+  else { control('ARCHITECTURE.md'); control('GLOSSARY.md'); pages(routed); }
+  return homes.some(([text, directory]) => completeClaim(text, normalized, { textDir: directory, cells: false }));
+}
+
+function termRowLanded(normalized, room) {
+  const row = normalized.match(/^\|(.*)\|$/);
+  if (!row) return false;
+  const cells = row[1].split(/(?<!\\)\|/).map(cell => cell.trim());
+  if (cells.length < 2 || cells.length > 3) return false;
+  const name = cells[0].match(/^\*\*([^*]+)\*\*$/)?.[1];
+  if (!name) return false;
+  const block = glossaryBlock(name, room);
+  if (!block) return false;
+  const definition = stripMarkup(cells[1]);
+  const distinction = stripMarkup(cells[2] ?? '');
+  const explanation = termWikiText(name, room);
+  return !!definition && (completeClaim(block, definition) || completeClaim(explanation, definition)) && (!distinction || completeClaim(explanation, distinction));
+}
+
+function mappedLineLanded(record, room, wikiLane) {
+  const [home, landedText, explanationHome, explanationText, reason] = record;
+  if (reason) {
+    // Only the known census's Markdown scaffolding retires without a home.
+    // Its one pointer row still requires the canonical Task entry.
+    return reason === 'scaffolding' || !!glossaryBlock('Task', room);
+  }
+  const local = relative => relative?.startsWith('wiki/') ? `${wikiLane}/${relative.slice(5)}` : relative;
+  const target = local(home);
+  const name = landedText?.match(/^\*\*([^*]+)\*\*:/)?.[1];
+  const content = name ? glossaryBlock(name, room) : room.files.get(target);
+  // The census text is written as it appears in its home, so both sides
+  // resolve their links from that home's directory.
+  const inHome = file => ({ textDir: path.posix.dirname(file), expectedDir: path.posix.dirname(file) });
+  if (!content || !completeClaim(content, landedText, name ? {} : inHome(target))) return false;
+  if (!explanationText) return true;
+  // A term's explanation text is written as it appears in its article, so it
+  // resolves from that article's directory; the article text is already root-resolved.
+  if (name) return completeClaim(termWikiText(name, room, local(explanationHome)), explanationText, { expectedDir: path.posix.dirname(local(explanationHome)) });
+  return completeClaim(room.files.get(local(explanationHome)) ?? '', explanationText, inHome(local(explanationHome)));
+}
+
+export function lexiconLanding(project, options = {}) {
+  const templates = options.templates ?? templateRoot();
+  const manifest = options.manifest ?? readManifestFile(project).manifest;
+  return lexiconLandingInRoom(project, templates, manifest, roomLandingText(project, manifest?.lanes?.wiki ?? lanes.wiki));
+}
+
+function lexiconLandingInRoom(project, templates, manifest, room) {
+  const lexicon = fs.readFileSync(path.join(project, RETIRED_LEXICON), 'utf8');
+  const generic = templates ? templateLexiconMatchers(templates, manifest) : { exact: new Set(), patterns: [], sources: 0 };
+  const wikiLane = manifest?.lanes?.wiki ?? lanes.wiki;
+  const missingHomes = templates ? genericHomesMissing(templates, wikiLane, room) : [];
+  const unlanded = [];
+  let sectionOwner = null, parentOwner = null;
+  lexicon.split(/\r?\n/).forEach((line, index) => {
+    const normalized = normalizeLandingText(line);
+    if (landingExempt(normalized)) return;
+    // The section a line sits under names its designated successor; a
+    // room-added `##` heading opens a section with none, and a room-added
+    // `###` heading inherits its parent's. Deeper headings are content.
+    const heading = normalized.match(/^(#{2,3}) (.+)$/);
+    if (heading) {
+      const known = LEXICON_SECTION_OWNERS.get(stripMarkup(heading[2])) ?? null;
+      if (heading[1] === '##') parentOwner = known;
+      sectionOwner = known ?? (heading[1] === '##' ? null : parentOwner);
+    }
+    // Identity stamps (name, version, review date, status) are not entries.
+    if (generic.patterns.some(pattern => pattern.test(normalized))) return;
+    if (generic.headings?.has(normalized)) return;
+    const record = generic.mapped?.get(digest(Buffer.from(normalized)));
+    const isGeneric = generic.exact.has(normalized) || !!record;
+    if (record && mappedLineLanded(record, room, wikiLane)) return;
+    const term = /^\|\s*\*\*[^*]+\*\*\s*\|/.test(normalized) && normalized.match(/(?<!\\)\|/g)?.length <= 4;
+    if (term ? termRowLanded(normalized, room) : standaloneLanded(normalized, sectionOwner, room)) return;
+    unlanded.push(isGeneric ? { line: index + 1, text: normalized, generic: true } : { line: index + 1, text: normalized });
+  });
+  return { unlanded, templateSources: generic.sources, genericHomesMissing: missingHomes };
+}
+
+function lexiconFinding(unlanded, missingHomes = []) {
+  const named = unlanded.slice(0, 5).map(item => `line ${item.line}: ${item.text}`).join('; ');
+  const more = unlanded.length > 5 ? `; and ${unlanded.length - 5} more` : '';
+  const homes = missingHomes.length
+    ? `; ${missingHomes.join(', ')} differ from current Template content; every historical line still requires its own surviving home`
+    : '';
+  return {
+    code: 'lexicon-unlanded', severity: 'attention', blocks: 'none',
+    message: `${RETIRED_LEXICON} is kept: ${unlanded.length} line(s) have not landed in their designated owner (${named}${more})${homes}; move each into its home, confirmed by grilling (a term row lands as a \`**Term**:\` glossary entry with its definition, its distinction in a Wiki article; an ownership or navigation line lands in ARCHITECTURE.md, a term-section line in GLOSSARY.md or a declared term article, and a line under a room-added heading in a successor or a Wiki page a successor links, with its link destinations intact), remove each landed row from ${RETIRED_LEXICON}, then rerun the update; a clean report archives the Lexicon, and retire-lexicon deletes it`,
+    lines: unlanded
+  };
+}
+
+// The pinned format of a successor control: the Glossary parses whole, and the
+// Architecture meets the standing filled-control rule (a title heading and at
+// least one section), the same rule Genesis readiness applies to every control.
+function successorFormatError(name, text) {
+  try {
+    if (name === 'GLOSSARY.md') { parseGlossary(text, name); return null; }
+  } catch (error) { return error.message.replace(/\s+/g, ' '); }
+  const body = String(text).replace(/\r\n?/g, '\n');
+  if (!/^# \S/.test(body)) return 'it lacks a title heading';
+  return /^## \S/m.test(body) ? null : 'it lacks a section heading';
+}
+
+// A control that exists but is not the canonical room-root file (a symlink, a
+// shared hard link, a file reached through a linked directory) is not a
+// usable owner: the migration keeps the Lexicon, names the control and why,
+// and reports itself incomplete, so no caller can report `complete`.
+function nonCanonicalControlResult(project, names, extra = {}) {
+  const refused = names.map(name => ({ name, ...canonicalRoomFile(project, name) })).filter(item => item.exists && !item.canonical);
+  if (!refused.length) return null;
+  return {
+    status: 'kept', installed: [], articles: [], unlanded: [], ...extra,
+    requiresReconciliation: true,
+    finding: { code: 'unfilled-control', severity: 'error', blocks: 'none', message: `Lexicon migration is incomplete: ${refused.map(item => `${item.name} is ${item.reason}`).join('; ')}; each control must be the ordinary, unshared file at the room root, then rerun workbench-layout.mjs migrate; ${RETIRED_LEXICON} is preserved`, controls: refused.map(item => item.name) }
+  };
+}
+
+// The vocabulary articles present in the Wiki lane that the lane's router
+// (`MEMORY.md`) does not link. A missing or non-canonical router routes none,
+// and so does an ignored one (PR431 comment 4313542679): the router passes
+// the same public admission as every landing source, since a clone without
+// it has no documented cold-start route to the articles.
+function unroutedVocabularyArticles(project, wikiLane) {
+  const present = wikiVocabularyFiles.filter(name => canonicalRoomFile(project, `${wikiLane}/${name}`).canonical);
+  const relative = `${wikiLane}/MEMORY.md`;
+  const router = canonicalRoomFile(project, relative);
+  if (!router.canonical) return { unrouted: present, reason: `${relative} is ${router.reason}` };
+  if (!publicLandingPaths(project, [relative]).includes(relative)) return { unrouted: present, reason: `${relative} is not a public ordinary file (ignored or under uncertain Git policy)` };
+  const targets = markdownLinkTargets(fs.readFileSync(router.path, 'utf8'));
+  return { unrouted: present.filter(name => !targets.some(target => linkResolvesToRootControl(project, router.path, target, `${wikiLane}/${name}`))), reason: `${relative} does not route` };
+}
+
+// A lane, collection or backup path that is not an ordinary directory keeps
+// the Lexicon and leaves the migration partial; nothing was written.
+function unsafeLayoutResult(message, extra = {}) {
+  return {
+    status: 'kept', installed: [], articles: [], unlanded: [], ...extra,
+    requiresReconciliation: true,
+    finding: { code: 'lane-collision', severity: 'error', blocks: 'none', message: `${RETIRED_LEXICON} is kept: ${message}; every lane, collection and the retirement backup path must be an ordinary directory inside the room, then rerun workbench-layout.mjs migrate` }
+  };
+}
+
+export function retireLexicon(project, options = {}) {
+  const lexiconPath = path.join(project, RETIRED_LEXICON);
+  if (!canonicalRoomFile(project, RETIRED_LEXICON).exists) return { status: 'absent' };
+  const lexiconRefused = nonCanonicalControlResult(project, [RETIRED_LEXICON]);
+  if (lexiconRefused) return lexiconRefused;
+  // PR431 comment 4313464725: the support root, every lane and collection
+  // must be an ordinary directory or absent before retirement writes
+  // anything, so a refused migration leaves no side effect outside the room.
+  const unsafe = preflightLayout(project);
+  if (unsafe) return unsafeLayoutResult(unsafe.error.message);
+  const templates = templateRoot();
+  if (!templates) {
+    return { status: 'kept', installed: [], articles: [], unlanded: [], finding: { code: 'lexicon-unlanded', severity: 'attention', blocks: 'none', message: `${RETIRED_LEXICON} is kept: run the update from the Workbench release checkout, whose Template carries GLOSSARY.md and ARCHITECTURE.md`, lines: [] } };
+  }
+  const { manifest } = readManifestFile(project);
+  const lexicon = fs.readFileSync(lexiconPath, 'utf8');
+  const values = {
+    '[HARNESS_VERSION]': String(options['--version'] ?? manifest?.workbenchVersion ?? '').replace(/^v/, ''),
+    '[YYYY-MM-DD]': options['--date'] ?? new Date().toISOString().slice(0, 10),
+    '[PROJECT_NAME]': options['--name'] ?? lexicon.match(/^# (.+?) - Lexicon\s*$/m)?.[1] ?? path.basename(project)
+  };
+  const installed = [];
+  for (const name of vocabularyControls) {
+    const destination = path.join(project, name);
+    if (lstatOrNull(destination)) continue;
+    writeSafeFile(project, destination, fillTemplate(fs.readFileSync(path.join(templates, name), 'utf8'), values));
+    installed.push(name);
+  }
+  const seeded = seedWiki(project, { '--version': values['[HARNESS_VERSION]'], '--date': values['[YYYY-MM-DD]'], '--name': values['[PROJECT_NAME]'] }, [], wikiVocabularyFiles);
+  if (!seeded.wiki) return unsafeLayoutResult(seeded.reason, { installed });
+  const articles = seeded.articles ?? [];
+  // A successor that exists but is not the canonical room-root file is named
+  // before any landing text is read; its bytes are never evidence.
+  const successorRefused = nonCanonicalControlResult(project, vocabularyControls, { installed, articles });
+  if (successorRefused) return successorRefused;
+  const wikiLane = manifest?.lanes?.wiki ?? lanes.wiki;
+  const room = roomLandingText(project, wikiLane);
+  const { unlanded, genericHomesMissing: missingHomes } = lexiconLandingInRoom(project, templates, manifest, room);
+  const unfilled = vocabularyControls.filter(name => {
+    const text = room.files.get(name);
+    return text === undefined || containsPlaceholder(text);
+  });
+  if (unfilled.length) return {
+    status: 'kept', installed, articles, unlanded, genericHomesMissing: missingHomes,
+    requiresReconciliation: true,
+    finding: { code: 'unfilled-control', severity: 'error', blocks: 'none', message: `Lexicon migration is incomplete: verify public ordinary files, fill and confirm ${unfilled.join(', ')} from project truth, then rerun workbench-layout.mjs migrate; LEXICON.md is preserved`, controls: unfilled }
+  };
+  // A filled successor that breaks its pinned format is not a usable canonical
+  // owner, so matching text inside it never authorizes deleting the Lexicon.
+  const malformed = vocabularyControls.map(name => ({ name, reason: successorFormatError(name, room.files.get(name)) })).filter(item => item.reason);
+  if (malformed.length) return {
+    status: 'kept', installed, articles, unlanded, genericHomesMissing: missingHomes,
+    requiresReconciliation: true,
+    finding: { code: 'unfilled-control', severity: 'error', blocks: 'none', message: `Lexicon migration is incomplete: ${malformed.map(item => `${item.name} is malformed (${item.reason})`).join('; ')}; repair each to its pinned format, then rerun workbench-layout.mjs migrate; ${RETIRED_LEXICON} is preserved`, controls: malformed.map(item => item.name) }
+  };
+  // PR431 comment 4313162397: the installed explanations must be reachable
+  // from the documented cold-start route. A retained router that predates the
+  // Vocabulary section is never rewritten here; the migration stays partial
+  // and names each article it does not link.
+  const { unrouted, reason: routerReason } = unroutedVocabularyArticles(project, wikiLane);
+  if (unrouted.length) return {
+    status: 'kept', installed, articles, unlanded, genericHomesMissing: missingHomes,
+    requiresReconciliation: true,
+    finding: { code: 'lexicon-unrouted', severity: 'error', blocks: 'none', message: `Lexicon migration is incomplete: ${routerReason} ${unrouted.join(', ')}; add the Template Wiki router's Vocabulary section (templates/wiki/MEMORY.project.md) linking each installed vocabulary article as a public ordinary file, then rerun workbench-layout.mjs migrate; ${RETIRED_LEXICON} is preserved`, articles: unrouted }
+  };
+  if (unlanded.length) return { status: 'kept', installed, articles, unlanded, genericHomesMissing: missingHomes, finding: lexiconFinding(unlanded, missingHomes) };
+  // Owner decision (PR431 comment 6270358739): a clean report archives the
+  // Lexicon in place; the update never deletes it. `retire-lexicon` is the
+  // explicit operator step that removes the archived file after a clean report.
+  return {
+    status: 'archived', installed, articles, unlanded, genericHomesMissing: missingHomes,
+    finding: { code: 'lexicon-archived', severity: 'attention', blocks: 'none', message: `${RETIRED_LEXICON} is archived: every line has landed in its designated owner and the update keeps the file; review the clean report, then delete it with workbench-layout.mjs retire-lexicon --project PATH, which backs it up in the recovery collection first`, lines: [] }
+  };
+}
+
+// The explicit operator step (PR431 comment 6270358739): delete an archived
+// Lexicon only after a clean report. It reruns the migration report, then the
+// installed Wiki validation, since the report's term-article match is looser
+// than the validator (PR431 comments 4313542646 and 4315267008: casing and
+// schema); any error refuses. The file is backed up in the recovery collection
+// before it is removed. A refusal names the finding and changes nothing. The
+// validator (`wiki.mjs validateWiki`) is passed in: `wiki.mjs` imports this
+// module, and the identity lock is synchronous.
+export function removeArchivedLexicon(project, options = {}, validateWiki) {
+  if (typeof validateWiki !== 'function') throw new Error('removeArchivedLexicon requires the installed Wiki validator.');
+  const report = retireLexicon(project, options);
+  if (report.status === 'absent') return report;
+  if (report.status !== 'archived') return { ...report, status: 'refused', error: { code: report.finding.code, message: report.finding.message } };
+  const refuse = finding => ({ ...report, status: 'refused', finding, error: { code: finding.code, message: finding.message } });
+  // The backup path is checked before anything is validated or written, so a
+  // linked recovery directory refuses with no side effect outside the room.
+  const backupDirectory = `${collections.recovery}/lexicon-retirement`;
+  let backup = `${backupDirectory}/${RETIRED_LEXICON}`;
+  for (let index = 1; lstatOrNull(path.join(project, backup)); index += 1) backup = `${backupDirectory}/LEXICON.${index}.md`;
+  try { assertSafeWritePath(project, path.join(project, backup)); }
+  catch (error) { return refuse(unsafeLayoutResult(error.message).finding); }
+  const errors = validateWiki(project).filter(item => item.severity === 'error').map(({ code, message }) => ({ code, message }));
+  if (errors.length) {
+    return refuse({ code: 'lexicon-wiki-invalid', severity: 'error', blocks: 'none', message: `${RETIRED_LEXICON} is kept: the installed Wiki validation reports ${errors.length} error(s) (${errors.slice(0, 3).map(item => `${item.code}: ${item.message}`).join('; ')}${errors.length > 3 ? `; and ${errors.length - 3} more` : ''}); repair each, confirm the term articles still hold their explanations, then rerun retire-lexicon`, findings: errors });
+  }
+  const lexiconPath = path.join(project, RETIRED_LEXICON);
+  const lexicon = fs.readFileSync(lexiconPath, 'utf8');
+  fs.mkdirSync(path.join(project, backupDirectory), { recursive: true });
+  writeSafeFile(project, path.join(project, backup), lexicon);
+  fs.unlinkSync(lexiconPath);
+  return { status: 'retired', installed: report.installed, articles: report.articles, backup };
+}
+
+// `retire-lexicon --project PATH`: the operator command around the step above,
+// under the same release-identity proof and identity lock as `migrate`.
+export async function retireLexiconCommand(options) {
+  const project = path.resolve(options['--project']);
+  const { manifest, failure } = readManifestFile(project);
+  if (failure) return failure;
+  const source = sourceIdentity({ ...options, '--version': options['--version'] ?? manifest.workbenchVersion });
+  if (source.status === 'invalid') return source;
+  const { validateWiki } = await import('./wiki.mjs');
+  return withIdentityLock(project, () => removeArchivedLexicon(project, options, validateWiki));
 }
 
 // Bring the seeded lane documents this release carries into a room and record
@@ -1143,7 +1807,7 @@ function preflightSeedDocuments(project, options = {}) {
   if (!templates) return fail('invalid-source-identity', 'A clean Workbench release checkout is required to seed documents.');
   try {
     assertSafeWritePath(project, path.join(project, SEED_RECORD));
-    for (const document of seededLaneDocuments.filter(document => !options.notepadOnly || document.lane === 'sessions')) {
+    for (const document of seededLaneDocuments.filter(document => !options.setupOnly || ['sessions', 'docs'].includes(document.lane))) {
       const source = path.join(templates, document.template);
       assertSafeReadPath(path.dirname(templates), source);
       if (!lstatOrNull(source)?.isFile()) return fail('invalid-source-identity', `Missing ordinary seed source: ${document.template}`);
@@ -1168,7 +1832,7 @@ function writeSeedDocuments(project, options) {
   const documents = { ...record.documents };
   const written = [];
   const retained = [];
-  for (const document of seededLaneDocuments.filter(document => !options.notepadOnly || document.lane === 'sessions')) {
+  for (const document of seededLaneDocuments.filter(document => !options.setupOnly || ['sessions', 'docs'].includes(document.lane))) {
     const relative = `${lanes[document.lane]}/${document.name}`;
     const destination = path.join(root, relative);
     const source = path.join(templates, document.template);
@@ -1449,12 +2113,125 @@ function validateManifestShape(manifest) {
   return null;
 }
 
+// S-006I TK-00BQ (ADR-001M): the skills lane is the host discovery directory.
+// Relocation renames the retired workbench/skills lane to .agents/skills and
+// makes .claude/skills one relative link to it; rollback is the exact inverse.
+// Both check every path before the first write and never copy a skill, so a
+// name never has two copies, even after an interrupted run.
+const SKILL_LINKS = ['.agents/skills', '.claude/skills'];
+
+function skillsLinkState(project, relative, laneReal) {
+  const target = path.join(project, relative);
+  const parent = lstatOrNull(path.dirname(target));
+  if (parent && (parent.isSymbolicLink() || !parent.isDirectory())) return { error: `${path.dirname(relative)} must be an ordinary directory` };
+  const entry = lstatOrNull(target);
+  if (!entry) return { present: false };
+  let resolved = null;
+  try { resolved = fs.realpathSync(target); } catch {}
+  if (entry.isSymbolicLink() && resolved === laneReal) return { present: true };
+  return { error: `${relative} exists and is not a link into the skills lane; preserve its contents and remove it first` };
+}
+
+function relocateSkillsLane(project, manifestPath, manifest) {
+  const from = path.join(project, LEGACY_SKILLS_LANE);
+  const to = path.join(project, SKILLS_LANE);
+  const laneEntry = lstatOrNull(from);
+  if (!laneEntry || laneEntry.isSymbolicLink() || !laneEntry.isDirectory()) return fail('skills-relocation-collision', `${LEGACY_SKILLS_LANE} must be an ordinary directory before relocation.`);
+  const laneReal = fs.realpathSync(from);
+  const states = {};
+  for (const relative of SKILL_LINKS) {
+    states[relative] = skillsLinkState(project, relative, laneReal);
+    if (states[relative].error) return fail('skills-relocation-collision', `${states[relative].error}.`, { path: relative });
+  }
+  // The earlier line-ending block covers workbench/** only; append the current
+  // block first so the moved lane keeps its LF checkout under core.autocrlf.
+  if (states[SKILLS_LANE].present) fs.unlinkSync(to);
+  fs.mkdirSync(path.dirname(to), { recursive: true });
+  fs.renameSync(from, to);
+  const claude = path.join(project, '.claude', 'skills');
+  if (states['.claude/skills'].present) fs.unlinkSync(claude);
+  fs.mkdirSync(path.dirname(claude), { recursive: true });
+  fs.symlinkSync('../.agents/skills', claude, 'dir');
+  const updated = { ...manifest, lanes: { ...manifest.lanes, skills: SKILLS_LANE } };
+  writeSafeFile(project, manifestPath, `${JSON.stringify(updated, null, 2)}\n`);
+  return report('migrated', { manifestPath, manifest: updated, moved: [{ source: LEGACY_SKILLS_LANE, destination: SKILLS_LANE }], relocated: { from: LEGACY_SKILLS_LANE, to: SKILLS_LANE }, rollback: 'node workbench/tools/workbench-layout.mjs skills-lane-rollback --project PATH', next: 'commit the rename, the .claude/skills link, the manifest and .gitattributes together' });
+}
+
+export function rollbackSkillsLane(options) {
+  const project = path.resolve(options['--project']);
+  return withIdentityLock(project, () => {
+    const valid = validateManifest(project);
+    if (valid.status !== 'valid') return valid;
+    const { manifest } = valid;
+    const manifestPath = path.join(project, 'workbench', 'manifest.json');
+    if (manifest.lanes.skills !== SKILLS_LANE) return fail('skills-rollback-unavailable', `The manifest declares ${manifest.lanes.skills}; only a room relocated to ${SKILLS_LANE} rolls back.`);
+    const lane = path.join(project, SKILLS_LANE);
+    const legacy = path.join(project, LEGACY_SKILLS_LANE);
+    const laneEntry = lstatOrNull(lane);
+    if (!laneEntry || laneEntry.isSymbolicLink() || !laneEntry.isDirectory()) return fail('skills-rollback-unavailable', `${SKILLS_LANE} must be an ordinary directory.`);
+    if (lstatOrNull(legacy)) return fail('skills-relocation-collision', `${LEGACY_SKILLS_LANE} already exists; preserve its contents and remove it first.`, { path: LEGACY_SKILLS_LANE });
+    const claudeState = skillsLinkState(project, '.claude/skills', fs.realpathSync(lane));
+    if (claudeState.error) return fail('skills-relocation-collision', `${claudeState.error}.`, { path: '.claude/skills' });
+    const claude = path.join(project, '.claude', 'skills');
+    if (claudeState.present) fs.unlinkSync(claude);
+    fs.renameSync(lane, legacy);
+    fs.mkdirSync(path.dirname(claude), { recursive: true });
+    for (const link of [lane, claude]) fs.symlinkSync('../workbench/skills', link, 'dir');
+    const updated = { ...manifest, lanes: { ...manifest.lanes, skills: LEGACY_SKILLS_LANE } };
+    writeSafeFile(project, manifestPath, `${JSON.stringify(updated, null, 2)}\n`);
+    return report('rolled-back', { manifestPath, manifest: updated, relocated: { from: SKILLS_LANE, to: LEGACY_SKILLS_LANE } });
+  });
+}
+
 // Lossless schema 1 -> 2 migration: the five-lane layout renames its
 // grilling lane into sessions, its tracked handoffs checkpoints into
 // sessions/checkpoints, and gains docs, tools, and the seven collections.
+// S-004O TK-009G: the managed update route also reports a room's Lexicon
+// (`retireLexicon`): archived in place once every line has landed, kept with
+// the unlanded lines otherwise, never deleted (PR431 comment 6270358739);
+// a room without one is unchanged.
+// S-006I TK-00BQ (ADR-001M): the one line-ending step for the skills lane.
+// Every migrate branch that creates or moves the .agents/skills lane (schema
+// 1, a pre-lane six-lane room, relocation of the retired lane) passes through
+// here; init writes the same block itself. An earlier block covers
+// workbench/** only, so the current block is checked before any write and
+// appended after a successful step that leaves the room on .agents/skills.
+function skillsLaneLineEndingsPreflight(project) {
+  const destination = path.join(project, ATTRIBUTES_FILE);
+  try { assertSafeWritePath(project, destination); }
+  catch (error) { return fail('lane-collision', `${error.message} Nothing was changed.`, { path: ATTRIBUTES_FILE }); }
+  const refused = ignoredAttributesMessage(project) ?? flaggedAttributesMessage(project);
+  return refused ? fail('lane-collision', `${refused} Nothing was changed.`, { path: ATTRIBUTES_FILE }) : null;
+}
+
+function withSkillsLaneLineEndings(project, result) {
+  if (!['migrated', 'current'].includes(result.status) || result.manifest?.lanes?.skills !== SKILLS_LANE) return result;
+  if (!ensureLineEndingPolicy(project)) return result;
+  return { ...result, status: 'migrated', added: [...(result.added ?? []), 'line-endings'] };
+}
+
 export function migrate(options) {
   const project = path.resolve(options['--project']);
-  return withIdentityLock(project, () => migrateUnlocked(options));
+  return withIdentityLock(project, () => {
+    const before = readManifestFile(project).manifest;
+    if (before && before.lanes?.skills !== SKILLS_LANE) {
+      const refused = skillsLaneLineEndingsPreflight(project);
+      if (refused) return refused;
+    }
+    const result = withSkillsLaneLineEndings(project, migrateUnlocked(options));
+    if (!['migrated', 'current'].includes(result.status) || result.manifest?.schemaVersion !== SCHEMA_VERSION) return result;
+    if (!canonicalRoomFile(project, RETIRED_LEXICON).exists) return result;
+    // PR431 comment 4313162414: retirement copies Template bytes into the
+    // room, so it runs only from the verified clean release
+    // checkout at the requested version, with any source assertion matching
+    // it; a room that was already current skipped this proof before.
+    const source = sourceIdentity({ ...options, '--version': options['--version'] ?? result.manifest.workbenchVersion });
+    if (source.status === 'invalid') return source;
+    const lexicon = retireLexicon(project, options);
+    if (lexicon.status === 'absent') return result;
+    const changed = lexicon.installed.length > 0 || lexicon.articles.length > 0;
+    return { ...result, status: lexicon.requiresReconciliation ? 'partial' : changed ? 'migrated' : result.status, lexicon };
+  });
 }
 
 function migrateUnlocked(options) {
@@ -1484,6 +2261,9 @@ function migrateUnlocked(options) {
       writeSafeFile(project, manifestPath, `${JSON.stringify(updated, null, 2)}\n`);
       return report('migrated', { manifestPath, manifest: updated, moved: [], added: ['lanes.skills'], next: 'run workbench-skills.mjs install --project PATH from the release checkout' });
     }
+    // S-006I TK-00BQ (ADR-001M): a room on the retired workbench/skills lane
+    // moves it to .agents/skills in one rename, so no skill is ever copied.
+    if (manifest.lanes.skills === LEGACY_SKILLS_LANE) return relocateSkillsLane(project, manifestPath, manifest);
     // S-00I TK-01U: a room stamped with the current pre-feature collection
     // set gains the features collection additively: the directory is created
     // (seeded with its README when the release templates are beside this
@@ -1629,6 +2409,11 @@ function validateGenesisControl(project, control, expectedVersion) {
     return null;
   }
   if (!/^#\s+\S/m.test(content) || !/^##\s+\S/m.test(content)) return fail('unfilled-control', `${control} must contain filled control content.`, { control });
+  // PR431 comment 4315959856: the canonical vocabulary owner is parsed whole,
+  // the same pinned format the Wiki validator, promotion and migration read,
+  // so Genesis cannot publish a room whose glossary they would then refuse.
+  const format = successorFormatError(control, content);
+  if (format) return fail('unfilled-control', `${control} must keep the pinned glossary format: ${format}.`, { control, reason: format });
   for (const marker of generatedRegions[control] ?? []) {
     if (!content.includes(marker)) return fail('unfilled-control', `${control} must keep the generated region marker ${marker} so render and doctor can project the first spec.`, { control, reason: `missing generated region marker ${marker}` });
   }
@@ -1638,7 +2423,7 @@ function validateGenesisControl(project, control, expectedVersion) {
 
 function validateFirstSpec(project, expectedVersion) {
   const specsRoot = path.join(project, lanes.specs);
-  const entries = fs.readdirSync(specsRoot, { withFileTypes: true }).filter((entry) => !entry.name.startsWith('.') && !(entry.name === 'CATALOG.md' && entry.isFile()));
+  const entries = fs.readdirSync(specsRoot, { withFileTypes: true }).filter((entry) => !entry.name.startsWith('.'));
   const names = entries.map((entry) => entry.name).sort();
   if (entries.length === 0) return fail('missing-first-spec', 'Genesis must create a first spec in workbench/specs.');
   if (entries.length !== 1 || !entries[0].isDirectory() || !/^S-[0-9A-Za-z]{3,}-[a-z0-9]+(?:-[a-z0-9]+)*$/.test(entries[0].name)) {
@@ -1692,13 +2477,16 @@ export const RUNTIME_TOOLS = Object.freeze([
   'claim-coordination.mjs',
   'diagnostics.mjs',
   'github-coordination.mjs',
+  'glossary-format.mjs',
   'host-floor.mjs',
   'landmark-artifact.mjs',
   'landmark-tracker.mjs',
   'landmark-wiki.mjs',
   'lane-sweep.mjs',
+  'lexicon-retirement-data.mjs',
   'markdown-table.mjs',
   'notepads.mjs',
+  'organization.mjs',
   'jot.mjs',
   'optional-capabilities.mjs',
   'privacy.mjs',
@@ -1717,6 +2505,7 @@ export const RUNTIME_TOOLS = Object.freeze([
   'visible-ids.mjs',
   'skill-inspection.mjs',
   'wiki.mjs',
+  'workspace-closeout.mjs',
   'workbench-layout.mjs',
   'workbench-paths.mjs'
 ]);
@@ -1783,7 +2572,7 @@ const LINE_ENDINGS_REMEDY = 'the installed bytes differ from the receipt only by
   + 'commit the Workbench line-endings block as the last lines of .gitattributes, then rewrite the lane from Git. '
   + 'Run both steps from the room root with the Workbench release checkout (replace /path/to/release with its path, keeping the quotes); each refuses with its reason and changes nothing it cannot finish safely. '
   + 'A room that already has a manifest cannot run `workbench-layout.mjs init` again, so append the block with `' + LINE_ENDINGS_APPEND + '` '
-  + '(it refuses a directory without workbench/manifest.json, a symlinked, multiply linked, skip-worktree or assume-unchanged .gitattributes, and refuses an ignored, untracked .gitattributes: resolve that with `git add --force .gitattributes`), '
+  + '(it refuses a directory without workbench/manifest.json, a symlinked, multiply linked, skip-worktree or assume-unchanged .gitattributes, and refuses an ignored, untracked .gitattributes: remove the ignore rule, or force-add an existing .gitattributes with `git add --force .gitattributes`), '
   + 'or copy the block from the .gitattributes that `init` writes in a fresh scratch project, and commit it. '
   + 'Then, with no unstaged change under workbench/, rewrite its tracked files from the Git index with `' + LINE_ENDINGS_REWRITE + '`, '
   + 'which replaces each file in place, deletes none, and refuses a gitlink, a skip-worktree, assume-unchanged or unmerged file, or an unstaged edit; or make a fresh clone';
@@ -2157,11 +2946,34 @@ function validateGenesisSkills(project, manifest) {
 }
 
 if (isMainModule(import.meta.url)) {
+  const conclude = result => {
+    process.stdout.write(`${JSON.stringify(result)}\n`);
+    if (!['initialized', 'valid', 'migrated', 'current', 'recorded', 'declared', 'seeded', 'identified', 'retired', 'planned', 'organized', 'rolled-back'].includes(result.status)) process.exitCode = 1;
+  };
+  const invalid = error => {
+    process.stdout.write(`${JSON.stringify(fail('invalid-invocation', error.message))}\n`);
+    process.exitCode = 1;
+  };
   try {
     const [command, ...args] = process.argv.slice(2);
     let result;
     if (command === 'init') result = initialize(parseOptions(args, ['--project', '--provenance', '--version']));
     else if (command === 'migrate') result = migrate(parseOptions(args, ['--project']));
+    else if (command === 'skills-lane-rollback') result = rollbackSkillsLane(parseOptions(args, ['--project']));
+    else if (command === 'organize-plan' || command === 'organize-apply' || command === 'organize-rollback') {
+      const fileFlag = command === 'organize-plan' ? '--map' : command === 'organize-apply' ? '--plan' : '--receipt';
+      const options = parseOptions(args, ['--project', fileFlag]);
+      if (Object.keys(options).some(key => !['--project', fileFlag].includes(key))) throw new Error('Organization accepts only --project and its map, plan or receipt flag.');
+      const project = path.resolve(options['--project']);
+      const valid = validateManifest(project);
+      if (valid.status !== 'valid') result = valid;
+      else result = import('./organization.mjs').then(({ planOrganization, applyOrganization, rollbackOrganization }) => command === 'organize-plan' ? planOrganization(project, options[fileFlag]) : command === 'organize-apply' ? applyOrganization(project, options[fileFlag]) : rollbackOrganization(project, options[fileFlag])).then(conclude, invalid);
+    }
+
+    // The operator step loads `wiki.mjs`, which imports this module, so it
+    // settles after this module has evaluated rather than under a top-level
+    // await that would wait on itself.
+    else if (command === 'retire-lexicon') result = retireLexiconCommand(parseOptions(args, ['--project'])).then(conclude, invalid);
     else if (command === 'identify') result = identify(parseOptions(args, ['--project']));
     else if (command === 'record-source') result = recordSource(parseOptions(args, ['--project']));
     else if (command === 'declare-legibility') result = declareLegibility(parseOptions(args, ['--project', ...LEGIBILITY_ENTRIES.map((entry) => `--${entry}`)], ['--pending']));
@@ -2172,11 +2984,9 @@ if (isMainModule(import.meta.url)) {
     else if (command === 'validate') {
       const requireGenesis = args.includes('--genesis');
       result = validate(parseOptions(args.filter((arg) => arg !== '--genesis'), ['--project']), requireGenesis);
-    } else throw new Error('Usage: workbench-layout.mjs init --project PATH --provenance genesis --version v3.2.1 [--source-commit SHA] [--source-repository URL] [--wiki-profile project|deployment] [--name NAME] [--default-branch NAME] [--integration-branch NAME] | migrate --project PATH [--version v3.2.1] [--source-commit SHA] [--source-repository URL] [--default-branch NAME] [--integration-branch NAME] | identify --project PATH | record-source --project PATH [--version v3.2.1] [--source-commit SHA] [--source-repository URL] | declare-legibility --project PATH --run CMD --operate CMD --inspect CMD --errors CMD --journey CMD --measure CMD [--pending] | seed-documents --project PATH [--version v3.2.1] | validate --project PATH [--genesis] (source flags assert the clean release checkout\'s resolved HEAD and origin; a relocated partial copy cannot establish provenance)');
-    process.stdout.write(`${JSON.stringify(result)}\n`);
-    if (!['initialized', 'valid', 'migrated', 'current', 'recorded', 'declared', 'seeded', 'identified'].includes(result.status)) process.exitCode = 1;
+    } else throw new Error('Usage: workbench-layout.mjs init --project PATH --provenance genesis --version v3.2.2 [--source-commit SHA] [--source-repository URL] [--wiki-profile project|deployment] [--name NAME] [--default-branch NAME] [--integration-branch NAME] | migrate --project PATH [--version v3.2.2] [--source-commit SHA] [--source-repository URL] [--default-branch NAME] [--integration-branch NAME] | skills-lane-rollback --project PATH | organize-plan --project PATH --map FILE | organize-apply --project PATH --plan FILE | organize-rollback --project PATH --receipt FILE | retire-lexicon --project PATH [--version v3.2.2] [--source-commit SHA] [--source-repository URL] | identify --project PATH | record-source --project PATH [--version v3.2.2] [--source-commit SHA] [--source-repository URL] | declare-legibility --project PATH --run CMD --operate CMD --inspect CMD --errors CMD --journey CMD --measure CMD [--pending] | seed-documents --project PATH [--version v3.2.2] | validate --project PATH [--genesis] (source flags assert the clean release checkout\'s resolved HEAD and origin; a relocated partial copy cannot establish provenance)');
+    if (!(result instanceof Promise)) conclude(result);
   } catch (error) {
-    process.stdout.write(`${JSON.stringify(fail('invalid-invocation', error.message))}\n`);
-    process.exitCode = 1;
+    invalid(error);
   }
 }

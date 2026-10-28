@@ -3,8 +3,10 @@ name: genesis
 description: Create a new greenfield project from a founding prompt using the Workbench bootstrap protocol and a private remote recovery boundary.
 ---
 
+Inherit both mandatory owner judgments under [authority and continuation](../implement/execution-authority.md): explicit confirmation before leaving Explore and explicit execution approval before leaving Prepare. Reuse their sources within scope; delegation and this skill grant neither.
+
 Use Genesis only for a new greenfield project. If the target already contains
-real code, history, or project controls, route to `/adoption` instead. An
+real code, history, or project controls, call the Skill tool for `adoption` instead. An
 explicit copy of the Workbench Template into a fresh target is still greenfield:
 it starts a new project with its own identity and evidence, rather than
 inheriting the Template's room state.
@@ -16,8 +18,8 @@ inheriting the Template's room state.
    authorized workspace, and classify the target before writing anything:
    create it as an empty directory if absent, then run
    `node tools/workbench-classify.mjs classify --project PATH` from the release
-   checkout. Continue only when the verdict is `genesis`; `adoption` routes to
-   `/adoption`, `upgrade` routes to `/update-harness`, and `unclassifiable`
+   checkout. Continue only when the verdict is `genesis`; for `adoption`, call the Skill tool for
+   `adoption`; for `upgrade`, call the Skill tool for `update-harness`; `unclassifiable`
    stops with the reported reasons for the owner. `init` accepts any
    directory without a manifest, so this read-only verdict is the routing
    check; the fresh-Template `derive` path instead refuses an existing
@@ -34,7 +36,10 @@ inheriting the Template's room state.
 4. For an explicitly selected fresh Template copy, use the validated
    `tools/genesis-from-decisions.mjs derive` path documented in the protocol.
    It forms the room from reviewed drafts and recorded decisions; implementation
-   and remote recovery still follow. Otherwise create the seven filled root controls, run
+   and remote recovery still follow. Otherwise create the eight filled root
+   controls (`GLOSSARY.md` and `ARCHITECTURE.md` in place of the retired
+   Lexicon; the `ARCHITECTURE.md` codemap is drafted from project evidence and
+   confirmed by grilling, as the protocol says), run
    the release checkout's `node workbench/tools/workbench-layout.mjs init` for
    the schema 2 support root (it seeds the wiki contract, declares
    `git.defaultBranch` and `git.integrationBranch` from `--default-branch` and
@@ -52,6 +57,13 @@ inheriting the Template's room state.
    not copy global core into a project-local skill tree or create a second proof store.
    Authorized room-local extensions follow the
    [`workbench-runtime` skill](../workbench-runtime/SKILL.md#room-local-skills).
+   Offer the optional skill choices from the source checkout with
+   `node tools/workbench-optional-skills.mjs list`; the source's
+   `workbench/optional-skills/README.md` describes them. Install only choices
+   the owner selects, after core installation, using
+   `node tools/workbench-optional-skills.mjs install --project PATH --skill NAME`.
+   No selection leaves the core-only installation unchanged. Preserve the
+   command's source identity and content hash with setup proof.
 5. Establish Git recovery immediately. When the current authorization and
    authenticated repository namespace permit remote creation, create a private
    remote if none was supplied. Never infer public visibility, change

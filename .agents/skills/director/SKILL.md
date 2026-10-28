@@ -5,6 +5,8 @@ description: "Trigger on ‘direct and dispatch’ or an assigned Director role:
 
 # Director
 
+Inherit [owner judgments](../implement/execution-authority.md); delegation grants neither.
+
 ## Purpose
 
 Coordinate the authorized project across Specs and integrate independently reviewed results. A role never grants, removes, or transfers authority. Director coordinates cross-Spec work; Dispatcher owns one Spec; Worker one Task.

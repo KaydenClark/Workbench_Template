@@ -14,7 +14,7 @@ claimant, blockers, corrections and acceptance before choosing the owning
 procedure. Compare cited source fingerprints when a writer has filled this view.
 Missing or stale sources mean follow current owners. This view grants no authority.
 
-For selection or resumption, start with [Situate the slice](workbench/skills/implement/SKILL.md#1-situate-the-slice).
+For selection or resumption, start with [Situate the slice](.agents/skills/implement/SKILL.md#1-situate-the-slice).
 Read that linked section first; follow further detail only when needed. Route
 selection is read-only. Execution still follows the full applicable procedure
 and its claim/resume and verification gates.
@@ -34,7 +34,7 @@ owner; keep requirements, assignments, approvals and correction history there.
 Only the named integration writer edits this view. Workers update existing owners
 and submit proposed summaries through their scoped candidates. Before checkpoint,
 handoff or yield, reread affected owners and retain concurrent lanes. Follow
-[reconciliation and recovery](workbench/skills/save/startup-reconciliation.md).
+[reconciliation and recovery](.agents/skills/save/startup-reconciliation.md).
 Never fingerprint STARTUP itself or copy private context into a broader view.
 
 Use **local-only** for unpublished changes, **pushed-pending** for a verified

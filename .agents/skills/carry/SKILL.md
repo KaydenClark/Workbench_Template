@@ -3,6 +3,8 @@ name: carry
 description: Carry an assigned Workbench spec or task to its already-authorized endpoint - recover context, reconcile evidence, execute, verify, and update the owning records - returning to the owner only for a genuine decision, and recording each hand-back that was not one.
 ---
 
+Inherit both mandatory owner judgments under [authority and continuation](../implement/execution-authority.md): explicit confirmation before leaving Explore and explicit execution approval before leaving Prepare. Reuse their sources within scope; delegation and this skill grant neither.
+
 Carry one already-assigned unit of work - a spec, or a named task inside one -
 from wherever it currently sits to the endpoint its existing authorization
 already reaches.
@@ -61,7 +63,7 @@ Do not stop short of that endpoint and report progress as completion. Stopping
 before an already-authorized step is the failure this skill exists to remove.
 
 A Task merge needs no separate-context review: write its two merge answers
-(`/implement` section 4) in the merge request, and the Spec's Dispatcher,
+(`implement` section 4) in the merge request, and the Spec's Dispatcher,
 Director or next agent validates them. The assembled Spec at its Verify step has one gate `carry` cannot supply for itself. `AGENTS.md` Git Rules requires a separate-context review of the assembled Spec, obtained with `report S-### --candidate <sha>` and bound to its content digest, recorded with `verdict`, and self-review alone never satisfies it.
 A green suite and your own reading are not a PASS. Where no separate context of the session's own provider is available to review the candidate, that is an **Unavailable resource** under section 4 - a reason to stop and say so, never a reason to merge and never a reason to use another provider the owner did not ask for.
 
@@ -69,13 +71,13 @@ A green suite and your own reading are not a PASS. Where no separate context of 
 
 Keep the assigned role: Director coordinates Dispatchers, Dispatcher coordinates
 Workers, and Workers implement Tasks. Carrying a Spec's endpoint does not assign
-its Tasks to the coordinator. Compose the role's entry before executing; missing
+its Tasks to the coordinator. Call the Skill tool for the assigned role before executing; missing
 Workers leave a recoverable blocker rather than a coordinator implementation fallback.
 
-Execute through the existing contracts: `/implement` for a Worker's task red/green
-loop, `/tracer-bullet` when the slice needs cutting, `/to-docs` for changed
-truth, `/code-review` for the separate-context review at a Spec's Verify step, and
-`/save` for persistence and the proven recovery boundary. Use the stance the
+Call the Skill tool for `implement` for a Worker's task red/green
+loop; call the Skill tool for `tracer-bullet` when the slice needs cutting; call the Skill tool for `to-docs` for changed
+truth; call the Skill tool for `code-review` for the separate-context review at a Spec's Verify step; call the Skill tool for
+`save` for persistence and the proven recovery boundary. Use the stance the
 SPEC and TASK assign.
 
 Record a receipt while the Task is still in progress, so an interruption leaves
@@ -86,7 +88,7 @@ node workbench/tools/spec-workbench.mjs receipt S-### --task TK-### \
   --tests "TESTS RUN AND RESULT" --docs "DOCS TOUCHED OR none" --remaining-gap "GAP OR none"
 ```
 
-Run the applicable verification gate from the `implement` skill: focused
+Call the Skill tool for `implement` for the applicable verification gate: focused
 checks for records, targeted checks during behavior work, and full checks at
 the substantive integration boundary. Then close with named proof and
 regenerate the projection:
@@ -100,7 +102,7 @@ node workbench/tools/spec-workbench.mjs render
 node workbench/tools/spec-workbench.mjs doctor
 ```
 
-Persist through `/save`, not a bare commit: stage only the named files, commit
+Call the Skill tool for `save` to persist, not a bare commit: stage only the named files, commit
 on the task branch, push, then prove containment against the freshly fetched
 ref with `git merge-base --is-ancestor <sha> origin/<branch>`. Name the exact
 commit and the remote ref that holds it. A failed or unavailable push or fetch
@@ -202,6 +204,8 @@ assignments and no single spec owns it.
 Record zero hand-backs when there were none. Do not manufacture findings, and do
 not count a genuine decision from the table in section 4 as one - answering
 those is the owner's proper involvement, not a defect.
+
+Before reporting, follow the shared [workspace closeout procedure](../implement/workflow-reference.md#workspace-closeout); partial work retains its recovery and discovery obligations.
 
 ## 6. Report
 

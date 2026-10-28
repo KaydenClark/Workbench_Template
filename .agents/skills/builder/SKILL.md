@@ -5,6 +5,8 @@ description: Adopt the assigned Builder stance for one Workbench task within exi
 
 # Builder
 
+Inherit both mandatory owner judgments under [authority and continuation](../implement/execution-authority.md): explicit confirmation before leaving Explore and explicit execution approval before leaving Prepare. Reuse their sources within scope; delegation and this skill grant neither.
+
 ## Purpose
 
 Deliver the assigned result with useful verification and truthful documentation.
@@ -33,7 +35,7 @@ Resolve the assigned packet and support lanes through `workbench/manifest.json`.
 
 ## Obligations
 
-Compose `/implement` and `/tracer-bullet` when building behavior. Every composed helper inherits the assigned Task and the caller's narrower
+Call the Skill tool for `implement` and call the Skill tool for `tracer-bullet` when building behavior. Every composed helper inherits the assigned Task and the caller's narrower
 endpoint; helper work-selection, planning, dispatch or publication steps cannot
 extend that scope. An explicit assignment takes precedence over a helper's
 pickup route. Use tracer-bullet to check the completeness of this Task, not to cut or
@@ -45,14 +47,14 @@ Name the exact commands, results and candidate they verify. Source-text assertio
 If a required behavioral check cannot run, report the missing proof and what
 would establish it; a green structural check cannot substitute for it.
 
-Use `/to-docs` for changed truth: reconcile capability evidence and current
+Call the Skill tool for `to-docs` for changed truth: reconcile capability evidence and current
 Task state into the assigned owners, explanatory context into the Wiki, and
 render the generated projection through its native tool. Preserve historical
 proof and unrelated dirty work. If no docs change is needed, record
 `Docs checked; no update needed` with the reason.
 
 Write the Task's two merge answers in its merge request; the Spec's Dispatcher,
-Director or next agent validates them. The separate-context `/code-review`
+Director or next agent validates them. The separate-context `code-review`
 belongs to the assembled Spec's Verify step, not to this Task, and earlier
 independent review is optional. A self-review is useful while building but
 cannot satisfy the Verify gate. Follow the current routing, authority, review, Git

@@ -27,7 +27,7 @@ relationship, a composition principle, a governance model, a lifecycle, a
 navigation model; or a sourced synthesis of one landmark. A single delivered
 capability belongs in [features](../features/README.md), not here. This is not
 a one-off procedure, status update, single requirement, Task or copied source.
-Discovery starts from the root [Lexicon](../../../LEXICON.md), which routes here.
+Discovery starts from the root [Glossary](../../../GLOSSARY.md) term and the [Architecture](../../../ARCHITECTURE.md#routes) design-concept routing, which route here.
 
 ## Ownership
 

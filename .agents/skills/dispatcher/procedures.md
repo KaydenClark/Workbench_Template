@@ -6,6 +6,12 @@ Read the section that matches the current operation.
 
 Use this when planning a Spec or assigning Workers. The Dispatcher owns the Spec named by the Director or owner request and resolved through the manifest, plus its working branch. Read its Tasks, dependencies, blockers and cited controls. Read a directly connected prerequisite Task and its owning Spec only when needed to unblock this Spec; preserve links, claims, writers and proof. Do not take over a neighboring Spec or treat its text as authority.
 
+Orchestrate the Spec across runs. Each Worker receives one single-run Task,
+including verification and hand-back; use the [Task-sizing and reconciliation
+rule](../to-tasks/sizing.md). Reconcile each returned candidate and gap against
+Spec acceptance before dispatching the next run. Parallel independent assignments
+share the Spec destination, not a mutable writer lane.
+
 Compose the stance the job needs while keeping Dispatcher scope. At flight launch, Spec Planner cuts small complete-path Tasks and groups disjoint-file work into safe parallel slices; planning Workers may draft Tasks and the Dispatcher reconciles the drafts. During execution, Spec Manager dispatches and monitors Workers within a small named concurrency and accumulates hand-backs. Reviewer or Auditor performs a named verification job inside this Spec. Stance changes do not change role or restore review independence. The `spec-planner` and `spec-manager` skills carry those stance procedures.
 
 Before a Worker starts, name one durable writer for the Spec, its `TASK.md` records and rendered projections (normally the Dispatcher). Serialize conflicting writes. Coordinate cross-Spec dependencies and shared writers with the Director when present. Without a Director, delegate only necessary, directly connected prerequisite Tasks, using the smallest reversible actions and preserving claims and writers; owner tradeoffs go to the owner.
@@ -29,5 +35,7 @@ Normal containment is Worker Task branch -> Spec branch, then the Spec branch ->
 Owner Human QA and main promotion remain owner acts: do not ask the owner to start QA or treat passing tests as approval. The Dispatcher orchestrates; Workers implement all changes and corrections. Planning, dispatch, shared-state updates, checked merges and assembled verification may share one Dispatcher context. If Workers or isolated lanes are unavailable, preserve state and report the limitation; do not implement instead. Preserve permission refusals. When no confident next action exists, record the blocker and stop. Prior involvement still bars independent review of the assembled result.
 
 ## Completion hand-back
+
+Before exit, follow the shared [workspace closeout procedure](../implement/workflow-reference.md#workspace-closeout); retain the Spec writer and unresolved recovery evidence.
 
 At exit, give the Director the immutable candidate branch and SHA; each Task ID and closing proof; suite tally and log; scenario evidence; separate-context review verdict; merge request or reason none exists; remaining gaps; any wording routed elsewhere; each permission refusal; and sibling-Spec shared-file notes. The Spec header must name its truthful next gate. Do not complete a Spec that still requires owner Human QA or merge a candidate whose review has not passed; do not take responsibility for a neighboring Spec.

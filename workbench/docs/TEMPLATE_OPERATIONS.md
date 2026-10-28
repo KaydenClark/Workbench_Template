@@ -1,6 +1,6 @@
 # Workbench Template - Detailed Operations
 
-> Generated from LLM Workbench v3.2.1. See Upgrading The Harness
+> Generated from LLM Workbench v3.2.2. See Upgrading The Harness
 > below.
 
 **Last reviewed:** 2026-09-08
@@ -16,8 +16,8 @@ should be boring, exact, and executable.
 Follow [AGENTS](../../AGENTS.md) -> [STARTUP Resume](../../STARTUP.md#resume) ->
 the assigned Spec and Task through the [manifest](../manifest.json). Use the
 [Runbook's Find, claim and resume route](../../RUNBOOK.md#find-claim-and-resume)
-for selection or resumption; consult [Lexicon Task Routing](../../LEXICON.md#task-routing)
-when needed. Inspect the root, branch, upstream and dirty state; run the project-local spec doctor and
+for selection or resumption; consult [Architecture Routes](../../ARCHITECTURE.md#routes)
+and the [Glossary](../../GLOSSARY.md) when needed. Inspect the root, branch, upstream and dirty state; run the project-local spec doctor and
 load the explicitly assigned spec. For owner-directed pickup, use `next --json`
 and `show` to resolve that assignment. The spec and ticket set the normal
 stance. Investigate within the task; do not invent a next task when blocked.
@@ -172,8 +172,8 @@ node workbench/tools/adr.mjs register
 effect and exits non-zero only for `all` or `selection` findings; a
 `selected-slice` finding is excluded by `next` and refused by `claim`, and an
 `attention` finding stays visible without blocking. The current
-[`workbench-runtime` diagnostics route](../skills/workbench-runtime/SKILL.md#diagnostics-and-blocking-effects)
-checks the tracked `workbench/skills/` lane and its discovery adapters. The
+[`workbench-runtime` diagnostics route](../../.agents/skills/workbench-runtime/SKILL.md#diagnostics-and-blocking-effects)
+checks the tracked `.agents/skills/` lane and its `.claude/skills` link. The
 retired `doctor --home` option is ignored; doctor does not inspect a provider
 home. Filesystem discovery remains distinct from configured-host invocation.
 `doctor` also reports
@@ -231,7 +231,7 @@ Width grows without truncation. Existing numeric and mixed-case labels remain
 readable and keep their stored bytes and paths; case-folded and leading-zero
 spellings reserve one identity. Letter-bearing Task labels are unique across
 the room; legacy numeric Task references remain Spec-qualified. The installed
-[`workbench-runtime` identifier procedure](../skills/workbench-runtime/SKILL.md#visible-identifiers)
+[`workbench-runtime` identifier procedure](../../.agents/skills/workbench-runtime/SKILL.md#visible-identifiers)
 owns allocation, remote reservation, collision and widening rules. The
 `WB-` connection identity keeps its separate base-62 alphabet.
 
@@ -254,7 +254,7 @@ Choose the artifact type prefix explicitly (for example N for objective notes);
 it is the prefix in the visible ID, not another identity field. Markdown
 handoffs do not use the JSON-notepad ID allocator.
 New note labels follow the same uppercase, width-four, letter-bearing artifact
-policy in the [identifier procedure](../skills/workbench-runtime/SKILL.md#visible-identifiers).
+policy in the [identifier procedure](../../.agents/skills/workbench-runtime/SKILL.md#visible-identifiers).
 Allocation chooses the first unoccupied label, not a timestamp. Legacy numeric
 and mixed-case labels remain readable; case-folded and leading-zero variants
 reserve the same identity. No existing note is renamed by allocation.
@@ -485,27 +485,28 @@ remain separate from these mechanical tests.
 
 ### Portable Save, Promote And Room-Local Skills
 
-[`save`](../skills/save/SKILL.md) preserves already-authorized work in its
-existing owners, uses source-linked Wiki [`jot`](../skills/jot/SKILL.md) for
+[`save`](../../.agents/skills/save/SKILL.md) preserves already-authorized work in its
+existing owners, uses source-linked Wiki [`jot`](../../.agents/skills/jot/SKILL.md) for
 fresh continuation, and reports the recovery boundary actually verified.
 Legacy JSON notes remain readable through `notepad`; save does not create a
 new JSON continuation record by default. `promote` reconciles selected supported
 material into its existing owner, then may compose save for the result. Neither
 starts implementation or grants broader scope. Mention is not invocation.
 
-The installed core catalog is `coreSkills` in the layout runtime. This
-candidate's receipt and lane contain 33 managed skills; its retained v3.2.1
-manifest policy lists 21 required names, all contained in that installed set.
-The runtime accepts that historical transition policy, but the manifest list
-alone does not enumerate every installed skill. The receipt and actual lane
-must also be checked. No later release is stamped by this distinction.
+The installed core catalog is `coreSkills` in the layout runtime. The v3.2.2
+receipt and lane contain 33 managed skills, and the v3.2.2 manifest policy
+lists the same 33 required names. The lane also holds the optional
+`diagnose-and-propose` and `grill-with-docs` skills this reference room selected;
+they are room-local, outside the core receipt, and installed only by explicit
+selection. The earlier v3.2.1 candidate's 21-name transition policy remains
+readable history in [S-000E](../specs/S-000E-v3-2-2-harness-upgrade/SPEC.md).
 
 For an authorized room-specific extension, keep its sole tracked source at
-`workbench/skills/NAME/SKILL.md`, with a name outside the managed core. Follow
-the installed [`workbench-runtime` room-local skill procedure](../skills/workbench-runtime/SKILL.md#room-local-skills)
-for collision checks, adapters and host invocation. `.agents/skills` and
-`.claude/skills` are discovery links into the lane, not authoring locations;
-their presence alone does not prove native discovery or callability.
+`.agents/skills/NAME/SKILL.md`, with a name outside the managed core. Follow
+the installed [`workbench-runtime` room-local skill procedure](../../.agents/skills/workbench-runtime/SKILL.md#room-local-skills)
+for collision checks, adapters and host invocation. `.agents/skills` is the lane
+itself and `.claude/skills` is one relative link into it, not an authoring
+location; their presence alone does not prove native discovery or callability.
 
 The room's managed update does not publish room-local source into a personal
 catalog. Doctor inspects this room's skill lane and adapters, not a provider
@@ -637,14 +638,14 @@ where it sits and run with `node tour.mjs`.
 ## Version-Control Procedures
 
 Git authority and review boundaries are in [AGENTS PR instructions](../../AGENTS.md#pr-instructions).
-Use the installed [`implement` version-control procedure](../skills/implement/SKILL.md#version-control-procedures)
+Use the installed [`implement` version-control procedure](../../.agents/skills/implement/SKILL.md#version-control-procedures)
 for a Task or assembled Spec branch. Inspect the target integration ref and
 preserve unrelated dirty work before branching. This room declares
 `integration` in its manifest; a PR's actual base and reviewed head must be
 read back, not assumed from an example branch name.
 
 At closeout, follow the installed guarded
-[`implement` branch-completion procedure](../skills/implement/SKILL.md#branch-completion)
+[`implement` branch-completion procedure](../../.agents/skills/implement/SKILL.md#branch-completion)
 with this room's Git and hosting commands. Pin the immutable reviewed head,
 refuse an advanced PR head, prove fresh integration containment and inspect the
 actual source-branch tips before cleanup. Remote deletion requires the owning
@@ -657,22 +658,28 @@ contained. A pushed candidate is a recovery point, not delivery.
 ## Upgrading The Harness
 
 These control docs were generated from a specific LLM Workbench version, recorded
-in the `Generated from LLM Workbench v3.2.1` stamp at the top of each
+in the `Generated from LLM Workbench v3.2.2` stamp at the top of each
 doc. That stamp lets you tell when the project is running an older harness than
 the current one.
 
 To upgrade:
 
 1. Check the clean LLM Workbench release checkout's releases/changelog for what changed since
-   `v3.2.1`.
+   `v3.2.2`.
 2. Re-copy only the changed template sections; keep this project's filled-in
    specifics. Never let `[BRACKETED]` placeholders leak back into filled docs.
 3. For this existing v3 room, use the pinned source layout migration for any
    additive collections and reconcile `workbenchVersion` to the new version;
    a `current` layout result alone does not advance that stamp. Preserve
    historical genesis and layout provenance. Update managed runtime tools only with that checkout's
-   `node tools/workbench-tools.mjs update --project PATH --home HOME --explicit-update`;
-   keep its receipt and backup as the component recovery point.
+   `node tools/workbench-tools.mjs update --project PATH --home HOME --explicit-update`
+   and the core skills with its
+   `node tools/workbench-skills.mjs update --project PATH --home HOME --explicit-update`;
+   keep their receipts and backups as component recovery points. Install each
+   optional skill the release selects for this room with
+   `node tools/workbench-optional-skills.mjs install --project PATH --skill NAME`.
+   A room still on the retired `workbench/skills` lane is relocated to
+   `.agents/skills` by the first `migrate`; `skills-lane-rollback` reverses it.
 4. Update each doc's version stamp to the new version. Do not rewrite the room
    manifest's historical adoption source to impersonate the newly installed
    component generation.
@@ -927,8 +934,8 @@ The Worker self-checks a Task and supplies its proof and merge answers; no
 separate-context Task review runs. A fresh independent context reviews the
 assembled Spec candidate for integration, with its immutable head, comparison
 base, expected integration tip and named verification. Follow the installed
-[`implement` review boundary](../skills/implement/SKILL.md#4-review-at-the-relevant-boundary)
-and [code-review procedure](../skills/code-review/SKILL.md). Inspect scope,
+[`implement` review boundary](../../.agents/skills/implement/SKILL.md#4-review-at-the-relevant-boundary)
+and [code-review procedure](../../.agents/skills/code-review/SKILL.md). Inspect scope,
 behavior, recovery, documentation, installed identities and consequential
 report claims. If the candidate changes, review the resulting assembled
 candidate as required; an earlier PASS does not cover changed content.
@@ -961,7 +968,7 @@ preservation inventory and recovery evidence, followed by independent review,
 remote integration containment and checks in a fresh remote clone. The producer
 release gate consumes the owning upgrade spec's proof. Main remains owner-only.
 
-The v3.2.1 runtime also provides `workbench/tools/project-evidence.mjs prepare`.
+The runtime (since v3.2.1) also provides `workbench/tools/project-evidence.mjs prepare`.
 Its request names source evidence and open questions; it creates a local grilling
 note without inventing owner decisions. The full tour test suite exercises the
 installed command in a disposable room and verifies the source hash. Fresh-room
