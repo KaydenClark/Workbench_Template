@@ -1,14 +1,14 @@
 {
   "base": "2f162c46afed6488862d2c3963b07bb0d905cabd",
-  "candidate_commit": "1bf6d2a21f85d0274097c062532c95a030e2590a",
-  "source": "8f08f11165c043a581c3c7130cb7c813eeec4483",
+  "candidate_commit": "6f04d015c1f493c330f04587c762a5dd72cd2101",
+  "source": "413e7039219a55bec31feb73e61c0c895307d3f9",
   "source_release": "v3.2.2",
   "inventory_scope": "Every tracked path at the baseline and at the installation commit; later S-000E record commits add only this Spec's own evidence.",
   "identity_preserved": true,
   "historical_provenance_preserved": true,
   "counts": {
     "Move": 20,
-    "Add": 35,
+    "Add": 36,
     "Move and managed update": 35,
     "Keep": 72,
     "Port": 8,
@@ -23,7 +23,7 @@
     "Copy": 1
   },
   "baseline_paths": 165,
-  "candidate_paths": 195,
+  "candidate_paths": 196,
   "files": [
     {
       "file": ".agents/skills",
@@ -39,9 +39,10 @@
       "from": null,
       "class": "managed-skills",
       "before": null,
-      "after": "1022be1b9d287dd27a24fb1f4dd4d7ba62759da948d310f36e0424c31c327822",
+      "after": "43a8503abbdcd83810fac578f33baa1e87317eb9175ef7a597745451c04d49ff",
       "mode": "100644",
-      "decision": "Add: managed-skills"
+      "decision": "Add: managed-skills",
+      "reinstall_413e7039": "changed: managed update"
     },
     {
       "file": ".agents/skills/adoption/SKILL.md",
@@ -282,9 +283,10 @@
       "from": "workbench/skills/implement/workflow-reference.md",
       "class": "managed-skills",
       "before": "1d80e3f46ffd6e89740b4beeef0c04c25b8726f66cd4821bf47c335544b11ce8",
-      "after": "f94243c121c13423a600a5f0e01d0dd35c356b8f7649707b406a6599a61ea99a",
+      "after": "ccf93f32abd1d9e0cccb72207c414165838880ad554baa70ac0d15bf63f76bd2",
       "mode": "100644",
-      "decision": "Move and managed update: workbench/skills/implement/workflow-reference.md"
+      "decision": "Move and managed update: workbench/skills/implement/workflow-reference.md",
+      "reinstall_413e7039": "changed: managed update"
     },
     {
       "file": ".agents/skills/improve-harness/SKILL.md",
@@ -516,9 +518,10 @@
       "from": null,
       "class": "managed-skills",
       "before": null,
-      "after": "2efcdbe84b279b0ac555eea6a708de8ba44d676f99fe3b14e564657888817cd0",
+      "after": "e7a791681332192ede3e09a227943c73f1e8eddcc1e9dc42dab413ab35bbd445",
       "mode": "100644",
-      "decision": "Add: managed-skills"
+      "decision": "Add: managed-skills",
+      "reinstall_413e7039": "changed: managed update"
     },
     {
       "file": ".agents/skills/workbench-runtime/SKILL.md",
@@ -606,9 +609,10 @@
       "from": null,
       "class": "project-owned",
       "before": "b541e42fba469ff3df67d3e50c47568609b650a22d66458cdf87c0b533eec960",
-      "after": "5d6bca77b8f4d087dd3e9a38591ca8ce1c71626c1aaeb00c3073a5341637bbc8",
+      "after": "d8dcae240045c22675fd9adc0ae83ff472eb75853e4a3cfba88979f63451ff9a",
       "mode": "100644",
-      "decision": "Managed: current line-endings block appended by migrate"
+      "decision": "Managed: current line-endings block appended by migrate",
+      "reinstall_413e7039": "changed: one managed block written by the source policy step"
     },
     {
       "file": ".github/workflows/verify.yml",
@@ -642,9 +646,10 @@
       "from": null,
       "class": "project-owned",
       "before": null,
-      "after": "0579d4335005266f0f71e9eb1e90f468fbcbd661eb0933292f3cfd77bb33a0d0",
+      "after": "4c0d19a5e2fcfef3c84fc0572c8b3835aff5044f0d3f2f80fda2c4a247b0bf09",
       "mode": "100644",
-      "decision": "Add: installed by migrate from the Template, filled for this room"
+      "decision": "Add: installed by migrate from the Template, filled for this room",
+      "reinstall_413e7039": "changed: template link repairs; moved paragraph reordered to land verbatim"
     },
     {
       "file": "BLUEPRINT.md",
@@ -678,18 +683,20 @@
       "from": null,
       "class": "project-owned",
       "before": "7f629c2cc95b17bd4d5ab0e5e9e13cf04ee314780d4b0d6ca8c7c9ae7e48e543",
-      "after": "ef166d8f321b65b212d51a08897046b65a68c3f0cb694b18047409e9d9b3e74e",
+      "after": "bf1707efa1a05e45607a42e907a0dc638574b7ece0d087c02a9fe3f3a548cc70",
       "mode": "100644",
-      "decision": "Archive: 78 dispositioned lines removed after successor landing (lexicon-disposition.json); status marked archived; file kept for the S-00A inventory"
+      "decision": "Archive: 78 dispositioned lines removed after successor landing (lexicon-disposition.json); status marked archived; file kept for the S-00A inventory",
+      "reinstall_413e7039": "changed: 9 tool-landed lines restored to the archived file"
     },
     {
       "file": "README.md",
       "from": null,
       "class": "project-owned",
       "before": "36ab7ce4040ff176e753ea2fcb5040338987bc17bcccd862457f43bc31a9f3c0",
-      "after": "2219db6994425416a9814cf660f3608decdb8118a4b3ecb8b6a2e9180c9b2c3b",
+      "after": "b3e0fc9173febbd060232c4af3ef1fddc24c837b3ae600f92af5fa4284ec11a7",
       "mode": "100644",
-      "decision": "Port: stamp, Glossary/Architecture controls, eight controls, .agents/skills links, v3.2.2 candidate boundary"
+      "decision": "Port: stamp, Glossary/Architecture controls, eight controls, .agents/skills links, v3.2.2 candidate boundary",
+      "reinstall_413e7039": "changed: pinned source repointed"
     },
     {
       "file": "RUNBOOK.md",
@@ -714,9 +721,10 @@
       "from": null,
       "class": "project-owned",
       "before": "5c18b78de989bdcd61df1926f684dc90c169941796dd4c2b9e7cbd987bf075ab",
-      "after": "1ec1e8d9fac14d8ab7f66801b0715667fdc6204bcd9397214a5632e0451425bc",
+      "after": "e9a5f86049ab4d1a33f946a83d5c8f0f0c632f204e49e7853e3873d923d4ece9",
       "mode": "100644",
-      "decision": "Regenerated projection; stamp v3.2.2"
+      "decision": "Regenerated projection; stamp v3.2.2",
+      "reinstall_413e7039": "changed: regenerated"
     },
     {
       "file": "tests/evidence-history.test.mjs",
@@ -804,9 +812,10 @@
       "from": null,
       "class": "project-owned",
       "before": "46a36c5a4f7399a36119a02316efb849b47cb85603955e1434c0c7e6aa1747f9",
-      "after": "25e9a7b454d01f2c3e2960dfab6c53be1f87a58de2069e1252a617f7869746fd",
+      "after": "9c04b0858294909ec9a5304dae9a0c6fe0278cfb3a7d58864f4eec73ef9c6642",
       "mode": "100644",
-      "decision": "Append: v3.2.2 assessment candidate section"
+      "decision": "Append: v3.2.2 assessment candidate section",
+      "reinstall_413e7039": "changed: pinned source repointed and reinstall noted"
     },
     {
       "file": "workbench/docs/WORKBENCH_STRUCTURE.md",
@@ -912,9 +921,10 @@
       "from": null,
       "class": "project-owned",
       "before": "32adc60eb2cb3ac9c7dc60d0deaaf416204d500941081e2f9b2715d52b2f32ab",
-      "after": "1aa79b5012b39204f496dfceee97aa634ee5afa0167abf03b901ca9e2255881e",
+      "after": "5298e7e78edf913099978d7f5310c25040c549873458bcfbd330fe3fab87e176",
       "mode": "100644",
-      "decision": "Append: four observed friction rows"
+      "decision": "Append: four observed friction rows",
+      "reinstall_413e7039": "changed: append repair row"
     },
     {
       "file": "workbench/landmarks/.gitkeep",
@@ -1137,18 +1147,20 @@
       "from": null,
       "class": "project-owned",
       "before": null,
-      "after": "8268654dcd9b73ae5c2327e51f3f2361c400c775fe2eb429d9180b76643d2aeb",
+      "after": "d52ead1b695903934242cd96c7ddc4719e1eb1eea6b67b65c6ef5a1cf68ae01f",
       "mode": "100644",
-      "decision": "Add: this upgrade Spec"
+      "decision": "Add: this upgrade Spec",
+      "reinstall_413e7039": "changed: room record"
     },
     {
       "file": "workbench/specs/S-000E-v3-2-2-harness-upgrade/lexicon-disposition.json",
       "from": null,
       "class": "project-owned",
       "before": null,
-      "after": "70239d02e27af4a09476cf7560557a30143e594761488c4bdc08b073e6f852c6",
+      "after": "92179fd8802943b8d56bbf28441187722246f084fad732aba5abe939b4352bdb",
       "mode": "100644",
-      "decision": "Add: Lexicon disposition record"
+      "decision": "Add: Lexicon disposition record",
+      "reinstall_413e7039": "changed: 69 dispositions"
     },
     {
       "file": "workbench/specs/S-001-self-explaining-room/SPEC.md",
@@ -1272,9 +1284,10 @@
       "from": null,
       "class": "managed-runtime",
       "before": "af5ea25aaba65cd8e1fe26fe0a5a8b11e46ef9d7cd13ad625ef9350762e529bc",
-      "after": "af0120bad343b61e2593c0f365512037a119212ddc129497c228e307b7c871d4",
+      "after": "7296b8ad2249dd1f313b0abc805c7ae5c7610e5b5388c90f147a17aa12ceca65",
       "mode": "100644",
-      "decision": "Managed update: managed-runtime"
+      "decision": "Managed update: managed-runtime",
+      "reinstall_413e7039": "changed: managed update"
     },
     {
       "file": "workbench/tools/adr.mjs",
@@ -1299,9 +1312,10 @@
       "from": null,
       "class": "managed-runtime",
       "before": "4ce85cc3332e78f1530f45738fd9bf6b11e663793bcba574f70b76c704a71b23",
-      "after": "e6d371f0e058a0391d9a9e0bc207a428db22518b20c5f8e9a8b5e8f991f38f2c",
+      "after": "c0f95477e2a4ddc06b0a288ebc38acf823ae9167c399c5a87e1155a12baf2070",
       "mode": "100644",
-      "decision": "Managed update: managed-runtime"
+      "decision": "Managed update: managed-runtime",
+      "reinstall_413e7039": "changed: managed update"
     },
     {
       "file": "workbench/tools/github-coordination.mjs",
@@ -1380,9 +1394,10 @@
       "from": null,
       "class": "managed-runtime",
       "before": null,
-      "after": "2bf39531db946a47d4cbc10af8893e41d8f5de53baf153f67fdb39c6b59498da",
+      "after": "3bd7854b25206a68f8ba63a045355bae0f2e687fa654582c784ec9fe6bc6b6b4",
       "mode": "100644",
-      "decision": "Add: managed-runtime"
+      "decision": "Add: managed-runtime",
+      "reinstall_413e7039": "changed: managed update"
     },
     {
       "file": "workbench/tools/markdown-table.mjs",
@@ -1497,9 +1512,10 @@
       "from": null,
       "class": "managed-runtime",
       "before": "8909773e6538971da4140d3c5284a65d98ccf21fd82c86ab9039f8a9d5833f57",
-      "after": "580ec66576c06c264d43d3093a8d01bf62bbab9d36cb3c6af9c1e50cf3ee21f4",
+      "after": "a0b46aae0902c06634b24e3b15daf746af41bcb8f0844d7aa8fa4183a5730124",
       "mode": "100644",
-      "decision": "Managed update: managed-runtime"
+      "decision": "Managed update: managed-runtime",
+      "reinstall_413e7039": "changed: managed update"
     },
     {
       "file": "workbench/tools/task-packet.mjs",
@@ -1569,27 +1585,30 @@
       "from": null,
       "class": "managed-runtime",
       "before": "8cf06a576c57276a0cd01b92bbac1e635fa46122a64de002698451d263aa5e61",
-      "after": "6ed0ae994ea6b723edc68e1b74c9ce3b58169e18b1f48b6d9256ec4839fcf3b1",
+      "after": "8a6ac9f2125983c897898979e41d1be6a79a63eb731bb477aca52bbf503d6a75",
       "mode": "100644",
-      "decision": "Managed update: managed-runtime"
+      "decision": "Managed update: managed-runtime",
+      "reinstall_413e7039": "changed: managed update"
     },
     {
       "file": "workbench/tools/workbench-paths.mjs",
       "from": null,
       "class": "managed-runtime",
       "before": "f0a3068f1b30f9f08dc0ed9f0bc890ff8e74e6133a1892cc4de263c5ee981bba",
-      "after": "374e876452d69d726447c63c408981407ec06d818b5def642af79798a3e32aee",
+      "after": "9a598d196e62d855c5956f87814071bb7bf3e3b6c260f19501f49177154d5cc6",
       "mode": "100644",
-      "decision": "Managed update: managed-runtime"
+      "decision": "Managed update: managed-runtime",
+      "reinstall_413e7039": "changed: managed update"
     },
     {
       "file": "workbench/tools/workspace-closeout.mjs",
       "from": null,
       "class": "managed-runtime",
       "before": null,
-      "after": "7cb8f732563c8d4af6615c4b5b0c5a7ae60aa76b06602ad082f279a9866a98ae",
+      "after": "00859c0fcb4d5bf3c04d01d7274e9a7d6d3575ac2f1b7a90d46006b288d735c5",
       "mode": "100644",
-      "decision": "Add: managed-runtime"
+      "decision": "Add: managed-runtime",
+      "reinstall_413e7039": "changed: managed update"
     },
     {
       "file": "workbench/wiki/.gitignore",
@@ -1821,9 +1840,45 @@
       "from": null,
       "class": "project-owned",
       "before": "c26c036647c3cfb457dcddb1ebaae504b346d145368d0416e4965a0f7edff09e",
-      "after": "c5dac88ad20ac97365ed23c9481164859202ab16fa19af448bb88b1d44e9c6ac",
+      "after": "f948efa7550eb24bf6efc73ae4cb014d45199b72a9fa4ed1512ffaf4f7b29526",
       "mode": "100644",
-      "decision": "Copy: pinned source templates/wiki/workbench-capabilities.md"
+      "decision": "Copy: pinned source templates/wiki/workbench-capabilities.md",
+      "reinstall_413e7039": "changed: copied from the new pinned source"
+    },
+    {
+      "file": "workbench/specs/S-000E-v3-2-2-harness-upgrade/preservation.json",
+      "from": null,
+      "class": "project-owned",
+      "before": null,
+      "after": "6811d7ca8f9e441474779e01ca90c3a2fe8ccf679249433da834ec1e08184cb5",
+      "mode": "100644",
+      "decision": "Add"
     }
+  ],
+  "first_install": {
+    "commit": "1bf6d2a",
+    "source": "8f08f11165c043a581c3c7130cb7c813eeec4483"
+  },
+  "reinstall_changed": [
+    ".agents/skills/.workbench-skills.json",
+    ".agents/skills/implement/workflow-reference.md",
+    ".agents/skills/update-harness/SKILL.md",
+    ".gitattributes",
+    "ARCHITECTURE.md",
+    "LEXICON.md",
+    "README.md",
+    "TASKBOARD.md",
+    "workbench/docs/VERSION_HISTORY.md",
+    "workbench/feedback/WORKBENCH_FEEDBACK.md",
+    "workbench/specs/S-000E-v3-2-2-harness-upgrade/SPEC.md",
+    "workbench/specs/S-000E-v3-2-2-harness-upgrade/lexicon-disposition.json",
+    "workbench/tools/.workbench-tools.json",
+    "workbench/tools/diagnostics.mjs",
+    "workbench/tools/lexicon-retirement-data.mjs",
+    "workbench/tools/spec-workbench.mjs",
+    "workbench/tools/workbench-layout.mjs",
+    "workbench/tools/workbench-paths.mjs",
+    "workbench/tools/workspace-closeout.mjs",
+    "workbench/wiki/workbench-capabilities.md"
   ]
 }

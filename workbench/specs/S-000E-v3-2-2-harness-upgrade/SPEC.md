@@ -8,7 +8,7 @@
 **Updated:** 2026-10-28
 **Catalog description:** Install the pinned LLM Workbench v3.2.2 source candidate into Workbench_Template integration through the supported update route, preserving the room and recording upgrade and recovery proof for the release audit.
 **Blockers:** none within the installation; release fitness audit, independent assembled review and owner main approval are separate gates
-**Latest event:** Installation inventory, managed bytes, recovery and installed scenarios recorded.
+**Latest event:** Reinstalled from repaired source 413e7039 and re-verified.
 **Next gate:** Required CI and reviewed merge into Template integration.
 
 ## Outcome
@@ -121,9 +121,14 @@ report and the scenario commands recorded in the evidence log.
 
 [Preservation inventory](preservation.json) lists every baseline and
 candidate tracked path with its before/after hash and decision.
-[Lexicon disposition](lexicon-disposition.json) records the 78 Lexicon lines
-the pinned tool reported unlanded after the successors were filled, and where
-each one's meaning now lives.
+[Lexicon disposition](lexicon-disposition.json) records the 69 Lexicon lines
+the pinned `413e7039` tool reported unlanded after the successors were filled,
+and where each one's meaning now lives (the first `8f08f111` run reported 78;
+the repaired joined-line check verifies the moved paragraph at lines 73-81).
+
+Reinstall from `413e7039` (commit `6f04d01`): the repaired source changed 6
+runtime tools and the `implement` and `update-harness` skills; inventory deltas
+are listed under `reinstall_changed` in the preservation inventory.
 
 Inventory: 165 baseline and 195 candidate tracked paths at installation commit
 `1bf6d2a`; 72 kept byte-for-byte, 20 moved unchanged and 35 moved and updated
@@ -134,7 +139,7 @@ optional skills, DDR projection and this Spec), and the reconciled controls,
 product and docs listed with a decision each. No room-owned file was deleted;
 `workbenchId` and genesis/layout provenance are unchanged.
 
-Managed bytes: from the pinned source, `workbench-tools.mjs verify` and
+Managed bytes (rechecked against `413e7039`): from the pinned source, `workbench-tools.mjs verify` and
 `workbench-skills.mjs verify` both report `valid` with no update available;
 all 35 runtime files and all 33 core skill trees equal the source bytes; the
 optional skills equal `workbench/optional-skills/diagnose-and-propose`
@@ -177,6 +182,7 @@ feedback log rows; tour and its tests.
 | 2026-10-28 | TK-000D | Baseline recovered and suite run before writes | Template integration 2f162c46; tour 21/21, evidence-history 14/14, history check, syntax, layout valid, doctor no blocker, Wiki and ADR valid, diff check; 165 tracked paths hashed | none | Installation pending |
 | 2026-10-28 | TK-000D | Pinned v3.2.2 installed through the v3 route | migrate relocated workbench/skills to .agents/skills (one move commit), installed GLOSSARY/ARCHITECTURE and 12 vocabulary articles; stamp and skillPolicy set; seed-documents seeded 2 documents and retained REPORT_FORMAT.md; tools update changed 19 files (35 managed), skills update changed 31 of 33; optional diagnose-and-propose and grill-with-docs installed; migrate reports current and Lexicon archived | Controls, Wiki, tour and tests reconciled | Inventory commit, rollback exercise, CI and review pending |
 | 2026-10-28 | TK-000D | Inventory, managed-byte, rollback and scenario evidence | Candidate suite: diff check, evidence-history 14/14, history check (10 sections vs 2f162c46), tour 22/22, syntax, layout valid, doctor no blocker, Wiki and ADR valid. Pinned-source verify valid for tools and skills. Rollback/reapply and skills-lane-rollback/migrate exercised in disposable copies. Installed gate in a disposable copy: claim refused before any write with no authority fields, with an unresolved Jot, with a superseded Jot and with a Jot naming another Spec; one current confirmed owner-intent Jot cited in both fields allowed the claim. Real S-000C shows missing Confirmation and Execution approval and has no ready Task. Jot read/search in a fresh clone returned the current entry with its correction context; a confirmed term written to GLOSSARY.md validated, and a malformed entry was refused. Evaluator diagnostic 52.6/113 before, 65.5/113 after (structural only) | preservation.json, Upgrade Proof | CI, independent review and integration containment pending |
+| 2026-10-28 | TK-000D | Reinstalled from repaired pinned source 413e7039 (LLM_Workbench PR #637) | migrate current, Lexicon archived with 69 dispositions (9 lines now tool-landed), no retired-lane links; the source's line-ending policy step rewrote .gitattributes to one managed block; tools update changed 6 files and skills update changed implement and update-harness with backups recorded as `~/` descriptors; optional reinstall refused with skill-collision over identical bytes (no write). Pinned-source verify valid for tools and skills; all 35 runtime files, 33 core skill trees and both optional skills equal 413e7039. Doctor: no retired-skills-lane-link; positive control with one stale `../skills/` link reports it. Fresh relocation from 2f162c46 reports 74 retired-lane links and writes one block. Disposable copy: tools and skills rollback (backup directory plus --home) restored the 857a196 bytes, both verify valid, reapply returned candidate bytes with only receipt metadata differing, tour 22/22 | preservation.json reinstall deltas, lexicon-disposition.json, controls | CI, independent review and integration containment pending |
 
 ## Completion Result
 
