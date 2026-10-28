@@ -12,7 +12,7 @@ import { readNote, resolveNote } from './notepads.mjs';
 import { parseSpecPacket } from './spec-packet.mjs';
 import { validateSpecCandidate } from './spec-workbench.mjs';
 import { listAdrs, validateAdrs } from './adr.mjs';
-import { validateWiki } from './wiki.mjs';
+import { validateWiki, parseGlossary } from './wiki.mjs';
 import { controls, containsPlaceholder } from './workbench-layout.mjs';
 import { laneRelative, IGNORED_COLLECTIONS } from './workbench-paths.mjs';
 import { landmarkSpecHomes } from './landmark-artifact.mjs';
@@ -88,6 +88,18 @@ function validatePromotionOwner(root, destination, content, original) {
   }
   const overrides = { contentOverrides: new Map([[destination.absolute, content]]) };
   let findings = [];
+  // S-004O TK-009E: the room's root glossary is a durable owner of confirmed
+  // vocabulary (DDR-001E). Its Template mirror stays refused. S-004O TK-009G:
+  // GLOSSARY.md is also an installed control, so this branch stays ahead of
+  // the controls branch to keep the Language section check.
+  if (destination.relative === 'GLOSSARY.md') {
+    if (containsPlaceholder(content) || /\[BRACKETED(?:_[A-Z]+)*\]/.test(content)) throw new Error('The glossary cannot contain template placeholders');
+    parseGlossary(content, 'GLOSSARY.md');
+    const invalid = validateWiki(root, overrides).filter(issue => issue.severity === 'error'
+      && (issue.note === 'GLOSSARY.md' || issue.message.includes('glossary_term')));
+    if (invalid.length) throw new Error(invalid.map(issue => issue.message).join('; '));
+    return 'glossary';
+  }
   if (controls.includes(destination.relative)) {
     if (containsPlaceholder(content) || /\[BRACKETED(?:_[A-Z]+)*\]/.test(content)) throw new Error('A root control cannot contain template placeholders');
     return 'control';
@@ -111,7 +123,7 @@ function validatePromotionOwner(root, destination, content, original) {
   }
   else if (beneath(laneRelative(root, 'wiki'))) findings = validateWiki(root, overrides).filter(issue => issue.severity === 'error' && (issue.note === destination.relative || issue.message.includes(destination.relative)));
   else if (beneath(laneRelative(root, 'docs')) || beneath(laneRelative(root, 'feedback'))) return 'document';
-  else throw new Error('Destination must be an existing control, spec, ADR, Wiki or docs/feedback Markdown owner');
+  else throw new Error('Destination must be an existing control, GLOSSARY.md, spec, ADR, Wiki or docs/feedback Markdown owner');
   if (findings.length) throw new Error(findings.map(issue => issue.message).join('; '));
   return beneath(collectionRelative(root, 'adr')) ? 'adr' : 'wiki';
 }
@@ -146,6 +158,9 @@ export function promote(root, options) {
     const hits = decodedStrings(selected.entries).flatMap(scanPrivacy).concat(scanPrivacy(content));
     if (hits.length) return { status: 'blocked', error: finding('secret-like-content', 'Selected material or authored destination contains private content'), hits };
     const owner = validatePromotionOwner(root, destination, content, original.toString('utf8'));
+    // Only a `decision` entry records confirmed meaning; a pending source_record
+    // or proposal stays in the notepad (DDR-001E capture boundary).
+    if (owner === 'glossary' && selected.entries.some(entry => entry.included_as === 'match' && entry.kind !== 'decision')) throw new Error('A glossary promotion selects only confirmed decision entries; pending meaning stays in the notepad');
     if (!fs.readFileSync(source.absolute).equals(sourceBytes) || !fs.readFileSync(destination.absolute).equals(original) || !fs.readFileSync(draft.absolute).equals(draftBytes)) throw new Error('Source, destination or draft changed during validation; read and reconcile again');
     backupDirectory = fs.mkdtempSync(path.join(path.dirname(destination.absolute), '.promotion-'));
     fs.writeFileSync(path.join(backupDirectory, 'original.md'), original, { flag: 'wx', mode: 0o600 });

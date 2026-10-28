@@ -28,7 +28,7 @@ model trials and cross-device demonstrations belong to scoped acceptance work.
 ## Review And Queue
 
 A Task author self-checks the diff, tests and evidence, then includes the two
-[merge answers](../skills/implement/SKILL.md#4-review-at-the-relevant-boundary):
+[merge answers](../../.agents/skills/implement/SKILL.md#4-review-at-the-relevant-boundary):
 can it merge into the named current destination, and did it complete the Task?
 Administrative PRs do not require an extra independent review ceremony. Review
 an assembled Spec once in a separate eligible context against its pinned candidate,

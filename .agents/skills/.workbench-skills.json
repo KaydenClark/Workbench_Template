@@ -1,0 +1,133 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "repository": "https://github.com/KaydenClark/LLM_Workbench.git",
+    "release": "v3.2.2",
+    "commit": "a58466ad1dca4ce7d6bd1a8328f47d6a58a2ee8d",
+    "dirty": false
+  },
+  "installedAt": "2026-10-19",
+  "skills": {
+    "adoption": "787b1eee9c6a77399f1dbfba95cae429ea0461aa815a84de0ca58e4293c9ccf0",
+    "checkpoint": "944f5ca061f055f96f80ab5da8ce1fd61b359842fecdd0fbc8658eb5a11650da",
+    "code-review": "402d14d1538475edb633b4c13808cbb5290963869251c7e452830cfb882e6006",
+    "genesis": "beae6621c13b1048c65821948c6bd2c0f0194d656fdfa286d4e99da01f9c8504",
+    "grilling": "1762965557a8e64ae786aef41436a54436fe96ff79e697e9c0c90bf8fa1e17e9",
+    "implement": "5ce86d25f68c2a20d5518aaa9541b68057cdd2b08daff1a3aeac37c505e8974e",
+    "make-it-so": "3ddbeeddd3e730f210f5b529fbbcf4a5e9b9cf0317d0cf6b4bce77d2e86927f2",
+    "to-docs": "5e058c330236b78ec498d742d301f5a6b49ea2a7cc09376605f67dedd6f44bd3",
+    "to-spec": "60011d959797e6b253a1dc660cdc8886f65289cea8be3c91cff8c0e9a18b0bfa",
+    "to-tasks": "f3ec72f6bfd7efa641e32b0dd5ded265fdc960f83ad2b1ee7424764271df01e9",
+    "tracer-bullet": "3e567ca9d9aaa70dc087b90822f82b9865a70a2a61a99ca95989049a103b9c3a",
+    "update-harness": "4cc6d7782e1be291bcf4d1dc744f908ce450e094cf37c7a3c6a909e563e72651",
+    "carry": "f09b4da88b6cd0ef9864f15d92cf133ddf92d8399f9df188751ceeae9eb5477a",
+    "notepad": "aa8d2d5b18d4a055d165ab3c27181803fd4d43798bc2d3016714aa69db9e7591",
+    "jot": "dabfcbfb7fd7e15f085f08885801cf065644141bb329dee25576b2607d030f20",
+    "save": "941fdf7d7210352ad264aee3f22dccee4943a0bdb0b7bd2a5a8b1abc8364cbfd",
+    "promote": "4176ca7971956ecc0424bc438961c2b492e112e0b33687df37ec539e231cd28f",
+    "handoff": "a34a595e39a64a022573746731d80f18ed0706f7d28cec5aea788919ed165d30",
+    "grill-me": "bb5f651e307d8d33eed96386c54aebc43a586a9e8386f932c501c59003aca90e",
+    "workbench-runtime": "1ae7262322819417e51130f015f6542d26eb01c9abcd5afd51b8ae243c09f638",
+    "improve-harness": "749a372feb7ff4a348be7ad315153efdcb47f06245ae3e41d29ceac38fe8d34d",
+    "domain-modeling": "d4da3ef89a47ceb883c4a06fe6f51af148bb1fdb04fd078b5635e850c26ecfe0",
+    "pr": "102fefd93cdf36ee98a19ae8ab27a29d4d8b40436299fa721866153199453917",
+    "writing-for-agents": "d2b4c5ad39deccafd01ee81ff621a0f55872571f1f7a3aecb6af1b0dc70bbc18",
+    "retro": "eaf6be7b729b4a809cde880266258f2940859fe23b4ea96d68a26f53e30b6df3",
+    "director": "101b916adfcd4129403190bf6a19d33924a27e57c3dd740e53357c24b52cb0cb",
+    "dispatcher": "c2351afd6724d5ce2c083f34f1296f70d97b33835e2af0515aa9c27462f5a064",
+    "spec-planner": "5cad336a4df9dd9e81355c5276ef105da4dd0a21ec13ac9436a56ff233cc1b7e",
+    "spec-manager": "5f01ae0dd9c735fc3241c7cef84541d8e35412a74d4dad364011958c16b7ade6",
+    "builder": "104b85c30f925361f759ae4c3564bafa8e9359f32419568df3888f750d3850e3",
+    "auditor": "02dd725b36aba035eca8de04d762e2567e3d65c9c7ea1ac231608d2d477db323",
+    "reviewer": "61ff51ffb042b0ed41afab7ad60b1ddde7a9de45a7eb8e795dd627477b9c3209",
+    "reconciler": "125ee82a1192ecafd10fff0643cded38e7d1b4644a37a8568a5fc86f2e3286ba"
+  },
+  "adapters": [
+    ".agents/skills",
+    ".claude/skills"
+  ],
+  "backups": [
+    {
+      "skills": [
+        "jot"
+      ]
+    },
+    {
+      "skills": [
+        "adoption",
+        "genesis",
+        "implement",
+        "save",
+        "handoff",
+        "writing-for-agents",
+        "director",
+        "dispatcher"
+      ]
+    },
+    {
+      "skills": [
+        "tracer-bullet",
+        "notepad",
+        "workbench-runtime"
+      ]
+    },
+    {
+      "skills": [
+        "adoption",
+        "genesis",
+        "update-harness"
+      ]
+    },
+    {
+      "path": "/private/tmp/tk00b7-home/.workbench-skills-backup-BDQdop",
+      "skills": [
+        "adoption",
+        "checkpoint",
+        "genesis",
+        "grilling",
+        "implement",
+        "make-it-so",
+        "to-docs",
+        "to-spec",
+        "to-tasks",
+        "tracer-bullet",
+        "update-harness",
+        "carry",
+        "notepad",
+        "jot",
+        "save",
+        "promote",
+        "handoff",
+        "grill-me",
+        "workbench-runtime",
+        "improve-harness",
+        "domain-modeling",
+        "writing-for-agents",
+        "retro",
+        "director",
+        "dispatcher",
+        "spec-planner",
+        "spec-manager",
+        "builder",
+        "auditor",
+        "reviewer",
+        "reconciler"
+      ]
+    },
+    {
+      "path": "~/.workbench-skills-backup-8FFZiT",
+      "skills": [
+        "implement",
+        "update-harness"
+      ]
+    },
+    {
+      "path": "~/.workbench-skills-backup-ELYoF6",
+      "skills": [
+        "implement",
+        "update-harness"
+      ]
+    }
+  ],
+  "updatedAt": "2026-10-28"
+}

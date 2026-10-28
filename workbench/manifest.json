@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "workbenchVersion": "v3.2.1",
+  "workbenchVersion": "v3.2.2",
   "provenance": {
     "lifecycle": "genesis",
     "source": {
@@ -27,7 +27,7 @@
     "sessions": "workbench/sessions",
     "feedback": "workbench/feedback",
     "tools": "workbench/tools",
-    "skills": "workbench/skills"
+    "skills": ".agents/skills"
   },
   "collections": {
     "adr": "workbench/docs/adr",
@@ -63,9 +63,21 @@
       "update-harness",
       "carry",
       "notepad",
+      "jot",
       "save",
       "promote",
       "handoff",
+      "grill-me",
+      "workbench-runtime",
+      "improve-harness",
+      "domain-modeling",
+      "pr",
+      "writing-for-agents",
+      "retro",
+      "director",
+      "dispatcher",
+      "spec-planner",
+      "spec-manager",
       "builder",
       "auditor",
       "reviewer",

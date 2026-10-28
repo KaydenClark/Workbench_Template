@@ -29,6 +29,46 @@ export const ID_PATTERN = /^([0-9A-Za-z]{3,})-([a-z0-9]+(?:-[a-z0-9]+)*)\.md$/;
 // in. `retired` is deliberately excluded here: ADR-000I reserves it for
 // Specs and Tasks and keeps ADR history in permanent `archive` instead. TK-002
 // reuses this exact constant when it migrates lifecycle out of frontmatter.
+// The Lexicon retires (DDR-001E) and records that name `LEXICON.md` in
+// `canonicalized_in` keep that history unchanged, so once a room has retired its
+// Lexicon the missing root file is a retired owner, not an unknown target. A
+// record accepted now still needs a live owner.
+const RETIRED_OWNERS = Object.freeze(['LEXICON.md']);
+
+function retiredOwner(root, target, record) {
+  if (!RETIRED_OWNERS.some(name => target === path.resolve(root, name)) || fs.existsSync(target)) return false;
+  // Absence is not history. The record must already have been accepted with
+  // this owner in a committed tree that still contained the Lexicon.
+  const git = (...args) => spawnSync('git', ['-C', root, ...args], { encoding: 'utf8' });
+  // A shallow or partial checkout cannot show the commit that held the Lexicon
+  // beside the record. That is an evidence limit, not a verdict: the caller
+  // reports it as a named finding instead of failing or silently passing.
+  const incompleteHistory = () => git('rev-parse', '--is-shallow-repository').stdout.trim() === 'true'
+    || !!git('config', '--get', 'remote.origin.promisor').stdout.trim()
+    || !!git('config', '--get', 'extensions.partialclone').stdout.trim();
+  const history = git('log', '--follow', '--format=%H', '--name-status', 'HEAD', '--', record.relativePath);
+  if (history.status !== 0) return incompleteHistory() ? 'unverified' : false;
+  let commit = null;
+  for (const line of history.stdout.split(/\r?\n/)) {
+    if (/^[a-f0-9]{40}$/.test(line)) { commit = line; continue; }
+    if (!commit || !/^[AMR]/.test(line)) continue;
+    const historicalPath = line.split('\t').at(-1);
+    if (!historicalPath || path.isAbsolute(historicalPath) || historicalPath.includes('\\') || historicalPath.split('/').includes('..') || path.posix.normalize(historicalPath) !== historicalPath) continue;
+    // Merged legacy parents and later record renames are legitimate history.
+    // The historical record and its ordinary Lexicon must coexist in the
+    // same committed tree; current absence alone grants no exception.
+    const owner = git('ls-tree', commit, '--', 'LEXICON.md');
+    if (!/^100(?:644|755) blob /.test(owner.stdout)) continue;
+    const previous = git('show', commit + ':' + historicalPath);
+    if (previous.status !== 0) continue;
+    const data = parseFrontmatter(previous.stdout).data;
+    const owners = Array.isArray(data.canonicalized_in) ? data.canonicalized_in : [data.canonicalized_in];
+    const accepted = data.status ? data.status === 'accepted' : !historicalPath.split('/').some(part => ['proposed', 'archive'].includes(part));
+    if (accepted && owners.some(value => typeof value === 'string' && path.resolve(root, value) === target)) return true;
+  }
+  return incompleteHistory() ? 'unverified' : false;
+}
+
 export const ADR_LIFECYCLE_FOLDERS = Object.freeze(['proposed', 'archive']);
 
 // S-003X TK-004X: the two kinds of decision record. `invalid` is the finding
@@ -317,6 +357,12 @@ export function validateAdrs(root, options = {}) {
       if (owners.length === 0) findings.push(finding(code, `${adr.relativePath} is accepted but names no canonicalized_in owner`, detail()));
       for (const owner of owners) {
         const target = path.resolve(root, owner);
+        const retired = retiredOwner(root, target, adr);
+        if (retired === 'unverified') {
+          findings.push(finding('retired-owner-unverified', `${adr.relativePath} canonicalized_in names the retired owner ${owner}, but this checkout's Git history is shallow or partial so its acceptance beside that owner cannot be verified; fetch full history to verify it`, detail({ owner })));
+          continue;
+        }
+        if (retired) continue;
         if (!target.startsWith(path.resolve(root) + path.sep) || !fs.existsSync(target)) {
           findings.push(finding(code, `${adr.relativePath} canonicalized_in target ${owner} does not exist`, detail({ owner })));
         }
@@ -745,7 +791,11 @@ function grillBoardReferenceFiles(root) {
 // product mirror) is deliberately excluded.
 function collectExternalMarkdownFiles(root) {
   const files = grillBoardReferenceFiles(root);
-  for (const name of ['AGENTS.md', 'RUNBOOK.md', 'GLOSSARY.md', 'LEXICON.md', 'BLUEPRINT.md', 'TASKBOARD.md', 'README.md', 'CLAUDE.md']) {
+  // ARCHITECTURE.md carries the routes the retiring Lexicon held and links
+  // records; a room the update has not reached still carries `LEXICON.md`, and
+  // every name is read only if present. GLOSSARY.md is read too, so a record
+  // link a room's glossary carries is repaired; a move never authors vocabulary.
+  for (const name of ['AGENTS.md', 'RUNBOOK.md', 'ARCHITECTURE.md', 'GLOSSARY.md', 'LEXICON.md', 'BLUEPRINT.md', 'TASKBOARD.md', 'README.md', 'CLAUDE.md']) {
     const file = path.join(root, name);
     if (fs.existsSync(file) && fs.statSync(file).isFile()) files.push(file);
   }
@@ -896,7 +946,11 @@ export function resolveRecord(root, id) {
 // `templates/` is the blank product and never names this room's records.
 export function collectRecordReferenceFiles(root) {
   const files = grillBoardReferenceFiles(root);
-  for (const name of ['AGENTS.md', 'RUNBOOK.md', 'GLOSSARY.md', 'LEXICON.md', 'BLUEPRINT.md', 'TASKBOARD.md', 'README.md', 'CLAUDE.md']) {
+  // ARCHITECTURE.md carries the routes the retiring Lexicon held and links
+  // records; a room the update has not reached still carries `LEXICON.md`, and
+  // every name is read only if present. GLOSSARY.md is read too, so a record
+  // link a room's glossary carries is repaired; a move never authors vocabulary.
+  for (const name of ['AGENTS.md', 'RUNBOOK.md', 'ARCHITECTURE.md', 'GLOSSARY.md', 'LEXICON.md', 'BLUEPRINT.md', 'TASKBOARD.md', 'README.md', 'CLAUDE.md']) {
     const file = path.join(root, name);
     if (fs.existsSync(file) && fs.lstatSync(file).isFile()) files.push(file);
   }

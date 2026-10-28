@@ -1,0 +1,635 @@
+{
+  "source": "LEXICON.md at Template integration 2f162c46afed6488862d2c3963b07bb0d905cabd",
+  "sha256": "7f629c2cc95b17bd4d5ab0e5e9e13cf04ee314780d4b0d6ca8c7c9ae7e48e543",
+  "lines": 191,
+  "method": "Pinned source 413e7039219a55bec31feb73e61c0c895307d3f9 workbench-layout.mjs migrate, run against the original Lexicon after GLOSSARY.md, ARCHITECTURE.md, the Wiki router and the project-terms article were filled, reported these 69 lines unlanded. Every other non-empty line, including the paragraph at lines 73-81 moved verbatim into ARCHITECTURE.md, landed by the tool's own check and stays in the archived LEXICON.md. Each line below was removed from LEXICON.md with its recorded disposition; the original bytes remain in Git history at the source commit.",
+  "unlanded": [
+    {
+      "line": 14,
+      "text": "The ordinary entry route is `AGENTS.md` -> [STARTUP](STARTUP.md#resume) -> the assigned Spec and Task resolved through `workbench/manifest.json`. Use [Runbook orientation](RUNBOOK.md#orientation) for an unfamiliar operation. Current owners and source fingerprints outrank a stale STARTUP view.",
+      "generic": false,
+      "disposition": "superseded",
+      "home": "ARCHITECTURE.md#routes; RUNBOOK.md#get-oriented; AGENTS.md first bullet",
+      "note": "Entry route now runs AGENTS -> RUNBOOK Get oriented -> ARCHITECTURE Routes -> GLOSSARY -> Wiki; STARTUP stays the continuation view.",
+      "confirmation": "pending owner confirmation"
+    },
+    {
+      "line": 25,
+      "text": "| Accepted terminology and product direction | This Lexicon -> [Blueprint](BLUEPRINT.md) |",
+      "generic": true,
+      "disposition": "superseded",
+      "home": "ARCHITECTURE.md#routes",
+      "note": "Same route in the successor Routes table (terminology -> Glossary; capability knowledge -> Feature catalog and Spec list; decision rationale -> ADR and DDR registers; operations and recovery rows).",
+      "confirmation": "pending owner confirmation"
+    },
+    {
+      "line": 27,
+      "text": "| Completed capability knowledge and retained proof | [Wiki features](workbench/wiki/features/README.md) when captured; [Spec catalog](workbench/specs/CATALOG.md) -> retained stable spec and dated evidence |",
+      "generic": false,
+      "disposition": "superseded",
+      "home": "ARCHITECTURE.md#routes",
+      "note": "Same route in the successor Routes table (terminology -> Glossary; capability knowledge -> Feature catalog and Spec list; decision rationale -> ADR and DDR registers; operations and recovery rows).",
+      "confirmation": "pending owner confirmation"
+    },
+    {
+      "line": 29,
+      "text": "| Decision rationale | [ADR register](workbench/docs/adr/REGISTER.md) -> active decision -> its operational owners; [history](workbench/docs/adr/HISTORY.md) remains explicit |",
+      "generic": false,
+      "disposition": "superseded",
+      "home": "ARCHITECTURE.md#routes",
+      "note": "Same route in the successor Routes table (terminology -> Glossary; capability knowledge -> Feature catalog and Spec list; decision rationale -> ADR and DDR registers; operations and recovery rows).",
+      "confirmation": "pending owner confirmation"
+    },
+    {
+      "line": 30,
+      "text": "| Commands and recovery | [Runbook](RUNBOOK.md) -> relevant workflow -> named skill or tool |",
+      "generic": false,
+      "disposition": "superseded",
+      "home": "ARCHITECTURE.md#routes",
+      "note": "Same route in the successor Routes table (terminology -> Glossary; capability knowledge -> Feature catalog and Spec list; decision rationale -> ADR and DDR registers; operations and recovery rows).",
+      "confirmation": "pending owner confirmation"
+    },
+    {
+      "line": 47,
+      "text": "An artifact is an identifiable document, record, source file or output. Its",
+      "generic": false,
+      "disposition": "superseded",
+      "home": "ARCHITECTURE.md#ownership",
+      "note": "Artifact, owner and maintainer definitions and the no-permission rule are restated in the Ownership opening paragraph.",
+      "confirmation": "pending owner confirmation"
+    },
+    {
+      "line": 48,
+      "text": "information owner is the maintained place for a particular kind of truth; its",
+      "generic": false,
+      "disposition": "superseded",
+      "home": "ARCHITECTURE.md#ownership",
+      "note": "Artifact, owner and maintainer definitions and the no-permission rule are restated in the Ownership opening paragraph.",
+      "confirmation": "pending owner confirmation"
+    },
+    {
+      "line": 49,
+      "text": "maintainer is the person or assigned agent responsible for keeping that place",
+      "generic": false,
+      "disposition": "superseded",
+      "home": "ARCHITECTURE.md#ownership",
+      "note": "Artifact, owner and maintainer definitions and the no-permission rule are restated in the Ownership opening paragraph.",
+      "confirmation": "pending owner confirmation"
+    },
+    {
+      "line": 50,
+      "text": "current. Information ownership does not grant permission to change it. Follow",
+      "generic": false,
+      "disposition": "superseded",
+      "home": "ARCHITECTURE.md#ownership",
+      "note": "Artifact, owner and maintainer definitions and the no-permission rule are restated in the Ownership opening paragraph.",
+      "confirmation": "pending owner confirmation"
+    },
+    {
+      "line": 51,
+      "text": "the question's job to the smallest current owner, then use the manifest to",
+      "generic": false,
+      "disposition": "superseded",
+      "home": "ARCHITECTURE.md#ownership",
+      "note": "Artifact, owner and maintainer definitions and the no-permission rule are restated in the Ownership opening paragraph.",
+      "confirmation": "pending owner confirmation"
+    },
+    {
+      "line": 52,
+      "text": "resolve installed paths. One file may serve several jobs without becoming a",
+      "generic": false,
+      "disposition": "superseded",
+      "home": "ARCHITECTURE.md#ownership",
+      "note": "Artifact, owner and maintainer definitions and the no-permission rule are restated in the Ownership opening paragraph.",
+      "confirmation": "pending owner confirmation"
+    },
+    {
+      "line": 53,
+      "text": "new authority.",
+      "generic": false,
+      "disposition": "superseded",
+      "home": "ARCHITECTURE.md#ownership",
+      "note": "Artifact, owner and maintainer definitions and the no-permission rule are restated in the Ownership opening paragraph.",
+      "confirmation": "pending owner confirmation"
+    },
+    {
+      "line": 55,
+      "text": "| Job or question | Maintained owner and route |",
+      "generic": false,
+      "disposition": "superseded",
+      "home": "ARCHITECTURE.md#ownership",
+      "note": "Each job row has a successor row in the Ownership job table.",
+      "confirmation": "pending owner confirmation"
+    },
+    {
+      "line": 57,
+      "text": "| Authority and boundaries: who may do what? | Current user request and [AGENTS](AGENTS.md); the assigned Spec narrows the capability. |",
+      "generic": false,
+      "disposition": "superseded",
+      "home": "ARCHITECTURE.md#ownership",
+      "note": "Each job row has a successor row in the Ownership job table.",
+      "confirmation": "pending owner confirmation"
+    },
+    {
+      "line": 58,
+      "text": "| Destination: what should this product become? | [Blueprint](BLUEPRINT.md). |",
+      "generic": false,
+      "disposition": "superseded",
+      "home": "ARCHITECTURE.md#ownership",
+      "note": "Each job row has a successor row in the Ownership job table.",
+      "confirmation": "pending owner confirmation"
+    },
+    {
+      "line": 59,
+      "text": "| Requirements and acceptance: what must this capability do, and what counts as done? | Assigned `SPEC.md` and its acceptance and verification sections. |",
+      "generic": false,
+      "disposition": "superseded",
+      "home": "ARCHITECTURE.md#ownership",
+      "note": "Each job row has a successor row in the Ownership job table.",
+      "confirmation": "pending owner confirmation"
+    },
+    {
+      "line": 60,
+      "text": "| Decisions and rationale: what was chosen, and why? | [ADR register](workbench/docs/adr/REGISTER.md) for architectural choices; manifest-declared `workbench/docs/ddr/` records for destination choices when present (no DDR register is installed in this room); capability-local choices remain in the Spec. |",
+      "generic": false,
+      "disposition": "superseded",
+      "home": "ARCHITECTURE.md#ownership",
+      "note": "Each job row has a successor row in the Ownership job table. The room now carries a rendered DDR register (workbench/docs/ddr/REGISTER.md), so the \"no DDR register is installed\" qualifier no longer holds.",
+      "confirmation": "pending owner confirmation"
+    },
+    {
+      "line": 61,
+      "text": "| Language: what does a shared term mean? | This Lexicon; capability-local meanings remain in the Spec until shared. |",
+      "generic": false,
+      "disposition": "superseded",
+      "home": "ARCHITECTURE.md#ownership",
+      "note": "Each job row has a successor row in the Ownership job table. Language now routes to GLOSSARY.md, not this Lexicon.",
+      "confirmation": "pending owner confirmation"
+    },
+    {
+      "line": 62,
+      "text": "| Knowledge: what context explains a topic? | [Wiki MEMORY](workbench/wiki/MEMORY.md) -> relevant note and its governing sources. |",
+      "generic": false,
+      "disposition": "superseded",
+      "home": "ARCHITECTURE.md#ownership",
+      "note": "Each job row has a successor row in the Ownership job table.",
+      "confirmation": "pending owner confirmation"
+    },
+    {
+      "line": 63,
+      "text": "| Navigation: where should I look? | This routing table, Wiki MEMORY for Wiki pages, and the manifest for installed paths. |",
+      "generic": false,
+      "disposition": "superseded",
+      "home": "ARCHITECTURE.md#ownership",
+      "note": "Each job row has a successor row in the Ownership job table.",
+      "confirmation": "pending owner confirmation"
+    },
+    {
+      "line": 64,
+      "text": "| Work state: what is assigned or blocked? | Owning `SPEC.md` and its `TASK.md` records; [Taskboard](TASKBOARD.md) is their projection. |",
+      "generic": false,
+      "disposition": "superseded",
+      "home": "ARCHITECTURE.md#ownership",
+      "note": "Each job row has a successor row in the Ownership job table.",
+      "confirmation": "pending owner confirmation"
+    },
+    {
+      "line": 65,
+      "text": "| Evidence: what was actually checked? | Spec evidence log -> named result, observer, candidate and limits; a result does not accept itself. |",
+      "generic": false,
+      "disposition": "superseded",
+      "home": "ARCHITECTURE.md#ownership",
+      "note": "Each job row has a successor row in the Ownership job table.",
+      "confirmation": "pending owner confirmation"
+    },
+    {
+      "line": 66,
+      "text": "| Operations and procedures: how is work performed here? | [Runbook](RUNBOOK.md) -> relevant workflow, installed skill section and tool. |",
+      "generic": false,
+      "disposition": "superseded",
+      "home": "ARCHITECTURE.md#ownership",
+      "note": "Each job row has a successor row in the Ownership job table.",
+      "confirmation": "pending owner confirmation"
+    },
+    {
+      "line": 67,
+      "text": "| Reusable behavior: which method applies? | Installed `workbench/skills/` skill named by the operation; a skill inherits the request's scope. |",
+      "generic": false,
+      "disposition": "superseded",
+      "home": "ARCHITECTURE.md#ownership",
+      "note": "Each job row has a successor row in the Ownership job table. Reusable behavior now lives in the .agents/skills lane.",
+      "confirmation": "pending owner confirmation"
+    },
+    {
+      "line": 68,
+      "text": "| Execution and capability: what ran, and can this host do it? | Actual source/tool, host configuration and observed check; configuration alone is not proof. |",
+      "generic": false,
+      "disposition": "superseded",
+      "home": "ARCHITECTURE.md#ownership",
+      "note": "Each job row has a successor row in the Ownership job table.",
+      "confirmation": "pending owner confirmation"
+    },
+    {
+      "line": 69,
+      "text": "| Configuration and provenance: what is installed, and from where? | [Manifest](workbench/manifest.json), component receipts and Git history; see [Version History](workbench/docs/VERSION_HISTORY.md). |",
+      "generic": false,
+      "disposition": "superseded",
+      "home": "ARCHITECTURE.md#ownership",
+      "note": "Each job row has a successor row in the Ownership job table.",
+      "confirmation": "pending owner confirmation"
+    },
+    {
+      "line": 70,
+      "text": "| Working context and recovery: what must survive interruption? | Source-linked [Jot](workbench/skills/jot/SKILL.md) in the relevant Wiki topic, then [implement recovery](workbench/skills/implement/SKILL.md#recovery-and-rollback) with verified live state. Legacy JSON notes remain readable. |",
+      "generic": false,
+      "disposition": "superseded",
+      "home": "ARCHITECTURE.md#ownership",
+      "note": "Each job row has a successor row in the Ownership job table.",
+      "confirmation": "pending owner confirmation"
+    },
+    {
+      "line": 71,
+      "text": "| Human orientation: how does someone start? | [README](README.md), linking to the Runbook for operations. |",
+      "generic": false,
+      "disposition": "superseded",
+      "home": "ARCHITECTURE.md#ownership",
+      "note": "Each job row has a successor row in the Ownership job table.",
+      "confirmation": "pending owner confirmation"
+    },
+    {
+      "line": 83,
+      "text": "## Artifact Boundaries",
+      "generic": false,
+      "disposition": "superseded",
+      "home": "ARCHITECTURE.md#ownership",
+      "note": "Artifact boundary rows have successors in the artifact job-and-limit table; the DDR qualifier no longer holds.",
+      "confirmation": "pending owner confirmation"
+    },
+    {
+      "line": 85,
+      "text": "The [ownership schema](#artifact-ownership-schema) routes a question. These",
+      "generic": false,
+      "disposition": "superseded",
+      "home": "ARCHITECTURE.md#ownership",
+      "note": "Artifact boundary rows have successors in the artifact job-and-limit table; the DDR qualifier no longer holds.",
+      "confirmation": "pending owner confirmation"
+    },
+    {
+      "line": 86,
+      "text": "limits keep a supporting artifact from taking another owner's job:",
+      "generic": false,
+      "disposition": "superseded",
+      "home": "ARCHITECTURE.md#ownership",
+      "note": "Artifact boundary rows have successors in the artifact job-and-limit table; the DDR qualifier no longer holds.",
+      "confirmation": "pending owner confirmation"
+    },
+    {
+      "line": 88,
+      "text": "| Artifact | Job and limit |",
+      "generic": false,
+      "disposition": "superseded",
+      "home": "ARCHITECTURE.md#ownership",
+      "note": "Artifact boundary rows have successors in the artifact job-and-limit table; the DDR qualifier no longer holds.",
+      "confirmation": "pending owner confirmation"
+    },
+    {
+      "line": 90,
+      "text": "| Root controls | [AGENTS](AGENTS.md) governs agent behavior; [Blueprint](BLUEPRINT.md) describes destination; this Lexicon defines and routes; [Runbook](RUNBOOK.md) routes operations; [README](README.md) orients people. [Taskboard](TASKBOARD.md) projects Spec state, and [CLAUDE](CLAUDE.md) adapts entry for its host. Being a root file does not give each claim equal instruction authority. |",
+      "generic": false,
+      "disposition": "superseded",
+      "home": "ARCHITECTURE.md#ownership",
+      "note": "Artifact boundary rows have successors in the artifact job-and-limit table; the DDR qualifier no longer holds.",
+      "confirmation": "pending owner confirmation"
+    },
+    {
+      "line": 91,
+      "text": "| Spec and Task | The Spec owns scoped capability requirements, acceptance and evidence; each `TASK.md` owns a bounded execution slice. A dashboard or handoff cannot replace either source record. |",
+      "generic": false,
+      "disposition": "superseded",
+      "home": "ARCHITECTURE.md#ownership",
+      "note": "Artifact boundary rows have successors in the artifact job-and-limit table; the DDR qualifier no longer holds.",
+      "confirmation": "pending owner confirmation"
+    },
+    {
+      "line": 92,
+      "text": "| Decision record | An accepted ADR owns an architectural decision and names its operational owners. Historical rationale and superseded choices remain distinguishable. This room has no installed DDR register; use actual records when present. |",
+      "generic": false,
+      "disposition": "superseded",
+      "home": "ARCHITECTURE.md#ownership",
+      "note": "Artifact boundary rows have successors in the artifact job-and-limit table; the DDR qualifier no longer holds.",
+      "confirmation": "pending owner confirmation"
+    },
+    {
+      "line": 93,
+      "text": "| Wiki and feature article | [Wiki MEMORY](workbench/wiki/MEMORY.md) routes source-backed explanations and Jot context. A [features article](workbench/wiki/features/README.md) explains a completed capability without copying live Task state or accepting its own delivery. Wiki pages authorize nothing. |",
+      "generic": false,
+      "disposition": "superseded",
+      "home": "ARCHITECTURE.md#ownership",
+      "note": "Artifact boundary rows have successors in the artifact job-and-limit table; the DDR qualifier no longer holds.",
+      "confirmation": "pending owner confirmation"
+    },
+    {
+      "line": 94,
+      "text": "| Jot, legacy note and handoff | [Jot](workbench/skills/jot/SKILL.md) captures source-linked topic context; legacy JSON notes remain readable; a [handoff](workbench/skills/handoff/SKILL.md#transfer-procedure) selects accessible context for a specified recipient. Their access and retention differ; none grants the recipient new authority. |",
+      "generic": false,
+      "disposition": "superseded",
+      "home": "ARCHITECTURE.md#ownership",
+      "note": "Artifact boundary rows have successors in the artifact job-and-limit table; the DDR qualifier no longer holds.",
+      "confirmation": "pending owner confirmation"
+    },
+    {
+      "line": 95,
+      "text": "| Manifest, receipt and adapter | The [manifest](workbench/manifest.json) declares paths and policy; component receipts record installed source and hashes. Discovery adapters expose the tracked skill lane. Valid shape or byte equality does not prove host invocation, rollback or release. |",
+      "generic": false,
+      "disposition": "superseded",
+      "home": "ARCHITECTURE.md#ownership",
+      "note": "Artifact boundary rows have successors in the artifact job-and-limit table; the DDR qualifier no longer holds.",
+      "confirmation": "pending owner confirmation"
+    },
+    {
+      "line": 96,
+      "text": "| Skill, source, tool and test | A pointed installed skill supplies reusable method for an operation within existing scope. Source implements, tools execute and tests exercise named seams; an observation proves only its exercised environment. |",
+      "generic": false,
+      "disposition": "superseded",
+      "home": "ARCHITECTURE.md#ownership",
+      "note": "Artifact boundary rows have successors in the artifact job-and-limit table; the DDR qualifier no longer holds.",
+      "confirmation": "pending owner confirmation"
+    },
+    {
+      "line": 97,
+      "text": "| Evidence and projection | Spec evidence records candidate, method, observer, result and limits. Taskboard, catalog and registers derive views from owning records; correct the source and regenerate the view. |",
+      "generic": false,
+      "disposition": "superseded",
+      "home": "ARCHITECTURE.md#ownership",
+      "note": "Artifact boundary rows have successors in the artifact job-and-limit table; the DDR qualifier no longer holds.",
+      "confirmation": "pending owner confirmation"
+    },
+    {
+      "line": 98,
+      "text": "| Template | A reusable starting shape; the filled room owns its local truth, historical evidence and deliberate differences. Copying a template does not make its examples a project decision. |",
+      "generic": false,
+      "disposition": "superseded",
+      "home": "ARCHITECTURE.md#ownership",
+      "note": "Artifact boundary rows have successors in the artifact job-and-limit table; the DDR qualifier no longer holds.",
+      "confirmation": "pending owner confirmation"
+    },
+    {
+      "line": 106,
+      "text": "| **Context Map** | The navigable relationships among Workbench concepts, controls, specs, Wiki context, and referenced source/evidence, entered through this Lexicon's Task Routing. | Existing owners hold the information; any rendered map is a source-derived Projection, not another truth store or authority. No graph service or Obsidian dependency is required. |",
+      "generic": true,
+      "disposition": "superseded",
+      "home": "GLOSSARY.md **Context Map**; workbench/wiki/vocabulary-workbench-room-and-artifacts.md",
+      "note": "Successor entry enters through ARCHITECTURE.md routes instead of this Lexicon.",
+      "confirmation": "pending owner confirmation"
+    },
+    {
+      "line": 107,
+      "text": "| **Blueprint** | The adaptable narrative of the desired finished product: destination, people, outcomes, experience, integrated design, cross-cutting qualities, lifecycle and non-goals. | It supports the design concept; it is not current status, an ADR inventory, a work queue, a glossary, or a proof archive. |",
+      "generic": false,
+      "disposition": "superseded",
+      "home": "GLOSSARY.md **Blueprint** / **Spec** / **Task** with their Wiki articles",
+      "note": "Current release entries carry the definition and distinction.",
+      "confirmation": "pending owner confirmation"
+    },
+    {
+      "line": 109,
+      "text": "| **Spec** | A stable capability record containing scoped intent, requirements, decisions, implementation slices, acceptance, verification, evidence, and completion. | It combines the useful product and engineering roles often split between a PRD and technical spec. |",
+      "generic": true,
+      "disposition": "superseded",
+      "home": "GLOSSARY.md **Blueprint** / **Spec** / **Task** with their Wiki articles",
+      "note": "Current release entries carry the definition and distinction.",
+      "confirmation": "pending owner confirmation"
+    },
+    {
+      "line": 110,
+      "text": "| **Task** | A bounded executable slice within a Spec, recorded in its own `TASK.md` with state, proof, blockers and assigned stance. | It is temporary execution structure, not durable capability history. The older name **Ticket** and historical `TK-` IDs remain readable in retained records. |",
+      "generic": false,
+      "disposition": "superseded",
+      "home": "GLOSSARY.md **Blueprint** / **Spec** / **Task** with their Wiki articles",
+      "note": "Current release entries carry the definition and distinction.",
+      "confirmation": "pending owner confirmation"
+    },
+    {
+      "line": 118,
+      "text": "| **Notepad** | A local, objective-scoped JSON working record with a compact editable current view and an append-oriented work record. Grilling records are notepads and therefore JSON. | It is not Canon or permanent history; preserve important material until reconciled. One objective may use several linked notes. |",
+      "generic": false,
+      "disposition": "superseded",
+      "home": "GLOSSARY.md Continuity terms; workbench/wiki/vocabulary-continuity-terms.md",
+      "note": "Current release entries.",
+      "confirmation": "pending owner confirmation"
+    },
+    {
+      "line": 119,
+      "text": "| **Jot** | A small source-linked Wiki capture of knowledge, owner intent, observations, proposals or unresolved questions, including correction history. | Shared topic context is recoverable from the Wiki; explicit private jots stay ignored and require local opt-in. A confirmed intention is not a verified result or instruction authority. Old JSON notepads remain readable. |",
+      "generic": false,
+      "disposition": "superseded",
+      "home": "GLOSSARY.md Continuity terms; workbench/wiki/vocabulary-continuity-terms.md",
+      "note": "Current release entries.",
+      "confirmation": "pending owner confirmation"
+    },
+    {
+      "line": 120,
+      "text": "| **Scoped handoff** | A separate local Markdown (`.md`) brief for a specified recipient, purpose, job and endpoint, selecting relevant Wiki context, legacy notes and source links. | The owner or an agent within its assigned role may initiate one. A pointer requires accessible, retained source data; preparation does not authorize the recipient's work. The [handoff procedure](workbench/skills/handoff/SKILL.md#transfer-procedure) owns transfer. |",
+      "generic": false,
+      "disposition": "superseded",
+      "home": "GLOSSARY.md Continuity terms; workbench/wiki/vocabulary-continuity-terms.md",
+      "note": "Current release entries.",
+      "confirmation": "pending owner confirmation"
+    },
+    {
+      "line": 121,
+      "text": "| **WBID** | A visible artifact identifier with a type prefix and value replacing a numeric portion. New Spec, Task, ADR and notepad values use uppercase `0-9A-Z`, minimum width four, and at least one letter. | Unique within type and Workbench, not globally. Short, widened or case variants of one collision key resolve to one record; existing numeric, short and mixed-case labels remain readable. Open Spec/Task widening uses explicit `widen-id`; historical numeric Tasks remain Spec-qualified. The `WB-` connection identity retains a separate base-62 format. |",
+      "generic": false,
+      "disposition": "superseded",
+      "home": "GLOSSARY.md Continuity terms; workbench/wiki/vocabulary-continuity-terms.md",
+      "note": "Current release entries.",
+      "confirmation": "pending owner confirmation"
+    },
+    {
+      "line": 127,
+      "text": "| **Stance** | The method and obligations for performing one assigned task within already established authority. | It is neither an identity nor an authority grant; switching stance creates no handoff. |",
+      "generic": true,
+      "disposition": "superseded",
+      "home": "GLOSSARY.md Stance terms (**Stance**, **Reviewer**, **Task**); workbench/wiki/vocabulary-stance-terms.md",
+      "note": "The TASK row is covered by the **Task** entry.",
+      "confirmation": "pending owner confirmation"
+    },
+    {
+      "line": 130,
+      "text": "| **Reviewer** | The stance that challenges a candidate's correctness, impact and evidence. | At integration it runs in a separate context; it does not quietly repair the candidate. |",
+      "generic": true,
+      "disposition": "superseded",
+      "home": "GLOSSARY.md Stance terms (**Stance**, **Reviewer**, **Task**); workbench/wiki/vocabulary-stance-terms.md",
+      "note": "The TASK row is covered by the **Task** entry.",
+      "confirmation": "pending owner confirmation"
+    },
+    {
+      "line": 132,
+      "text": "| **TASK** | The assigned Task within a stable SPEC, carrying its normal stance assignment in `TASK.md`. | The installed Spec tool writes Task records; Taskboard displays their derived state. Historical ticket wording remains readable. |",
+      "generic": false,
+      "disposition": "superseded",
+      "home": "GLOSSARY.md Stance terms (**Stance**, **Reviewer**, **Task**); workbench/wiki/vocabulary-stance-terms.md",
+      "note": "The TASK row is covered by the **Task** entry.",
+      "confirmation": "pending owner confirmation"
+    },
+    {
+      "line": 137,
+      "text": "relationship *is* starts here, then follows the term to the maintained",
+      "generic": false,
+      "disposition": "superseded",
+      "home": "ARCHITECTURE.md design-concept routing paragraph",
+      "note": "Design-concept routing now starts at the glossary term from ARCHITECTURE.",
+      "confirmation": "pending owner confirmation"
+    },
+    {
+      "line": 138,
+      "text": "articles in `workbench/wiki/design-concepts/`; an authorized operation may",
+      "generic": false,
+      "disposition": "superseded",
+      "home": "ARCHITECTURE.md design-concept routing paragraph",
+      "note": "Design-concept routing now starts at the glossary term from ARCHITECTURE.",
+      "confirmation": "pending owner confirmation"
+    },
+    {
+      "line": 139,
+      "text": "create or update one with its provenance. The Blueprint and the assigned",
+      "generic": false,
+      "disposition": "superseded",
+      "home": "ARCHITECTURE.md design-concept routing paragraph",
+      "note": "Design-concept routing now starts at the glossary term from ARCHITECTURE.",
+      "confirmation": "pending owner confirmation"
+    },
+    {
+      "line": 144,
+      "text": "`BLUEPRINT.md`, and rationale in the project's `workbench/docs/adr/` collection.",
+      "generic": true,
+      "disposition": "superseded",
+      "home": "ARCHITECTURE.md#invariants-and-boundaries",
+      "note": "Binding-owner statement restated in the invariants, now naming DDRs too.",
+      "confirmation": "pending owner confirmation"
+    },
+    {
+      "line": 148,
+      "text": "| **Governance Plane** | The role one claim plays in one operation: **Intent** (the request), **Canon** (the binding current-state rule), **Grounding** (evidence about intended truth or whether work was done correctly), **Enduring Context** (durable reference consulted), **Actuality** (the target being changed, including files, source, runtime, and verified state), and **Projection** (a source-derived report). | Planes classify claims and their use, never whole files, directories, or artifact types. One assigned spec carries Canon, Projection, Grounding, and Enduring Context claims at once. |",
+      "generic": true,
+      "disposition": "superseded",
+      "home": "GLOSSARY.md Governance core; workbench/wiki/vocabulary-governance-core.md",
+      "note": "Current release entries; Support lane now places skills at .agents/skills.",
+      "confirmation": "pending owner confirmation"
+    },
+    {
+      "line": 149,
+      "text": "| **Workbench Contract** | The binding claim set named by AGENTS Instruction Authority: `AGENTS.md`, the explicitly assigned Spec's bounded capability requirements and, for an operation, the binding requirements of the lane skill the Contract points to. | It is not a file. Other root artifacts route by job; no `CONTRACT.md` or other coequal root file exists. |",
+      "generic": false,
+      "disposition": "superseded",
+      "home": "GLOSSARY.md Governance core; workbench/wiki/vocabulary-governance-core.md",
+      "note": "Current release entries; Support lane now places skills at .agents/skills.",
+      "confirmation": "pending owner confirmation"
+    },
+    {
+      "line": 150,
+      "text": "| **Instruction authority** | What an agent may do: the current owner request, then `AGENTS.md` with platform safety, then the explicitly assigned spec as a bounded capability delegate, then the procedural controls. | An assigned spec cannot enlarge the request, platform safety, or `AGENTS.md` scope; an unassigned spec is evidence. |",
+      "generic": true,
+      "disposition": "superseded",
+      "home": "GLOSSARY.md Governance core; workbench/wiki/vocabulary-governance-core.md",
+      "note": "Current release entries; Support lane now places skills at .agents/skills.",
+      "confirmation": "pending owner confirmation"
+    },
+    {
+      "line": 154,
+      "text": "| **Support lane** | One of the seven manifest-declared slots under lowercase `workbench/`: `docs`, `specs`, `wiki`, `sessions`, `feedback`, `tools`, `skills`. | A lane is a structural slot, not a Governance Plane; the installed skills lane holds tracked reusable behavior. |",
+      "generic": false,
+      "disposition": "superseded",
+      "home": "GLOSSARY.md Governance core; workbench/wiki/vocabulary-governance-core.md",
+      "note": "Current release entries; Support lane now places skills at .agents/skills.",
+      "confirmation": "pending owner confirmation"
+    },
+    {
+      "line": 155,
+      "text": "| **Collection** | A manifest-declared, machine-used directory inside a lane, including `docs/adr`, `docs/ddr`, `wiki/design-concepts`, `wiki/features`, `wiki/guidebooks`, `wiki/archive`, the declared sessions collections and `workbench/landmarks`. | Read the actual manifest for the complete room list. Collection names are lowercase; a collection is not promoted to a lane because its contents differ. |",
+      "generic": false,
+      "disposition": "superseded",
+      "home": "GLOSSARY.md Governance core; workbench/wiki/vocabulary-governance-core.md",
+      "note": "Current release entries; Support lane now places skills at .agents/skills.",
+      "confirmation": "pending owner confirmation"
+    },
+    {
+      "line": 159,
+      "text": "| **Design Concept article** | An encyclopedic wiki article in `wiki/design-concepts/` explaining a durable cross-cutting model or supported landmark synthesis, with sources and `History`. | It is not the Blueprint, an ADR, procedure or Task state. An agent may create or update one during an authorized operation that touched it, recording that operation. |",
+      "generic": false,
+      "disposition": "superseded",
+      "home": "GLOSSARY.md Governance core; workbench/wiki/vocabulary-governance-core.md",
+      "note": "Current release entries; Support lane now places skills at .agents/skills.",
+      "confirmation": "pending owner confirmation"
+    },
+    {
+      "line": 162,
+      "text": "| **Declared integration branch** | The branch, named by exact case in `workbench/manifest.json` `git.integrationBranch`, that stages approved assembled Spec work after the [independent review boundary](workbench/skills/implement/SKILL.md#4-review-at-the-relevant-boundary); `git.defaultBranch` names the branch it is created from. | A declaration, not a prose convention: controls resolve it from the manifest, `doctor` reports it undeclared or missing without blocking selection, and only generation, adoption, and upgrade completion fail closed on it. A Task receives Worker self-check, not a separate-context review. |",
+      "generic": false,
+      "disposition": "superseded",
+      "home": "GLOSSARY.md **Declared integration branch**; workbench/wiki/vocabulary-governance-core.md#declared-integration-branch",
+      "note": "The Lexicon said the integration branch stages approved assembled Spec work after the independent review boundary. The v3.2.2 template entry said the independent review gate merges task branches, which contradicts AGENTS (Task PRs need self-check, merge answers and CI; only assembled Specs get independent review). This room's Glossary entry was corrected to say the branch receives Task PRs after self-check, merge answers and CI and stages assembled Spec work for its independent review. The declaration-not-convention distinction lives in the governance-core Wiki section.",
+      "confirmation": "pending owner confirmation"
+    },
+    {
+      "line": 168,
+      "text": "| **Room** | One repository with the Workbench installed in it: seven root controls, a `workbench/` support root declared by a manifest, and an installed managed runtime. | A room is an installation, not the harness. `LLM_Workbench` is the harness; `Example Workbench` and `Audit Workbench` are rooms. Avoid \"workbench\" alone when you mean one installation. |",
+      "generic": false,
+      "disposition": "moved",
+      "home": "workbench/wiki/vocabulary-project-terms.md#room; GLOSSARY.md **Room**",
+      "note": "The shared **Room** entry is kept; this room's installation reading and its distinction moved to the project-terms article. Owner review of the merged meaning is open.",
+      "confirmation": "pending owner confirmation"
+    },
+    {
+      "line": 186,
+      "text": "- **Core compatibility:** the supported room-version range, when declared for a",
+      "generic": false,
+      "disposition": "superseded",
+      "home": "GLOSSARY.md **Core compatibility**",
+      "note": "The retired workbench/skills lane reference no longer applies.",
+      "confirmation": "pending owner confirmation"
+    },
+    {
+      "line": 187,
+      "text": "selected managed core generation in the tracked `workbench/skills/` lane.",
+      "generic": false,
+      "disposition": "superseded",
+      "home": "GLOSSARY.md **Core compatibility**",
+      "note": "The retired workbench/skills lane reference no longer applies.",
+      "confirmation": "pending owner confirmation"
+    },
+    {
+      "line": 188,
+      "text": "Compare the declared range and installed receipt with this room's version;",
+      "generic": false,
+      "disposition": "superseded",
+      "home": "GLOSSARY.md **Core compatibility**",
+      "note": "The retired workbench/skills lane reference no longer applies.",
+      "confirmation": "pending owner confirmation"
+    },
+    {
+      "line": 189,
+      "text": "version difference alone is not proof of incompatibility. Host invocation",
+      "generic": false,
+      "disposition": "superseded",
+      "home": "GLOSSARY.md **Core compatibility**",
+      "note": "The retired workbench/skills lane reference no longer applies.",
+      "confirmation": "pending owner confirmation"
+    },
+    {
+      "line": 190,
+      "text": "remains a separate check, without an assumed provider-home installation.",
+      "generic": false,
+      "disposition": "superseded",
+      "home": "GLOSSARY.md **Core compatibility**",
+      "note": "The retired workbench/skills lane reference no longer applies.",
+      "confirmation": "pending owner confirmation"
+    }
+  ],
+  "history": [
+    "8f08f111 run: 78 lines reported unlanded and removed, because that tool checked wrapped prose line by line.",
+    "413e7039 run: wrapped lines land when joined, so the 9 lines of the moved paragraph (73-81) are tool-verified and restored to the archived file; 69 dispositions remain."
+  ],
+  "confirmation": "Pending owner confirmation for all 69 entries (68 superseded, 1 moved). The archived state was reached by removing these lines on the installing agent's judgment, not by the tool's landing check. Do not run retire-lexicon until the owner confirms them.",
+  "archive_tidy": "After the a58466ad reinstall, header-less table separators, the empty Continuity Terms table and four wrapped fragments of landed paragraphs were removed from the archived file. The removed lines had already landed by the tool's check, so no meaning changed."
+}

@@ -53,7 +53,7 @@ routes.
 
 ## Fresh Capture And Privacy
 
-The installed [Jot skill](../skills/jot/SKILL.md) captures small, source-linked
+The installed [Jot skill](../../.agents/skills/jot/SKILL.md) captures small, source-linked
 entries in an existing topic page or a flat `context-TOPIC.md` page. Record the
 claim kind and state, source, speaker or author, time and linked correction or
 supersession. A confirmed owner intention is not implementation proof or Canon.
@@ -147,7 +147,7 @@ After a Wiki update, read touched pages and their affected routes for source
 coverage, correct summaries and contradictions, then run validation. At
 assembled review, review affected pages against changed controls as well as
 whole-Wiki structural validation. A green validator is not semantic proof;
-the [to-docs Wiki lint](../skills/to-docs/SKILL.md#wiki-lint) gives the checks.
+the [to-docs Wiki lint](../../.agents/skills/to-docs/SKILL.md#wiki-lint) gives the checks.
 
 ## Stale Handling
 
@@ -192,7 +192,7 @@ for a manifest whose recorded source identity is a placeholder or disagrees with
 its managed-runtime check; the checks themselves live in
 `workbench/tools/workbench-layout.mjs` and are repaired by its `seed-documents`
 and `record-source` commands. The installed
-[update-harness skill](../skills/update-harness/SKILL.md) documents their
+[update-harness skill](../../.agents/skills/update-harness/SKILL.md) documents their
 upgrade route. Neither blocks.
 
 `normalize` is the explicit repair for a note missing required properties. It

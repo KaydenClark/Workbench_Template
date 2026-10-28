@@ -106,6 +106,16 @@ function parseEntries(text) {
   if (text.split(START).length - 1 !== entries.length || text.split(END).length - 1 !== entries.length) fail('invalid-page', 'The Wiki page contains a malformed jot boundary');
   return entries;
 }
+// S-006J TK-008R: the lifecycle authority check reads the same native entries
+// and applies this reader's ignored-page rule: an ignored page is local
+// context. Outside a Git work tree no ignore rule can apply.
+export function parseJotEntries(text) { return parseEntries(text); }
+export function ignoredJotPage(root, relative) {
+  const inside = spawnSync('git', ['-C', root, 'rev-parse', '--is-inside-work-tree'], { encoding: 'utf8' });
+  if (inside.error) fail('git-unavailable', 'Git is required to verify ignored provenance');
+  if (inside.status !== 0) return false;
+  return ignored(root, relative);
+}
 function legacySnapshot(text) {
   const match = text.match(/<!-- jot-legacy-source (\{[^\n]+\}) -->\n```json\n([\s\S]*?)\n```\n<!-- \/jot-legacy-source -->/);
   if (!match) return null;

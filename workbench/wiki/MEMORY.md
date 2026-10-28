@@ -7,12 +7,12 @@ provenance:
   - Genesis or Adoption of this room
 source_paths:
   - workbench/wiki
-last_verified: 2026-10-18
+last_verified: 2026-10-28
 ---
 
 # Example Workbench Memory
 
-> Generated from LLM Workbench v3.2.1. This is the room brain: the
+> Generated from LLM Workbench v3.2.2. This is the room brain: the
 > canonical, human-editable memory router for this project, kept at
 > `workbench/wiki/MEMORY.md`. Start here and follow the smallest relevant
 > link instead of browsing folders or searching.
@@ -29,7 +29,8 @@ state; it routes to it. Private jots remain outside shared routes.
 ## Source Precedence
 
 1. Verified runtime and this room's live controls: `AGENTS.md`, `BLUEPRINT.md`,
-   the assigned stable spec, `TASKBOARD.md`, and `RUNBOOK.md`.
+   `GLOSSARY.md`, `ARCHITECTURE.md`, the assigned stable spec, `TASKBOARD.md`,
+   and `RUNBOOK.md`.
 2. Maintained notes routed from this file.
 3. `archive/` and generated material.
 
@@ -44,7 +45,8 @@ nothing.
 |---|---|
 | [AGENTS.md](../../AGENTS.md) | Authority, scope, safety, and the work loop |
 | [BLUEPRINT.md](../../BLUEPRINT.md) | Product map, architecture, and the spec catalog |
-| [LEXICON.md](../../LEXICON.md) | Shared terms, the Governance Core, and design-concept routing |
+| [GLOSSARY.md](../../GLOSSARY.md) | Shared terms, the Governance Core and this room's project terms |
+| [ARCHITECTURE.md](../../ARCHITECTURE.md) | Ownership, routes, invariants and design-concept routing |
 | [TASKBOARD.md](../../TASKBOARD.md) | Current execution state |
 | `workbench/specs/` | Stable capability records, acceptance, evidence, and proof |
 | [RUNBOOK.md](../../RUNBOOK.md) | Exact operating and verification commands |
@@ -52,6 +54,28 @@ nothing.
 | [design-concepts/](design-concepts/README.md) | Articles explaining durable design models and any landmark synthesis supported by this room |
 | [features/](features/README.md) | Readable capability articles captured when Specs complete |
 | [guidebooks/](guidebooks/) | Ordered procedures that outgrew the Runbook |
+
+## Vocabulary
+
+The root `GLOSSARY.md` defines the project's shared words. These articles
+explain them, one article per glossary grouping, each word a section linking
+its definition, plus one reference page for general AI coding words. They
+ship with the room; add a section or a page when a word of this project needs
+more than its glossary entry.
+
+- [Destination and direction](vocabulary-destination-and-direction.md) - where the project is going: destinations, maps, question cards and the frontier of ready work
+- [Workflow verbs](vocabulary-workflow-verbs.md) - the actions every workflow is built from, from Idea to Clean Up
+- [Workbench, room and artifacts](vocabulary-workbench-room-and-artifacts.md) - the Workbench, the project and the kinds of artifact agents meet
+- [Specs and Tasks](vocabulary-specs-and-tasks.md) - the units of planned work, their reviews, where their records go and the Priority and Value table
+- [Chats and roles](vocabulary-chats-and-roles.md) - the working contexts agents run in and the scopes they are assigned
+- [Feedback disposition](vocabulary-feedback-disposition.md) - the closed set of outcomes every feedback finding ends with
+- [Workbench meanings of AI coding terms](vocabulary-workbench-meanings-of-ai-coding-terms.md) - the two AI coding words with a distinct Workbench meaning
+- [Continuity terms](vocabulary-continuity-terms.md) - notepads, scoped handoffs and the identifiers that name artifacts
+- [Stance terms](vocabulary-stance-terms.md) - the job each stance does inside an assigned role
+- [Governance core](vocabulary-governance-core.md) - claim roles, authority, lanes, collections and decision records shared by every Workbench
+- [Continuity and evidence boundaries](vocabulary-continuity-and-evidence-boundaries.md) - what transport, promotion, host checks and compatibility do and do not establish
+- [Project terms](vocabulary-project-terms.md) - this reference room's own words: tour, place, zone, drift and how it reads Room
+- [AI coding reference](ai-coding-reference.md) - general AI coding words restated in Workbench words, with attribution
 
 ## Routing
 
@@ -63,7 +87,7 @@ nothing.
 | How do I know the explanation is still true? | `node tests/tour.test.mjs` - drift is a test failure, not a backlog item |
 | How did the harness get here, and how do I stand in an earlier generation? | [VERSION_HISTORY.md](../docs/VERSION_HISTORY.md), then `git checkout version/NN-...`; recorded by [S-002](../specs/S-002-version-history-replay/SPEC.md) |
 | Where is a delivered capability explained? | [features/](features/README.md) for captured articles; [Spec catalog](../specs/CATALOG.md) for retained records and dated proof |
-| Where did an owner correction or useful finding go? | The relevant shared topic page recorded through [Jot](../skills/jot/SKILL.md); follow its source and correction links |
+| Where did an owner correction or useful finding go? | The relevant shared topic page recorded through [Jot](../../.agents/skills/jot/SKILL.md); follow its source and correction links |
 
 This reference room has no general flat topic notes yet. The rows above route
 to live controls, captured capability articles when present, and the room's

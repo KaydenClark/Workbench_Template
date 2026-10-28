@@ -1,6 +1,6 @@
 # Workbench Template
 
-> Generated from LLM Workbench v3.2.1.
+> Generated from LLM Workbench v3.2.2.
 
 A copyable reference installation of LLM Workbench. It provides a legible
 starting structure and an installed target for reviewed harness updates.
@@ -27,14 +27,16 @@ for capabilities, purpose, version evidence and availability.
 
 ## How This Project Is Run
 
-Start with [AGENTS](AGENTS.md) -> [STARTUP](STARTUP.md) -> the assigned Spec and Task. Use [Runbook orientation](RUNBOOK.md#orientation) for an unfamiliar operation. Read other owners when the operation needs them:
+Start with [AGENTS](AGENTS.md) -> [Runbook orientation](RUNBOOK.md#get-oriented) -> the assigned Spec and Task; [STARTUP](STARTUP.md) is the shared continuation view. Read other owners when the operation needs them:
 
 - [`AGENTS.md`](AGENTS.md) - how agents behave here: authority order, read/edit
   scope, the task-selection loop, documentation ownership, and proof rules.
 - [`BLUEPRINT.md`](BLUEPRINT.md) - desired product destination, integrated design, constraints and lifecycle. The
-  complete capability catalog is linked from the Lexicon.
-- [`LEXICON.md`](LEXICON.md) - accepted project-wide terms and definitions;
+  complete capability catalog is linked from the Wiki router.
+- [`GLOSSARY.md`](GLOSSARY.md) - accepted project-wide terms and definitions;
   consult it when shared language could be ambiguous.
+- [`ARCHITECTURE.md`](ARCHITECTURE.md) - which owner holds each kind of truth,
+  the routes to it and the invariants that keep owners apart.
 - [`TASKBOARD.md`](TASKBOARD.md) - active spec projection: current slice, owner,
   blocker, latest event, and next gate.
 - [assigned `SPEC.md`](workbench/specs/CATALOG.md) - on-demand capability truth,
@@ -50,14 +52,16 @@ Start with [AGENTS](AGENTS.md) -> [STARTUP](STARTUP.md) -> the assigned Spec and
   Workbench Feedback, the return channel to the reusable harness these docs
   came from: log where the harness rules themselves are unclear, wrong, or slow
   the work down, so they can be improved upstream. It lives in the feedback
-  lane so the root keeps exactly seven controls.
+  lane so the root controls stay at eight. The only other root files are
+  [`STARTUP.md`](STARTUP.md), the shared continuation view, and the archived
+  v3.2.1 [`LEXICON.md`](LEXICON.md).
 - [`workbench/docs/VERSION_HISTORY.md`](workbench/docs/VERSION_HISTORY.md) -
   how the harness got here. This repository's history replays every LLM
   Workbench generation as one commit and one `version/` branch each, from the
   three-file GAME_PLAN room through the v3.1.2 baseline, so any generation can be
   checked out, run, and diffed against its neighbours.
 
-For a new project, follow the installed [Genesis skill](workbench/skills/genesis/SKILL.md). For a repository with code, follow [Adoption](workbench/skills/adoption/SKILL.md). Both recover verified release source before their release-side setup procedure. Solo or team scopes remain in the room's own authority records.
+For a new project, follow the installed [Genesis skill](.agents/skills/genesis/SKILL.md). For a repository with code, follow [Adoption](.agents/skills/adoption/SKILL.md). Both recover verified release source before their release-side setup procedure. Solo or team scopes remain in the room's own authority records.
 
 ## Getting Started
 
@@ -82,7 +86,7 @@ For **Claude Code**, keep the one-line `CLAUDE.md` containing exactly
 generated `/init` file. Other agents should be pointed at `AGENTS.md` as their
 entry point.
 
-Ordinary continuation follows AGENTS -> STARTUP -> assigned Spec and Task; consult only the needed Runbook operation.
+Ordinary continuation follows AGENTS -> Runbook orientation -> assigned Spec and Task, with STARTUP as the shared continuation view; consult only the needed Runbook operation.
 
 Every completed Task must leave proof in its final response and owning Spec's
 append-only evidence log. Milestone specs additionally require a short demo
@@ -99,22 +103,18 @@ See [`TASKBOARD.md`](TASKBOARD.md) for active execution state and
 Same license as the LLM Workbench harness it was generated from. This room is
 meant to be copied, read, and discarded.
 
-The manifest and managed receipts retain the **v3.2.1 release label** as the
-released baseline. Template `integration` contains the reviewed, unreleased
-upgrade delivered by merge `f3d34a0f7d2bbb60b2a087afa18079aa09cf3bb8`
-from candidate `cd68ea759b100b94e423051a69da2264267cbaf5`; their trees
-match. A later carry re-pinned the managed runtime and skills receipts to
-LLM Workbench source `9734078399efb2b49b9fbca195d2c8f3c68b9722`, the producer
-`integration` tip it was cut from (the earlier pin was
-`0ce1750750f80767536f4d4c0bc44bf5ccabe730`), and added the Workbench
-line-endings block to `.gitattributes`. Neither delivery stamped a new
-release or promoted Template `main`. See
-[Version History](workbench/docs/VERSION_HISTORY.md#unreleased-template-upgrade-candidate-2026-10-18)
-for the installation boundary and retained history. Run `node tour.mjs` for
-this room's current map.
+The manifest and managed receipts carry the **v3.2.2 release label** from
+LLM Workbench source `a58466ad1dca4ce7d6bd1a8328f47d6a58a2ee8d`, installed on
+Template `integration` through the update route recorded in
+[S-000E](workbench/specs/S-000E-v3-2-2-harness-upgrade/SPEC.md). It is an
+assessment candidate: release fitness is assessed on integration before any
+owner-approved promotion, and Template `main` still carries v3.2.1. The earlier
+unreleased v3.2.1 candidate and its re-pinned receipts are retained in
+[Version History](workbench/docs/VERSION_HISTORY.md#unreleased-template-upgrade-candidate-2026-10-18).
+Run `node tour.mjs` for this room's current map.
 
 Earlier verified upgrades remain in their original owners:
-[S-003](workbench/specs/S-003-v3-2-0-upgrade-and-project-validation/SPEC.md)
-and [S-00B](workbench/specs/S-00B-v3-2-1-harness-upgrade/SPEC.md). Historical
+[S-003](workbench/specs/S-003-v3-2-0-upgrade-and-project-validation/SPEC.md),
+[S-00B](workbench/specs/S-00B-v3-2-1-harness-upgrade/SPEC.md) and the earlier v3.2.1 candidate carry. Historical
 replay branches retain their original versions. Every new upgrade still follows
 [reference upgrade acceptance](workbench/docs/TEMPLATE_OPERATIONS.md#reference-upgrade-acceptance).
