@@ -40,6 +40,15 @@ readiness check fails closed on the same finding. The check recognises bare
 shape it cannot safely interpret is reported as uncertainty;
 widen or simplify the rule, or record the deliberate restriction in `AGENTS.md`.
 
+The `UserPromptSubmit` hook adds a one-line reminder of the two gates in
+`AGENTS.md` to each owner message: the readback waits for confirmation, and a
+confirmation alone is jotted but does not start execution without approval.
+The LLM Workbench producer test `tools/test-mandatory-workflow-gates.mjs` keeps
+it consistent with `AGENTS.md`. Installed headless trials showed the prose rule
+alone did not stop agents on plain change requests, approval wording or intent
+corrections (LLM Workbench S-006J TK-00BR). It only adds context; it blocks
+nothing and grants no authority.
+
 Notes:
 
 - `deny` wins over `allow`, so the secret/credential rules hold even if a broad

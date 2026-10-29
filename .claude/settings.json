@@ -44,5 +44,17 @@
       "Bash(node workbench/tools/wiki.mjs:*)",
       "Bash(node workbench/tools/workbench-layout.mjs:*)"
     ]
+  },
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo 'Workbench gate: if this message asks to change files, or corrects the intent of a pending change, first read back the concept, scope, constraints and endpoint, then stop until the owner explicitly confirms it. Approval wording inside the request itself is not that confirmation. If this message confirms a readback, jot the confirmation; execution still waits for explicit owner approval of planned execution unless this message also gives it. If it approves execution, jot the approval before acting. Authority already recorded within scope needs no new ask.'"
+          }
+        ]
+      }
+    ]
   }
 }
