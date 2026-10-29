@@ -1,0 +1,3181 @@
+{
+  "schemaVersion": 1,
+  "baseline": "276d3107874dbf0c84f1f81bab4818daf9ec3ab8",
+  "producer": "45a857f25adadeb068e0f000c09dcb3addb36a90",
+  "baselineTrackedFiles": 196,
+  "phase": "final candidate inventory before immutable commit",
+  "selfExcluded": "workbench/specs/S-000E-v3-2-2-harness-upgrade/proof/runbook-preservation.json",
+  "limits": "This is a per-path preservation comparison, not a native closeout snapshot or proof of remote recovery; this inventory file itself is excluded to avoid recursive hashing.",
+  "entries": [
+    {
+      "path": ".agents/skills/.workbench-skills.json",
+      "before": {
+        "path": ".agents/skills/.workbench-skills.json",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "312fec5734ab3c98b48e3a8020a0f69902285200b53826989660dc09ddec9400"
+      },
+      "after": {
+        "path": ".agents/skills/.workbench-skills.json",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "b8394349d1ca46a681b29465420d0c1dd57ec78a273c8f8876178e8ab8911e90"
+      },
+      "disposition": "managed continuation update"
+    },
+    {
+      "path": ".agents/skills/adoption/SKILL.md",
+      "before": {
+        "path": ".agents/skills/adoption/SKILL.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "d0ac8473a58ed4b4082a44c40371d68f6fdf1095b4e6398fac357f87bdebb68d"
+      },
+      "after": {
+        "path": ".agents/skills/adoption/SKILL.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "d0ac8473a58ed4b4082a44c40371d68f6fdf1095b4e6398fac357f87bdebb68d"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": ".agents/skills/auditor/SKILL.md",
+      "before": {
+        "path": ".agents/skills/auditor/SKILL.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "89bad78e8fc69b6871f2b8973793128f0cfe6bc451e35b18db471cae31dc8fd1"
+      },
+      "after": {
+        "path": ".agents/skills/auditor/SKILL.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "89bad78e8fc69b6871f2b8973793128f0cfe6bc451e35b18db471cae31dc8fd1"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": ".agents/skills/builder/SKILL.md",
+      "before": {
+        "path": ".agents/skills/builder/SKILL.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "ebea0a68fa94c58dda573fc401bc3d025ad863a7a9f522d5bb4b247b1555d00d"
+      },
+      "after": {
+        "path": ".agents/skills/builder/SKILL.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "ebea0a68fa94c58dda573fc401bc3d025ad863a7a9f522d5bb4b247b1555d00d"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": ".agents/skills/builder/references/verification.md",
+      "before": {
+        "path": ".agents/skills/builder/references/verification.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "8d4c187e6c7cf18fcf3be9577172c83f76bcd672735f2c436aa8988d4624df6d"
+      },
+      "after": {
+        "path": ".agents/skills/builder/references/verification.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "8d4c187e6c7cf18fcf3be9577172c83f76bcd672735f2c436aa8988d4624df6d"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": ".agents/skills/carry/SKILL.md",
+      "before": {
+        "path": ".agents/skills/carry/SKILL.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "b90f2830e0fe1fa51acdaaeebe79d41cc2273d3cf26d7039e0c471d1c97ebeb2"
+      },
+      "after": {
+        "path": ".agents/skills/carry/SKILL.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "b90f2830e0fe1fa51acdaaeebe79d41cc2273d3cf26d7039e0c471d1c97ebeb2"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": ".agents/skills/checkpoint/SKILL.md",
+      "before": {
+        "path": ".agents/skills/checkpoint/SKILL.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "c8197579b988fb51d53a0acdaff91411ee6a26a57eb66d65418025ad6af89322"
+      },
+      "after": {
+        "path": ".agents/skills/checkpoint/SKILL.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "c8197579b988fb51d53a0acdaff91411ee6a26a57eb66d65418025ad6af89322"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": ".agents/skills/code-review/SKILL.md",
+      "before": {
+        "path": ".agents/skills/code-review/SKILL.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "9d0c6aff278e3eadc8966aa03e83758b9eb9cf369282cdd3f74d311c2499789d"
+      },
+      "after": {
+        "path": ".agents/skills/code-review/SKILL.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "9d0c6aff278e3eadc8966aa03e83758b9eb9cf369282cdd3f74d311c2499789d"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": ".agents/skills/diagnose-and-propose/SKILL.md",
+      "before": {
+        "path": ".agents/skills/diagnose-and-propose/SKILL.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "e1dd150d7ce447737180ca35a97f15254809226155320c308f3e806f01e20c9d"
+      },
+      "after": {
+        "path": ".agents/skills/diagnose-and-propose/SKILL.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "e1dd150d7ce447737180ca35a97f15254809226155320c308f3e806f01e20c9d"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": ".agents/skills/director/SKILL.md",
+      "before": {
+        "path": ".agents/skills/director/SKILL.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "1d21015c12af404ef4d206b558510819e7315caece6482f0e443c8687e5ee8c4"
+      },
+      "after": {
+        "path": ".agents/skills/director/SKILL.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "1d21015c12af404ef4d206b558510819e7315caece6482f0e443c8687e5ee8c4"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": ".agents/skills/director/procedures.md",
+      "before": {
+        "path": ".agents/skills/director/procedures.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "6ef5a19dbf21237e829ae2a8d3b5a0fe13d801a1a59edfda27953091ef416856"
+      },
+      "after": {
+        "path": ".agents/skills/director/procedures.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "6ef5a19dbf21237e829ae2a8d3b5a0fe13d801a1a59edfda27953091ef416856"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": ".agents/skills/dispatcher/SKILL.md",
+      "before": {
+        "path": ".agents/skills/dispatcher/SKILL.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "fe383b82ea1ebc48a47857d074a9da52dfa350eca540e46a6d5c2482aa4eb9e3"
+      },
+      "after": {
+        "path": ".agents/skills/dispatcher/SKILL.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "fe383b82ea1ebc48a47857d074a9da52dfa350eca540e46a6d5c2482aa4eb9e3"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": ".agents/skills/dispatcher/assembled-review.md",
+      "before": {
+        "path": ".agents/skills/dispatcher/assembled-review.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "239be4cfdab661ab848a1abfa9f1263c65022d0e1e66c4114ddbecfd53070dcd"
+      },
+      "after": {
+        "path": ".agents/skills/dispatcher/assembled-review.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "239be4cfdab661ab848a1abfa9f1263c65022d0e1e66c4114ddbecfd53070dcd"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": ".agents/skills/dispatcher/procedures.md",
+      "before": {
+        "path": ".agents/skills/dispatcher/procedures.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "02bc6e1325b071b18c3e7bdc4766396365c9aa369c279c2754b4c0d953efa7f8"
+      },
+      "after": {
+        "path": ".agents/skills/dispatcher/procedures.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "02bc6e1325b071b18c3e7bdc4766396365c9aa369c279c2754b4c0d953efa7f8"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": ".agents/skills/domain-modeling/GLOSSARY-FORMAT.md",
+      "before": {
+        "path": ".agents/skills/domain-modeling/GLOSSARY-FORMAT.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "1c9c1c614921f5f0edb4f7e0952c7f26fc1f19ef41b44810de77e89f6eb30a25"
+      },
+      "after": {
+        "path": ".agents/skills/domain-modeling/GLOSSARY-FORMAT.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "1c9c1c614921f5f0edb4f7e0952c7f26fc1f19ef41b44810de77e89f6eb30a25"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": ".agents/skills/domain-modeling/NOTICE.md",
+      "before": {
+        "path": ".agents/skills/domain-modeling/NOTICE.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "a478ab0a6b405eaa9af80c5b34080c0bff263727ecbe72a8a89911cd425acead"
+      },
+      "after": {
+        "path": ".agents/skills/domain-modeling/NOTICE.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "a478ab0a6b405eaa9af80c5b34080c0bff263727ecbe72a8a89911cd425acead"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": ".agents/skills/domain-modeling/SKILL.md",
+      "before": {
+        "path": ".agents/skills/domain-modeling/SKILL.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "b70a0e5e324868354cbe72ad77d16a696700f7d60a3880ac45d9276f9174a0a1"
+      },
+      "after": {
+        "path": ".agents/skills/domain-modeling/SKILL.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "b70a0e5e324868354cbe72ad77d16a696700f7d60a3880ac45d9276f9174a0a1"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": ".agents/skills/genesis/SKILL.md",
+      "before": {
+        "path": ".agents/skills/genesis/SKILL.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "2c6adaf5bc61cef70e6c3eb91073458a421bda919ca42a7b294b1d550d8f59bf"
+      },
+      "after": {
+        "path": ".agents/skills/genesis/SKILL.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "2c6adaf5bc61cef70e6c3eb91073458a421bda919ca42a7b294b1d550d8f59bf"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": ".agents/skills/grill-me/SKILL.md",
+      "before": {
+        "path": ".agents/skills/grill-me/SKILL.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "7f68220b2d45a5ff35665c0247ec8a60903e0a0af109b0b60da9c7b4e52ad622"
+      },
+      "after": {
+        "path": ".agents/skills/grill-me/SKILL.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "7f68220b2d45a5ff35665c0247ec8a60903e0a0af109b0b60da9c7b4e52ad622"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": ".agents/skills/grill-with-docs/SKILL.md",
+      "before": {
+        "path": ".agents/skills/grill-with-docs/SKILL.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "7de372c13488f1ee96cc11cd8907b56b6809cc93eef776eeddd37de6b6cbe3fe"
+      },
+      "after": {
+        "path": ".agents/skills/grill-with-docs/SKILL.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "7de372c13488f1ee96cc11cd8907b56b6809cc93eef776eeddd37de6b6cbe3fe"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": ".agents/skills/grill-with-docs/agents/openai.yaml",
+      "before": {
+        "path": ".agents/skills/grill-with-docs/agents/openai.yaml",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "a1499d95abd8447558c535fe5554adcc3c9b988a0a39264a6283d430effe1e94"
+      },
+      "after": {
+        "path": ".agents/skills/grill-with-docs/agents/openai.yaml",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "a1499d95abd8447558c535fe5554adcc3c9b988a0a39264a6283d430effe1e94"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": ".agents/skills/grilling/SKILL.md",
+      "before": {
+        "path": ".agents/skills/grilling/SKILL.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "7e6f38d55b4714b654b10acecb2a50da92c9d73cbdadca7a4d3f875fd78e5c48"
+      },
+      "after": {
+        "path": ".agents/skills/grilling/SKILL.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "7e6f38d55b4714b654b10acecb2a50da92c9d73cbdadca7a4d3f875fd78e5c48"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": ".agents/skills/handoff/SKILL.md",
+      "before": {
+        "path": ".agents/skills/handoff/SKILL.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "bef990be4bc3ae34629fb432c7d04995fbd7d4266c2dcb4a0a5f6558afac4486"
+      },
+      "after": {
+        "path": ".agents/skills/handoff/SKILL.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "c762baf3d1d38e81b1ccf850993b2230e657819c6f048c6087ccad8804446b82"
+      },
+      "disposition": "managed continuation update"
+    },
+    {
+      "path": ".agents/skills/handoff/assets/HANDOFF.md",
+      "before": {
+        "path": ".agents/skills/handoff/assets/HANDOFF.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "e247f709d9171d68b6fd6d3389968b6236939dc718a41279cd22d2a55426621d"
+      },
+      "after": {
+        "path": ".agents/skills/handoff/assets/HANDOFF.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "e247f709d9171d68b6fd6d3389968b6236939dc718a41279cd22d2a55426621d"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": ".agents/skills/implement/SKILL.md",
+      "before": {
+        "path": ".agents/skills/implement/SKILL.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "7835491415dbd372865f198aedb6b208c0e81bc3e50dfe22ad3b537e0ef3d008"
+      },
+      "after": {
+        "path": ".agents/skills/implement/SKILL.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "bd2158a9403ea500a01f5c8dfb4220602481b54883dd3ea66dd6b0de98525081"
+      },
+      "disposition": "managed continuation update"
+    },
+    {
+      "path": ".agents/skills/implement/execution-authority.md",
+      "before": {
+        "path": ".agents/skills/implement/execution-authority.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "6c85ccf9e94da53c32593b5ed0f9bf317e2297f4ea64f4f4a97a0bc8698beb75"
+      },
+      "after": {
+        "path": ".agents/skills/implement/execution-authority.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "6c85ccf9e94da53c32593b5ed0f9bf317e2297f4ea64f4f4a97a0bc8698beb75"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": ".agents/skills/implement/references/scenario.md",
+      "before": {
+        "path": ".agents/skills/implement/references/scenario.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "c1d071bb15a98a04125a1f725d4f22697bf9029790d9614c12d90a5345de1c4e"
+      },
+      "after": {
+        "path": ".agents/skills/implement/references/scenario.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "c1d071bb15a98a04125a1f725d4f22697bf9029790d9614c12d90a5345de1c4e"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": ".agents/skills/implement/workflow-reference.md",
+      "before": {
+        "path": ".agents/skills/implement/workflow-reference.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "9983a44963efa3e98c53506a2b65e093a3f668ceeaf8291c16dbd335caea7957"
+      },
+      "after": {
+        "path": ".agents/skills/implement/workflow-reference.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "9983a44963efa3e98c53506a2b65e093a3f668ceeaf8291c16dbd335caea7957"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": ".agents/skills/improve-harness/SKILL.md",
+      "before": {
+        "path": ".agents/skills/improve-harness/SKILL.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "c342a861d128e7e9e6acd77f37d9decb9da0fa325fd955cad36742434d62bcee"
+      },
+      "after": {
+        "path": ".agents/skills/improve-harness/SKILL.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "c342a861d128e7e9e6acd77f37d9decb9da0fa325fd955cad36742434d62bcee"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": ".agents/skills/jot/SKILL.md",
+      "before": {
+        "path": ".agents/skills/jot/SKILL.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "2b68d549dd4dbb2e0f6b629e0330e11455eed52f37cb8c9a22ed14225ddee036"
+      },
+      "after": {
+        "path": ".agents/skills/jot/SKILL.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "2b68d549dd4dbb2e0f6b629e0330e11455eed52f37cb8c9a22ed14225ddee036"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": ".agents/skills/make-it-so/SKILL.md",
+      "before": {
+        "path": ".agents/skills/make-it-so/SKILL.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "5f1c5e14a198ba9555fd0038f867fa55c52f80c21a7dcecc5f0d697dbf7b5c6e"
+      },
+      "after": {
+        "path": ".agents/skills/make-it-so/SKILL.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "5f1c5e14a198ba9555fd0038f867fa55c52f80c21a7dcecc5f0d697dbf7b5c6e"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": ".agents/skills/notepad/SKILL.md",
+      "before": {
+        "path": ".agents/skills/notepad/SKILL.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "c81dc5ff6fc4388cf0a76e7c666497824fc5821a75f69961018ef2b5c275193c"
+      },
+      "after": {
+        "path": ".agents/skills/notepad/SKILL.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "c81dc5ff6fc4388cf0a76e7c666497824fc5821a75f69961018ef2b5c275193c"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": ".agents/skills/pr/CREDITS.md",
+      "before": {
+        "path": ".agents/skills/pr/CREDITS.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "a7a087127665d7298a72280ef6e19c41ad8404523712a788c8dc3ab414bc2497"
+      },
+      "after": {
+        "path": ".agents/skills/pr/CREDITS.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "a7a087127665d7298a72280ef6e19c41ad8404523712a788c8dc3ab414bc2497"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": ".agents/skills/pr/NOTICE.md",
+      "before": {
+        "path": ".agents/skills/pr/NOTICE.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "ed6d6b6e0be6f87d322d92e57bcb0099d555c4843e1847134b054a4dded5c1a6"
+      },
+      "after": {
+        "path": ".agents/skills/pr/NOTICE.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "ed6d6b6e0be6f87d322d92e57bcb0099d555c4843e1847134b054a4dded5c1a6"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": ".agents/skills/pr/SKILL.md",
+      "before": {
+        "path": ".agents/skills/pr/SKILL.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "ab63f1cf78647389edcd386c9427c5dfca27ed2836930c24773ffee834c19bcd"
+      },
+      "after": {
+        "path": ".agents/skills/pr/SKILL.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "ab63f1cf78647389edcd386c9427c5dfca27ed2836930c24773ffee834c19bcd"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": ".agents/skills/pr/agents/openai.yaml",
+      "before": {
+        "path": ".agents/skills/pr/agents/openai.yaml",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "2295b586624db4ef546f3fd4695492f039d941a46d8a1593a702ce3ca511b8ad"
+      },
+      "after": {
+        "path": ".agents/skills/pr/agents/openai.yaml",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "2295b586624db4ef546f3fd4695492f039d941a46d8a1593a702ce3ca511b8ad"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": ".agents/skills/promote/SKILL.md",
+      "before": {
+        "path": ".agents/skills/promote/SKILL.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "503b886ae3a07aeb4833ef3aaa6d2899439de4eceb602b60917f08ba585cfc72"
+      },
+      "after": {
+        "path": ".agents/skills/promote/SKILL.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "503b886ae3a07aeb4833ef3aaa6d2899439de4eceb602b60917f08ba585cfc72"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": ".agents/skills/reconciler/SKILL.md",
+      "before": {
+        "path": ".agents/skills/reconciler/SKILL.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "8e643628971d2dd5d50bfba8b2019443f18b1fc33400567cb21789674413f439"
+      },
+      "after": {
+        "path": ".agents/skills/reconciler/SKILL.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "8e643628971d2dd5d50bfba8b2019443f18b1fc33400567cb21789674413f439"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": ".agents/skills/reconciler/references/reconcile.md",
+      "before": {
+        "path": ".agents/skills/reconciler/references/reconcile.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "f8e6947840d2496286e249a097e302164892352cfce5975654002fa9ee321f43"
+      },
+      "after": {
+        "path": ".agents/skills/reconciler/references/reconcile.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "f8e6947840d2496286e249a097e302164892352cfce5975654002fa9ee321f43"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": ".agents/skills/retro/NOTICE.md",
+      "before": {
+        "path": ".agents/skills/retro/NOTICE.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "635472f16338f0af4fae749ebda362ca37b7dfd9e5f9d12ee8bf76785e984d32"
+      },
+      "after": {
+        "path": ".agents/skills/retro/NOTICE.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "635472f16338f0af4fae749ebda362ca37b7dfd9e5f9d12ee8bf76785e984d32"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": ".agents/skills/retro/SKILL.md",
+      "before": {
+        "path": ".agents/skills/retro/SKILL.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "a1304dfd60b105f01292ed8e9b7f43266bd103fd912d3655430517b827e6ea78"
+      },
+      "after": {
+        "path": ".agents/skills/retro/SKILL.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "a1304dfd60b105f01292ed8e9b7f43266bd103fd912d3655430517b827e6ea78"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": ".agents/skills/retro/agents/openai.yaml",
+      "before": {
+        "path": ".agents/skills/retro/agents/openai.yaml",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "a1499d95abd8447558c535fe5554adcc3c9b988a0a39264a6283d430effe1e94"
+      },
+      "after": {
+        "path": ".agents/skills/retro/agents/openai.yaml",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "a1499d95abd8447558c535fe5554adcc3c9b988a0a39264a6283d430effe1e94"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": ".agents/skills/reviewer/SKILL.md",
+      "before": {
+        "path": ".agents/skills/reviewer/SKILL.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "0e9099222067daf334c92270d6024e85c4477a825479a39dd83e87e79c61d046"
+      },
+      "after": {
+        "path": ".agents/skills/reviewer/SKILL.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "0e9099222067daf334c92270d6024e85c4477a825479a39dd83e87e79c61d046"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": ".agents/skills/reviewer/references/review-evidence.md",
+      "before": {
+        "path": ".agents/skills/reviewer/references/review-evidence.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "a252c734d9e77379debc12620c4b992f1baad752c36cf13cf26ca0e4cc73d94c"
+      },
+      "after": {
+        "path": ".agents/skills/reviewer/references/review-evidence.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "a252c734d9e77379debc12620c4b992f1baad752c36cf13cf26ca0e4cc73d94c"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": ".agents/skills/save/SKILL.md",
+      "before": {
+        "path": ".agents/skills/save/SKILL.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "f578b88d1fcd4cb29199e026ca1fa039cb0aa9d1d30ef93304c2b7296df27305"
+      },
+      "after": {
+        "path": ".agents/skills/save/SKILL.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "d5812fcbf51fc8fee8f282d60333a238579a7f7c378a9ac30a9c7e97c3fa28cd"
+      },
+      "disposition": "managed continuation update"
+    },
+    {
+      "path": ".agents/skills/save/startup-reconciliation.md",
+      "before": {
+        "path": ".agents/skills/save/startup-reconciliation.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "961cc04f681889fd429855ac933eb5732ccbb9e88e4d135cd82efc502f99c04a"
+      },
+      "after": null,
+      "disposition": "managed continuation update"
+    },
+    {
+      "path": ".agents/skills/save/taskboard-continuation.md",
+      "before": null,
+      "after": {
+        "path": ".agents/skills/save/taskboard-continuation.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "7aa4f7e0b639b345db6cc21a1a107343d4e9963d7eef43b8a84d484211c73bb5"
+      },
+      "disposition": "managed continuation update"
+    },
+    {
+      "path": ".agents/skills/spec-manager/SKILL.md",
+      "before": {
+        "path": ".agents/skills/spec-manager/SKILL.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "9ee183b1a3cf9f28a1e699a11b94fd748b9732081d8a67830679e5cb827d4541"
+      },
+      "after": {
+        "path": ".agents/skills/spec-manager/SKILL.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "9ee183b1a3cf9f28a1e699a11b94fd748b9732081d8a67830679e5cb827d4541"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": ".agents/skills/spec-planner/SKILL.md",
+      "before": {
+        "path": ".agents/skills/spec-planner/SKILL.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "e9964a0c841db80a1b03759f61da927e7a68b1d52fc406e3a2fd5bc3d910082c"
+      },
+      "after": {
+        "path": ".agents/skills/spec-planner/SKILL.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "e9964a0c841db80a1b03759f61da927e7a68b1d52fc406e3a2fd5bc3d910082c"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": ".agents/skills/to-docs/SKILL.md",
+      "before": {
+        "path": ".agents/skills/to-docs/SKILL.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "b3cb2da60d22c7c3fd471c7c90f75bde31d74e16e396717d08bf8c72b48b5d37"
+      },
+      "after": {
+        "path": ".agents/skills/to-docs/SKILL.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "b3cb2da60d22c7c3fd471c7c90f75bde31d74e16e396717d08bf8c72b48b5d37"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": ".agents/skills/to-spec/SKILL.md",
+      "before": {
+        "path": ".agents/skills/to-spec/SKILL.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "182cbf350fb5763ded15ef7badc7f20cb0fd44bc8b2fdbdb7f183df66525c41e"
+      },
+      "after": {
+        "path": ".agents/skills/to-spec/SKILL.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "182cbf350fb5763ded15ef7badc7f20cb0fd44bc8b2fdbdb7f183df66525c41e"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": ".agents/skills/to-tasks/SKILL.md",
+      "before": {
+        "path": ".agents/skills/to-tasks/SKILL.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "8c7250b82aeaf71e1a5ce2ac41b7ef0c2eb80596ac55087336f60bc64273ab6b"
+      },
+      "after": {
+        "path": ".agents/skills/to-tasks/SKILL.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "8c7250b82aeaf71e1a5ce2ac41b7ef0c2eb80596ac55087336f60bc64273ab6b"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": ".agents/skills/to-tasks/sizing.md",
+      "before": {
+        "path": ".agents/skills/to-tasks/sizing.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "41a3fffe7b16fe451177c6b543a17f5b95c9b1e7944e2337fddd79bf6bfdee7c"
+      },
+      "after": {
+        "path": ".agents/skills/to-tasks/sizing.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "41a3fffe7b16fe451177c6b543a17f5b95c9b1e7944e2337fddd79bf6bfdee7c"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": ".agents/skills/tracer-bullet/SKILL.md",
+      "before": {
+        "path": ".agents/skills/tracer-bullet/SKILL.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "67d9579ec38b689321ce7af8aac6f56c5b1161541cce857f268bc3e4437a7875"
+      },
+      "after": {
+        "path": ".agents/skills/tracer-bullet/SKILL.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "67d9579ec38b689321ce7af8aac6f56c5b1161541cce857f268bc3e4437a7875"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": ".agents/skills/update-harness/SKILL.md",
+      "before": {
+        "path": ".agents/skills/update-harness/SKILL.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "ea5f9e920f352e4b8151827425f31b09bfdfb44658fbb41f0a6dfc064c81e564"
+      },
+      "after": {
+        "path": ".agents/skills/update-harness/SKILL.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "012d29772ab976fe6224853d49f9f34b14baa2370928f74f454ab7e6c0b17076"
+      },
+      "disposition": "managed continuation update"
+    },
+    {
+      "path": ".agents/skills/workbench-runtime/SKILL.md",
+      "before": {
+        "path": ".agents/skills/workbench-runtime/SKILL.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "f21af3deaa66f2945a84d57612332d95e63b98d4c046fa079667b7ae253c0c4c"
+      },
+      "after": {
+        "path": ".agents/skills/workbench-runtime/SKILL.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "f21af3deaa66f2945a84d57612332d95e63b98d4c046fa079667b7ae253c0c4c"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": ".agents/skills/writing-for-agents/INVOCATION.md",
+      "before": {
+        "path": ".agents/skills/writing-for-agents/INVOCATION.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "94126739f07a05e7d39097926147b82014463e8206881563a9327e0954e572e3"
+      },
+      "after": {
+        "path": ".agents/skills/writing-for-agents/INVOCATION.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "94126739f07a05e7d39097926147b82014463e8206881563a9327e0954e572e3"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": ".agents/skills/writing-for-agents/NOTICE.md",
+      "before": {
+        "path": ".agents/skills/writing-for-agents/NOTICE.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "be284384460d509b6d2d009387f8c459899d3f4269c3f535042e78ee54446de2"
+      },
+      "after": {
+        "path": ".agents/skills/writing-for-agents/NOTICE.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "be284384460d509b6d2d009387f8c459899d3f4269c3f535042e78ee54446de2"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": ".agents/skills/writing-for-agents/REFERENCE.md",
+      "before": {
+        "path": ".agents/skills/writing-for-agents/REFERENCE.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "551adca942227b44192edba88acd4e8db911f0121ce58ad16944ccf6a896a74a"
+      },
+      "after": {
+        "path": ".agents/skills/writing-for-agents/REFERENCE.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "551adca942227b44192edba88acd4e8db911f0121ce58ad16944ccf6a896a74a"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": ".agents/skills/writing-for-agents/SKILL-MECHANICS.md",
+      "before": {
+        "path": ".agents/skills/writing-for-agents/SKILL-MECHANICS.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "c768e6307c7c10728c401c213f2c4ba71c542127eeb7ad2956aabd15a0fa0059"
+      },
+      "after": {
+        "path": ".agents/skills/writing-for-agents/SKILL-MECHANICS.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "c768e6307c7c10728c401c213f2c4ba71c542127eeb7ad2956aabd15a0fa0059"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": ".agents/skills/writing-for-agents/SKILL.md",
+      "before": {
+        "path": ".agents/skills/writing-for-agents/SKILL.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "3cc0a5e18c90596306b785caf7d10cd7c97023309103134697a7309085001fef"
+      },
+      "after": {
+        "path": ".agents/skills/writing-for-agents/SKILL.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "3cc0a5e18c90596306b785caf7d10cd7c97023309103134697a7309085001fef"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": ".claude/README.md",
+      "before": {
+        "path": ".claude/README.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "b3d4e48c58e5cfb4d5375eb42d238b871404896ab818b9caa6fc0b56794c51fb"
+      },
+      "after": {
+        "path": ".claude/README.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "b3d4e48c58e5cfb4d5375eb42d238b871404896ab818b9caa6fc0b56794c51fb"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": ".claude/settings.json",
+      "before": {
+        "path": ".claude/settings.json",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "a19544df5cc2cde63449c090de715e70439a228abb4ad5ea9b73f9a5312a7a97"
+      },
+      "after": {
+        "path": ".claude/settings.json",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "a19544df5cc2cde63449c090de715e70439a228abb4ad5ea9b73f9a5312a7a97"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": ".claude/skills",
+      "before": {
+        "path": ".claude/skills",
+        "kind": "symlink",
+        "mode": "0o755",
+        "sha256": "3c74c93317f015d16370349a76529b6f8332c808bdd589e7640eeba6a1b1b874"
+      },
+      "after": {
+        "path": ".claude/skills",
+        "kind": "symlink",
+        "mode": "0o755",
+        "sha256": "3c74c93317f015d16370349a76529b6f8332c808bdd589e7640eeba6a1b1b874"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": ".gitattributes",
+      "before": {
+        "path": ".gitattributes",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "f46afb2380b981460b0f0f81c255771649fa9608937da47bd7332c9427b94086"
+      },
+      "after": {
+        "path": ".gitattributes",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "f46afb2380b981460b0f0f81c255771649fa9608937da47bd7332c9427b94086"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": ".github/workflows/verify.yml",
+      "before": {
+        "path": ".github/workflows/verify.yml",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "69db8675e8200bb61b90b358686a9c1e04a8d6a158e884ae0006df811448c939"
+      },
+      "after": {
+        "path": ".github/workflows/verify.yml",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "69db8675e8200bb61b90b358686a9c1e04a8d6a158e884ae0006df811448c939"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": ".gitignore",
+      "before": {
+        "path": ".gitignore",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "4d56952b0fb13bf8f9b6c13a6d4c34a075bac3af447636a1df4335d7576e2f97"
+      },
+      "after": {
+        "path": ".gitignore",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "4d56952b0fb13bf8f9b6c13a6d4c34a075bac3af447636a1df4335d7576e2f97"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "AGENTS.md",
+      "before": {
+        "path": "AGENTS.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "ec4c0c3298c3a96be052c28ecf28cff35738f0b0f8fb7ac1dda8b9e940250ac3"
+      },
+      "after": {
+        "path": "AGENTS.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "30008b08283d6c9d69500dd5b620d0cc14024fa0d9d30daa331d71fa85c1d7bf"
+      },
+      "disposition": "bounded RUNBOOK continuation reconciliation"
+    },
+    {
+      "path": "ARCHITECTURE.md",
+      "before": {
+        "path": "ARCHITECTURE.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "8d1d6a0e6898ff73307e55b3f280743e9aecef83f9d1f3f85f3bbfbb31fc77f0"
+      },
+      "after": {
+        "path": "ARCHITECTURE.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "58afdc8761d9ece0a483069c82cb4678f99b420631c9ebd28ad4a637789fe12d"
+      },
+      "disposition": "bounded RUNBOOK continuation reconciliation"
+    },
+    {
+      "path": "BLUEPRINT.md",
+      "before": {
+        "path": "BLUEPRINT.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "b225416db39f38316febd4a1b5323ddda8a62fad97d9a3e21a778011a42c48ad"
+      },
+      "after": {
+        "path": "BLUEPRINT.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "c578511c122e6192094fc36fc9df07eb55b94af403c795a3f9ba52c3d7868337"
+      },
+      "disposition": "bounded RUNBOOK continuation reconciliation"
+    },
+    {
+      "path": "CLAUDE.md",
+      "before": {
+        "path": "CLAUDE.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "336cc4fbf19beaada7ccf9986414fa91851a8d7a07dfb3ccbe800a69eed0ab49"
+      },
+      "after": {
+        "path": "CLAUDE.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "336cc4fbf19beaada7ccf9986414fa91851a8d7a07dfb3ccbe800a69eed0ab49"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "GLOSSARY.md",
+      "before": {
+        "path": "GLOSSARY.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "bba36a16c83397a224f656044a41ea65da8904e481170131788946c06a8c7767"
+      },
+      "after": {
+        "path": "GLOSSARY.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "bba36a16c83397a224f656044a41ea65da8904e481170131788946c06a8c7767"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "LEXICON.md",
+      "before": {
+        "path": "LEXICON.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "715ffaf584132b51f327234a20d4f6c8d0dd5f85472ff2c7dea8f2d86adf72ae"
+      },
+      "after": {
+        "path": "LEXICON.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "715ffaf584132b51f327234a20d4f6c8d0dd5f85472ff2c7dea8f2d86adf72ae"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "README.md",
+      "before": {
+        "path": "README.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "4c1782a7b9276f90bbb3334af8bcdc21cb6673ac119e2a7ff20e4bce3039f4bc"
+      },
+      "after": {
+        "path": "README.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "afcd454300a5c2ec2bbb8a955148ca6ad300556ed75e2edfb269b9b3e35ddbdb"
+      },
+      "disposition": "bounded RUNBOOK continuation reconciliation"
+    },
+    {
+      "path": "RUNBOOK.md",
+      "before": {
+        "path": "RUNBOOK.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "7115ab83c57fb99cfa052a6275ca79272f2076ffc1fc6c1d2fc3b67bf07fafb1"
+      },
+      "after": {
+        "path": "RUNBOOK.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "8d8cb709822bfde844f6fbe501531590d547943cae9ed7531e11deab6ed98129"
+      },
+      "disposition": "bounded RUNBOOK continuation reconciliation"
+    },
+    {
+      "path": "STARTUP.md",
+      "before": {
+        "path": "STARTUP.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "3bec38c1ad69be1fadb50a871eb647c75c0640d7ad57415e6a96d100f605c0bc"
+      },
+      "after": null,
+      "disposition": "retired after recovery/disposition"
+    },
+    {
+      "path": "TASKBOARD.md",
+      "before": {
+        "path": "TASKBOARD.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "7a2b2095ad35e9e5192325423748a559ee88fc866ec0fb48055e1f3859f988a2"
+      },
+      "after": {
+        "path": "TASKBOARD.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "e889fc499994f4c1f59a2054fde8d5a12609f1d74370db7cc421bd75953852d1"
+      },
+      "disposition": "bounded RUNBOOK continuation reconciliation"
+    },
+    {
+      "path": "tests/evidence-history.test.mjs",
+      "before": {
+        "path": "tests/evidence-history.test.mjs",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "76a6e541031223389a73b92a631a41217f62990476ca6d8447a2fed7abd15aa4"
+      },
+      "after": {
+        "path": "tests/evidence-history.test.mjs",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "76a6e541031223389a73b92a631a41217f62990476ca6d8447a2fed7abd15aa4"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "tests/tour.test.mjs",
+      "before": {
+        "path": "tests/tour.test.mjs",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "e68c0e00c8c34c6070e3d5942b0b5110a09dd3f374790aee1688da9754209eee"
+      },
+      "after": {
+        "path": "tests/tour.test.mjs",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "833d6ad86df33ecb98b40666c78b46c87a393ca7244e5751f7cf0ce526a14d19"
+      },
+      "disposition": "bounded RUNBOOK continuation reconciliation"
+    },
+    {
+      "path": "tools/check-evidence-history.mjs",
+      "before": {
+        "path": "tools/check-evidence-history.mjs",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "a27d06ab17a1f3a7a8c0ad95aa241a906a167ed0477ee2295219279c32de20cd"
+      },
+      "after": {
+        "path": "tools/check-evidence-history.mjs",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "a27d06ab17a1f3a7a8c0ad95aa241a906a167ed0477ee2295219279c32de20cd"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "tour.mjs",
+      "before": {
+        "path": "tour.mjs",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "323d859b9172605774bd8cedf0b442969f53fbffeeb2d431c9edd7637cbd2bdf"
+      },
+      "after": {
+        "path": "tour.mjs",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "212c1587ca1f8790c2d15b434a39f7938d2f887462f0a6a6310f96ece265e98b"
+      },
+      "disposition": "bounded RUNBOOK continuation reconciliation"
+    },
+    {
+      "path": "workbench/.workbench-seed.json",
+      "before": {
+        "path": "workbench/.workbench-seed.json",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "c2e7f5a693e1ebcdab92bcd6b574e690e1910ce58f249843a6f13098ebd57cfc"
+      },
+      "after": {
+        "path": "workbench/.workbench-seed.json",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "c2e7f5a693e1ebcdab92bcd6b574e690e1910ce58f249843a6f13098ebd57cfc"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/docs/.gitkeep",
+      "before": {
+        "path": "workbench/docs/.gitkeep",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "after": {
+        "path": "workbench/docs/.gitkeep",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/docs/AUTO_MERGE.md",
+      "before": {
+        "path": "workbench/docs/AUTO_MERGE.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "2c3810d409b00abfc4b0952634f236b8cbde8f7a6683410ec69223e7773cdf23"
+      },
+      "after": {
+        "path": "workbench/docs/AUTO_MERGE.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "7b793a84a5234a7d365588cf36b1216c01cd31f99b9d224eb67603c5a6ca865e"
+      },
+      "disposition": "bounded RUNBOOK continuation reconciliation"
+    },
+    {
+      "path": "workbench/docs/ORGANIZATION.md",
+      "before": {
+        "path": "workbench/docs/ORGANIZATION.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "fc72f5a151f2a162c0077367a60e80a8dceccbacc5b1f3766f0ec5ef31d96edd"
+      },
+      "after": {
+        "path": "workbench/docs/ORGANIZATION.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "fc72f5a151f2a162c0077367a60e80a8dceccbacc5b1f3766f0ec5ef31d96edd"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/docs/TEMPLATE_OPERATIONS.md",
+      "before": {
+        "path": "workbench/docs/TEMPLATE_OPERATIONS.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "193dae5fe5c7217351fa5e5638ee4d1a4ee6e3c470c54ed125b6c9e642041670"
+      },
+      "after": {
+        "path": "workbench/docs/TEMPLATE_OPERATIONS.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "ba25fdca64472840ba6664961bb8e1691c328ba1516669058203aa9e5487fb95"
+      },
+      "disposition": "bounded RUNBOOK continuation reconciliation"
+    },
+    {
+      "path": "workbench/docs/VERSION_HISTORY.md",
+      "before": {
+        "path": "workbench/docs/VERSION_HISTORY.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "4ee0c792d4c308b58b33e2e7a4defb56d6032c21b38f91e2f509dd0b36a016b1"
+      },
+      "after": {
+        "path": "workbench/docs/VERSION_HISTORY.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "4ee0c792d4c308b58b33e2e7a4defb56d6032c21b38f91e2f509dd0b36a016b1"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/docs/WORKBENCH_STRUCTURE.md",
+      "before": {
+        "path": "workbench/docs/WORKBENCH_STRUCTURE.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "3f4ef9a94cd948005d5d0a3d271dd9680575d25ea2ae2e7cfb6755a2fdf9bfbd"
+      },
+      "after": {
+        "path": "workbench/docs/WORKBENCH_STRUCTURE.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "143c11375d2e1e9543f028f08d1deeb3df228464bd60d7287734f303a332d8b7"
+      },
+      "disposition": "bounded RUNBOOK continuation reconciliation"
+    },
+    {
+      "path": "workbench/docs/adr/.gitkeep",
+      "before": {
+        "path": "workbench/docs/adr/.gitkeep",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "after": {
+        "path": "workbench/docs/adr/.gitkeep",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/docs/adr/0001-template-ownership-and-continuity.md",
+      "before": {
+        "path": "workbench/docs/adr/0001-template-ownership-and-continuity.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "455e7f8415ef38895b87b3a0afb1e473c6b60f2aa21e79e7569eeb12b0bf2429"
+      },
+      "after": {
+        "path": "workbench/docs/adr/0001-template-ownership-and-continuity.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "455e7f8415ef38895b87b3a0afb1e473c6b60f2aa21e79e7569eeb12b0bf2429"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/docs/adr/HISTORY.md",
+      "before": {
+        "path": "workbench/docs/adr/HISTORY.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "a40776a78a94da4d9061bb529bc8a207bcc2dcbef50cb757a1a8bfc8b4f71c99"
+      },
+      "after": {
+        "path": "workbench/docs/adr/HISTORY.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "a40776a78a94da4d9061bb529bc8a207bcc2dcbef50cb757a1a8bfc8b4f71c99"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/docs/adr/REGISTER.md",
+      "before": {
+        "path": "workbench/docs/adr/REGISTER.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "5e8cabb6f27a9e4d295480ce667d45b5689501e8aa32bc85b84f93be619fad61"
+      },
+      "after": {
+        "path": "workbench/docs/adr/REGISTER.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "5e8cabb6f27a9e4d295480ce667d45b5689501e8aa32bc85b84f93be619fad61"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/docs/ddr/HISTORY.md",
+      "before": {
+        "path": "workbench/docs/ddr/HISTORY.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "7e3965a2dc5efa67aabd13ea7413be4d0153f88b2df67fceb442e9a47c25f048"
+      },
+      "after": {
+        "path": "workbench/docs/ddr/HISTORY.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "7e3965a2dc5efa67aabd13ea7413be4d0153f88b2df67fceb442e9a47c25f048"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/docs/ddr/REGISTER.md",
+      "before": {
+        "path": "workbench/docs/ddr/REGISTER.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "e1ce576e401891a31e78d03a81d13ae76ec4f89ad5af68a45ed1ab199c75c6fb"
+      },
+      "after": {
+        "path": "workbench/docs/ddr/REGISTER.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "e1ce576e401891a31e78d03a81d13ae76ec4f89ad5af68a45ed1ab199c75c6fb"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/docs/ddr/archive/.gitkeep",
+      "before": {
+        "path": "workbench/docs/ddr/archive/.gitkeep",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "after": {
+        "path": "workbench/docs/ddr/archive/.gitkeep",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/docs/ddr/proposed/.gitkeep",
+      "before": {
+        "path": "workbench/docs/ddr/proposed/.gitkeep",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "after": {
+        "path": "workbench/docs/ddr/proposed/.gitkeep",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/feedback/.gitkeep",
+      "before": {
+        "path": "workbench/feedback/.gitkeep",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "after": {
+        "path": "workbench/feedback/.gitkeep",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/feedback/REPORT_FORMAT.md",
+      "before": {
+        "path": "workbench/feedback/REPORT_FORMAT.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "31680ad3a127299de1efc6a3795037bf20f36ca2f7153dd070c077fc956c2d39"
+      },
+      "after": {
+        "path": "workbench/feedback/REPORT_FORMAT.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "31680ad3a127299de1efc6a3795037bf20f36ca2f7153dd070c077fc956c2d39"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/feedback/WORKBENCH_FEEDBACK.md",
+      "before": {
+        "path": "workbench/feedback/WORKBENCH_FEEDBACK.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "5298e7e78edf913099978d7f5310c25040c549873458bcfbd330fe3fab87e176"
+      },
+      "after": {
+        "path": "workbench/feedback/WORKBENCH_FEEDBACK.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "5298e7e78edf913099978d7f5310c25040c549873458bcfbd330fe3fab87e176"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/landmarks/.gitkeep",
+      "before": {
+        "path": "workbench/landmarks/.gitkeep",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "after": {
+        "path": "workbench/landmarks/.gitkeep",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/manifest.json",
+      "before": {
+        "path": "workbench/manifest.json",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "07d789f38e4af7a7f37ffaa93b7681a50e17f36a851d22456baf7d5c122e475f"
+      },
+      "after": {
+        "path": "workbench/manifest.json",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "07d789f38e4af7a7f37ffaa93b7681a50e17f36a851d22456baf7d5c122e475f"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/sessions/.gitignore",
+      "before": {
+        "path": "workbench/sessions/.gitignore",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "b22ec04b90a3b40c7921dfbc480abb06e0d5f1f70979d8e0487f8ef4e644f10e"
+      },
+      "after": {
+        "path": "workbench/sessions/.gitignore",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "b22ec04b90a3b40c7921dfbc480abb06e0d5f1f70979d8e0487f8ef4e644f10e"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/sessions/.gitkeep",
+      "before": {
+        "path": "workbench/sessions/.gitkeep",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "after": {
+        "path": "workbench/sessions/.gitkeep",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/sessions/checkpoints/.gitkeep",
+      "before": {
+        "path": "workbench/sessions/checkpoints/.gitkeep",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "after": {
+        "path": "workbench/sessions/checkpoints/.gitkeep",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/sessions/grilling/.gitkeep",
+      "before": {
+        "path": "workbench/sessions/grilling/.gitkeep",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "after": {
+        "path": "workbench/sessions/grilling/.gitkeep",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/sessions/handoffs/.gitkeep",
+      "before": {
+        "path": "workbench/sessions/handoffs/.gitkeep",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "after": {
+        "path": "workbench/sessions/handoffs/.gitkeep",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/sessions/notepads/templates/grilling.example.json",
+      "before": {
+        "path": "workbench/sessions/notepads/templates/grilling.example.json",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "4856b43d2f939a131172e24f455fca457b17508da505d56c89312d58906a2458"
+      },
+      "after": {
+        "path": "workbench/sessions/notepads/templates/grilling.example.json",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "4856b43d2f939a131172e24f455fca457b17508da505d56c89312d58906a2458"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/sessions/notepads/templates/handoff.example.json",
+      "before": {
+        "path": "workbench/sessions/notepads/templates/handoff.example.json",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "4923c44076344979732fc87ca4aadde82b3bf98914003e7e298084c67f67d1b7"
+      },
+      "after": {
+        "path": "workbench/sessions/notepads/templates/handoff.example.json",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "4923c44076344979732fc87ca4aadde82b3bf98914003e7e298084c67f67d1b7"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/sessions/notepads/templates/notepad.schema.json",
+      "before": {
+        "path": "workbench/sessions/notepads/templates/notepad.schema.json",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "2bdc47d139314642bc4b90e8e2d2e2a5e24cc4d258aaa90ec4d126def2be00c0"
+      },
+      "after": {
+        "path": "workbench/sessions/notepads/templates/notepad.schema.json",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "2bdc47d139314642bc4b90e8e2d2e2a5e24cc4d258aaa90ec4d126def2be00c0"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/sessions/notepads/templates/work.example.json",
+      "before": {
+        "path": "workbench/sessions/notepads/templates/work.example.json",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "7608eb9e6879fb564041011f6c09756de696b01a1292a48c2cee9e32c6b82376"
+      },
+      "after": {
+        "path": "workbench/sessions/notepads/templates/work.example.json",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "7608eb9e6879fb564041011f6c09756de696b01a1292a48c2cee9e32c6b82376"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/sessions/recovery/.gitkeep",
+      "before": {
+        "path": "workbench/sessions/recovery/.gitkeep",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "after": {
+        "path": "workbench/sessions/recovery/.gitkeep",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/specs/.gitkeep",
+      "before": {
+        "path": "workbench/specs/.gitkeep",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "after": {
+        "path": "workbench/specs/.gitkeep",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/specs/CATALOG.md",
+      "before": {
+        "path": "workbench/specs/CATALOG.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "e53fb9771b66a1dcb6dbd5433c5c26c561c32de1147bbce281860dfe70842ccc"
+      },
+      "after": {
+        "path": "workbench/specs/CATALOG.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "e53fb9771b66a1dcb6dbd5433c5c26c561c32de1147bbce281860dfe70842ccc"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/specs/S-000C-ci-agent-review-auto-merge/SPEC.md",
+      "before": {
+        "path": "workbench/specs/S-000C-ci-agent-review-auto-merge/SPEC.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "75c615f1efcf5d3c52e5112aad84f764390cf25898bdb55e742299dde5b4c6b3"
+      },
+      "after": {
+        "path": "workbench/specs/S-000C-ci-agent-review-auto-merge/SPEC.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "75c615f1efcf5d3c52e5112aad84f764390cf25898bdb55e742299dde5b4c6b3"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/specs/S-000C-ci-agent-review-auto-merge/tasks/TK-000B/TASK.md",
+      "before": {
+        "path": "workbench/specs/S-000C-ci-agent-review-auto-merge/tasks/TK-000B/TASK.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "31210d9424d90a196e5494ec7faec589e570b769e550b37fdc2a149f0c7ddf14"
+      },
+      "after": {
+        "path": "workbench/specs/S-000C-ci-agent-review-auto-merge/tasks/TK-000B/TASK.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "31210d9424d90a196e5494ec7faec589e570b769e550b37fdc2a149f0c7ddf14"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/specs/S-000C-ci-agent-review-auto-merge/tasks/TK-001/TASK.md",
+      "before": {
+        "path": "workbench/specs/S-000C-ci-agent-review-auto-merge/tasks/TK-001/TASK.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "bcd28ffb1234de4b141dde199c38fa68d43a5db420250756a1676a3e804b0094"
+      },
+      "after": {
+        "path": "workbench/specs/S-000C-ci-agent-review-auto-merge/tasks/TK-001/TASK.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "bcd28ffb1234de4b141dde199c38fa68d43a5db420250756a1676a3e804b0094"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/specs/S-000D-workbench-feature-catalog/SPEC.md",
+      "before": {
+        "path": "workbench/specs/S-000D-workbench-feature-catalog/SPEC.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "dff1d65f35ec1eba967dae4ba82e8444f64f3666b4dcdfb07ca9717434551ec7"
+      },
+      "after": {
+        "path": "workbench/specs/S-000D-workbench-feature-catalog/SPEC.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "dff1d65f35ec1eba967dae4ba82e8444f64f3666b4dcdfb07ca9717434551ec7"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/specs/S-000D-workbench-feature-catalog/tasks/.gitkeep",
+      "before": {
+        "path": "workbench/specs/S-000D-workbench-feature-catalog/tasks/.gitkeep",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "after": {
+        "path": "workbench/specs/S-000D-workbench-feature-catalog/tasks/.gitkeep",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/specs/S-000D-workbench-feature-catalog/tasks/TK-000C/TASK.md",
+      "before": {
+        "path": "workbench/specs/S-000D-workbench-feature-catalog/tasks/TK-000C/TASK.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "942d69c2826515374fbaf439d7af876da7aeedfc568f832a886277550198f0c6"
+      },
+      "after": {
+        "path": "workbench/specs/S-000D-workbench-feature-catalog/tasks/TK-000C/TASK.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "942d69c2826515374fbaf439d7af876da7aeedfc568f832a886277550198f0c6"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/specs/S-000E-v3-2-2-harness-upgrade/SPEC.md",
+      "before": {
+        "path": "workbench/specs/S-000E-v3-2-2-harness-upgrade/SPEC.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "e900a8797d6a54c786ff92bbf436e0f927f0f95c79d35d641b3b9c5eadf5d5b4"
+      },
+      "after": {
+        "path": "workbench/specs/S-000E-v3-2-2-harness-upgrade/SPEC.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "d85d246f427306852c6d65e56927e5262451280c2b7c6c670f6f0dbf7e66c0d8"
+      },
+      "disposition": "bounded RUNBOOK continuation reconciliation"
+    },
+    {
+      "path": "workbench/specs/S-000E-v3-2-2-harness-upgrade/lexicon-disposition.json",
+      "before": {
+        "path": "workbench/specs/S-000E-v3-2-2-harness-upgrade/lexicon-disposition.json",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "517052beab999e702007eace6b8a4c90c8505027aab7252424d9dbd4d713b7ef"
+      },
+      "after": {
+        "path": "workbench/specs/S-000E-v3-2-2-harness-upgrade/lexicon-disposition.json",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "517052beab999e702007eace6b8a4c90c8505027aab7252424d9dbd4d713b7ef"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/specs/S-000E-v3-2-2-harness-upgrade/preservation.json",
+      "before": {
+        "path": "workbench/specs/S-000E-v3-2-2-harness-upgrade/preservation.json",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "e319f717827ad860417f4229e9648f6fbfcaa05e3dea35f60e5f24de7c111ef4"
+      },
+      "after": {
+        "path": "workbench/specs/S-000E-v3-2-2-harness-upgrade/preservation.json",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "e319f717827ad860417f4229e9648f6fbfcaa05e3dea35f60e5f24de7c111ef4"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/specs/S-000E-v3-2-2-harness-upgrade/proof/runbook-taskboard-2026-10-29.md",
+      "before": null,
+      "after": {
+        "path": "workbench/specs/S-000E-v3-2-2-harness-upgrade/proof/runbook-taskboard-2026-10-29.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "d488e2c2f847a87642f9b6d16bbb13c5ed43e64e44c376dcf30d90b0a25549a7"
+      },
+      "disposition": "bounded RUNBOOK continuation reconciliation"
+    },
+    {
+      "path": "workbench/specs/S-000E-v3-2-2-harness-upgrade/proof/runbook-verification.json",
+      "before": null,
+      "after": {
+        "path": "workbench/specs/S-000E-v3-2-2-harness-upgrade/proof/runbook-verification.json",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "f329545548f08e870a0a3f17ba9020bac7c525cf381d689706e0236a61b19f95"
+      },
+      "disposition": "bounded RUNBOOK continuation reconciliation"
+    },
+    {
+      "path": "workbench/specs/S-001-self-explaining-room/SPEC.md",
+      "before": {
+        "path": "workbench/specs/S-001-self-explaining-room/SPEC.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "ae6ecf54660154bfacb1277bd1a16cabde6abe38d51ac52b8c5df6a443205c13"
+      },
+      "after": {
+        "path": "workbench/specs/S-001-self-explaining-room/SPEC.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "ae6ecf54660154bfacb1277bd1a16cabde6abe38d51ac52b8c5df6a443205c13"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/specs/S-002-version-history-replay/SPEC.md",
+      "before": {
+        "path": "workbench/specs/S-002-version-history-replay/SPEC.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "1770df4c81d24351005706068beb4b6ef360a75e53f013ded90508a459222392"
+      },
+      "after": {
+        "path": "workbench/specs/S-002-version-history-replay/SPEC.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "1770df4c81d24351005706068beb4b6ef360a75e53f013ded90508a459222392"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/specs/S-003-v3-2-0-upgrade-and-project-validation/SPEC.md",
+      "before": {
+        "path": "workbench/specs/S-003-v3-2-0-upgrade-and-project-validation/SPEC.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "32ac4322050f5de321590a9cd240069865b08226fcb27f8de3a987c790323e71"
+      },
+      "after": {
+        "path": "workbench/specs/S-003-v3-2-0-upgrade-and-project-validation/SPEC.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "32ac4322050f5de321590a9cd240069865b08226fcb27f8de3a987c790323e71"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/specs/S-003-v3-2-0-upgrade-and-project-validation/fresh-project-result.json",
+      "before": {
+        "path": "workbench/specs/S-003-v3-2-0-upgrade-and-project-validation/fresh-project-result.json",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "44b0711b664303115f8c58c45316ddae9c0411f7cb5a38b9fd9301641f928370"
+      },
+      "after": {
+        "path": "workbench/specs/S-003-v3-2-0-upgrade-and-project-validation/fresh-project-result.json",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "44b0711b664303115f8c58c45316ddae9c0411f7cb5a38b9fd9301641f928370"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/specs/S-003-v3-2-0-upgrade-and-project-validation/installation-result.json",
+      "before": {
+        "path": "workbench/specs/S-003-v3-2-0-upgrade-and-project-validation/installation-result.json",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "67d29760d59d720cb20dfce366ed0c2c2e0e5038e0286166c64fc8913f43b09c"
+      },
+      "after": {
+        "path": "workbench/specs/S-003-v3-2-0-upgrade-and-project-validation/installation-result.json",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "67d29760d59d720cb20dfce366ed0c2c2e0e5038e0286166c64fc8913f43b09c"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/specs/S-00A-workbench-template-reformation/SPEC.md",
+      "before": {
+        "path": "workbench/specs/S-00A-workbench-template-reformation/SPEC.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "9499fcf3b4ae9bcf3a7897c585e81db88e53ec78e7684890d38030138859dd2c"
+      },
+      "after": {
+        "path": "workbench/specs/S-00A-workbench-template-reformation/SPEC.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "9499fcf3b4ae9bcf3a7897c585e81db88e53ec78e7684890d38030138859dd2c"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/specs/S-00A-workbench-template-reformation/blueprint-source.json",
+      "before": {
+        "path": "workbench/specs/S-00A-workbench-template-reformation/blueprint-source.json",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "716737f5888942f6a0d42ecc5f7b2e4e89bda8de31832273a74d128d2e0831e4"
+      },
+      "after": {
+        "path": "workbench/specs/S-00A-workbench-template-reformation/blueprint-source.json",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "716737f5888942f6a0d42ecc5f7b2e4e89bda8de31832273a74d128d2e0831e4"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/specs/S-00A-workbench-template-reformation/control-fidelity.json",
+      "before": {
+        "path": "workbench/specs/S-00A-workbench-template-reformation/control-fidelity.json",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "715df61dd1162efa49dd8394473413dbc6317d31e9442c16177a3114e2dd9eed"
+      },
+      "after": {
+        "path": "workbench/specs/S-00A-workbench-template-reformation/control-fidelity.json",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "715df61dd1162efa49dd8394473413dbc6317d31e9442c16177a3114e2dd9eed"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/specs/S-00A-workbench-template-reformation/update-acceptance.json",
+      "before": {
+        "path": "workbench/specs/S-00A-workbench-template-reformation/update-acceptance.json",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "cfa2ce94f8f66bffb678a4e44d2647b7c9df954e1233b3d1e69fbe07efb59a5c"
+      },
+      "after": {
+        "path": "workbench/specs/S-00A-workbench-template-reformation/update-acceptance.json",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "cfa2ce94f8f66bffb678a4e44d2647b7c9df954e1233b3d1e69fbe07efb59a5c"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/specs/S-00B-v3-2-1-harness-upgrade/SPEC.md",
+      "before": {
+        "path": "workbench/specs/S-00B-v3-2-1-harness-upgrade/SPEC.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "32dcacbf950adfb0864e2c49ede54986ba02dd80a8c0523c19c39f28eec4e7d9"
+      },
+      "after": {
+        "path": "workbench/specs/S-00B-v3-2-1-harness-upgrade/SPEC.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "32dcacbf950adfb0864e2c49ede54986ba02dd80a8c0523c19c39f28eec4e7d9"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/specs/S-00B-v3-2-1-harness-upgrade/control-fidelity.json",
+      "before": {
+        "path": "workbench/specs/S-00B-v3-2-1-harness-upgrade/control-fidelity.json",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "35f18fdec71c45d35a1da29b9a2ca8c402112c6492b84228c597d1955f90018c"
+      },
+      "after": {
+        "path": "workbench/specs/S-00B-v3-2-1-harness-upgrade/control-fidelity.json",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "35f18fdec71c45d35a1da29b9a2ca8c402112c6492b84228c597d1955f90018c"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/specs/S-00B-v3-2-1-harness-upgrade/preservation.json",
+      "before": {
+        "path": "workbench/specs/S-00B-v3-2-1-harness-upgrade/preservation.json",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "c95725a576640465ce1098e59e621dd47d90b3b63c1262cae9b1a517dc68e95f"
+      },
+      "after": {
+        "path": "workbench/specs/S-00B-v3-2-1-harness-upgrade/preservation.json",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "c95725a576640465ce1098e59e621dd47d90b3b63c1262cae9b1a517dc68e95f"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/tools/.gitkeep",
+      "before": {
+        "path": "workbench/tools/.gitkeep",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "after": {
+        "path": "workbench/tools/.gitkeep",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/tools/.workbench-tools.json",
+      "before": {
+        "path": "workbench/tools/.workbench-tools.json",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "cad4ae8e4a006bc09b3f250611c744a88ead6b13e163cc4d603229ed991a08b4"
+      },
+      "after": {
+        "path": "workbench/tools/.workbench-tools.json",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "cad4ae8e4a006bc09b3f250611c744a88ead6b13e163cc4d603229ed991a08b4"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/tools/adr.mjs",
+      "before": {
+        "path": "workbench/tools/adr.mjs",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "f732f6d9d5a6138aec304a7db0f4bc513e0f89ab92d6c6d1b3e776a5064acb33"
+      },
+      "after": {
+        "path": "workbench/tools/adr.mjs",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "f732f6d9d5a6138aec304a7db0f4bc513e0f89ab92d6c6d1b3e776a5064acb33"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/tools/claim-coordination.mjs",
+      "before": {
+        "path": "workbench/tools/claim-coordination.mjs",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "83068a6f5ec06cb52aef8778699f380ba1a21477e6be22dfc79afa0863604aa0"
+      },
+      "after": {
+        "path": "workbench/tools/claim-coordination.mjs",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "83068a6f5ec06cb52aef8778699f380ba1a21477e6be22dfc79afa0863604aa0"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/tools/diagnostics.mjs",
+      "before": {
+        "path": "workbench/tools/diagnostics.mjs",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "c0f95477e2a4ddc06b0a288ebc38acf823ae9167c399c5a87e1155a12baf2070"
+      },
+      "after": {
+        "path": "workbench/tools/diagnostics.mjs",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "c0f95477e2a4ddc06b0a288ebc38acf823ae9167c399c5a87e1155a12baf2070"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/tools/github-coordination.mjs",
+      "before": {
+        "path": "workbench/tools/github-coordination.mjs",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "1d4c120ab8442e12c0a0186e7cdb0bfd7e6d8079682c96fc49b8025febf5a720"
+      },
+      "after": {
+        "path": "workbench/tools/github-coordination.mjs",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "1d4c120ab8442e12c0a0186e7cdb0bfd7e6d8079682c96fc49b8025febf5a720"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/tools/glossary-format.mjs",
+      "before": {
+        "path": "workbench/tools/glossary-format.mjs",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "1bf28fb20a4e74a27abf219c46370316c3df6a6f7bc557d08e082170717420ff"
+      },
+      "after": {
+        "path": "workbench/tools/glossary-format.mjs",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "1bf28fb20a4e74a27abf219c46370316c3df6a6f7bc557d08e082170717420ff"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/tools/host-floor.mjs",
+      "before": {
+        "path": "workbench/tools/host-floor.mjs",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "db5bfeb569af46f0df464d5e614bd5fd25e9297f1aaf7a4a3dc7eecda6c7a193"
+      },
+      "after": {
+        "path": "workbench/tools/host-floor.mjs",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "db5bfeb569af46f0df464d5e614bd5fd25e9297f1aaf7a4a3dc7eecda6c7a193"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/tools/jot.mjs",
+      "before": {
+        "path": "workbench/tools/jot.mjs",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "ec6f8675e0ed29cc0db2a448dad48a33af62d853ac3efb19ee59aeda5f78f8c4"
+      },
+      "after": {
+        "path": "workbench/tools/jot.mjs",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "ec6f8675e0ed29cc0db2a448dad48a33af62d853ac3efb19ee59aeda5f78f8c4"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/tools/landmark-artifact.mjs",
+      "before": {
+        "path": "workbench/tools/landmark-artifact.mjs",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "2c3b46907d16097ca4d45c1ead05f8f6d11ddb9753210065c7b2e5ec5bcb1c11"
+      },
+      "after": {
+        "path": "workbench/tools/landmark-artifact.mjs",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "2c3b46907d16097ca4d45c1ead05f8f6d11ddb9753210065c7b2e5ec5bcb1c11"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/tools/landmark-tracker.mjs",
+      "before": {
+        "path": "workbench/tools/landmark-tracker.mjs",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "3c0a56f72c166cdb6869bd48390d1067769ce0a600115f0878aab461cd3a758d"
+      },
+      "after": {
+        "path": "workbench/tools/landmark-tracker.mjs",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "3c0a56f72c166cdb6869bd48390d1067769ce0a600115f0878aab461cd3a758d"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/tools/landmark-wiki.mjs",
+      "before": {
+        "path": "workbench/tools/landmark-wiki.mjs",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "dd5eee302f9cb8afb1db7949461554bc7471a575425cc920aa0b04a6b1322d52"
+      },
+      "after": {
+        "path": "workbench/tools/landmark-wiki.mjs",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "dd5eee302f9cb8afb1db7949461554bc7471a575425cc920aa0b04a6b1322d52"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/tools/lane-sweep.mjs",
+      "before": {
+        "path": "workbench/tools/lane-sweep.mjs",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "b4143a27b5b99de9e1d705144493766869818c744d00a57312413376b691eacf"
+      },
+      "after": {
+        "path": "workbench/tools/lane-sweep.mjs",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "b4143a27b5b99de9e1d705144493766869818c744d00a57312413376b691eacf"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/tools/lexicon-retirement-data.mjs",
+      "before": {
+        "path": "workbench/tools/lexicon-retirement-data.mjs",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "3bd7854b25206a68f8ba63a045355bae0f2e687fa654582c784ec9fe6bc6b6b4"
+      },
+      "after": {
+        "path": "workbench/tools/lexicon-retirement-data.mjs",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "3bd7854b25206a68f8ba63a045355bae0f2e687fa654582c784ec9fe6bc6b6b4"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/tools/markdown-table.mjs",
+      "before": {
+        "path": "workbench/tools/markdown-table.mjs",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "acca5cb04cecb0044c74aaa38f42d6f0e4e6addb26b45a744d14ca0b74487e6b"
+      },
+      "after": {
+        "path": "workbench/tools/markdown-table.mjs",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "acca5cb04cecb0044c74aaa38f42d6f0e4e6addb26b45a744d14ca0b74487e6b"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/tools/notepads.mjs",
+      "before": {
+        "path": "workbench/tools/notepads.mjs",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "157bb7c93f0b7914414ba2a2b9b47c631cfbf3b85d48f8efc79d572934febc4b"
+      },
+      "after": {
+        "path": "workbench/tools/notepads.mjs",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "157bb7c93f0b7914414ba2a2b9b47c631cfbf3b85d48f8efc79d572934febc4b"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/tools/optional-capabilities.mjs",
+      "before": {
+        "path": "workbench/tools/optional-capabilities.mjs",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "430df9d08ba18e4af2a389019b3b591f23ad9ae390801b2a39273878d05490be"
+      },
+      "after": {
+        "path": "workbench/tools/optional-capabilities.mjs",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "430df9d08ba18e4af2a389019b3b591f23ad9ae390801b2a39273878d05490be"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/tools/organization.mjs",
+      "before": {
+        "path": "workbench/tools/organization.mjs",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "bda6fc519b5d2e72640fcd79930bc1479a078f43b6593fb57d653b616862fafa"
+      },
+      "after": {
+        "path": "workbench/tools/organization.mjs",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "bda6fc519b5d2e72640fcd79930bc1479a078f43b6593fb57d653b616862fafa"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/tools/privacy.mjs",
+      "before": {
+        "path": "workbench/tools/privacy.mjs",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "8731047bc626b7b7a539b04c674aac2ac19452e7103cebd53ccf336c32a3ad8b"
+      },
+      "after": {
+        "path": "workbench/tools/privacy.mjs",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "8731047bc626b7b7a539b04c674aac2ac19452e7103cebd53ccf336c32a3ad8b"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/tools/project-evidence.mjs",
+      "before": {
+        "path": "workbench/tools/project-evidence.mjs",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "5fdfdce8f57b749b3be995a1f31ff9bf69ce4b6c6cf8690df9719661813eeca3"
+      },
+      "after": {
+        "path": "workbench/tools/project-evidence.mjs",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "5fdfdce8f57b749b3be995a1f31ff9bf69ce4b6c6cf8690df9719661813eeca3"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/tools/self-drift.mjs",
+      "before": {
+        "path": "workbench/tools/self-drift.mjs",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "2b84f455849372f47fcec3fb95754816536bcf79d4e6c484a23182e0c3b85c18"
+      },
+      "after": {
+        "path": "workbench/tools/self-drift.mjs",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "2b84f455849372f47fcec3fb95754816536bcf79d4e6c484a23182e0c3b85c18"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/tools/session-transport.mjs",
+      "before": {
+        "path": "workbench/tools/session-transport.mjs",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "17172dcb489a2fa571551a605f3130fd20d6bc2a17d8cba8811ef39a8c2c5416"
+      },
+      "after": {
+        "path": "workbench/tools/session-transport.mjs",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "17172dcb489a2fa571551a605f3130fd20d6bc2a17d8cba8811ef39a8c2c5416"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/tools/sessions.mjs",
+      "before": {
+        "path": "workbench/tools/sessions.mjs",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "efc5310b48459523277bf50374f20319d0b75d6bc7846af7413826caf4ff0bf3"
+      },
+      "after": {
+        "path": "workbench/tools/sessions.mjs",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "efc5310b48459523277bf50374f20319d0b75d6bc7846af7413826caf4ff0bf3"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/tools/skill-inspection.mjs",
+      "before": {
+        "path": "workbench/tools/skill-inspection.mjs",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "ac92932518d5c120392eca542b7695ce08c05638b93e04ef80f32ea51521c672"
+      },
+      "after": {
+        "path": "workbench/tools/skill-inspection.mjs",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "ac92932518d5c120392eca542b7695ce08c05638b93e04ef80f32ea51521c672"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/tools/spec-packet.mjs",
+      "before": {
+        "path": "workbench/tools/spec-packet.mjs",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "8fe47ec5dda6e237a6005b99e6679c7588fd19d15eba31cc2378f0c8f4e5f132"
+      },
+      "after": {
+        "path": "workbench/tools/spec-packet.mjs",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "8fe47ec5dda6e237a6005b99e6679c7588fd19d15eba31cc2378f0c8f4e5f132"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/tools/spec-report.mjs",
+      "before": {
+        "path": "workbench/tools/spec-report.mjs",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "7f1afb2613995d7fc32389d5104cab7e39e7c71efbf983569004c9bfe75163c3"
+      },
+      "after": {
+        "path": "workbench/tools/spec-report.mjs",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "7f1afb2613995d7fc32389d5104cab7e39e7c71efbf983569004c9bfe75163c3"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/tools/spec-workbench.mjs",
+      "before": {
+        "path": "workbench/tools/spec-workbench.mjs",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "a0b46aae0902c06634b24e3b15daf746af41bcb8f0844d7aa8fa4183a5730124"
+      },
+      "after": {
+        "path": "workbench/tools/spec-workbench.mjs",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "a0b46aae0902c06634b24e3b15daf746af41bcb8f0844d7aa8fa4183a5730124"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/tools/task-packet.mjs",
+      "before": {
+        "path": "workbench/tools/task-packet.mjs",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "688e46ff537561dec55f557bfc3a408f82c8bacbbd456729883fcbf042329c5a"
+      },
+      "after": {
+        "path": "workbench/tools/task-packet.mjs",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "688e46ff537561dec55f557bfc3a408f82c8bacbbd456729883fcbf042329c5a"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/tools/task-receipt.mjs",
+      "before": {
+        "path": "workbench/tools/task-receipt.mjs",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "aaefb6321bdd4568f1e850f885b0b8aaf56a2e4c383f8786c3df79b3a0ebb7c5"
+      },
+      "after": {
+        "path": "workbench/tools/task-receipt.mjs",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "aaefb6321bdd4568f1e850f885b0b8aaf56a2e4c383f8786c3df79b3a0ebb7c5"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/tools/task-record.mjs",
+      "before": {
+        "path": "workbench/tools/task-record.mjs",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "21aeb1acf8138b4c9afd397dc247191dcf30fd2f36fc5c696624d70d6e3c0347"
+      },
+      "after": {
+        "path": "workbench/tools/task-record.mjs",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "21aeb1acf8138b4c9afd397dc247191dcf30fd2f36fc5c696624d70d6e3c0347"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/tools/taskboard.mjs",
+      "before": {
+        "path": "workbench/tools/taskboard.mjs",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "e2cebd88f301182109347a191c6647295609a0283a84f69e27ef5096e4cd7e75"
+      },
+      "after": {
+        "path": "workbench/tools/taskboard.mjs",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "e2cebd88f301182109347a191c6647295609a0283a84f69e27ef5096e4cd7e75"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/tools/template-placeholders.mjs",
+      "before": {
+        "path": "workbench/tools/template-placeholders.mjs",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "d6e45ebcbeb028ded78b597d852d24017c65e52ae7ed193bfc3497ee4f51eb48"
+      },
+      "after": {
+        "path": "workbench/tools/template-placeholders.mjs",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "d6e45ebcbeb028ded78b597d852d24017c65e52ae7ed193bfc3497ee4f51eb48"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/tools/visible-ids.mjs",
+      "before": {
+        "path": "workbench/tools/visible-ids.mjs",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "587b737001ec95a5bbee2f4f9b3920bacdb5b7e540f01da87ea8fe0b0ee4796f"
+      },
+      "after": {
+        "path": "workbench/tools/visible-ids.mjs",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "587b737001ec95a5bbee2f4f9b3920bacdb5b7e540f01da87ea8fe0b0ee4796f"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/tools/wiki.mjs",
+      "before": {
+        "path": "workbench/tools/wiki.mjs",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "d9ec1e9de9839c2b32c625fdec610755786490225a328365ecdf719e50c9d0e1"
+      },
+      "after": {
+        "path": "workbench/tools/wiki.mjs",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "d9ec1e9de9839c2b32c625fdec610755786490225a328365ecdf719e50c9d0e1"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/tools/workbench-layout.mjs",
+      "before": {
+        "path": "workbench/tools/workbench-layout.mjs",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "8a6ac9f2125983c897898979e41d1be6a79a63eb731bb477aca52bbf503d6a75"
+      },
+      "after": {
+        "path": "workbench/tools/workbench-layout.mjs",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "8a6ac9f2125983c897898979e41d1be6a79a63eb731bb477aca52bbf503d6a75"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/tools/workbench-paths.mjs",
+      "before": {
+        "path": "workbench/tools/workbench-paths.mjs",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "9a598d196e62d855c5956f87814071bb7bf3e3b6c260f19501f49177154d5cc6"
+      },
+      "after": {
+        "path": "workbench/tools/workbench-paths.mjs",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "9a598d196e62d855c5956f87814071bb7bf3e3b6c260f19501f49177154d5cc6"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/tools/workspace-closeout.mjs",
+      "before": {
+        "path": "workbench/tools/workspace-closeout.mjs",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "a61609e2a3d8f63810de95ab43ae353ba9942f9f69ec47d23d4da66ffc14efb9"
+      },
+      "after": {
+        "path": "workbench/tools/workspace-closeout.mjs",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "a61609e2a3d8f63810de95ab43ae353ba9942f9f69ec47d23d4da66ffc14efb9"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/wiki/.gitignore",
+      "before": {
+        "path": "workbench/wiki/.gitignore",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "7cd0c1095e6fb0636e86017e7bee1a584f2b7c90bb80bdaa06434c911e0a9cb2"
+      },
+      "after": {
+        "path": "workbench/wiki/.gitignore",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "7cd0c1095e6fb0636e86017e7bee1a584f2b7c90bb80bdaa06434c911e0a9cb2"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/wiki/.gitkeep",
+      "before": {
+        "path": "workbench/wiki/.gitkeep",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "after": {
+        "path": "workbench/wiki/.gitkeep",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/wiki/AGENTS.md",
+      "before": {
+        "path": "workbench/wiki/AGENTS.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "c22b304642dbb6a8ee37d16858127cd9f11fee02103e17bad6e7ed6cea4b5908"
+      },
+      "after": {
+        "path": "workbench/wiki/AGENTS.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "c22b304642dbb6a8ee37d16858127cd9f11fee02103e17bad6e7ed6cea4b5908"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/wiki/MEMORY.md",
+      "before": {
+        "path": "workbench/wiki/MEMORY.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "d1a325f6272579c354e4b37f0af04f6e23c5f5e2111a34a2d3df613ff4205c72"
+      },
+      "after": {
+        "path": "workbench/wiki/MEMORY.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "89046d277ad7aa5441e84ef0664529e71527390c7d426abccce8162c027b187d"
+      },
+      "disposition": "bounded RUNBOOK continuation reconciliation"
+    },
+    {
+      "path": "workbench/wiki/SCHEMA.md",
+      "before": {
+        "path": "workbench/wiki/SCHEMA.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "30b2b62d86c0266fceaf3bff7d7cce677f4caa5b101277bdec02348ff4b1d2ee"
+      },
+      "after": {
+        "path": "workbench/wiki/SCHEMA.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "30b2b62d86c0266fceaf3bff7d7cce677f4caa5b101277bdec02348ff4b1d2ee"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/wiki/ai-coding-reference.md",
+      "before": {
+        "path": "workbench/wiki/ai-coding-reference.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "7e4a40acc33a76946adf428d40be90a6e808f8473030b0cd4053668511609e16"
+      },
+      "after": {
+        "path": "workbench/wiki/ai-coding-reference.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "7e4a40acc33a76946adf428d40be90a6e808f8473030b0cd4053668511609e16"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/wiki/archive/.gitkeep",
+      "before": {
+        "path": "workbench/wiki/archive/.gitkeep",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "after": {
+        "path": "workbench/wiki/archive/.gitkeep",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/wiki/context-auto-merge.md",
+      "before": {
+        "path": "workbench/wiki/context-auto-merge.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "6487d4dd295d3fed9ada35374f5781c5c49d71a049b406af83b6bd6a17264940"
+      },
+      "after": {
+        "path": "workbench/wiki/context-auto-merge.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "6487d4dd295d3fed9ada35374f5781c5c49d71a049b406af83b6bd6a17264940"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/wiki/context-runbook-continuation.md",
+      "before": null,
+      "after": {
+        "path": "workbench/wiki/context-runbook-continuation.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "95082d9d01dfe10c40f39bde7ffaa410e3b185929a23927a2f6920cf41d9b56d"
+      },
+      "disposition": "bounded RUNBOOK continuation reconciliation"
+    },
+    {
+      "path": "workbench/wiki/context-workbench-feature-catalog.md",
+      "before": {
+        "path": "workbench/wiki/context-workbench-feature-catalog.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "a7a0eb2436c73b9c869d308d057fa2e91368ef60f5adf54d0fafefcf4551e6fe"
+      },
+      "after": {
+        "path": "workbench/wiki/context-workbench-feature-catalog.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "a7a0eb2436c73b9c869d308d057fa2e91368ef60f5adf54d0fafefcf4551e6fe"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/wiki/design-concepts/.gitkeep",
+      "before": {
+        "path": "workbench/wiki/design-concepts/.gitkeep",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "after": {
+        "path": "workbench/wiki/design-concepts/.gitkeep",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/wiki/design-concepts/README.md",
+      "before": {
+        "path": "workbench/wiki/design-concepts/README.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "83d7f9cd9c9d1acc79f0b0f52a56053809cd34690d089a0de81f749d1685baf7"
+      },
+      "after": {
+        "path": "workbench/wiki/design-concepts/README.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "83d7f9cd9c9d1acc79f0b0f52a56053809cd34690d089a0de81f749d1685baf7"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/wiki/features/README.md",
+      "before": {
+        "path": "workbench/wiki/features/README.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "845a5fe6c2b29057a9014466a9f73f95f583cabd834bfc32e54214b9a8dca7f8"
+      },
+      "after": {
+        "path": "workbench/wiki/features/README.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "845a5fe6c2b29057a9014466a9f73f95f583cabd834bfc32e54214b9a8dca7f8"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/wiki/guidebooks/.gitkeep",
+      "before": {
+        "path": "workbench/wiki/guidebooks/.gitkeep",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "after": {
+        "path": "workbench/wiki/guidebooks/.gitkeep",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/wiki/vocabulary-chats-and-roles.md",
+      "before": {
+        "path": "workbench/wiki/vocabulary-chats-and-roles.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "b133e8b3f0133e4ba9968d3c54f56119aab4f0d54e2ae98fbfd399085f566297"
+      },
+      "after": {
+        "path": "workbench/wiki/vocabulary-chats-and-roles.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "b133e8b3f0133e4ba9968d3c54f56119aab4f0d54e2ae98fbfd399085f566297"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/wiki/vocabulary-continuity-and-evidence-boundaries.md",
+      "before": {
+        "path": "workbench/wiki/vocabulary-continuity-and-evidence-boundaries.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "0cf0491a1e1e4e1e342035fa5ad159046971e64c960fa4a23278c4c26c396f87"
+      },
+      "after": {
+        "path": "workbench/wiki/vocabulary-continuity-and-evidence-boundaries.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "0cf0491a1e1e4e1e342035fa5ad159046971e64c960fa4a23278c4c26c396f87"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/wiki/vocabulary-continuity-terms.md",
+      "before": {
+        "path": "workbench/wiki/vocabulary-continuity-terms.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "f7ca9aae6dcb862f433cbc79d126b2185908c9e884f7fd273f2ac108aa9e1ad8"
+      },
+      "after": {
+        "path": "workbench/wiki/vocabulary-continuity-terms.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "f7ca9aae6dcb862f433cbc79d126b2185908c9e884f7fd273f2ac108aa9e1ad8"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/wiki/vocabulary-destination-and-direction.md",
+      "before": {
+        "path": "workbench/wiki/vocabulary-destination-and-direction.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "d8873a573f5193da4b583be9651a4b84e69d4ef376f4f591fc497f3bde0c150f"
+      },
+      "after": {
+        "path": "workbench/wiki/vocabulary-destination-and-direction.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "d8873a573f5193da4b583be9651a4b84e69d4ef376f4f591fc497f3bde0c150f"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/wiki/vocabulary-feedback-disposition.md",
+      "before": {
+        "path": "workbench/wiki/vocabulary-feedback-disposition.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "eabb8ddccfd373b7f35f291d31f22dd4c4fd7ecb79d8470b049811c9a7cf94bd"
+      },
+      "after": {
+        "path": "workbench/wiki/vocabulary-feedback-disposition.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "eabb8ddccfd373b7f35f291d31f22dd4c4fd7ecb79d8470b049811c9a7cf94bd"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/wiki/vocabulary-governance-core.md",
+      "before": {
+        "path": "workbench/wiki/vocabulary-governance-core.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "3e305e17a775665091e8b62dca2712439a11a916ff167338af88a202e7debfc5"
+      },
+      "after": {
+        "path": "workbench/wiki/vocabulary-governance-core.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "3e305e17a775665091e8b62dca2712439a11a916ff167338af88a202e7debfc5"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/wiki/vocabulary-project-terms.md",
+      "before": {
+        "path": "workbench/wiki/vocabulary-project-terms.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "8c769befa0adff08e70e61ebbd8768bb9bb4f58dfc319ff7d244fc9a5e7c8ed6"
+      },
+      "after": {
+        "path": "workbench/wiki/vocabulary-project-terms.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "8c769befa0adff08e70e61ebbd8768bb9bb4f58dfc319ff7d244fc9a5e7c8ed6"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/wiki/vocabulary-specs-and-tasks.md",
+      "before": {
+        "path": "workbench/wiki/vocabulary-specs-and-tasks.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "73f7d1bddf81753cdf849377b699659874fe049871d606a9a0f7da115d7bf260"
+      },
+      "after": {
+        "path": "workbench/wiki/vocabulary-specs-and-tasks.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "73f7d1bddf81753cdf849377b699659874fe049871d606a9a0f7da115d7bf260"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/wiki/vocabulary-stance-terms.md",
+      "before": {
+        "path": "workbench/wiki/vocabulary-stance-terms.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "4839e16d99a9cdba373d8bb5bfdb813730f33068ead65463dd65440ee1faca47"
+      },
+      "after": {
+        "path": "workbench/wiki/vocabulary-stance-terms.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "4839e16d99a9cdba373d8bb5bfdb813730f33068ead65463dd65440ee1faca47"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/wiki/vocabulary-workbench-meanings-of-ai-coding-terms.md",
+      "before": {
+        "path": "workbench/wiki/vocabulary-workbench-meanings-of-ai-coding-terms.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "8ee0834101c122204b43a10e668b39b6aa36c1b93e231caf6b0378c90ad9fd39"
+      },
+      "after": {
+        "path": "workbench/wiki/vocabulary-workbench-meanings-of-ai-coding-terms.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "8ee0834101c122204b43a10e668b39b6aa36c1b93e231caf6b0378c90ad9fd39"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/wiki/vocabulary-workbench-room-and-artifacts.md",
+      "before": {
+        "path": "workbench/wiki/vocabulary-workbench-room-and-artifacts.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "b9951ab22c13291af80f6ffb753ecd1f837a0c716887498cad99874638695400"
+      },
+      "after": {
+        "path": "workbench/wiki/vocabulary-workbench-room-and-artifacts.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "b9951ab22c13291af80f6ffb753ecd1f837a0c716887498cad99874638695400"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/wiki/vocabulary-workflow-verbs.md",
+      "before": {
+        "path": "workbench/wiki/vocabulary-workflow-verbs.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "e3e271f215bc167a0a4e2fe14a781ebb621a077c10e604fbb6733f43eaacfffa"
+      },
+      "after": {
+        "path": "workbench/wiki/vocabulary-workflow-verbs.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "e3e271f215bc167a0a4e2fe14a781ebb621a077c10e604fbb6733f43eaacfffa"
+      },
+      "disposition": "kept unchanged"
+    },
+    {
+      "path": "workbench/wiki/workbench-capabilities.md",
+      "before": {
+        "path": "workbench/wiki/workbench-capabilities.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "f948efa7550eb24bf6efc73ae4cb014d45199b72a9fa4ed1512ffaf4f7b29526"
+      },
+      "after": {
+        "path": "workbench/wiki/workbench-capabilities.md",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "40190a6e29c6755eaaa91feecf90f3f28593d5fc65ac571f493416f7d450782a"
+      },
+      "disposition": "bounded RUNBOOK continuation reconciliation"
+    }
+  ]
+}

@@ -18,7 +18,9 @@ whitespace, doctor, Wiki and decision-record validation, and preservation of
 existing Spec evidence and Task receipt rows across the event range. The history
 check follows Git-detected moves within the Spec/Task lane that retain the same
 record kind, so future runs keep scanning them. Missing or rewritten old rows
-and moves outside that coverage fail.
+and moves outside that coverage fail. The tour suite also rejects a RUNBOOK
+above 500 whole-file whitespace-delimited words; a failing limit check therefore
+blocks the existing required `verify` without changing branch rules.
 
 PR checks test the proposed merge with its destination. Postmerge checks test the
 actual landed state. A new head or base needs current passing checks. Missing,

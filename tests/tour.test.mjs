@@ -17,6 +17,38 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const manifest = readManifest(root);
 const described = new Set(PLACES.map((place) => place.path));
 
+test('RUNBOOK stays within the 500-word hard limit', () => {
+  const manual = fs.readFileSync(path.join(root, 'RUNBOOK.md'), 'utf8');
+  // Count the entire file, including stamps, comments and fenced commands.
+  const words = (manual.match(/\S+/g) ?? []).length;
+  assert.ok(words <= 500, `RUNBOOK.md has ${words} words; its hard limit is 500`);
+});
+
+test('RUNBOOK routes continuation through TASKBOARD and preserves the finish loop', () => {
+  const manual = fs.readFileSync(path.join(root, 'RUNBOOK.md'), 'utf8');
+  assert.match(manual, /\]\(TASKBOARD\.md(?:#[^)]+)?\)/,
+    'the arriving agent must have a direct route to TASKBOARD');
+  assert.match(manual, /complete[^\n]*work/i);
+  assert.match(manual, /update[^\n]*knowledge/i);
+  assert.match(manual, /clean\s*up[^\n]*work/i);
+  const board = fs.readFileSync(path.join(root, 'TASKBOARD.md'), 'utf8');
+  assert.match(board, /spec-workbench\.mjs render/,
+    'the outgoing agent must regenerate the board from its owning records');
+  assert.match(board, /<!-- hot-specs:start -->[\s\S]*<!-- hot-specs:end -->/,
+    'continuation must retain the generated source projection');
+});
+
+test('live continuation routes do not depend on STARTUP', () => {
+  assert.ok(!fs.existsSync(path.join(root, 'STARTUP.md')),
+    'the retired shared continuation control must be absent');
+  for (const file of ['AGENTS.md', 'RUNBOOK.md', '.agents/skills/implement/SKILL.md',
+    '.agents/skills/save/SKILL.md', '.agents/skills/handoff/SKILL.md']) {
+    const content = fs.readFileSync(path.join(root, file), 'utf8');
+    assert.doesNotMatch(content, /\]\([^)]*STARTUP\.md(?:#[^)]*)?\)/,
+      `${file} must route through current continuation owners`);
+  }
+});
+
 test('the tour and the room agree on where the room is', () => {
   assert.equal(ROOM_ROOT, root, 'the tour must describe the room it ships inside');
 });
@@ -69,7 +101,7 @@ test('the eight root controls are present and all eight are explained', () => {
 
 test('root Markdown files are the eight controls plus named non-control files, and the tour says so', () => {
   const controls = ['AGENTS.md', 'BLUEPRINT.md', 'GLOSSARY.md', 'ARCHITECTURE.md', 'RUNBOOK.md', 'TASKBOARD.md', 'CLAUDE.md', 'README.md'];
-  const nonControls = { 'STARTUP.md': /continuation view/i, 'LEXICON.md': /archived/i };
+  const nonControls = { 'LEXICON.md': /archived/i };
   const rootMarkdown = fs.readdirSync(root).filter((name) => name.endsWith('.md'));
   for (const name of rootMarkdown) {
     assert.ok(controls.includes(name) || name in nonControls, `${name} sits at the root but is neither a control nor a named non-control file`);

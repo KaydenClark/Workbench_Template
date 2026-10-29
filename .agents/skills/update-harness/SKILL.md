@@ -431,8 +431,8 @@ Settle the target's starting point first:
      the project-owned controls, product code, active specs, completed evidence
      and Wiki content, then reconcile only the intended template sections
      through the existing manifest, preserving filled project-specific content,
-     as the control reconciliation below describes (it also brings in
-     `STARTUP.md`). That procedure requires the skills first: a brief's `Skill
+     as the control reconciliation below describes (it also reconciles
+     TASKBOARD continuation and retires the legacy startup control). That procedure requires the skills first: a brief's `Skill
      Map` entry for a skill the lane does not hold is reported as
      `skill-pointer-dangling`, so never reconcile controls before step 4.
   6. Verify managed bytes: rerun both `verify` commands; each must report no
@@ -524,9 +524,11 @@ reconciles them to the current templates this way:
 2. Bring in the template's compact `AGENTS.md` brief, which links `RUNBOOK.md`
    for cold-start orientation, the Wiki router, the manifest and the lane skills, and keep the
    room's own lines: its scope, Git rules, verification commands, safety rules
-   and every divergence it recorded. Copy `STARTUP.md` from `templates/STARTUP.md`
-   when the room has none and name its reconciliation writer; reconcile an
-   existing one from current owners instead of overwriting it. Bring
+   and every divergence it recorded. Follow
+   [TASKBOARD continuation and legacy retirement](../save/taskboard-continuation.md#retire-a-legacy-continuation-control-during-an-update):
+   preserve the old STARTUP.md recovery point, reconcile its meaningful contents
+   into existing owners, regenerate TASKBOARD, then remove it after readback.
+   Never recreate that retired control. Bring
    `RUNBOOK.md` to the template's operating manual and its prompt-guided
    cold-start flow, keeping the room's
    own rows, sections, exact commands and recovery; a long procedure the room

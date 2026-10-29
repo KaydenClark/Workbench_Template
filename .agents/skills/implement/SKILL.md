@@ -18,7 +18,7 @@ Authorized room-local extensions follow the
 ## 1. Situate the slice
 
 Verify the repository root, branch, remote, upstream, and dirty state. Read the
-nearest `AGENTS.md` and [STARTUP resume](../../../STARTUP.md#resume), then run:
+nearest `AGENTS.md` and [TASKBOARD continuation](../save/taskboard-continuation.md#resume), then run:
 
 ```bash
 node workbench/tools/spec-workbench.mjs doctor
@@ -70,10 +70,10 @@ Run focused project-owned verification during the loop. Select the final gate th
 driven when expected red and green results and the applicable gate are proven.
 
 At checkpoint, handoff or yield, update existing source owners first and follow
-[STARTUP reconciliation](../../../STARTUP.md#reconcile). Only its named writer
-updates the shared view; other lanes submit source changes and proposed summaries.
+[TASKBOARD continuation](../save/taskboard-continuation.md#reconcile). Keep one
+writer per owner and serialize shared board regeneration from current sources.
 Verify source freshness on resume and distinguish local, pushed and fetched
-integration state. An unreconciled scaffold grants no authority.
+integration state. The projection grants no authority.
 
 ## 3. Document and checkpoint
 
@@ -288,7 +288,7 @@ and `unknown-blocker-qualifier` rather than bypassing selection or claim.
 
 Examples name S-001/TK-001; substitute the actual IDs and quoted values.
 
-Ordinary entry is AGENTS -> STARTUP -> the assigned Spec and Task;
+Ordinary entry follows RUNBOOK through relevant context and TASKBOARD to current owners;
 use `ARCHITECTURE.md` Routes and `GLOSSARY.md` meanings when needed.
 Verify root, branch, remote, upstream and dirty state first.
 Preserve unrelated work and obey the assigned stance/file lane.

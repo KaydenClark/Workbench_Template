@@ -7,7 +7,7 @@ appear only when used; this diagram does not certify installation or migration.
 ```text
 <project-root>/
 ├── AGENTS.md, CLAUDE.md                 # Instructions and host entry
-├── README.md, STARTUP.md                # Human orientation and continuation
+├── README.md                           # Human orientation; TASKBOARD projects continuation
 ├── BLUEPRINT.md                         # Product destination
 ├── GLOSSARY.md, ARCHITECTURE.md          # Language and information owners
 ├── RUNBOOK.md, TASKBOARD.md              # Operations and generated work view

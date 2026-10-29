@@ -35,7 +35,7 @@ true as files move.
 | `.github/workflows/verify.yml` | The required CI job that runs the full Test And Build suite on PRs to and pushes on `integration` and `main`. |
 | `.agents/skills/` | The tracked skills lane: the core skills with their receipt and the optional skills this room selected; `.claude/skills` is one relative link into it. |
 | `workbench/specs/` | This room's Specs and Tasks, including the retained historical Specs and upgrade records; `CATALOG.md` is their generated index. |
-| Root files | `AGENTS.md`, `BLUEPRINT.md`, `GLOSSARY.md`, `ARCHITECTURE.md`, `STARTUP.md`, `RUNBOOK.md`, `README.md`, `TASKBOARD.md` and the `CLAUDE.md` host adapter; their jobs are in [Ownership](#ownership). `LEXICON.md` is the archived v3.2.1 vocabulary, not a current control. |
+| Root files | `AGENTS.md`, `BLUEPRINT.md`, `GLOSSARY.md`, `ARCHITECTURE.md`, `RUNBOOK.md`, `README.md`, `TASKBOARD.md` and the `CLAUDE.md` host adapter; their jobs are in [Ownership](#ownership). `LEXICON.md` is the archived v3.2.1 vocabulary, not a current control. |
 | `workbench/` | The lanes and collections the manifest declares under the support root: Specs and Tasks, landmarks, the Wiki, decision records, managed runtime tools, sessions and feedback. The skills lane is `.agents/skills/`, above. |
 
 [Layout](workbench/docs/WORKBENCH_STRUCTURE.md); [organization](workbench/docs/ORGANIZATION.md).

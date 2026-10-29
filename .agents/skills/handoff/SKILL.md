@@ -21,7 +21,7 @@ and follow it. Suggestions grant no new authority.
 
 When saved context matters, call the Skill tool for `jot`; for legacy notes,
 call the Skill tool for `notepad`. Keep source owners current and follow
-[STARTUP reconciliation](../../../STARTUP.md#reconcile). Read the document as its recipient;
+[TASKBOARD continuation](../save/taskboard-continuation.md#reconcile). Read the document as its recipient;
 check sources, scope and next action. Return its path and the authorized next step.
 
 Follow [workspace closeout](../implement/workflow-reference.md#workspace-closeout) before handing back.

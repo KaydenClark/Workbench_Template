@@ -47,8 +47,8 @@ export const PLACES = [
   {
     zone: 'Root controls',
     path: 'RUNBOOK.md',
-    owns: 'The commands: setup, run, test, verify, recover, upgrade.',
-    why: 'Procedures are the truth most likely to go stale and the easiest to check. Kept apart from prose so that every line is a command someone actually ran and saw pass.',
+    owns: 'The operating manual: prompt-guided startup, current work, knowledge preservation, verification and scoped cleanup.',
+    why: 'A cold agent needs a short flow to the relevant context and source owners. Detailed commands and recovery stay in linked procedures rather than competing with the manual.',
   },
   {
     zone: 'Root controls',
@@ -288,7 +288,7 @@ export const ROUTE = [
 
 export const ZONE_BLURBS = {
   'Root controls':
-    'Eight controls sit at the root, the same eight in every room. An agent reads these\n  on entry to know how to behave here. Two other root files are not controls:\n  STARTUP.md is the shared continuation view, and LEXICON.md is the archived\n  v3.2.1 vocabulary kept as history.',
+    'Eight controls sit at the root, the same eight in every room. An agent reads these\n  on entry to know how to behave here. One other root Markdown file is not a control:\n  LEXICON.md is the archived v3.2.1 vocabulary kept as history. TASKBOARD is\n  the generated continuation view; its linked records own current work.',
   'The support root':
     'Everything the harness manages lives under `workbench/`, plus the skills lane at\n  `.agents/skills`, declared by a manifest rather than assumed by path. This is what\n  makes a room portable and upgradable.',
   'The product':
