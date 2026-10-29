@@ -213,5 +213,12 @@
     "Local component backup is host-local; original Git276d3107 is portable whole-room recovery.",
     "Four Wiki stale stamps and remaining baseline diagnostics retained; unrelated artifact caps and Lexicon retirement excluded.",
     "Independent review, two-context continuation, hosted checks and integration containment pending."
-  ]
+  ],
+  "recordedAtStage": "Initial local candidate verification; current delivered state is in linked closeout receipt.",
+  "currentDisposition": {
+    "boundedRepair": "delivered",
+    "receipt": "runbook-delivery-continuation.json",
+    "broaderUpgrade": "in-progress",
+    "main": "unchanged; excluded"
+  }
 }

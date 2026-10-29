@@ -3,7 +3,7 @@
   "baseline": "276d3107874dbf0c84f1f81bab4818daf9ec3ab8",
   "producer": "45a857f25adadeb068e0f000c09dcb3addb36a90",
   "baselineTrackedFiles": 196,
-  "phase": "final candidate inventory before immutable commit",
+  "phase": "Reviewed product-candidate inventory at eb3600fb; subsequent administrative proof changes are excluded from this dated observation.",
   "selfExcluded": "workbench/specs/S-000E-v3-2-2-harness-upgrade/proof/runbook-preservation.json",
   "limits": "This is a per-path preservation comparison, not a native closeout snapshot or proof of remote recovery; this inventory file itself is excluded to avoid recursive hashing.",
   "entries": [
@@ -3177,5 +3177,19 @@
       },
       "disposition": "bounded RUNBOOK continuation reconciliation"
     }
-  ]
+  ],
+  "candidate": "eb3600fb622e9b013f88be6d1509e407d30173aa",
+  "administrativeFollowup": {
+    "productAndManagedBytes": "unchanged",
+    "allowedRecordPaths": [
+      "TASKBOARD.md",
+      "workbench/specs/S-000E-v3-2-2-harness-upgrade/SPEC.md",
+      "workbench/wiki/context-runbook-continuation.md",
+      "workbench/specs/S-000E-v3-2-2-harness-upgrade/proof/runbook-taskboard-2026-10-29.md",
+      "workbench/specs/S-000E-v3-2-2-harness-upgrade/proof/runbook-verification.json",
+      "workbench/specs/S-000E-v3-2-2-harness-upgrade/proof/runbook-preservation.json",
+      "workbench/specs/S-000E-v3-2-2-harness-upgrade/proof/runbook-delivery-continuation.json"
+    ],
+    "limits": "Per-path after hashes describe exact reviewed eb3600fb, not later administrative owner/proof bytes; this file itself remains excluded from recursive hashing."
+  }
 }

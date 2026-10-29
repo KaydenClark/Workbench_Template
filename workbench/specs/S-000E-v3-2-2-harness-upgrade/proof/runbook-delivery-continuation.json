@@ -1,0 +1,101 @@
+{
+  "schemaVersion": 1,
+  "scope": "Bounded RUNBOOK/TASKBOARD repair; broader S-000E/TK-000D remains in progress.",
+  "producer": "45a857f25adadeb068e0f000c09dcb3addb36a90",
+  "reviewedTarget": "eb3600fb622e9b013f88be6d1509e407d30173aa",
+  "integration": "b874814af4f58eb1d2718888ac54b53ea5f3bbb1",
+  "pullRequest": "https://github.com/KaydenClark/Workbench_Template/pull/27",
+  "independentReview": {
+    "candidate": "eb3600fb622e9b013f88be6d1509e407d30173aa",
+    "result": "PASS; product and subsequent evidence-only delta inspected in a separate Codex context",
+    "reviewId": 5704020122
+  },
+  "landedVerify": {
+    "run": 40943481371,
+    "conclusion": "SUCCESS",
+    "url": "https://github.com/KaydenClark/Workbench_Template/actions/runs/40943481371"
+  },
+  "freshRemoteClone": {
+    "candidate": "eb3600fb622e9b013f88be6d1509e407d30173aa",
+    "kind": "Fresh HTTPS clone from GitHub; declared integration ref fetched before final diagnostics",
+    "results": {
+      "tour": {
+        "pass": 26,
+        "fail": 0
+      },
+      "history": {
+        "pass": 14,
+        "fail": 0
+      },
+      "preservedEvidenceSections": 11,
+      "toolsVerifier": "valid; authentic unchanged source receipt a58466ad",
+      "skillsVerifier": "valid; source45a857f25adadeb068e0f000c09dcb3addb36a90",
+      "wiki": "four pre-existing stale stamps retained"
+    },
+    "allNineRoomCommandsExitZero": true,
+    "bothManagedVerifiers": "valid",
+    "setupCorrection": {
+      "initialDoctorAttention": 37,
+      "initialFinding": "integration-branch-missing because single-branch clone excluded the declared integration ref",
+      "action": "git fetch origin integration:refs/remotes/origin/integration",
+      "rerunExitCode": 0,
+      "rerunAttention": 36,
+      "blockers": 0
+    }
+  },
+  "localTwoContextContinuation": {
+    "productBase": "ee3855b8bf36755faeee9cad94d7d1088cb29dbd",
+    "checkpoint": "eeee77f072da3593a5a69070ce5fe38d12d15040",
+    "productBytesUnchangedAtReviewedTarget": true,
+    "first": {
+      "entry": "Git status -> AGENTS -> RUNBOOK -> Architecture/Glossary -> relevant Wiki -> TASKBOARD -> current owner",
+      "recoveredOwner": {
+        "spec": "S-000E",
+        "task": "TK-000D",
+        "authoritySource": "workbench/wiki/context-runbook-continuation.md#jot-98e9d6f4-8f57-43ac-9c90-a9ff014f6798"
+      },
+      "tour": {
+        "pass": 26,
+        "fail": 0
+      },
+      "historyTests": {
+        "pass": 14,
+        "fail": 0
+      },
+      "changedOnly": [
+        "workbench/specs/S-000E-v3-2-2-harness-upgrade/SPEC.md",
+        "workbench/wiki/context-runbook-continuation.md",
+        "TASKBOARD.md"
+      ],
+      "render": "native render, serialized, unrelated rows preserved",
+      "cleanup": "Created one attributed ignored recovery probe; removed only that probe and verified absence.",
+      "end": "clean local commit; no push"
+    },
+    "second": {
+      "promptBoundary": "Only disposable clone path and generic resume request; no owner or checkpoint path supplied.",
+      "entry": "Normal repository entry recovered current owner, approval source, knowledge, check results and executable next action.",
+      "checks": {
+        "tourPass": 26,
+        "historyTestsPass": 14,
+        "preservedEvidenceSections": 11,
+        "doctorExit": 0
+      },
+      "writes": false,
+      "end": "clean same local checkpoint"
+    },
+    "limits": [
+      "Local-only disposable recovery; no remote or cross-device recovery proof and no reliability claim.",
+      "Combined source reads were truncated; focused follow-up reads and recorded source routes retain bounded coverage.",
+      "Disposable clone lacked integration ref: doctor had 37 informational findings, no blocker.",
+      "Existing table-backed Task cannot host native closeout snapshot; unknown-task refusal retained.",
+      "Second context noticed an older pre-final evidence paragraph. Final reviewed candidate and fresh HTTPS-clone checks supply the later results; the old paragraph did not establish them.",
+      "No product, managed files, new queue or external state changed during this local continuation trial."
+    ]
+  },
+  "main": {
+    "before": "25e51bc17bf34e6022a45452d509839b6a2cfac3",
+    "after": "25e51bc17bf34e6022a45452d509839b6a2cfac3",
+    "changed": false
+  },
+  "remaining": "Broader installed authority proof and upgrade acceptance, unresolved Lexicon disposition confirmation, Audit/release and owner-only main gates stay with their existing owners."
+}

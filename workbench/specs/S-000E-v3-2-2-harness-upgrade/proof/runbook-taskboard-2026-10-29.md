@@ -100,6 +100,47 @@ and [per-path preservation](runbook-preservation.json) retain the exact scope an
 limits. No observed friction within this repair requires an additional feedback
 assignment; the native table-backed closeout limitation remains explicit above.
 
-Independent review, two-context installed continuation, hosted checks and
-integration containment remain pending. The broader upgrade Task stays in
-progress; main remains untouched.
+## Observed integration delivery and continuation closeout
+
+The preceding candidate checks are now supplemented by actual delivery proof.
+Independent review passed exact target `eb3600fb622e9b013f88be6d1509e407d30173aa`
+(including its evidence-only delta; review 5704020122). [PR #27](https://github.com/KaydenClark/Workbench_Template/pull/27)
+merged that head into fetched integration `b874814af4f58eb1d2718888ac54b53ea5f3bbb1`.
+Containment passed and the landed tree is identical to the reviewed candidate.
+The [landed hosted verify](https://github.com/KaydenClark/Workbench_Template/actions/runs/40943481371)
+succeeded. Native `record-landing` accepted this table-backed Spec and recorded
+that observation and the actual remaining broader gate; the separate native
+workspace snapshot still has its documented table-backed limitation.
+
+A fresh HTTPS clone of exact final candidate `eb3600f` passed all nine room
+commands, tour 26/26, evidence-history 14/14, 11 preserved sections and both
+managed verifiers. An initial single-branch clone omitted the declared
+integration ref (37 informational findings); fetching it and rerunning doctor
+returned the baseline 36 with zero blockers. Four old Wiki stamps remain.
+
+Two fresh Codex contexts separately exercised the installed product at
+`ee3855b8bf36755faeee9cad94d7d1088cb29dbd`; product and managed bytes are unchanged
+in final reviewed `eb3600f`. The first followed normal entry, recovered the
+existing owner and scoped approval, passed tour 26/26 and history 14/14, updated
+only that owner and existing knowledge topic, regenerated TASKBOARD, and removed
+only its attributed ignored temporary artifact. It left clean local checkpoint
+`eeee77f072da3593a5a69070ce5fe38d12d15040`. The second received only the clone path
+and a generic resume request, recovered that work/knowledge/next action through
+normal repository entry, and freshly passed 26 tour tests, 14 history tests and
+preservation of 11 sections without writes. This is bounded local continuation,
+not remote/cross-device recovery or agent reliability. Its missing integration
+ref and native `unknown-task` limitations remain explicit. The second reader
+correctly noticed the pre-final proof paragraph; the final candidate and actual
+fresh-remote checks supply the later results.
+
+[Sanitized delivery and continuation receipt](runbook-delivery-continuation.json)
+records the identities, observations and limits without private paths or raw
+transcripts. The preservation inventory is pinned to reviewed product candidate
+`eb3600f`; this administrative follow-up intentionally changes only the named
+owner, generated board, topic and proof records, not product or managed bytes.
+
+The bounded RUNBOOK repair is delivered. The broader S-000E/TK-000D upgrade stays
+in progress, including remaining installed authority/acceptance and Lexicon
+disposition confirmation in their existing owners. No Audit, release acceptance
+or main promotion is inferred. Main was freshly fetched unchanged at
+`25e51bc17bf34e6022a45452d509839b6a2cfac3`.
