@@ -1,0 +1,217 @@
+{
+  "schemaVersion": 1,
+  "baseline": "276d3107874dbf0c84f1f81bab4818daf9ec3ab8",
+  "source": "45a857f25adadeb068e0f000c09dcb3addb36a90",
+  "productCheckpoint": "ee3855b",
+  "baselineTour": {
+    "passed": 23,
+    "failed": 0
+  },
+  "redTour": {
+    "passed": 23,
+    "failed": 3,
+    "reasons": [
+      "RUNBOOK611words",
+      "noTASKBOARDroute",
+      "STARTUPpresent"
+    ]
+  },
+  "candidateTour": {
+    "passed": 26,
+    "failed": 0
+  },
+  "evidenceHistoryTests": {
+    "passed": 14,
+    "failed": 0
+  },
+  "historySections": 11,
+  "runbookCap": {
+    "originalWords": 244,
+    "originalSha256": "8d8cb709822bfde844f6fbe501531590d547943cae9ed7531e11deab6ed98129",
+    "results": [
+      {
+        "words": 500,
+        "exit": 0,
+        "expectedExit": 0,
+        "wholeFileIncludingCommentsAndFences": true
+      },
+      {
+        "words": 501,
+        "exit": 1,
+        "expectedExit": 1,
+        "wholeFileIncludingCommentsAndFences": true
+      }
+    ],
+    "candidateUnchanged": true,
+    "method": "Actual installed test file executed against actual RUNBOOK file in an independent copy of the candidate; no producer path dependency."
+  },
+  "managed": {
+    "source": "45a857f25adadeb068e0f000c09dcb3addb36a90",
+    "verifiers": [
+      {
+        "component": "tools",
+        "exit": 0,
+        "status": "valid",
+        "source": {
+          "repository": "https://github.com/KaydenClark/LLM_Workbench.git",
+          "release": "v3.2.2",
+          "commit": "a58466ad1dca4ce7d6bd1a8328f47d6a58a2ee8d",
+          "dirty": false
+        },
+        "updateAvailable": [],
+        "roomLocal": null
+      },
+      {
+        "component": "skills",
+        "exit": 0,
+        "status": "valid",
+        "source": {
+          "repository": "https://github.com/KaydenClark/LLM_Workbench.git",
+          "release": "v3.2.2",
+          "commit": "45a857f25adadeb068e0f000c09dcb3addb36a90",
+          "dirty": false
+        },
+        "updateAvailable": [],
+        "roomLocal": [
+          "diagnose-and-propose",
+          "grill-with-docs"
+        ]
+      }
+    ],
+    "exactManagedFiles": 91,
+    "optionalSkillsLexiconManifestUnchanged": 5,
+    "sourceClean": true
+  },
+  "recovery": {
+    "candidate": "ee3855b",
+    "restoredSkillFiles": 56,
+    "reappliedSkillFiles": 56,
+    "reappliedSource": "45a857f25adadeb068e0f000c09dcb3addb36a90",
+    "componentVerifiers": [
+      {
+        "component": "tools",
+        "status": "valid",
+        "updateAvailable": []
+      },
+      {
+        "component": "skills",
+        "status": "valid",
+        "updateAvailable": []
+      }
+    ],
+    "candidateUnchanged": true,
+    "limits": "Component rollback exercised in disposable clone using local backup; original Template integration276d3107 is portable whole-room recovery. Unchanged tools had no new backup and were verified byte-identical instead."
+  },
+  "linkCheck": {
+    "files": 9,
+    "result": "pass"
+  },
+  "fidelityCounts": {
+    "AGENTS.md": {
+      "filled": 2,
+      "unchanged": 17,
+      "dropped": 3,
+      "changed": 9,
+      "added": 3
+    },
+    "BLUEPRINT.md": {
+      "filled": 4,
+      "unchanged": 9,
+      "dropped": 6,
+      "changed": 0,
+      "added": 79
+    },
+    "GLOSSARY.md": {
+      "filled": 5,
+      "unchanged": 377,
+      "dropped": 1,
+      "changed": 1,
+      "added": 14
+    },
+    "ARCHITECTURE.md": {
+      "filled": 6,
+      "unchanged": 152,
+      "dropped": 0,
+      "changed": 2,
+      "added": 9
+    },
+    "RUNBOOK.md": {
+      "filled": 3,
+      "unchanged": 49,
+      "dropped": 4,
+      "changed": 0,
+      "added": 4
+    },
+    "TASKBOARD.md": {
+      "filled": 5,
+      "unchanged": 30,
+      "dropped": 7,
+      "changed": 1,
+      "added": 7
+    },
+    "README.md": {
+      "filled": 8,
+      "unchanged": 51,
+      "dropped": 106,
+      "changed": 8,
+      "added": 52
+    },
+    "CLAUDE.md": {
+      "filled": 0,
+      "unchanged": 1,
+      "dropped": 0,
+      "changed": 0,
+      "added": 0
+    },
+    ".claude/settings.json": {
+      "filled": 0,
+      "unchanged": 60,
+      "dropped": 0,
+      "changed": 0,
+      "added": 0
+    },
+    "workbench/wiki/SCHEMA.md": {
+      "filled": 2,
+      "unchanged": 148,
+      "dropped": 114,
+      "changed": 26,
+      "added": 30
+    },
+    "workbench/wiki/AGENTS.md": {
+      "filled": 3,
+      "unchanged": 40,
+      "dropped": 16,
+      "changed": 11,
+      "added": 13
+    },
+    "workbench/wiki/design-concepts/README.md": {
+      "filled": 2,
+      "unchanged": 65,
+      "dropped": 22,
+      "changed": 10,
+      "added": 11
+    },
+    "workbench/wiki/features/README.md": {
+      "filled": 2,
+      "unchanged": 78,
+      "dropped": 13,
+      "changed": 5,
+      "added": 6
+    },
+    "workbench/wiki/MEMORY.md": {
+      "filled": 3,
+      "unchanged": 72,
+      "dropped": 17,
+      "changed": 6,
+      "added": 24
+    }
+  },
+  "preservedRoomRules": "AGENTS differs from original276d3107 only at startup route line7; owner-only main and all other room rules are byte-identical.",
+  "limitations": [
+    "Native workspace closeout snapshot refused unknown-task for existing table-backed Task; actual starting inventory retained instead.",
+    "Tools updater returned current and correctly preserved authentic a584 receipt; all runtime bytes equal45a.",
+    "Local component backup is host-local; original Git276d3107 is portable whole-room recovery.",
+    "Four Wiki stale stamps and remaining baseline diagnostics retained; unrelated artifact caps and Lexicon retirement excluded.",
+    "Independent review, two-context continuation, hosted checks and integration containment pending."
+  ]
+}

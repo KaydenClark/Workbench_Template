@@ -3,9 +3,9 @@
   "baseline": "276d3107874dbf0c84f1f81bab4818daf9ec3ab8",
   "producer": "45a857f25adadeb068e0f000c09dcb3addb36a90",
   "baselineTrackedFiles": 196,
-  "phase": "candidate before final proof amendment",
+  "phase": "final candidate inventory before immutable commit",
   "selfExcluded": "workbench/specs/S-000E-v3-2-2-harness-upgrade/proof/runbook-preservation.json",
-  "limits": "This is a per-path preservation comparison, not a native closeout snapshot or proof of remote recovery; the proof file itself is excluded to avoid recursive hashing. Later evidence-only amendments retain their Git diff/history.",
+  "limits": "This is a per-path preservation comparison, not a native closeout snapshot or proof of remote recovery; this inventory file itself is excluded to avoid recursive hashing.",
   "entries": [
     {
       "path": ".agents/skills/.workbench-skills.json",
@@ -1220,7 +1220,7 @@
         "path": "TASKBOARD.md",
         "kind": "file",
         "mode": "0o644",
-        "sha256": "dc36e94fe16eaf3b69887de20df74f2bf1e7c88a944e36b23afa59e61be96ecd"
+        "sha256": "e889fc499994f4c1f59a2054fde8d5a12609f1d74370db7cc421bd75953852d1"
       },
       "disposition": "bounded RUNBOOK continuation reconciliation"
     },
@@ -1908,7 +1908,7 @@
         "path": "workbench/specs/S-000E-v3-2-2-harness-upgrade/SPEC.md",
         "kind": "file",
         "mode": "0o644",
-        "sha256": "2d2a48e4662eb578d2a56848059faf4da9cee820ade64d3e411501958b378854"
+        "sha256": "d85d246f427306852c6d65e56927e5262451280c2b7c6c670f6f0dbf7e66c0d8"
       },
       "disposition": "bounded RUNBOOK continuation reconciliation"
     },
@@ -1951,7 +1951,18 @@
         "path": "workbench/specs/S-000E-v3-2-2-harness-upgrade/proof/runbook-taskboard-2026-10-29.md",
         "kind": "file",
         "mode": "0o644",
-        "sha256": "3507e6131001db7df131031d7de2f9593b5ba1e094e20e76f7051b07687e7c71"
+        "sha256": "d488e2c2f847a87642f9b6d16bbb13c5ed43e64e44c376dcf30d90b0a25549a7"
+      },
+      "disposition": "bounded RUNBOOK continuation reconciliation"
+    },
+    {
+      "path": "workbench/specs/S-000E-v3-2-2-harness-upgrade/proof/runbook-verification.json",
+      "before": null,
+      "after": {
+        "path": "workbench/specs/S-000E-v3-2-2-harness-upgrade/proof/runbook-verification.json",
+        "kind": "file",
+        "mode": "0o644",
+        "sha256": "f329545548f08e870a0a3f17ba9020bac7c525cf381d689706e0236a61b19f95"
       },
       "disposition": "bounded RUNBOOK continuation reconciliation"
     },
@@ -2874,7 +2885,7 @@
         "path": "workbench/wiki/context-runbook-continuation.md",
         "kind": "file",
         "mode": "0o644",
-        "sha256": "d372e39ee1dd0c7a10f3495d058da5f085a1d2d4a05dd470718cd02e7bd7dde4"
+        "sha256": "95082d9d01dfe10c40f39bde7ffaa410e3b185929a23927a2f6920cf41d9b56d"
       },
       "disposition": "bounded RUNBOOK continuation reconciliation"
     },

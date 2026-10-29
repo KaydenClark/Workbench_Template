@@ -8,8 +8,8 @@
 **Updated:** 2026-10-29
 **Catalog description:** Install the pinned LLM Workbench v3.2.2 source candidate into Workbench_Template integration through the supported update route, preserving the room and recording upgrade and recovery proof for the release audit.
 **Blockers:** none within the installation; release fitness audit, independent assembled review and owner main approval are separate gates
-**Latest event:** The reviewed RUNBOOK/TASKBOARD continuation repair is installed from producer 45a857f2; target verification and checked integration delivery are in progress.
-**Next gate:** Finish target verification, independent review and installed continuation proof for the bounded RUNBOOK repair, then checked Template integration delivery. Broader upgrade/release gates remain open.
+**Latest event:** RUNBOOK repair installed from reviewed producer 45a857f2; target tour 26/26, full suite, 500/501 boundary, exact managed bytes and disposable rollback/reapply pass.
+**Next gate:** Independent review and two-context installed continuation proof for the bounded RUNBOOK repair, then required hosted checks and Template integration delivery. Broader upgrade/release gates remain open.
 
 ## Outcome
 
@@ -301,6 +301,8 @@ feedback log rows; tour and its tests.
 | 2026-10-28 | TK-000D | S-006J capped gate fix reinstalled from LLM_Workbench 95023de5 (PR #646) through update-harness | Baseline suite green at 38085384; migrate and tools update current; skills update changed update-harness (receipt 95023de5); optional skills current; verify valid; hook command and .claude/README.md reconciled by hand; settings fidelity 60 unchanged; candidate suite recorded in the PR | .claude/settings.json, .claude/README.md, .agents/skills/update-harness, skills receipt, this Spec | Reviewed merge into integration; full installed scenario set on the merged commit (LLM_Workbench TK-00B4) |
 
 | 2026-10-29 | TK-000D | Bounded RUNBOOK/TASKBOARD source installed under scoped owner approval | Original integration 276d3107 baseline: tour 23/23 and evidence-history 14/14; three new tests failed on 611 words, absent TASKBOARD route and present STARTUP. Supported migration/tools current; skills update changed four core skills and receipt names reviewed source 45a857f2. Candidate tour 26/26; actual installed-file boundary 500 passes and 501 fails in disposable copy, including comments/fences; RUNBOOK 244 words. All 91 managed files equal 45a857f2; unchanged runtime receipt retains authentic a58466ad provenance. | Compact manual, current routes, source-generated board, continuation procedure and preserved STARTUP disposition in linked proof. | Recovery exercise, final committed full suite, independent review, two-context continuation, hosted checks and integration containment pending; broader upgrade remains in progress and main is excluded. |
+
+| 2026-10-29 | TK-000D | Bounded installed verification and recovery checked | Product checkpoint ee3855b: complete target suite passes (tour 26/26, evidence-history 14/14, 11 historical evidence sections, syntax/layout/doctor/Wiki/ADR/whitespace). Nine changed entry files pass link/anchor checks. All 91 managed files equal source 45a857f2, optional skills/Lexicon/manifest unchanged. Disposable skills rollback restores 56 baseline files exactly; supported reapply restores 56 current files, both verifiers valid and tour 26/26. AGENTS only route line7 differs from original and owner-only main stays unchanged. | Linked scoped proof, machine-readable verification and per-path preservation; generated TASKBOARD. | Independent review, two-context continuation, hosted checks and integration containment pending; no whole upgrade, main or release claim. |
 
 ## Completion Result
 

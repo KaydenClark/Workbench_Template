@@ -70,7 +70,36 @@ instead (SHA-256 `c84988840fbc16e406410dc2a9c3250dde46aafb388c48eae6e41ca1bb8322
 
 ## Candidate verification and remaining gates
 
-Target green checks, 500/501 boundary proof, recovery exercise, preservation
-comparison, independent review, two-context installed continuation, hosted checks
-and integration containment remain pending until their actual results are added.
-The broader upgrade Task stays in progress; main remains untouched.
+At product checkpoint `ee3855b`, all 26 tour tests pass and the complete target
+suite passes: 14 evidence-history tests, 11 preserved evidence sections against
+`276d3107`, syntax, layout, doctor, Wiki, ADR and whitespace. The committed
+candidate suite is rerun before publication. Nine changed entry/operations files
+pass the producer's link/anchor check; RUNBOOK is 244 whole-file words.
+
+The same installed tour test, reading the actual RUNBOOK file in a disposable
+copy of the candidate, passes at exactly 500 words and fails at 501. Its added
+payload sits inside comments and a fenced block, proving those tokens count.
+The original candidate bytes remain unchanged. The existing required `verify`
+already runs this portable target test; no producer file path or external rules
+change is required to enforce the cap.
+
+All 35 runtime files and 56 files across 33 core skills equal reviewed producer
+`45a857f2`; both managed verifiers report valid and no updates. Optional skills,
+archived Lexicon, manifest identity and provenance are unchanged. Only AGENTS
+startup-route line 7 differs from the original target; every other room rule,
+including its stricter owner-only main rule, is byte-identical. The control
+fidelity diagnostic retains AGENTS counts 17 unchanged, 9 changed and 3 dropped,
+which were already deliberate room differences.
+
+In a separate committed clone, the recorded skills backup restored all 56 old
+core-skill files exactly to baseline `276d3107`. Supported reapply restored all
+56 current files, both verifiers reported valid with no updates, and tour 26/26
+passed. The original candidate stayed clean. Unchanged runtime files needed no
+new rollback backup. [Machine-readable verification](runbook-verification.json)
+and [per-path preservation](runbook-preservation.json) retain the exact scope and
+limits. No observed friction within this repair requires an additional feedback
+assignment; the native table-backed closeout limitation remains explicit above.
+
+Independent review, two-context installed continuation, hosted checks and
+integration containment remain pending. The broader upgrade Task stays in
+progress; main remains untouched.
