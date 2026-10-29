@@ -8,8 +8,8 @@
 **Updated:** 2026-10-28
 **Catalog description:** Install the pinned LLM Workbench v3.2.2 source candidate into Workbench_Template integration through the supported update route, preserving the room and recording upgrade and recovery proof for the release audit.
 **Blockers:** none within the installation; release fitness audit, independent assembled review and owner main approval are separate gates
-**Latest event:** Independent review findings repaired on the room side.
-**Next gate:** Required CI and reviewed merge into Template integration.
+**Latest event:** Gate controls reinstalled from LLM_Workbench 8b914257 through update-harness; review should-fixes recorded.
+**Next gate:** Reviewed merge of the gate reinstall into Template integration, then installed agent scenarios on the merged commit (LLM_Workbench S-006J TK-00B4).
 
 ## Outcome
 
@@ -175,6 +175,63 @@ are not whole-room recovery. In a separate copy (first install),
 `skills-lane-rollback` returned the lane to `workbench/skills`, and a rerun
 `migrate` relocated it again to a tree identical to the candidate.
 
+Gate reinstall from `8b914257` (LLM_Workbench PR #642, S-006J TK-00BR;
+2026-10-29): baseline suite green at Template integration `b995aecb`. From the
+merged source, `migrate` reported `current`. The `workbench-tools` and
+`workbench-skills` updates and both optional-skill installs reported
+`current`, and both `verify` runs reported `valid`. The source changed no
+managed byte since `a58466ad`, so the receipts keep `a58466ad`. The only
+template changes since `a58466ad` are the AGENTS gate and autonomy lines, the
+`.claude/settings.json` `UserPromptSubmit` gate-reminder hook and its
+`.claude/README.md` paragraph. Each was reconciled by hand into the room
+copy, following update-harness section 3.
+
+- The AGENTS gate line now matches the template.
+- The room's own autonomy line ("Do not add approval gates or treat a question
+  as authorization") is deliberately replaced by the template line ("add no
+  other gates"): it contradicted the two gates.
+- The room README names the hook's consistency test as the producer's test.
+
+Control fidelity: AGENTS moves from 15 to 17 unchanged lines (changed 11 to 9).
+`.claude/settings.json` goes from 5 dropped lines to fully unchanged (60
+unchanged). Other controls are unchanged from the earlier reconciliation.
+
+Corrections and decisions after review of the gate reinstall (2026-10-28 local
+time; the evidence row above dated 2026-10-29 used UTC):
+
+- The settings count above is wrong. At base `b995aecb`, the pinned-source
+  report counts 12 dropped `.claude/settings.json` lines: 7 trivial brace or
+  bracket lines and 5 labelled newer-template. The labelled five are
+  `"hooks": {`, `"UserPromptSubmit": [`, `"hooks": [`, `"type": "command",`
+  and the command line. The report's summary prints this as "dropped 5 (7
+  trivial)". `--previous-templates` set to the templates at `a58466ad` gives
+  the same numbers. After the reinstall, nothing is dropped and all 60 lines are
+  unchanged. Reproduce with `node tools/control-fidelity.mjs report --project
+  ROOM --control .claude/settings.json` from the `8b914257` checkout; add
+  `--previous-templates TEMPLATES_AT_a58466ad`, or read `counts` in the JSON
+  output. AGENTS counts at base are unchanged 15, changed 11, dropped 3; after
+  the reinstall they are unchanged 17, changed 9, dropped 3.
+- Decision on the dropped clause "or treat a question as authorization" (from
+  the room's own autonomy line). The producer template dropped its
+  counterpart, "questions grant no authority", in LLM_Workbench S-006J TK-00BR.
+  Two reasons: the entry brief's 500-word budget, and the new gate line, which
+  requires an explicit owner confirmation of a readback before any file change.
+  No room line now states the clause directly. It is covered only by
+  implication:
+  - "no request confirms itself", together with the requirement to confirm a
+    readback explicitly before changing files, means a question cannot
+    authorize a change;
+  - the Claude Code hook says approval wording inside a request is not
+    confirmation.
+
+  Neither says in words that a question is not authorization. Installed
+  scenario 9a (a "What would that involve?" question) made no edits under the
+  new wording. The room accepts this coverage by implication and does not
+  restore the clause.
+- `.claude/README.md` no longer claims a producer test keeps the room's hook
+  consistent. Nothing in this room checks the installed hook against the
+  `AGENTS.md` gate line, so the two are kept in step by hand.
+
 ## Documentation Impact
 
 AGENTS, RUNBOOK, README, BLUEPRINT, STARTUP and TASKBOARD stamps and routes;
@@ -193,6 +250,8 @@ feedback log rows; tour and its tests.
 | 2026-10-28 | TK-000D | Reinstalled from repaired pinned source 413e7039 (LLM_Workbench PR #637) | migrate current, Lexicon archived with 69 dispositions (9 lines now tool-landed), no retired-lane links; the source's line-ending policy step rewrote .gitattributes to one managed block; tools update changed 6 files and skills update changed implement and update-harness with backups recorded as `~/` descriptors; optional reinstall refused with skill-collision over identical bytes (no write). Pinned-source verify valid for tools and skills; all 35 runtime files, 33 core skill trees and both optional skills equal 413e7039. Doctor: no retired-skills-lane-link; positive control with one stale `../skills/` link reports it. Fresh relocation from 2f162c46 reports 74 retired-lane links and writes one block. Disposable copy: tools and skills rollback (backup directory plus --home) restored the 857a196 bytes, both verify valid, reapply returned candidate bytes with only receipt metadata differing, tour 22/22 | preservation.json reinstall deltas, lexicon-disposition.json, controls | CI, independent review and integration containment pending |
 | 2026-10-28 | TK-000D | Reinstalled from repaired pinned source a58466ad (LLM_Workbench PR #638) | tools update changed workspace-closeout.mjs and skills update changed implement and update-harness, with `~/` backups; optional skills report current; migrate current, Lexicon archived. Pinned-source verify valid; all 35 runtime files, 33 core skill trees and both optional skills equal a58466ad. Disposable copy: rollback with the receipts' `~/NAME` form plus --home restored the 421094e bytes, both verify valid, reapply returned candidate bytes, tour 22/22. Closeout: this room's table-backed S-000E cannot host a snapshot (`unknown-task`); in a disposable GitHub clone with a record-backed fixture Task, an inherited stash, an untracked file and local-only commits, `check` exited 1 with retained-stash-not-remote, retained-bytes-not-remote, retained-ref-not-remote and unaccounted findings, and remoteRecoverable false | preservation.json, Spec header | CI, independent review and integration containment pending |
 | 2026-10-28 | TK-000D | Independent review of 934c9348 (APPROVE, non-blocking findings) repaired on the room side | Glossary **Declared integration branch** corrected to the AGENTS meaning, and Lexicon line 162 given its own note; 69 Lexicon dispositions marked pending owner confirmation, with a retire-lexicon gate in LEXICON.md status, this Spec and Version History; archive tidied (2 separator rows, empty Continuity Terms table, 4 landed fragments) with migrate still archived and 0 unlanded (genericHomesMissing now lists GLOSSARY.md and ARCHITECTURE.md because the room changed template lines); Upgrade Proof records a58466ad and the volatile `--home /private/tmp/tk00b7-home3`; Template operations points the v3.2.1 policy to revision 2f162c46; Blueprint entry route, Architecture codemap and README/tour root-file statements made truthful (tour test red first: module export missing and blurb claim, then 23/23); `/LEXICON.md text=auto eol=lf` added as a room-owned line outside the managed block, `git check-attr eol LEXICON.md` reports lf, and the policy step keeps it. Suite: evidence-history 14/14, history check, tour 23/23, syntax, layout, doctor no blocker, Wiki, ADR, diff check, 0 broken links; pinned-source verify valid | GLOSSARY, LEXICON, ARCHITECTURE, BLUEPRINT, README, tour and test, .gitattributes, Template operations, Version History, Spec, disposition | CI, owner Lexicon confirmation and integration containment pending |
+| 2026-10-29 | TK-000D | Gate reinstall from LLM_Workbench 8b914257 (PR #642, S-006J TK-00BR) through the update-harness route | Baseline suite green at b995aecb; migrate, tools, skills and optional-skill updates current; both verify valid; AGENTS gate and autonomy lines, settings hook and .claude README reconciled by hand; fidelity AGENTS unchanged 15 to 17, settings fully unchanged; candidate suite below | AGENTS, .claude/settings.json, .claude/README.md, this Spec | Reviewed merge into integration; installed agent scenarios on the merged commit (LLM_Workbench TK-00B4) |
+| 2026-10-28 | TK-000D | Gate reinstall candidate suite and review corrections | Candidate suite on the README fix 523ac287 (room content of the final head): tour 23/23, evidence-history 14/14, check-evidence-history 11 sections against b995aecb, node --check tour.mjs, layout valid, doctor no blocking finding, Wiki and ADR valid, diff check, all exit 0. Fidelity from 8b914257: settings 12 dropped at base (7 trivial, 5 newer-template), 0 dropped and 60 unchanged after; AGENTS unchanged 15 to 17, changed 11 to 9, dropped 3 | .claude/README.md wording; this Spec: settings-count correction and question-clause decision | Reviewed merge into integration; installed agent scenarios on the merged commit (LLM_Workbench TK-00B4) |
 
 ## Completion Result
 
