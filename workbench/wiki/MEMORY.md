@@ -26,6 +26,8 @@ state; it routes to it. Private jots remain outside shared routes.
 - [Workbench features and capabilities](workbench-capabilities.md) - capabilities, purpose, introduction evidence, source availability and limits.
 - [Catalog scope](context-workbench-feature-catalog.md) - the sourced owner intent and local delivery boundary.
 
+- [RUNBOOK continuation](context-runbook-continuation.md) - scoped owner approval and source-linked migration context; current work and proof stay in the upgrade Spec.
+
 ## Source Precedence
 
 1. Verified runtime and this room's live controls: `AGENTS.md`, `BLUEPRINT.md`,

@@ -27,7 +27,7 @@ for capabilities, purpose, version evidence and availability.
 
 ## How This Project Is Run
 
-Start with [AGENTS](AGENTS.md) -> [Runbook orientation](RUNBOOK.md#get-oriented) -> the assigned Spec and Task; [STARTUP](STARTUP.md) is the shared continuation view. Read other owners when the operation needs them:
+Follow [AGENTS](AGENTS.md) and the [RUNBOOK cold-start flow](RUNBOOK.md#get-oriented) through relevant context to [TASKBOARD](TASKBOARD.md), then its current work owners. Read other owners when the operation needs them:
 
 - [`AGENTS.md`](AGENTS.md) - how agents behave here: authority order, read/edit
   scope, the task-selection loop, documentation ownership, and proof rules.
@@ -52,9 +52,8 @@ Start with [AGENTS](AGENTS.md) -> [Runbook orientation](RUNBOOK.md#get-oriented)
   Workbench Feedback, the return channel to the reusable harness these docs
   came from: log where the harness rules themselves are unclear, wrong, or slow
   the work down, so they can be improved upstream. It lives in the feedback
-  lane so the root controls stay at eight. The only other root files are
-  [`STARTUP.md`](STARTUP.md), the shared continuation view, and the archived
-  v3.2.1 [`LEXICON.md`](LEXICON.md).
+  lane so the root controls stay at eight. The only other root Markdown file is
+  the archived v3.2.1 [`LEXICON.md`](LEXICON.md).
 - [`workbench/docs/VERSION_HISTORY.md`](workbench/docs/VERSION_HISTORY.md) -
   how the harness got here. This repository's history replays every LLM
   Workbench generation as one commit and one `version/` branch each, from the
@@ -86,7 +85,7 @@ For **Claude Code**, keep the one-line `CLAUDE.md` containing exactly
 generated `/init` file. Other agents should be pointed at `AGENTS.md` as their
 entry point.
 
-Ordinary continuation follows AGENTS -> Runbook orientation -> assigned Spec and Task, with STARTUP as the shared continuation view; consult only the needed Runbook operation.
+Ordinary continuation follows the RUNBOOK context flow to TASKBOARD and its current Spec/Task owners. Update work and knowledge owners, regenerate the board, then clean up the relevant work; follow the [continuation procedure](.agents/skills/save/taskboard-continuation.md).
 
 Every completed Task must leave proof in its final response and owning Spec's
 append-only evidence log. Milestone specs additionally require a short demo

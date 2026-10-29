@@ -101,7 +101,7 @@ test('the eight root controls are present and all eight are explained', () => {
 
 test('root Markdown files are the eight controls plus named non-control files, and the tour says so', () => {
   const controls = ['AGENTS.md', 'BLUEPRINT.md', 'GLOSSARY.md', 'ARCHITECTURE.md', 'RUNBOOK.md', 'TASKBOARD.md', 'CLAUDE.md', 'README.md'];
-  const nonControls = { 'STARTUP.md': /continuation view/i, 'LEXICON.md': /archived/i };
+  const nonControls = { 'LEXICON.md': /archived/i };
   const rootMarkdown = fs.readdirSync(root).filter((name) => name.endsWith('.md'));
   for (const name of rootMarkdown) {
     assert.ok(controls.includes(name) || name in nonControls, `${name} sits at the root but is neither a control nor a named non-control file`);

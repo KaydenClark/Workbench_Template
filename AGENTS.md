@@ -4,7 +4,7 @@
 
 ## Dev environment tips
 
-- Start with `git status --short --branch`, read this brief and [RUNBOOK](RUNBOOK.md#get-oriented). Follow: [ARCHITECTURE](ARCHITECTURE.md#routes) -> [GLOSSARY](GLOSSARY.md) -> relevant [Wiki/context](workbench/wiki/MEMORY.md); [STARTUP](STARTUP.md) is the shared continuation view. Load the relevant tracked skill before performing its operation.
+- Start with `git status --short --branch`, read this brief and [RUNBOOK](RUNBOOK.md#get-oriented). Follow: [ARCHITECTURE](ARCHITECTURE.md#routes) -> [GLOSSARY](GLOSSARY.md) -> relevant [Wiki/context](workbench/wiki/MEMORY.md); read [TASKBOARD](TASKBOARD.md) to recover relevant work from its current owners. Load the relevant tracked skill before performing its operation.
 - Resolve assigned work through [the manifest](workbench/manifest.json). Read the assigned Spec and Task before editing; use [implement](.agents/skills/implement/SKILL.md#work-selection-and-lifecycle) to select and claim work.
 - Before changing files, read back concept, scope, constraints and endpoint. Before leaving Explore, await explicit owner confirmation; no request confirms itself; intent corrections restart it. Before leaving Prepare, obtain explicit owner approval of planned execution. One response may supply both. Jot each; reuse [authority](.agents/skills/implement/execution-authority.md) within scope.
 - Use the [Wiki router](workbench/wiki/MEMORY.md) for project context, [GLOSSARY](GLOSSARY.md) for meanings, [ARCHITECTURE](ARCHITECTURE.md) for ownership and routes, and [Blueprint](BLUEPRINT.md) for direction. Follow their relevant links; use a bounded search when a route fails.

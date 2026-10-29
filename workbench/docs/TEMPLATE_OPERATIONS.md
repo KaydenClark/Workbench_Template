@@ -13,8 +13,8 @@ should be boring, exact, and executable.
 
 ## Ordinary Entry
 
-Follow [AGENTS](../../AGENTS.md) -> [STARTUP Resume](../../STARTUP.md#resume) ->
-the assigned Spec and Task through the [manifest](../manifest.json). Use the
+Follow [AGENTS](../../AGENTS.md) and the [RUNBOOK cold-start flow](../../RUNBOOK.md#get-oriented) through relevant context to
+[TASKBOARD](../../TASKBOARD.md), then its current work owners through the [manifest](../manifest.json). Use the
 [Runbook's Find, claim and resume route](../../RUNBOOK.md#find-claim-and-resume)
 for selection or resumption; consult [Architecture Routes](../../ARCHITECTURE.md#routes)
 and the [Glossary](../../GLOSSARY.md) when needed. Inspect the root, branch, upstream and dirty state; run the project-local spec doctor and
@@ -120,10 +120,21 @@ Full verification:
 
 ```bash
 node tests/tour.test.mjs
+node tests/evidence-history.test.mjs
+node tools/check-evidence-history.mjs <immutable-base-sha>
 node --check tour.mjs
 node workbench/tools/workbench-layout.mjs validate --project .
 node workbench/tools/spec-workbench.mjs doctor
+node workbench/tools/wiki.mjs validate
+node workbench/tools/adr.mjs validate
+git diff --check
 ```
+
+The immutable base is the fetched integration commit selected before editing.
+The tour suite enforces the whole-file RUNBOOK maximum of 500 whitespace-delimited
+words, including comments and fenced commands; its writing target is 150–250.
+The existing required hosted `verify` runs that suite for integration/main PRs
+and landed commits.
 
 Expected result:
 

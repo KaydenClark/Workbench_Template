@@ -58,10 +58,10 @@ checkpoints and unresolved/correction/handoff dependencies; for cleanup, call th
 claim history; call the Skill tool for `jot` to correct it.
 
 At checkpoint, handoff or yield, update existing source owners first and follow
-[STARTUP reconciliation](../../../STARTUP.md#reconcile). Only its named writer
-updates the shared view; other lanes submit source changes and proposed summaries.
+[TASKBOARD continuation](../save/taskboard-continuation.md#reconcile). Keep one
+writer per owner and serialize shared board regeneration from current sources.
 Verify source freshness on resume and distinguish local, pushed and fetched
-integration state. An unreconciled scaffold grants no authority.
+integration state. The projection grants no authority.
 
 Before yielding, call the shared [workspace closeout procedure](../implement/workflow-reference.md#workspace-closeout), including when publication is blocked.
 

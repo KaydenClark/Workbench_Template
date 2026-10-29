@@ -3,13 +3,13 @@
 **Spec ID:** S-000E
 **Status:** active
 **Priority:** 1
-**Owner:** claude-s006k-tk00b7
+**Owner:** codex-runbook-template
 **Stance:** Builder
-**Updated:** 2026-10-28
+**Updated:** 2026-10-29
 **Catalog description:** Install the pinned LLM Workbench v3.2.2 source candidate into Workbench_Template integration through the supported update route, preserving the room and recording upgrade and recovery proof for the release audit.
 **Blockers:** none within the installation; release fitness audit, independent assembled review and owner main approval are separate gates
-**Latest event:** S-006J capped gate fix reinstalled from LLM_Workbench 95023de5 through update-harness.
-**Next gate:** Reviewed merge into Template integration, then the full installed scenario set on the merged commit (LLM_Workbench S-006J TK-00B4).
+**Latest event:** The reviewed RUNBOOK/TASKBOARD continuation repair is installed from producer 45a857f2; target verification and checked integration delivery are in progress.
+**Next gate:** Finish target verification, independent review and installed continuation proof for the bounded RUNBOOK repair, then checked Template integration delivery. Broader upgrade/release gates remain open.
 
 ## Outcome
 
@@ -20,6 +20,20 @@ manifest stamp and receipts, filled Glossary and Architecture, the relocated
 `.agents/skills` lane and the six confirmed workflows, with every room-owned
 file preserved or deliberately reconciled. The result is an assessable
 candidate for the v3.2.2 release audit, not a release pass.
+
+## Bounded RUNBOOK continuation repair — 2026-10-29
+
+The current writer owns only Kayden's approved RUNBOOK/TASKBOARD repair through
+Template integration: [authority and recovery proof](proof/runbook-taskboard-2026-10-29.md).
+It consumes reviewed producer `45a857f25adadeb068e0f000c09dcb3addb36a90` after
+producer PR #652 landed. This updates the earlier installed generation without
+rewriting its historical evidence or claiming the entire upgrade complete.
+RUNBOOK teaches the complete prompt-guided startup and finish/knowledge/cleanup
+flow; TASKBOARD projects current work owners and replaces STARTUP continuation.
+The exact 500-word RUNBOOK cap runs in the existing required tour/CI suite.
+Archived Lexicon, other artifact requirements, Audit and main remain outside this
+bounded repair. The table-backed TK-000D remains in progress; no new live queue
+or replacement Task is introduced.
 
 ## Why It Matters
 
@@ -265,7 +279,8 @@ TK-00B4 fix round under owner direction JOT-c6b4d000; 2026-10-28 local time):
 
 ## Documentation Impact
 
-AGENTS, RUNBOOK, README, BLUEPRINT, STARTUP and TASKBOARD stamps and routes;
+AGENTS, RUNBOOK, README, BLUEPRINT and TASKBOARD stamps and routes;
+STARTUP retirement and its preserved continuation/recovery meaning;
 filled GLOSSARY and ARCHITECTURE; archived LEXICON; Wiki router and new
 project-terms article; Template operations, AUTO_MERGE and Wiki SCHEMA links;
 feature catalog copied from the pinned source; Version History entry;
@@ -284,6 +299,8 @@ feedback log rows; tour and its tests.
 | 2026-10-29 | TK-000D | Gate reinstall from LLM_Workbench 8b914257 (PR #642, S-006J TK-00BR) through the update-harness route | Baseline suite green at b995aecb; migrate, tools, skills and optional-skill updates current; both verify valid; AGENTS gate and autonomy lines, settings hook and .claude README reconciled by hand; fidelity AGENTS unchanged 15 to 17, settings fully unchanged; candidate suite below | AGENTS, .claude/settings.json, .claude/README.md, this Spec | Reviewed merge into integration; installed agent scenarios on the merged commit (LLM_Workbench TK-00B4) |
 | 2026-10-28 | TK-000D | Gate reinstall candidate suite and review corrections | Candidate suite on the README fix 523ac287 (room content of the final head): tour 23/23, evidence-history 14/14, check-evidence-history 11 sections against b995aecb, node --check tour.mjs, layout valid, doctor no blocking finding, Wiki and ADR valid, diff check, all exit 0. Fidelity from 8b914257: settings 12 dropped at base (7 trivial, 5 newer-template), 0 dropped and 60 unchanged after; AGENTS unchanged 15 to 17, changed 11 to 9, dropped 3 | .claude/README.md wording; this Spec: settings-count correction and question-clause decision | Reviewed merge into integration; installed agent scenarios on the merged commit (LLM_Workbench TK-00B4) |
 | 2026-10-28 | TK-000D | S-006J capped gate fix reinstalled from LLM_Workbench 95023de5 (PR #646) through update-harness | Baseline suite green at 38085384; migrate and tools update current; skills update changed update-harness (receipt 95023de5); optional skills current; verify valid; hook command and .claude/README.md reconciled by hand; settings fidelity 60 unchanged; candidate suite recorded in the PR | .claude/settings.json, .claude/README.md, .agents/skills/update-harness, skills receipt, this Spec | Reviewed merge into integration; full installed scenario set on the merged commit (LLM_Workbench TK-00B4) |
+
+| 2026-10-29 | TK-000D | Bounded RUNBOOK/TASKBOARD source installed under scoped owner approval | Original integration 276d3107 baseline: tour 23/23 and evidence-history 14/14; three new tests failed on 611 words, absent TASKBOARD route and present STARTUP. Supported migration/tools current; skills update changed four core skills and receipt names reviewed source 45a857f2. Candidate tour 26/26; actual installed-file boundary 500 passes and 501 fails in disposable copy, including comments/fences; RUNBOOK 244 words. All 91 managed files equal 45a857f2; unchanged runtime receipt retains authentic a58466ad provenance. | Compact manual, current routes, source-generated board, continuation procedure and preserved STARTUP disposition in linked proof. | Recovery exercise, final committed full suite, independent review, two-context continuation, hosted checks and integration containment pending; broader upgrade remains in progress and main is excluded. |
 
 ## Completion Result
 
