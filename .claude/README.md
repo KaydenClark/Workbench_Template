@@ -43,8 +43,9 @@ widen or simplify the rule, or record the deliberate restriction in `AGENTS.md`.
 The `UserPromptSubmit` hook adds a one-line reminder of the two gates in
 `AGENTS.md` to each owner message: the readback waits for confirmation, and a
 confirmation alone is jotted but does not start execution without approval.
-The LLM Workbench producer test `tools/test-mandatory-workflow-gates.mjs` keeps
-it consistent with `AGENTS.md`. Installed headless trials showed the prose rule
+The LLM Workbench producer checks only its own template copies of the hook and
+the gate line; nothing in this room checks them against each other, so keep the
+hook and the `AGENTS.md` gate line in step by hand. Installed headless trials showed the prose rule
 alone did not stop agents on plain change requests, approval wording or intent
 corrections (LLM Workbench S-006J TK-00BR). It only adds context; it blocks
 nothing and grants no authority.
