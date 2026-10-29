@@ -5,6 +5,9 @@ boundary mechanical for Claude Code: the harness enforces it instead of trusting
 the agent to remember. Other agents still read `AGENTS.md`; this is the belt to
 that suspenders.
 
+This file only explains `.claude/settings.json`. Don't add notes here; put
+notes, history and rationale in the Wiki (`workbench/wiki/`).
+
 Fill the `[BRACKETED]` placeholders from the same scope you filled in
 `AGENTS.md`. Each of the three permission buckets maps to one declarative scope
 idea:
@@ -42,13 +45,11 @@ widen or simplify the rule, or record the deliberate restriction in `AGENTS.md`.
 
 The `UserPromptSubmit` hook adds a one-line reminder of the two gates in
 `AGENTS.md` to each owner message: the readback waits for confirmation, and a
-confirmation alone is jotted but does not start execution without approval.
-The LLM Workbench producer checks only its own template copies of the hook and
-the gate line; nothing in this room checks them against each other, so keep the
-hook and the `AGENTS.md` gate line in step by hand. Installed headless trials showed the prose rule
-alone did not stop agents on plain change requests, approval wording or intent
-corrections (LLM Workbench S-006J TK-00BR). It only adds context; it blocks
-nothing and grants no authority.
+confirmation alone is jotted but does not start execution without approval; a
+request only to Map or Plan ends at prepared work, and an ordinary fix inside
+approved scope needs no new ask. The LLM Workbench producer checks only its own
+template copies, so keep the hook and the `AGENTS.md` gate line in step by hand.
+It only adds context; it blocks nothing and grants no authority.
 
 Notes:
 

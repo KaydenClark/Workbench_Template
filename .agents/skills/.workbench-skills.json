@@ -3,7 +3,7 @@
   "source": {
     "repository": "https://github.com/KaydenClark/LLM_Workbench.git",
     "release": "v3.2.2",
-    "commit": "a58466ad1dca4ce7d6bd1a8328f47d6a58a2ee8d",
+    "commit": "95023de5d8992e7bc3b5424abe87269f504eaa3c",
     "dirty": false
   },
   "installedAt": "2026-10-19",
@@ -19,7 +19,7 @@
     "to-spec": "60011d959797e6b253a1dc660cdc8886f65289cea8be3c91cff8c0e9a18b0bfa",
     "to-tasks": "f3ec72f6bfd7efa641e32b0dd5ded265fdc960f83ad2b1ee7424764271df01e9",
     "tracer-bullet": "3e567ca9d9aaa70dc087b90822f82b9865a70a2a61a99ca95989049a103b9c3a",
-    "update-harness": "4cc6d7782e1be291bcf4d1dc744f908ce450e094cf37c7a3c6a909e563e72651",
+    "update-harness": "6a4d1ed54c82b4e0e7963b450aedda84c77df88279cba3770ff552b04fb8a3c5",
     "carry": "f09b4da88b6cd0ef9864f15d92cf133ddf92d8399f9df188751ceeae9eb5477a",
     "notepad": "aa8d2d5b18d4a055d165ab3c27181803fd4d43798bc2d3016714aa69db9e7591",
     "jot": "dabfcbfb7fd7e15f085f08885801cf065644141bb329dee25576b2607d030f20",
@@ -127,7 +127,13 @@
         "implement",
         "update-harness"
       ]
+    },
+    {
+      "path": "~/.workbench-skills-backup-BEGXhy",
+      "skills": [
+        "update-harness"
+      ]
     }
   ],
-  "updatedAt": "2026-10-28"
+  "updatedAt": "2026-10-29"
 }
