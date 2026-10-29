@@ -8,8 +8,8 @@
 **Updated:** 2026-10-29
 **Catalog description:** Install the pinned LLM Workbench v3.2.2 source candidate into Workbench_Template integration through the supported update route, preserving the room and recording upgrade and recovery proof for the release audit.
 **Blockers:** none within the installation; release fitness audit, independent assembled review and owner main approval are separate gates
-**Latest event:** RUNBOOK repair installed from reviewed producer 45a857f2; target tour 26/26, full suite, 500/501 boundary, exact managed bytes and disposable rollback/reapply pass.
-**Next gate:** Independent review and two-context installed continuation proof for the bounded RUNBOOK repair, then required hosted checks and Template integration delivery. Broader upgrade/release gates remain open.
+**Latest event:** Candidate eb3600fb622e9b013f88be6d1509e407d30173aa observed contained in origin/integration at b874814af4f58eb1d2718888ac54b53ea5f3bbb1; continuation recorded.
+**Next gate:** The bounded RUNBOOK repair is delivered. Continue remaining broader upgrade acceptance through its existing release owners, including installed authority proof and unresolved Lexicon disposition confirmation; main and release approval remain excluded from this assignment.
 
 ## Outcome
 
@@ -303,10 +303,19 @@ feedback log rows; tour and its tests.
 | 2026-10-29 | TK-000D | Bounded RUNBOOK/TASKBOARD source installed under scoped owner approval | Original integration 276d3107 baseline: tour 23/23 and evidence-history 14/14; three new tests failed on 611 words, absent TASKBOARD route and present STARTUP. Supported migration/tools current; skills update changed four core skills and receipt names reviewed source 45a857f2. Candidate tour 26/26; actual installed-file boundary 500 passes and 501 fails in disposable copy, including comments/fences; RUNBOOK 244 words. All 91 managed files equal 45a857f2; unchanged runtime receipt retains authentic a58466ad provenance. | Compact manual, current routes, source-generated board, continuation procedure and preserved STARTUP disposition in linked proof. | Recovery exercise, final committed full suite, independent review, two-context continuation, hosted checks and integration containment pending; broader upgrade remains in progress and main is excluded. |
 
 | 2026-10-29 | TK-000D | Bounded installed verification and recovery checked | Product checkpoint ee3855b: complete target suite passes (tour 26/26, evidence-history 14/14, 11 historical evidence sections, syntax/layout/doctor/Wiki/ADR/whitespace). Nine changed entry files pass link/anchor checks. All 91 managed files equal source 45a857f2, optional skills/Lexicon/manifest unchanged. Disposable skills rollback restores 56 baseline files exactly; supported reapply restores 56 current files, both verifiers valid and tour 26/26. AGENTS only route line7 differs from original and owner-only main stays unchanged. | Linked scoped proof, machine-readable verification and per-path preservation; generated TASKBOARD. | Independent review, two-context continuation, hosted checks and integration containment pending; no whole upgrade, main or release claim. |
+| 2026-10-29 | landing | Integration landing recorded (run 1) | git merge-base --is-ancestor eb3600fb622e9b013f88be6d1509e407d30173aa b874814af4f58eb1d2718888ac54b53ea5f3bbb1: passed; origin/integration observed at b874814af4f58eb1d2718888ac54b53ea5f3bbb1; local refs only, fetch freshness is the caller's responsibility | Current continuation recorded; render and publish the owner records, then read them back from fetched integration. No review, approval or completion inferred. | The bounded RUNBOOK repair is delivered. Continue remaining broader upgrade acceptance through its existing release owners, including installed authority proof and unresolved Lexicon disposition confirmation; main and release approval remain excluded from this assignment. |
+
+| 2026-10-29 | TK-000D | Bounded RUNBOOK repair delivered; remaining broader gate retained | PR27 reviewed head eb3600fb contained in fetched integration b874814a with identical tree; independent review 5704020122 PASS and landed verify 40943481371 SUCCESS. Fresh HTTPS clone: all nine room commands, tour 26/26, history 14/14, 11 sections and both managed verifiers pass; fetching declared integration corrects only the initial single-branch diagnostic. Two fresh local contexts at unchanged product ee3855b/checkpoint eeee77f recover existing owner, approval, knowledge and next action through normal entry; first renders board and removes only its attributed ignored probe, second performs read-only 26/14/11 checks. | Sanitized linked proof, existing source owners and generated TASKBOARD. | Bounded local continuation is not cross-device recovery or reliability. Native snapshot unknown-task remains; broader upgrade/installed authority acceptance, Lexicon confirmation, Audit/release and owner-only main stay separate. |
 
 ## Completion Result
 
-Pending: required CI, reviewed integration merge and containment.
+The bounded RUNBOOK/TASKBOARD repair is delivered through [PR #27](https://github.com/KaydenClark/Workbench_Template/pull/27):
+reviewed `eb3600fb622e9b013f88be6d1509e407d30173aa` is contained in fetched
+integration `b874814af4f58eb1d2718888ac54b53ea5f3bbb1`, whose hosted verify passed.
+[Exact scoped proof and continuation limits](proof/runbook-taskboard-2026-10-29.md)
+include fresh HTTPS-clone verification and the separate local two-context trial.
+The wider S-000E/TK-000D upgrade remains in progress with its unchecked acceptance
+and Lexicon confirmation; no release, Audit or main completion follows.
 
 ## Remaining Limitations Or Follow-Up Specs
 
