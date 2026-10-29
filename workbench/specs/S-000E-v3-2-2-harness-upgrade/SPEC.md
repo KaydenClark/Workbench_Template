@@ -8,8 +8,8 @@
 **Updated:** 2026-10-28
 **Catalog description:** Install the pinned LLM Workbench v3.2.2 source candidate into Workbench_Template integration through the supported update route, preserving the room and recording upgrade and recovery proof for the release audit.
 **Blockers:** none within the installation; release fitness audit, independent assembled review and owner main approval are separate gates
-**Latest event:** Gate controls reinstalled from LLM_Workbench 8b914257 through update-harness; review should-fixes recorded.
-**Next gate:** Reviewed merge of the gate reinstall into Template integration, then installed agent scenarios on the merged commit (LLM_Workbench S-006J TK-00B4).
+**Latest event:** S-006J capped gate fix reinstalled from LLM_Workbench 95023de5 through update-harness.
+**Next gate:** Reviewed merge into Template integration, then the full installed scenario set on the merged commit (LLM_Workbench S-006J TK-00B4).
 
 ## Outcome
 
@@ -232,6 +232,37 @@ time; the evidence row above dated 2026-10-29 used UTC):
   consistent. Nothing in this room checks the installed hook against the
   `AGENTS.md` gate line, so the two are kept in step by hand.
 
+Capped gate fix reinstall from `95023de5` (LLM_Workbench PR #646, S-006J
+TK-00B4 fix round under owner direction JOT-c6b4d000; 2026-10-28 local time):
+
+- Baseline at Template integration `38085384`: the suite passed (9 commands,
+  all exit 0) and 196 paths were inventoried. There are no ignored files
+  under `workbench/`.
+- From the release checkout: `migrate` reported `current` and
+  `workbench-tools update` reported `current`, so the tools receipt stays at
+  `a58466ad` with unchanged bytes. `workbench-skills update` changed only
+  `update-harness` (it gained the bullet on carrying a changed `hooks` block
+  into the room's settings). The skills receipt now names `95023de5` and
+  records the backup as `~/.workbench-skills-backup-BEGXhy` under the volatile
+  install home `/private/tmp/tk00b4-fix/home-t2`. Both optional skills report
+  `current`; tools and skills `verify` report `valid`.
+- Reconciled by hand under update-harness section 3:
+  - The `.claude/settings.json` hook command now matches the template, and
+    the room's permissions are kept. The hook asks for the two judgments
+    separately, ends a request only to map or plan at prepared work, and
+    keeps an ordinary in-scope fix approved.
+  - `.claude/README.md` now says right after its title paragraph that it only
+    explains `.claude/settings.json`, and that notes, history and rationale
+    go in the Wiki (owner instruction JOT-0601d3aa). The installed-trials
+    sentence is removed, and the hook paragraph matches the template. Its one
+    remaining difference from the template is the room's earlier
+    authorship-lanes wording.
+  - AGENTS already matched the template gate and autonomy lines; it is
+    unchanged.
+- Control fidelity from `95023de5`: settings has 60 unchanged lines (the hook
+  command was 1 changed line before reconciliation); AGENTS counts are
+  unchanged at 17 unchanged, 9 changed, 3 dropped.
+
 ## Documentation Impact
 
 AGENTS, RUNBOOK, README, BLUEPRINT, STARTUP and TASKBOARD stamps and routes;
@@ -252,6 +283,7 @@ feedback log rows; tour and its tests.
 | 2026-10-28 | TK-000D | Independent review of 934c9348 (APPROVE, non-blocking findings) repaired on the room side | Glossary **Declared integration branch** corrected to the AGENTS meaning, and Lexicon line 162 given its own note; 69 Lexicon dispositions marked pending owner confirmation, with a retire-lexicon gate in LEXICON.md status, this Spec and Version History; archive tidied (2 separator rows, empty Continuity Terms table, 4 landed fragments) with migrate still archived and 0 unlanded (genericHomesMissing now lists GLOSSARY.md and ARCHITECTURE.md because the room changed template lines); Upgrade Proof records a58466ad and the volatile `--home /private/tmp/tk00b7-home3`; Template operations points the v3.2.1 policy to revision 2f162c46; Blueprint entry route, Architecture codemap and README/tour root-file statements made truthful (tour test red first: module export missing and blurb claim, then 23/23); `/LEXICON.md text=auto eol=lf` added as a room-owned line outside the managed block, `git check-attr eol LEXICON.md` reports lf, and the policy step keeps it. Suite: evidence-history 14/14, history check, tour 23/23, syntax, layout, doctor no blocker, Wiki, ADR, diff check, 0 broken links; pinned-source verify valid | GLOSSARY, LEXICON, ARCHITECTURE, BLUEPRINT, README, tour and test, .gitattributes, Template operations, Version History, Spec, disposition | CI, owner Lexicon confirmation and integration containment pending |
 | 2026-10-29 | TK-000D | Gate reinstall from LLM_Workbench 8b914257 (PR #642, S-006J TK-00BR) through the update-harness route | Baseline suite green at b995aecb; migrate, tools, skills and optional-skill updates current; both verify valid; AGENTS gate and autonomy lines, settings hook and .claude README reconciled by hand; fidelity AGENTS unchanged 15 to 17, settings fully unchanged; candidate suite below | AGENTS, .claude/settings.json, .claude/README.md, this Spec | Reviewed merge into integration; installed agent scenarios on the merged commit (LLM_Workbench TK-00B4) |
 | 2026-10-28 | TK-000D | Gate reinstall candidate suite and review corrections | Candidate suite on the README fix 523ac287 (room content of the final head): tour 23/23, evidence-history 14/14, check-evidence-history 11 sections against b995aecb, node --check tour.mjs, layout valid, doctor no blocking finding, Wiki and ADR valid, diff check, all exit 0. Fidelity from 8b914257: settings 12 dropped at base (7 trivial, 5 newer-template), 0 dropped and 60 unchanged after; AGENTS unchanged 15 to 17, changed 11 to 9, dropped 3 | .claude/README.md wording; this Spec: settings-count correction and question-clause decision | Reviewed merge into integration; installed agent scenarios on the merged commit (LLM_Workbench TK-00B4) |
+| 2026-10-28 | TK-000D | S-006J capped gate fix reinstalled from LLM_Workbench 95023de5 (PR #646) through update-harness | Baseline suite green at 38085384; migrate and tools update current; skills update changed update-harness (receipt 95023de5); optional skills current; verify valid; hook command and .claude/README.md reconciled by hand; settings fidelity 60 unchanged; candidate suite recorded in the PR | .claude/settings.json, .claude/README.md, .agents/skills/update-harness, skills receipt, this Spec | Reviewed merge into integration; full installed scenario set on the merged commit (LLM_Workbench TK-00B4) |
 
 ## Completion Result
 

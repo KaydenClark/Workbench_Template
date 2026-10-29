@@ -495,6 +495,9 @@ For the v3 spec-centered Workbench:
   by the initial prompt, then the relevant work. Link detailed workflows to
   their owning skills and keep the room's exact commands and recovery;
 - keep `CLAUDE.md` as the thin `@AGENTS.md` bridge;
+- carry a changed template `hooks` block into the room's filled
+  `.claude/settings.json`, keeping the room's permissions; control fidelity
+  counts brace-only lines as trivial, so compare the whole block;
 - preserve public setup in `README.md` and harness friction in
   `WORKBENCH_FEEDBACK.md` (legacy `HARNESS_FEEDBACK.md`);
 - refresh the Workbench-managed runtime tools in `workbench/tools/` only
