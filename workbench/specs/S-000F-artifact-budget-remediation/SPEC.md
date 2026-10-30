@@ -10,8 +10,8 @@
 **Blockers:** none
 **Confirmation:** [JOT-45742b87-a137-45d6-982f-577e08ed0cae](../../wiki/context-artifact-budgets.md#jot-45742b87-a137-45d6-982f-577e08ed0cae)
 **Execution approval:** [JOT-45742b87-a137-45d6-982f-577e08ed0cae](../../wiki/context-artifact-budgets.md#jot-45742b87-a137-45d6-982f-577e08ed0cae)
-**Latest event:** Separate-context code/content review passed at de3866255f0a4139d136c21f288c9af83a59ffd6 with no findings; criterion 4 is achieved. The record successor needs final native verdict binding.
-**Next gate:** Bind the independent verdict to this record successor; require current CI and producer containment, merge into integration, then record landing. Owner QA remains separate.
+**Latest event:** Candidate 469393d4f5d7c98042d52abb2b3ac0b8d9e7648f observed contained in origin/integration at 47131f7a2ce8dff38c7df4ccfb1a2b9a3a40ad17; continuation recorded.
+**Next gate:** Owner Human QA remains separate before Spec completion; no broad harness adoption, main promotion, release or new Audit trials are authorized.
 
 ## Outcome
 
@@ -22,6 +22,8 @@ All in-scope Markdown meets the approved policy: bounded root filenames allow 3,
 The owner requests concise, reviewable agent artifacts using writing-for-agents, delegated execution and carry through existing workflows.
 
 ## Current Verified State
+
+Pruning is integrated at 47131f7a2ce8dff38c7df4ccfb1a2b9a3a40ad17, containing reviewed candidate 469393d4f5d7c98042d52abb2b3ac0b8d9e7648f; merge-state CI run 41031337238 passed. The merge tree equals the reviewed candidate tree, so unchanged product/check evidence is reused. This owner and its generated continuation record the landing; earlier checkpoints below remain history.
 
 Baseline: 22 oversized artifacts among 112 Markdown files. Current scoped scan: the final-budget scan now passes with no oversized artifacts after six native Spec disclosures and the supported component carry.
 
@@ -60,7 +62,7 @@ Source assignment S-006P/TK-00C8 coordinates the cross-room carry. TK-000E owns 
 - [x] Required meaning, original evidence, receipt identity and frozen outcomes remain checkable.
 - [x] Supported installed readers/writers, lifecycle/digest behavior, links and regenerated views pass relevant checks.
 - [x] Full room verification and independent assembled review pass at the immutable candidate, with remaining limits stated.
-- [ ] Checked integration delivery, fresh containment and updated continuation are proven; main remains untouched.
+- [x] Checked integration delivery, fresh containment and updated continuation are proven; main remains untouched.
 
 ## Verification Procedure
 
@@ -73,9 +75,9 @@ Maintain this Spec, the context-artifact-budgets topic, affected control/context
 ## Append-Only Evidence And Execution Log
 
 <!-- workbench-record-section max=15000 -->
-- [Part 1](SPEC.md.part-append-only-evidence-and-execution-log-001.c237978a28c146c8fd4dbb17d68953679064c86053a4b62b5aae8ce3e343ebd5.md)
+- [Part 1](SPEC.md.part-append-only-evidence-and-execution-log-001.a9db33cfd08548787d2bb4ec26bc12b892f2c2d40e8b6aa978f228582ad186cb.md)
 <!-- /workbench-record-section -->
 
 ## Completion Result
 
-Local managed components and lossless pruning are prepared; independent review, hosted CI and checked integration remain. No release, whole-room upgrade or owner acceptance is claimed.
+Reviewed pruning is contained in integration at 47131f7a2ce8dff38c7df4ccfb1a2b9a3a40ad17; merge-state CI 41031337238 passed. The finishing Task is done and all five delivery criteria are achieved. This records-only continuation is prepared for checked publication. The Spec remains active pending separate owner Human QA; no owner approval, main promotion, release, broader adoption or new Audit trials are inferred.
