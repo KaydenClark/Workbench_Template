@@ -29,7 +29,7 @@ Baseline: 22 oversized artifacts among 112 Markdown files. Current scoped scan: 
 
 Root controls and ordinary references now fit their limits. Four source documents disclose 22 companion responsibilities; three table leaves paginate 102 rows without changing their order. Across the complete ordinary sources, 15 fenced blocks and 197 Markdown data rows are retained. All 119 canonical terms remain, with full original definitions in linked topic pages. See the [preservation proof](../../docs/artifact-pruning-proof.json).
 
-The app suite passes 40/40. Wiki validation retains four pre-existing stale-version stamps, pending the native update; it has no new note errors. Earlier statements that managed files and receipts were unchanged describe the prior checkpoint; the current component carry is recorded below.
+The earlier app checkpoint passed 40/40; current focused checks passed 43/43. Wiki validation retains four pre-existing stale-version stamp attention findings and no new note errors; those stamps do not imply another managed update. Earlier statements that managed files and receipts were unchanged describe the prior checkpoint; the current component carry is recorded below.
 
 ## Desired Behavior
 
@@ -50,11 +50,11 @@ Other projects, paid model runs, new audit attempts, main/release promotion, sil
 
 ## Dependencies And Blockers
 
-Necessary managed support is installed from pinned producer073acbfecbd340e005c758e49baad11a68990144 through existing explicit-update tools, with backups and truthful receipts. Source integration containment and final candidate checks remain. Existing review holds and owner acceptance remain with their original owners.
+Managed runtime source073acbfecbd340e005c758e49baad11a68990144 and skills source94702faae1779eefe09e8336a1a0b0df62365c31 remain installed with backups and truthful receipts. Producer and consumer integration containment and required candidate checks are verified. The existing continuation is published; separate owner Human QA remains before Spec completion.
 
 ## Vertical Implementation Slices
 
-Source assignment S-006P/TK-00C8 coordinates the cross-room carry. TK-000E owns this current finishing run: verify the recovered candidate and prepare its checked-integration hand-back. It does not retroactively claim earlier pruning or grant whole harness upgrade acceptance.
+Source assignment S-006P/TK-00C8 coordinates the cross-room carry. TK-000E completed the finishing verification and checked-integration preparation; its recorded Task status is done. It does not retroactively claim earlier pruning or grant whole harness upgrade acceptance.
 
 ## Acceptance Criteria
 
@@ -75,9 +75,9 @@ Maintain this Spec, the context-artifact-budgets topic, affected control/context
 ## Append-Only Evidence And Execution Log
 
 <!-- workbench-record-section max=15000 -->
-- [Part 1](SPEC.md.part-append-only-evidence-and-execution-log-001.a9db33cfd08548787d2bb4ec26bc12b892f2c2d40e8b6aa978f228582ad186cb.md)
+- [Part 1](SPEC.md.part-append-only-evidence-and-execution-log-001.0bb53ca40dc39c71a6d65fbee87b046b88328eda033d6f9701e57ba9cfac13fa.md)
 <!-- /workbench-record-section -->
 
 ## Completion Result
 
-Reviewed pruning is contained in integration at 47131f7a2ce8dff38c7df4ccfb1a2b9a3a40ad17; merge-state CI 41031337238 passed. The finishing Task is done and all five delivery criteria are achieved. This records-only continuation is prepared for checked publication. The Spec remains active pending separate owner Human QA; no owner approval, main promotion, release, broader adoption or new Audit trials are inferred.
+Reviewed pruning is contained in integration at 47131f7a2ce8dff38c7df4ccfb1a2b9a3a40ad17; merge-state CI 41031337238 passed. The finishing Task is done and all five delivery criteria are achieved. The existing continuation is published in integration. The Spec remains active pending separate owner Human QA; no owner approval, main promotion, release, broader adoption or new Audit trials are inferred.
