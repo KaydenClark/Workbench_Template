@@ -17,7 +17,7 @@ note or handoff into Git, assert cross-device recovery from a local save, or
 modify a historical record merely to mark it PAUSED.
 
 New durable claims use `sessions.mjs promote` under existing authorization with
-privacy, owner validation and byte read-back. `make-it-so` may compose that
+privacy, owner validation and byte read-back. `carry` may compose that
 work when the user authorizes execution. The old command
 `node workbench/tools/sessions.mjs checkpoint` returns a nonzero explanatory
 refusal and writes nothing. Operational recovery is a separate collection.

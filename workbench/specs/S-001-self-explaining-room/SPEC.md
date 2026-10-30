@@ -37,29 +37,9 @@ carries real work.
 
 ## Current Verified State
 
-Genesis produced this room from LLM Workbench v3.1.2 at commit
-`18ffc0d295722e8437a13399b3a1b67369248314`:
-
-- `workbench-layout.mjs init --provenance genesis` wrote a schema 2 manifest
-  declaring six lanes, seven collections, the `project` wiki profile, the
-  sixteen-skill policy, and `git.defaultBranch` / `git.integrationBranch`.
-- `workbench-tools.mjs install` wrote eleven managed runtime tools into
-  `workbench/tools/` with a receipt naming release `v3.1.2`, the same commit,
-  and a hash per file.
-- `tour.mjs` enumerates twenty-three places across three zones. `PLACES` is the
-  only enumeration of the room's structure; the terminal output and the tests
-  read the same array.
-- `tests/tour.test.mjs` passes nine cases. Two of them were confirmed to fail
-  on real drift rather than only to pass on a good tree: adding an undeclared
-  file to the tools lane, and adding a lane to the manifest without describing
-  it, each exit 1 and name the offending path.
-
-`node tour.mjs --lifecycle` then closed that gap: it reads `provenance` and the
-tools receipt out of the room and prints how the room came to exist, followed
-by the five-step route to a newer harness version. Twelve cases now pass.
-
-The room is published at `https://github.com/KaydenClark/Example_Workbench`, so
-it is reachable by clone and no longer depends on one machine.
+<!-- workbench-record-section max=15000 -->
+- [Part 1](SPEC.md.part-current-verified-state-001.24c0848bb037e3c164f96d089812bb363a29a6b6b2148531277d3761275e5fd6.md)
+<!-- /workbench-record-section -->
 
 ## Desired Behavior
 
@@ -106,40 +86,13 @@ it is reachable by clone and no longer depends on one machine.
 
 ## Vertical Implementation Slices
 
-Tickets are temporary tracer bullets within this stable capability record.
-
-| Ticket | Slice | Status | Blockers | Proof |
-|---|---|---|---|---|
-| TK-001 | Print the annotated map and make drift a test failure | done | none | `node tests/tour.test.mjs` 9/9; two drift cases confirmed red at exit 1 |
-| TK-002 | Explain the room's lifecycle: how it was created and how it reaches a newer harness version | done | none | `node tour.mjs --lifecycle`; `node tests/tour.test.mjs` 12/12 |
-| TK-003 | Publish the room so it can be cloned rather than copied | done | none | `git clone https://github.com/KaydenClark/Example_Workbench` |
-
-### TK-002 - Done
-
+<!-- workbench-record-section max=15000 -->
 **Stance:** Builder
-
-`lifecycle()` reads `provenance.lifecycle`, `provenance.source`,
-`workbenchVersion`, and the tools receipt out of the room; nothing in the
-account is written by hand except `ROUTE`, and a case asserts every `.mjs` the
-route names is installed in this room's lane. `--lifecycle` renders it.
-
-The route is stated carefully because the obvious guess is wrong:
-`workbench-upgrade.mjs upgrade` is the one-time v2 to v3 migration and refuses
-an existing support root. For a room already on v3 the route is
-`workbench-tools.mjs update --explicit-update`, then `record-source`, then a
-hand stamp of `workbenchVersion`, then a hand re-stamp of the documents that
-name a version. The last two steps are hand edits because no command performs
-them - established by rehearsal, not assumption (see the evidence log).
-
-### TK-003 - Done
-
 **Stance:** Builder
-
-The owner directed publication on 2026-09-06 and created
-`KaydenClark/Example_Workbench` as a public repository. The room was pushed
-there. Before the first push its one absolute home path was removed from
-`BLUEPRINT.md`, on the same rule the checkpoint promoter enforces: a home path
-is not published, even in a room that holds no secrets.
+<a id="tk-002---done"></a> [TK-002 - Done](SPEC.md.part-vertical-implementation-slices-001.c5badb1b08a56f4718da990cf839bdbf39b4f8e420abcb5b9b1a7a9bb0d0dc11.md#tk-002---done)
+<a id="tk-003---done"></a> [TK-003 - Done](SPEC.md.part-vertical-implementation-slices-001.c5badb1b08a56f4718da990cf839bdbf39b4f8e420abcb5b9b1a7a9bb0d0dc11.md#tk-003---done)
+- [Part 1](SPEC.md.part-vertical-implementation-slices-001.c5badb1b08a56f4718da990cf839bdbf39b4f8e420abcb5b9b1a7a9bb0d0dc11.md)
+<!-- /workbench-record-section -->
 
 ## Acceptance Criteria
 
@@ -186,13 +139,9 @@ node workbench/tools/spec-workbench.mjs doctor
 
 ## Append-Only Evidence And Execution Log
 
-| Date | Ticket | Event | Verification | Docs | Remaining gap |
-|---|---|---|---|---|---|
-| 2026-09-06 | TK-001 | Genesis ran and the room's own explanation was made executable | `workbench-layout.mjs init --provenance genesis --version v3.1.2` wrote a schema 2 manifest from release checkout `18ffc0d`; `workbench-tools.mjs install` wrote eleven managed tools plus a receipt naming the same release and commit; `node tests/tour.test.mjs` passes 9/9; drift confirmed red twice at exit 1 - an unmanaged `room-helper.mjs` in the tools lane failed "the tools lane holds only what the receipt accounts for", and an added `scratch` lane failed "every lane the manifest declares is explained" with the message naming the lane; both restored green | Seven root controls filled with no bracketed placeholders; `BLUEPRINT.md`, `LEXICON.md`, `RUNBOOK.md` written from this spec; room brain seeded | The tour explains where every part is, not how the room came to exist or how it changes version - TK-002 owns that |
-
-| 2026-09-06 | TK-002 | The room now reads its own lifecycle out of the manifest and receipt | `node tour.mjs --lifecycle` prints lifecycle `genesis`, source release `v3.1.2` at `18ffc0d295722e8437a13399b3a1b67369248314`, stamp `v3.1.2`, and a receipt attesting 11 managed files; `node tests/tour.test.mjs` passes 12/12. Three new cases: the lifecycle account is compared field by field against the manifest and receipt it claims to read; the recorded commit is asserted to be a full 40-character SHA and not the placeholders `unrecorded` or `unknown`; every `.mjs` the route names is asserted present in this room's tools lane, and `workbench-tools.mjs` asserted absent, since it is a release tool rather than a room tool. The five-step route was established by rehearsing the v3.1.1 to v3.1.2 upgrade on a disposable copy of a real v3.1.1 room, not by reading the docs: `update --explicit-update` rewrote 8 of 11 tools and the receipt; `record-source --version v3.1.2` set `provenance.source` but left `workbenchVersion` at v3.1.1, which `doctor` then reported as `unverified-provenance` (attention); stamping `workbenchVersion` by hand cleared it; `seed-documents` wrote nothing and the four seeded wiki documents kept their v3.1.1 stamps as `stale-stamp` (attention), and the six root controls kept theirs unreported | Spec TK-002 closed; `RUNBOOK.md` and `README.md` name `--lifecycle` | The room still has no remote - TK-003, blocked on owner direction |
-| 2026-09-06 | TK-002 | Recorded what the genesis readiness gate does after Genesis is over | `workbench-layout.mjs validate --project . --genesis` returned `{"status":"valid"}` at the Genesis commit `b19c1e9`, with every readiness box satisfied. Re-run after TK-002 closed, it returns `invalid` with reason `at least one ticket must be ready with blockers none` - because TK-002 is `done` and TK-003 is `blocked`. That is the gate behaving correctly: `GENESIS.md` says "Read this once, run it once", and the gate scores an actionable *first* packet, not a room mid-life. The steady-state checks are the right ones after bootstrap: `validate --project .` reports `valid`, `doctor` exits 0 with no blocking finding, `next --json` returns `null` because the only open ticket is blocked | Logged in `workbench/feedback/WORKBENCH_FEEDBACK.md` as a harness legibility observation, since nothing in the gate's output says it is one-time | None. The gate is correct; only its one-time nature is undocumented in its own failure message |
-| 2026-09-06 | TK-003 | Owner directed publication; the room is public and clonable | Owner created `KaydenClark/Example_Workbench` as a public repository and directed that the room live there rather than nested inside the harness repository. `BLUEPRINT.md`'s `Source root` field carried the one absolute home path in the room; it was replaced before the first push, and a repository-wide grep confirms no `/Users/` path remains outside the managed runtime, which carries none either. All three branches pushed; `main` carries the finished room so a clone shows what the room is rather than only how it started | Spec TK-003 closed and its acceptance box checked; the no-remote limitation is retired and replaced with the pinned-provenance one that is actually true now | None for this slice. The room is a v3.1.2 room and stays one until someone runs the upgrade route it documents |
+<!-- workbench-record-section max=15000 -->
+- [Part 1](SPEC.md.part-append-only-evidence-and-execution-log-001.420fc9d62a310e0b34530c682ca90899eab167980f650d3f3ad265d47bba1455.md)
+<!-- /workbench-record-section -->
 
 ## Completion Result
 
@@ -208,21 +157,9 @@ portability; the harness's own portability suites own that claim.
 
 ## Remaining Limitations Or Follow-Up Specs
 
-- **The room's provenance pins one commit of the harness.** `provenance.source`
-  names LLM Workbench `18ffc0d`. When the harness releases again, this room is
-  a v3.1.2 room until someone runs the upgrade route it documents. That is
-  correct rather than stale, but it means the room does not automatically
-  demonstrate the newest release.
-- **No separate-context review ran on TK-002.** This room's `AGENTS.md` requires
-  an independent reviewer before a branch combines into `integration`, and no
-  second context was assigned to this room. The branch was merged anyway, and
-  that deviation is recorded here rather than left unstated. It is the same
-  class of gap the upstream harness hit during v3.1.2, which is why naming it
-  matters more than tidying it away.
-- **One room cannot prove portability.** This room was created on macOS by
-  Claude. Nothing here establishes that genesis produces the same result on
-  another platform or from another agent; the upstream portability suites own
-  that claim, not this room.
+<!-- workbench-record-section max=15000 -->
+- [Part 1](SPEC.md.part-remaining-limitations-or-follow-up-specs-001.36c5112abc85f0a8d6d6c4cd38b26a5b48819c3e3f882429b295fa6e3b15abff.md)
+<!-- /workbench-record-section -->
 
 ## Supersession
 

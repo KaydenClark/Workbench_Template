@@ -103,3 +103,5 @@ declared collections; only `archive/` may nest.
 ## Up-Link
 
 Standalone room; no deployment wiki.
+
+- [Artifact budget remediation](context-artifact-budgets.md) - approved pruning scope, preservation and carry dependencies.

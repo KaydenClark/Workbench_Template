@@ -2,6 +2,7 @@
 // Small, source-labelled capture inside the existing Wiki. The Markdown claim
 // text is stored once; its labels never supply authority or implementation proof.
 import fs from 'node:fs';
+import { readRecordText, writeRecordText, isRecordPartPath } from './record-parts.mjs';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import { spawnSync } from 'node:child_process';
@@ -128,7 +129,7 @@ function legacySnapshot(text) {
 }
 function load(root, target) {
   if (!fs.existsSync(target.absolute)) return { text: '', revision: null, entries: [] };
-  const text = fs.readFileSync(target.absolute, 'utf8');
+  const text = readRecordText(target.absolute, root);
   const { data } = parseFrontmatter(text);
   if (!data || !data.sensitivity || !data.knowledge_role) fail('invalid-page', 'Capture requires an existing Wiki page with handling metadata');
   if (data.sensitivity !== 'normal' && !target.privateFile && !(data.sensitivity === 'private' && target.localIgnored && target.privateAccess)) fail('private-access', 'Private/restricted existing pages remain outside shared capture');
@@ -175,10 +176,10 @@ function publish(root, target, before, after) {
   try { fs.mkdirSync(lock); } catch (error) { if (error.code === 'EEXIST' && occupied()) fail('concurrent-write', 'Another capture holds this page; retry after it completes, or inspect an abandoned lock'); throw error; }
   const ownership = fs.lstatSync(lock);
   try {
-    const current = fs.existsSync(target.absolute) ? fs.readFileSync(target.absolute, 'utf8') : '';
+    const current = fs.existsSync(target.absolute) ? readRecordText(target.absolute, root) : '';
     if (current !== before) fail('stale-revision', 'The page changed during capture; read its revision and retry');
     if (target.privateFile) privateBoundary(root, target.relative);
-    writeSafeFile(root, target.absolute, after, { exclusive: !before, stagingDir: lock });
+    writeRecordText(target.absolute, after, { root, writePrimary: (file, content) => writeSafeFile(root, file, content, { exclusive: !before, stagingDir: lock }) });
   } finally {
     // Do not remove a directory another writer substituted at the same path.
     try {
@@ -319,10 +320,11 @@ export function searchJots(root, options = {}) {
         const localIgnored = ignored(root, relative);
         if (localIgnored && !privateAccess) continue;
         if (file.isDirectory()) { walk(absolute); continue; }
+        if (isRecordPartPath(absolute)) continue;
         if (!file.isFile() || !file.name.endsWith('.md') || ['MEMORY.md', 'SCHEMA.md', 'AGENTS.md'].includes(file.name)) continue;
         const metadata = handling(absolute);
         if (metadata?.sensitivity === 'restricted' || metadata?.sensitivity === 'private' && !(privateAccess && (privateFile || localIgnored))) continue;
-        const text = fs.readFileSync(absolute, 'utf8');
+        const text = readRecordText(absolute, root);
         if (!text.includes(START) && !text.includes('<!-- jot-legacy-source ')) continue;
         const target = location(root, { page: relative, visibility: privateFile || localIgnored ? 'private' : 'shared', 'include-private': privateAccess });
         const loaded = load(root, target);

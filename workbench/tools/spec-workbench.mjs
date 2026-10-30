@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 import { inspectSkills } from './skill-inspection.mjs';
 import fs from 'node:fs';
+import { readRecordText, writeRecordText, withRecordProperties, isRecordPartPath } from './record-parts.mjs';
+import { artifactCharacterLimit, paginateGeneratedTable, writeGeneratedPages, generatedPageIssues } from './artifact-pagination.mjs';
 import os from 'node:os';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
@@ -458,6 +460,12 @@ function claimInTree(rootDir, id, options, remoteClaims) {
     const reason = reviewGapReason(judged) ?? approvalGapReason(judged);
     if (reason) throw new Error(`${id}/${task.id} is a post-delivery Task; Deliver and Cleanup wait for Review, Verify and Approve of the current content: ${reason}`);
   }
+  // Metadata selection is lazy; execution validates the complete write set
+  // before an earlier capability route can publish a partial claim.
+  void spec.content;
+  for (const slice of [task, ...pendingRoutes.map(entry => slices.find(item => item.id === entry.taskId))]) {
+    if (slice?.record) void slice.record.content;
+  }
   const routed = [];
   for (const entry of pendingRoutes) {
     const slice = slices.find((item) => item.id === entry.taskId);
@@ -521,7 +529,7 @@ export function executionAuthority(spec) {
   const spellings = [spec.id, ...(spec.formerId ? [spec.formerId] : [])].map(escapeRegExp).join('|');
   const named = new RegExp(`(^|[^A-Za-z0-9-])(?:${spellings})(?![A-Za-z0-9])`);
   for (const [key, field] of Object.entries(AUTHORITY_FIELDS)) {
-    const lines = [...spec.content.matchAll(new RegExp(`^\\*\\*${field}:\\*\\*[ \\t]*(.*)$`, 'gm'))];
+    const lines = [...(spec.sourceContent ?? spec.content).matchAll(new RegExp(`^\\*\\*${field}:\\*\\*[ \\t]*(.*)$`, 'gm'))];
     if (lines.length === 0) { reading.gaps.push(`missing ${field}`); continue; }
     if (lines.length > 1) { reading.gaps.push(`ambiguous: ${lines.length} ${field} fields`); continue; }
     const value = lines[0][1].trim();
@@ -549,7 +557,7 @@ export function executionAuthority(spec) {
       }
       let entries;
       try {
-        const text = fs.readFileSync(absolute, 'utf8');
+        const text = readRecordText(absolute, spec.root);
         if (parseFrontmatter(text).data?.sensitivity !== 'normal') throw new Error('not shared');
         entries = parseJotEntries(text);
       } catch {
@@ -651,7 +659,7 @@ export function closeTask(rootDir, id, options) {
       'Close pending': JSON.stringify({ version: 2, row, receiptChecksum: receipt.checksum, attribution })
     });
     const record = parseTaskRecord(published, task.record.filePath, task.record.root);
-    writeSafeFile(root, task.record.filePath, published);
+    writeRecordText(task.record.filePath, published, { root });
     return finishRecordClose(root, spec, { ...task, declared: 'done', record }, slices, options);
   }
   let content = spec.content;
@@ -765,11 +773,11 @@ function finishRecordClose(root, spec, task, slices, options) {
       'Next gate': closedNextGate(spec, remaining)
     });
     content = appendEvidence(content, pending.row);
-    writeSafeFile(root, spec.filePath, content);
+    writeRecordText(spec.filePath, content, { root });
   }
   const cleared = record.content.replace(/^\*\*Close pending:\*\* .+\r?\n?/m, '');
   parseTaskRecord(cleared, record.filePath, record.root);
-  writeSafeFile(root, record.filePath, cleared);
+  writeRecordText(record.filePath, cleared, { root });
   return showSpec(root, spec.id);
 }
 
@@ -1275,8 +1283,14 @@ export function recordLanding(rootDir, specId, options = {}) {
     const row = `| ${[today(), 'landing', `Integration landing recorded (run ${prior.length + 1})`, verification, docs, nextGate].map(escapeCell).join(' | ')} |`;
     content = appendEvidence(content, row);
   }
-  if (content !== spec.content) writeSafeFile(root, spec.filePath, content);
+  if (content !== spec.content) writeRecordText(spec.filePath, content, { root });
   return { specId: spec.id, candidate, integrationContainment: containment, nextGate, projectionPending: true, publicationPending: true, recorded: !duplicate };
+}
+
+function taskboardPages(root, source, table) {
+  const start = source.indexOf(HOT_START), end = source.indexOf(HOT_END);
+  if (start < 0 || end < start) throw new Error('TASKBOARD.md is missing generated region markers');
+  return paginateGeneratedTable('TASKBOARD.md', table, { prefix: source.slice(0, start + HOT_START.length) + '\n', suffix: '\n' + source.slice(end), maxCharacters: artifactCharacterLimit(root, 'TASKBOARD.md') });
 }
 
 export function render(rootDir, options = {}) {
@@ -1288,7 +1302,7 @@ export function render(rootDir, options = {}) {
   const landmarks = loadLandmarkParents(root);
   const taskboardPath = path.join(root, 'TASKBOARD.md');
   const taskboard = fs.readFileSync(taskboardPath, 'utf8');
-  atomicWrite(taskboardPath, replaceRegion(taskboard, HOT_START, HOT_END, renderHotBoard(specs, retired, landmarks)));
+  writeGeneratedPages(root, taskboardPages(root, taskboard, renderHotBoard(specs, retired, landmarks)));
   return { specs: specs.length, active: specs.filter((spec) => isHot(spec)).length, retired: retired.length };
 }
 
@@ -1361,7 +1375,7 @@ export function readTaskboard(root, { qualified = false } = {}) {
   const completed = satisfiedBlockers(specs);
   const options = { resolveTask(spec, task) {
     const slice = {
-      ...task, declared: task.status, source: task.content ? 'record' : 'table', record: task,
+      ...task, declared: task.status, source: task.filePath ? 'record' : 'table', record: task,
       blockers: Array.isArray(task.blockers) ? task.blockers.join(', ') || 'none' : task.blockers,
       blockerIds: Array.isArray(task.blockers) ? task.blockers : splitBlockers(task.blockers),
       capabilities: task.capabilities ?? [], missingCapabilities: task.missingCapabilities ?? []
@@ -1424,7 +1438,13 @@ export function doctor(rootDir, options = {}) {
   const landmarks = readableLandmarkParents(root);
   issues.push(...packetFindings(specs, options, retired, root, landmarks));
   issues.push(...uncapturedCompleteFindings(root, specs.filter((spec) => !spec.sliceConflict)));
-  checkRender(root, 'TASKBOARD.md', HOT_START, HOT_END, renderHotBoard(specs, retired, landmarks), issues);
+  try {
+    assertSafeReadPath(root, path.join(root, 'TASKBOARD.md'));
+    const taskboardText = fs.readFileSync(path.join(root, 'TASKBOARD.md'), 'utf8');
+    for (const message of generatedPageIssues(root, taskboardPages(root, taskboardText, renderHotBoard(specs, retired, landmarks)))) issues.push(finding('render-drift', message));
+  } catch (error) {
+    issues.push(finding('render-drift', `TASKBOARD.md generated projection cannot be checked: ${error.message}`));
+  }
   issues.push(...collectionFindings(root));
   issues.push(...skillFindings(root, options));
   issues.push(...gitFindings(root, specs, issues));
@@ -2371,7 +2391,7 @@ export function loadSpecs(rootDir, options = {}) {
     const retiredRecords = listRetiredTaskRecords(specDir, root);
     const recordBacked = fs.existsSync(path.join(specDir, 'tasks'));
     const content = options.contentOverrides?.get(filePath) ?? fs.readFileSync(filePath, 'utf8');
-    const spec = { ...parseSpecPacket(content, filePath, root, { recordBacked }), specsPrefix: home.specsPrefix, landmarkId: home.landmarkId, records, retiredRecords, recordBacked };
+    const spec = withRecordProperties(parseSpecPacket(content, filePath, root, { recordBacked }), { specsPrefix: home.specsPrefix, landmarkId: home.landmarkId, records, retiredRecords, recordBacked });
     spec.formerId = specFormerId(content, spec.id);
     assertOneSliceTruth(spec);
     return spec;
@@ -2422,7 +2442,7 @@ export function loadRetiredSpecs(rootDir) {
       const retiredRecords = listRetiredTaskRecords(specDir, root);
       const recordBacked = fs.existsSync(path.join(specDir, 'tasks'));
       const content = fs.readFileSync(filePath, 'utf8');
-      const spec = { ...parseSpecPacket(content, filePath, root, { recordBacked }), specsPrefix: home.specsPrefix, landmarkId: home.landmarkId, records, retiredRecords, recordBacked, lifecycleFolder: folder };
+      const spec = withRecordProperties(parseSpecPacket(content, filePath, root, { recordBacked }), { specsPrefix: home.specsPrefix, landmarkId: home.landmarkId, records, retiredRecords, recordBacked, lifecycleFolder: folder });
       spec.formerId = specFormerId(content, spec.id);
       assertOneSliceTruth(spec);
       specs.push(spec);
@@ -2448,15 +2468,14 @@ export function isLandmarkId(value) {
 
 function landmarkParent(root, landmark) {
   const dir = path.dirname(landmark.filePath);
-  return {
-    ...landmark,
-    kind: 'landmark',
-    blockers: landmark.blockers.length > 0 ? landmark.blockers.join(', ') : 'none',
-    rows: [],
+  const parent = withRecordProperties(landmark, {
+    kind: 'landmark', rows: [],
     records: listTaskRecords(dir, root),
     retiredRecords: listRetiredTaskRecords(dir, root),
     recordBacked: true
-  };
+  });
+  parent.blockers = landmark.blockers.length > 0 ? landmark.blockers.join(', ') : 'none';
+  return parent;
 }
 
 // Every landmark at both homes as a parent. A malformed landmark or direct
@@ -2792,7 +2811,7 @@ function effectiveStatus(slice, satisfied, session = null) {
 // Existing blocker/capability resolution supplies facts; one pure lane and
 // eligibility calculation serves preview, ordinary selection, claim and doctor.
 function taskboardEntryForSlice(spec, slice, satisfied, session = null) {
-  return taskboardTaskEntry(spec, { ...slice, status: slice.declared, content: slice.record?.content }, {
+  return taskboardTaskEntry(spec, { ...slice, status: slice.declared, content: slice.record?.sourceContent ?? slice.record?.content }, {
     resolvedStatus: effectiveStatus(slice, satisfied, session),
     dependenciesMet: blockersSatisfied(slice.blockers, satisfied)
   });
@@ -3239,8 +3258,8 @@ function lifecycleMoveLocations(root, oldDir, newDir, movingFiles, unmoved) {
   movingDirectories(oldDir);
   const moving = new Set(movingFiles);
   for (const file of [...movingFiles, ...unmoved]) {
-    if (!file.endsWith('.md')) continue;
-    const { prefix, suffix } = splitEvidenceSection(fs.readFileSync(file, 'utf8'));
+    if (!file.endsWith('.md') || isRecordPartPath(file)) continue;
+    const { prefix, suffix } = splitEvidenceSection(readRecordText(file, root, { allowPrimaryHardlinks: true }));
     for (const link of [...localLinks(prefix), ...localLinks(suffix)]) {
       const target = path.resolve(path.dirname(file), link);
       if (target !== root && !target.startsWith(root + path.sep)) continue;
@@ -3282,10 +3301,11 @@ function lifecycleMoveLocations(root, oldDir, newDir, movingFiles, unmoved) {
 // `rewriteAdrLinks` can only do that when the unmoved target is in the map,
 // mapped to itself.
 function rewriteReferenceFile(root, filePath, oldDir, newDir, locations, totals, options = {}) {
-  const finalContent = planReferenceRewrite(root, filePath, fs.readFileSync(filePath, 'utf8'), oldDir, newDir, locations, totals, options);
+  if (isRecordPartPath(filePath)) return;
+  const finalContent = planReferenceRewrite(root, filePath, readRecordText(filePath, root, { allowPrimaryHardlinks: true }), oldDir, newDir, locations, totals, options);
   if (finalContent !== null) {
     assertSafeWritePath(root, filePath);
-    writeSafeFile(root, filePath, finalContent);
+    writeRecordText(filePath, finalContent, { root });
   }
 }
 
@@ -3295,12 +3315,13 @@ function rewriteReferenceFile(root, filePath, oldDir, newDir, locations, totals,
 function preflightReferenceWrites(root, files, locations, options = {}) {
   for (const file of files) {
     const destination = locations.get(file);
-    if (!destination.endsWith('.md')) continue;
-    const rewritten = planReferenceRewrite(root, destination, fs.readFileSync(file, 'utf8'),
+    if (!destination.endsWith('.md') || isRecordPartPath(file)) continue;
+    const rewritten = planReferenceRewrite(root, destination, readRecordText(file, root, { allowPrimaryHardlinks: true }),
       path.dirname(file), path.dirname(destination), locations,
       { referencesRewritten: {}, historicalReferencesLeft: {} }, options);
     if (rewritten === null) continue;
     assertSafeWritePath(root, file);
+    writeRecordText(file, rewritten, { root, dryRun: true });
     if (destination !== file) assertSafeWritePath(root, destination);
   }
 }
@@ -4183,13 +4204,85 @@ function durableOwnerRefusal(root, specId, historicalRoute, noteAbsolute, { feat
   // Review corrective (Low, S-00I TK-005): a note can satisfy every property
   // check above and still be unreachable from a cold-start agent's actual
   // entry point. `MEMORY.md` is the one router `SCHEMA.md`/`ARCHITECTURE.md` name.
-  const memoryPath = path.join(wikiRoot, 'MEMORY.md');
-  const memoryContent = fs.existsSync(memoryPath) ? fs.readFileSync(memoryPath, 'utf8') : '';
   const noteRelativeToWikiRoot = path.relative(wikiRoot, noteAbsolute).split(path.sep).join('/');
-  if (!memoryContent.includes(noteRelativeToWikiRoot)) {
+  if (!memoryRoutesTo(root, wikiRoot, noteAbsolute)) {
     return `${noteRelative} is not linked from workbench/wiki/MEMORY.md (no relative link to ${noteRelativeToWikiRoot} found); a durable owner unreachable from the room brain is not routed`;
   }
   return null;
+}
+
+// MEMORY may route through its explicitly linked, same-directory semantic
+// companions. Follow only that finite navigation family, never arbitrary Wiki
+// articles or record links. Missing/private/linked paths remain uncaptured.
+function memoryRoutesTo(root, wikiRoot, target) {
+  const pending = [path.join(wikiRoot, 'MEMORY.md')], visited = new Set();
+  let remainingBytes = 1024 * 1024;
+  while (pending.length && visited.size < 64) {
+    const file = pending.shift();
+    if (visited.has(file)) continue;
+    visited.add(file);
+    let stat;
+    try {
+      assertSafeReadPath(root, file);
+      stat = fs.lstatSync(file);
+    } catch { continue; }
+    if (!stat.isFile() || stat.nlink !== 1 || stat.size > remainingBytes) continue;
+    remainingBytes -= stat.size;
+    const content = fs.readFileSync(file, 'utf8');
+    const { data: metadata, body } = parseFrontmatter(content);
+    if (metadata?.sensitivity && metadata.sensitivity !== 'normal') continue;
+    const navigation = renderedNavigation(body);
+    for (const match of navigation.matchAll(/\]\(<?([^\s)>]+)>?(?:\s+"[^"]*")?\)/g)) {
+      const route = match[1].split(/[?#]/)[0];
+      if (!route || /^(?:[a-z][a-z0-9+.-]*:|\/)/i.test(route)) continue;
+      let decoded;
+      try { decoded = decodeURIComponent(route); } catch { continue; }
+      const next = path.resolve(path.dirname(file), decoded);
+      if (next === target) return true;
+      if (path.dirname(next) === wikiRoot && /^MEMORY--[^/]+\.md$/.test(path.basename(next)) && !visited.has(next)) pending.push(next);
+    }
+  }
+  return false;
+}
+
+// Navigation must be rendered prose: metadata and code examples do not make
+// a durable owner discoverable. Closing fences may be longer than their opener;
+// an unclosed fence consumes the rest of the document, as Markdown does.
+function renderedNavigation(body) {
+  let fence = null;
+  let prose = body.split('\n').map(line => {
+    const delimiter = /^ {0,3}(`{3,}|~{3,})(.*)$/.exec(line);
+    if (fence) {
+      if (delimiter && delimiter[1][0] === fence[0] && delimiter[1].length >= fence.length && !delimiter[2].trim()) fence = null;
+      return '';
+    }
+    if (delimiter) { fence = delimiter[1]; return ''; }
+    return /^ {4}|^\t/.test(line) ? '' : line;
+  }).join('\n');
+  // Remove comments and complete code spans in lexical order, including
+  // actual links whose labels merely use code styling.
+  const runs = [...prose.matchAll(/<!--|`+/g)], spans = [];
+  for (let i = 0; i < runs.length; i++) {
+    const open = runs[i];
+    if (open[0] === '<!--') {
+      const closing = prose.indexOf('-->', open.index + 4);
+      const end = closing < 0 ? prose.length : closing + 3;
+      spans.push([open.index, end]);
+      while (i + 1 < runs.length && runs[i + 1].index < end) i++;
+      continue;
+    }
+    let escapes = 0;
+    for (let at = open.index - 1; prose[at] === '\\'; at--) escapes++;
+    if (escapes % 2) continue;
+    const close = runs.findIndex((run, index) => index > i && run[0] === open[0]);
+    if (close < 0) continue;
+    spans.push([open.index, runs[close].index + runs[close][0].length]);
+    i = close;
+  }
+  // A separator prevents removing a code span from inventing a new link by
+  // joining the label before it to a destination after it.
+  for (const [start, end] of spans.reverse()) prose = prose.slice(0, start) + ' ' + prose.slice(end);
+  return prose;
 }
 
 // The route a Spec's durable owner names in `source_paths`: its own path once
@@ -5308,13 +5401,7 @@ function localLinks(content) {
 // in spec-report.mjs writes its Spec file through this one temp-file-plus-
 // rename discipline rather than a second write path.
 export function atomicWrite(filePath, content) {
-  const temporary = `${filePath}.tmp-${process.pid}`;
-  try {
-    fs.writeFileSync(temporary, content.endsWith('\n') ? content : `${content}\n`);
-    fs.renameSync(temporary, filePath);
-  } finally {
-    fs.rmSync(temporary, { force: true });
-  }
+  return writeRecordText(filePath, content.endsWith('\n') ? content : `${content}\n`);
 }
 
 function validDate(value) {

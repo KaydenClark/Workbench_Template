@@ -17,6 +17,21 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const manifest = readManifest(root);
 const described = new Set(PLACES.map((place) => place.path));
 
+// Operational requirements remain in the linked responsibility that owns them.
+function readOperationInstructions() {
+  const visited = new Set();
+  function read(relative) {
+    if (visited.has(relative)) return '';
+    visited.add(relative);
+    const text = fs.readFileSync(path.join(root, relative), 'utf8');
+    const companions = [...text.matchAll(/^Read \[[^\n]+\]\(([^)]+)\) when working on this topic\.$/gm)]
+      .map((match) => path.posix.normalize(path.posix.join(path.posix.dirname(relative), match[1].split('#')[0])))
+      .filter((target) => target.startsWith('workbench/docs/TEMPLATE_OPERATIONS--') && target.endsWith('.md'));
+    return [text, ...companions.map(read)].join('\n');
+  }
+  return read('workbench/docs/TEMPLATE_OPERATIONS.md');
+}
+
 test('RUNBOOK stays within the 500-word hard limit', () => {
   const manual = fs.readFileSync(path.join(root, 'RUNBOOK.md'), 'utf8');
   // Count the entire file, including stamps, comments and fenced commands.
@@ -101,7 +116,13 @@ test('the eight root controls are present and all eight are explained', () => {
 
 test('root Markdown files are the eight controls plus named non-control files, and the tour says so', () => {
   const controls = ['AGENTS.md', 'BLUEPRINT.md', 'GLOSSARY.md', 'ARCHITECTURE.md', 'RUNBOOK.md', 'TASKBOARD.md', 'CLAUDE.md', 'README.md'];
-  const nonControls = { 'LEXICON.md': /archived/i };
+  const nonControls = {
+    'LEXICON.md': /archived/i,
+    'ARCHITECTURE--codemap.md': /supporting Architecture/i,
+    'ARCHITECTURE--ownership.md': /supporting Architecture/i,
+    'ARCHITECTURE--routes.md': /supporting Architecture/i,
+    'ARCHITECTURE--invariants-and-boundaries.md': /supporting Architecture/i
+  };
   const rootMarkdown = fs.readdirSync(root).filter((name) => name.endsWith('.md'));
   for (const name of rootMarkdown) {
     assert.ok(controls.includes(name) || name in nonControls, `${name} sits at the root but is neither a control nor a named non-control file`);
@@ -201,7 +222,7 @@ test('the Blueprint distinguishes product data from Workbench support state', ()
 
 test('configured-host guidance pins the expected producer identity before execution', () => {
   const runbook = fs.readFileSync(path.join(root, 'RUNBOOK.md'), 'utf8');
-  const operations = fs.readFileSync(path.join(root, 'workbench/docs/TEMPLATE_OPERATIONS.md'), 'utf8');
+  const operations = readOperationInstructions();
   assert.match(runbook, /workbench\/docs\/TEMPLATE_OPERATIONS\.md/);
   assert.match(operations, /`sourceCommit` \(the expected full 40-character producer commit\)/);
   assert.match(operations, /`sourceRepository` \(the expected producer `origin` URL\)/);
@@ -242,7 +263,7 @@ test('the Blueprint disposition preserves its exact source and relocated decisio
     assert.ok(fs.existsSync(path.join(root,claim.owner)),claim.id);
     if(claim.disposition==='relocate-accepted-decision') assert.ok(fs.readFileSync(path.join(root,claim.owner),'utf8').includes(claim.text),claim.id);
   }
-  const operations=fs.readFileSync(path.join(root,'workbench/docs/TEMPLATE_OPERATIONS.md'),'utf8');
+  const operations=readOperationInstructions();
   assert.match(operations,/Workbench support state has declared seeding/);
   assert.match(operations,/## Independent Review Boundaries/);
 });

@@ -1,6 +1,11 @@
 #!/usr/bin/env node
 // Preserve existing Spec evidence and Task receipts across the CI event range.
 import { spawnSync } from 'node:child_process';
+import path from 'node:path';
+import fs from 'node:fs';
+import { fileURLToPath, pathToFileURL } from 'node:url';
+const installedParts = fileURLToPath(new URL('../workbench/tools/record-parts.mjs', import.meta.url));
+const expandParts = fs.existsSync(installedParts) ? (await import(pathToFileURL(installedParts).href)).expandRecordText : null;
 
 function git(...args) {
   const result = spawnSync('git', args, { encoding: 'utf8', maxBuffer: 32 * 1024 * 1024 });
@@ -25,6 +30,13 @@ try {
   if (!/^[a-f0-9]{40,64}$/.test(base)) throw new Error('An immutable base commit ID is required.');
   git('cat-file', '-e', `${base}^{commit}`);
   git('merge-base', '--is-ancestor', base, 'HEAD');
+  const root = git('rev-parse', '--show-toplevel').trim();
+  const logicalText = (revision, file) => {
+    const content = git('show', `${revision}:${file}`);
+    if (!content.includes('<!-- workbench-record-section')) return content;
+    if (!expandParts) throw new Error(`${file}: linked evidence requires the supported installed record reader`);
+    return expandParts(content, path.join(root, file), { readPart: part => git('show', `${revision}:${path.relative(root, part).split(path.sep).join('/')}`) });
+  };
   // Follow only renames Git can identify; unknown relocation still fails closed.
   const changes = git('diff', '--name-status', '-M', '-z', base, 'HEAD', '--').split('\0');
   const renames = new Map();
@@ -41,7 +53,7 @@ try {
   let sections = 0;
   for (const file of files) {
     const heading = file.endsWith('/TASK.md') ? 'Receipt' : 'Append-Only Evidence And Execution Log';
-    const oldRows = rows(git('show', `${base}:${file}`), heading);
+    const oldRows = rows(logicalText(base, file), heading);
     if (!oldRows.length) continue;
     let candidate;
     const destination = renames.get(file) ?? file;
@@ -49,7 +61,7 @@ try {
     if (!destination.startsWith('workbench/specs/') || !destination.endsWith(kind)) {
       throw new Error(`${file}: rename leaves its governed path or record kind. Keep evidence in the managed Spec/Task lane.`);
     }
-    try { candidate = git('show', `HEAD:${destination}`); }
+    try { candidate = logicalText('HEAD', destination); }
     catch { throw new Error(`${file}: evidence-bearing file missing or moved.`); }
     const newRows = rows(candidate, heading);
     if (oldRows.some((row, index) => row !== newRows[index])) {

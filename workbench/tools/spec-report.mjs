@@ -30,6 +30,7 @@
 // changed. Verdict and gate refuse missing or mismatched candidate content.
 import crypto from 'node:crypto';
 import fs from 'node:fs';
+import { expandRecordText, planRecordWrite } from './record-parts.mjs';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { escapeMarkdownTableCell, parseMarkdownTableRow } from './markdown-table.mjs';
@@ -213,7 +214,9 @@ export function computeSpecDigest(root, spec, candidate = null) {
     return result.stdout;
   }
   if (candidate) relativeDir = committedSpecDirectory(root, spec, candidate, relativeDir, committed);
-  const specContent = candidate ? committed(['show', `${candidate}:${relativeDir}/SPEC.md`]) : spec.content;
+  const specFile = path.join(root, relativeDir, 'SPEC.md');
+  const expand = (text, file) => expandRecordText(text, file, { root, ...(candidate ? { readPart: part => committed(['show', `${candidate}:${path.relative(root, part).split(path.sep).join('/')}`]) } : {}) });
+  const specContent = candidate ? expand(committed(['show', `${candidate}:${relativeDir}/SPEC.md`]), specFile) : spec.content;
   addEntry('SPEC.md', stripPostDeliveryAcceptanceState(stripVolatileSpecFields(stripEvidenceRows(specContent))));
   let taskNames;
   if (candidate) {
@@ -232,7 +235,7 @@ export function computeSpecDigest(root, spec, candidate = null) {
     }
   }
   for (const name of taskNames.filter((name) => /^tasks\/(?:retired\/)?[^/]+\/TASK\.md$/.test(name)).sort()) {
-    const content = candidate ? committed(['show', `${candidate}:${relativeDir}/${name}`]) : fs.readFileSync(path.join(specDir, name), 'utf8');
+    const content = expand(candidate ? committed(['show', `${candidate}:${relativeDir}/${name}`]) : fs.readFileSync(path.join(specDir, name), 'utf8'), path.join(root, relativeDir, name));
     addEntry(name, stripPostDeliveryTaskState(stripReceiptSection(content)));
   }
   return hash.digest('hex');
@@ -544,7 +547,7 @@ export function recordReviewVerdict(rootDir, specId, options = {}) {
   // Keep the durable row while planning its corrections. A synchronous failure
   // restores it only after every owned Task write has rolled back safely.
   const correction = appendCorrectiveEvidence(root, spec, updated,
-    result === 'fail' ? () => createCorrectiveTasks(root, specId, { candidate, findings }) : null);
+    result === 'fail' ? parent => prepareCorrectiveTasks(root, specId, { candidate, findings }, parent) : null);
   const correctiveTasks = correction?.created;
   const continuedTasks = correction?.continued;
 
@@ -667,7 +670,7 @@ export function recordOwnerApproval(rootDir, specId, options = {}) {
   const updated = appendEvidence(spec.content, row);
   const correction = appendCorrectiveEvidence(root, spec, updated,
     result === 'finding' && !returnToAlign
-      ? () => createCorrectiveTasks(root, specId, { candidate, findings: findingsInput }) : null);
+      ? parent => prepareCorrectiveTasks(root, specId, { candidate, findings: findingsInput }, parent) : null);
   const correctiveTasks = correction?.created;
   const continuedTasks = correction?.continued;
 
@@ -706,6 +709,15 @@ export function isAncestorOfBranch(root, sha, branch) {
 // other ready Task record; it never touches the Spec header or an existing
 // record, so a done Task is never reopened.
 export function createCorrectiveTasks(rootDir, specId, options = {}) {
+  const planned = prepareCorrectiveTasks(rootDir, specId, options);
+  writeCorrectiveBatch(path.resolve(rootDir), planned.staged);
+  return planned.result;
+}
+
+// The evidence row and its corrective records are planned as one write set.
+// The proposed parent is private to this call; external callers still need
+// an already-published row before creating its corrective work.
+function prepareCorrectiveTasks(rootDir, specId, options = {}, proposedParent = null) {
   const root = path.resolve(rootDir);
   const candidate = requiredString(options.candidate, 'createCorrectiveTasks requires a --candidate SHA');
   const findings = requiredString(options.findings, 'createCorrectiveTasks requires --findings naming at least one defect');
@@ -722,7 +734,7 @@ export function createCorrectiveTasks(rootDir, specId, options = {}) {
   // S-003Z TK-008H: a failed whole-landmark verdict answers with corrective
   // Tasks directly under the landmark (`<landmark>/tasks/`), through this same
   // seam; the landmark parent is shaped like a record-backed Spec.
-  const spec = isLandmarkId(specId) ? findLandmarkParent(root, specId) : findSpec(root, specId);
+  const spec = proposedParent ?? (isLandmarkId(specId) ? findLandmarkParent(root, specId) : findSpec(root, specId));
   const landmark = spec.kind === 'landmark';
   assertSpecOpenForCorrection(spec);
   const evidence = parseEvidence(spec.content);
@@ -832,13 +844,12 @@ export function createCorrectiveTasks(rootDir, specId, options = {}) {
     const record = existingRecords.find((task) => task.id === id);
     return { filePath: record.filePath, content, originalContent: record.content };
   });
-  writeCorrectiveBatch(root, [...staged, ...continuedWrites]);
   const created = staged.map(({ id, filePath, slice }) => ({
     id, filePath: path.relative(root, filePath).split(path.sep).join('/'), slice
   }));
   const continued = continuedRuns;
 
-  return { specId, candidate, verdictRow: { ordinal: rowOrdinal, date: verdictDate }, created, continued };
+  return { staged: [...staged, ...continuedWrites], result: { specId, candidate, verdictRow: { ordinal: rowOrdinal, date: verdictDate }, created, continued } };
 }
 
 // S-004F TK-005S (DDR-000M): the route a gap against delivered work takes.
@@ -912,80 +923,105 @@ function planCorrectiveFindings(root, spec, items) {
   });
 }
 
-// Roll back only writes this call still owns. Validate the complete write set
-// before deleting anything; concurrent edits keep the partial state and anchor.
-// This handles synchronous failures, not process death or a filesystem transaction.
+// Plan physical primaries and immutable pages together. The original physical
+// bytes/inode establish ownership; expanded content establishes record meaning.
+// Validate the entire rollback set before reverting anything, so concurrent
+// arrivals preserve the durable evidence anchor and report incomplete recovery.
 function writeCorrectiveBatch(root, staged) {
-  const directories = [];
-  const files = [];
-  const sameIdentity = (stat, identity) => stat.dev === identity.dev && stat.ino === identity.ino;
+  const directories = [], files = [], guards = [], writes = [], removals = [];
+  const sameIdentity = (stat, identity) => identity && stat.dev === identity.dev && stat.ino === identity.ino;
+  const snapshot = (file, content) => {
+    assertSafeWritePath(root, file);
+    const identity = fs.lstatSync(file);
+    if (!identity.isFile() || identity.nlink !== 1 || fs.readFileSync(file, 'utf8') !== content) throw new Error(`Corrective source changed before publication: ${file}`);
+    return { content, identity };
+  };
+  const matches = (file, original) => {
+    assertSafeWritePath(root, file);
+    const stat = fs.lstatSync(file);
+    return stat.isFile() && stat.nlink === 1 && sameIdentity(stat, original.identity) && fs.readFileSync(file, 'utf8') === original.content;
+  };
   for (const item of staged) {
     assertSafeWritePath(root, item.filePath);
-    if (item.originalContent === undefined && fs.existsSync(path.dirname(item.filePath))) {
-      throw new Error(`Corrective Task destination already exists: ${item.filePath}`);
+    if (item.originalContent === undefined && fs.existsSync(path.dirname(item.filePath))) throw new Error(`Corrective Task destination already exists: ${item.filePath}`);
+    const logical = item.content.endsWith('\n') ? item.content : `${item.content}\n`;
+    const plan = planRecordWrite(item.filePath, logical, { root });
+    const original = item.originalContent === undefined ? null : snapshot(item.filePath, plan.original);
+    if (original && expandRecordText(original.content, item.filePath, { root }) !== item.originalContent) throw new Error(`Corrective continuation changed before publication: ${item.filePath}`);
+    if (!original && fs.existsSync(item.filePath)) throw new Error(`Corrective destination became occupied: ${item.filePath}`);
+    if (original) guards.push({ path: item.filePath, original });
+    const currentParts = new Set(plan.pages.map(page => page.file));
+    for (const previous of plan.previousParts) {
+      const prior = snapshot(previous, fs.readFileSync(previous, 'utf8'));
+      guards.push({ path: previous, original: prior });
+      if (!currentParts.has(previous)) removals.push({ path: previous, expectedContent: null, original: prior, deleted: false });
     }
+    for (const page of plan.pages) {
+      if (fs.existsSync(page.file)) {
+        // Reused immutable pages are dependencies too, even without a write.
+        if (!plan.previousParts.includes(page.file)) guards.push({ path: page.file, original: snapshot(page.file, page.text) });
+      } else writes.push({ path: page.file, expectedContent: page.text, original: null, identity: null });
+    }
+    writes.push({ path: item.filePath, expectedContent: plan.content, original, identity: null });
+  }
+  const sourcePages = new Map(guards.map(guard => [guard.path, guard.original.content]));
+  for (const item of staged) {
+    if (item.originalContent === undefined) continue;
+    const physical = sourcePages.get(item.filePath);
+    const logical = expandRecordText(physical, item.filePath, { root, readPart: file => {
+      if (!sourcePages.has(file)) throw new Error(`Corrective source page was not snapshotted: ${file}`);
+      return sourcePages.get(file);
+    } });
+    if (logical !== item.originalContent) throw new Error(`Corrective source changed before publication: ${item.filePath}`);
+  }
+  for (const guard of guards) if (!matches(guard.path, guard.original)) throw new Error(`Corrective source changed before publication: ${guard.path}`);
+  for (const write of writes) {
+    const temporary = `${write.path}.tmp-${process.pid}`;
+    if (fs.existsSync(temporary)) throw new Error(`Corrective temporary destination already exists: ${temporary}`);
   }
   try {
-    for (const item of staged) {
+    for (const write of writes) {
       const missing = [];
-      let directory = path.dirname(item.filePath);
+      let directory = path.dirname(write.path);
       while (!fs.existsSync(directory)) { missing.push(directory); directory = path.dirname(directory); }
-      for (const name of missing.reverse()) {
-        fs.mkdirSync(name);
-        directories.push({ path: name, identity: fs.lstatSync(name) });
-      }
-      assertSafeWritePath(root, item.filePath);
-      const temporary = `${item.filePath}.tmp-${process.pid}`;
-      if (fs.existsSync(temporary)) throw new Error(`Corrective temporary destination already exists: ${temporary}`);
-      const expectedContent = item.content.endsWith('\n') ? item.content : `${item.content}\n`;
-      const original = item.originalContent === undefined ? null : {
-        content: item.originalContent, identity: fs.lstatSync(item.filePath)
-      };
-      if (original) {
-        if (!original.identity.isFile() || original.identity.nlink !== 1
-          || fs.readFileSync(item.filePath, 'utf8') !== original.content) {
-          throw new Error(`Corrective continuation changed before publication: ${item.filePath}`);
-        }
-      } else if (fs.existsSync(item.filePath)) {
-        throw new Error(`Corrective destination became occupied: ${item.filePath}`);
-      }
-      const published = { path: item.filePath, expectedContent, original, identity: null };
-      const temporaryFile = { path: temporary, expectedContent, original: null, identity: null };
-      files.push(published, temporaryFile);
-      publishCorrectiveFile(item.filePath, item.content, (identity) => {
-        temporaryFile.identity = identity;
-        published.identity = identity;
-      }, original);
-      assertSafeWritePath(root, item.filePath);
-      published.identity = temporaryFile.identity;
-      const stat = fs.lstatSync(item.filePath);
-      if (!stat.isFile() || stat.nlink !== 1 || !sameIdentity(stat, published.identity)
-        || fs.readFileSync(item.filePath, 'utf8') !== expectedContent) {
-        throw new Error(`Corrective file changed during publication: ${item.filePath}`);
-      }
+      for (const name of missing.reverse()) { fs.mkdirSync(name); directories.push({ path: name, identity: fs.lstatSync(name) }); }
+      assertSafeWritePath(root, write.path);
+      const temporary = { path: `${write.path}.tmp-${process.pid}`, expectedContent: write.expectedContent, original: null, identity: null };
+      files.push(write, temporary);
+      publishCorrectiveFile(write.path, write.expectedContent, identity => { temporary.identity = identity; write.identity = identity; }, write.original);
+      if (!matches(write.path, { content: write.expectedContent, identity: write.identity })) throw new Error(`Corrective file changed during publication: ${write.path}`);
+    }
+    // No old page disappears until all referencing primaries have published.
+    // A synchronous cleanup failure is included in the same bounded rollback.
+    for (const removal of removals) {
+      if (!matches(removal.path, removal.original)) throw new Error(`Corrective page changed before cleanup: ${removal.path}`);
+      files.push(removal); fs.unlinkSync(removal.path); removal.deleted = true;
+    }
+    for (const write of writes) if (!matches(write.path, { content: write.expectedContent, identity: write.identity })) throw new Error(`Corrective file changed during publication: ${write.path}`);
+    for (const guard of guards) {
+      if (writes.some(write => write.path === guard.path) || removals.some(removal => removal.path === guard.path)) continue;
+      if (!matches(guard.path, guard.original)) throw new Error(`Corrective immutable dependency changed during publication: ${guard.path}`);
     }
   } catch (error) {
     try {
+      const owned = new Set([...directories, ...files].map(entry => entry.path));
       for (const directory of directories) {
         const stat = fs.lstatSync(directory.path);
-        if (!stat.isDirectory() || !sameIdentity(stat, directory.identity)) {
-          throw new Error(`Corrective rollback directory changed: ${directory.path}`);
-        }
+        if (!stat.isDirectory() || !sameIdentity(stat, directory.identity) || fs.readdirSync(directory.path).some(name => !owned.has(path.join(directory.path, name)))) throw new Error(`Corrective rollback directory changed: ${directory.path}`);
       }
       const rollback = [];
       for (const file of files) {
         let stat;
         try { stat = fs.lstatSync(file.path); }
-        catch (missing) { if (missing.code === 'ENOENT' && !file.original) continue; throw missing; }
+        catch (missing) {
+          if (missing.code === 'ENOENT' && file.deleted) { rollback.push(file); continue; }
+          if (missing.code === 'ENOENT' && !file.original) continue;
+          throw missing;
+        }
         assertSafeWritePath(root, file.path);
         const content = fs.readFileSync(file.path, 'utf8');
-        // A failed atomic rename leaves an existing continuation untouched.
-        const unchanged = file.original && sameIdentity(stat, file.original.identity)
-          && content === file.original.content;
-        if (!stat.isFile() || stat.nlink !== 1 || (!unchanged
-          && (!file.identity || !sameIdentity(stat, file.identity) || content !== file.expectedContent))) {
-          throw new Error(`Corrective rollback file changed: ${file.path}`);
-        }
+        const unchanged = file.original && sameIdentity(stat, file.original.identity) && content === file.original.content;
+        if (!stat.isFile() || stat.nlink !== 1 || (!unchanged && (!sameIdentity(stat, file.identity) || content !== file.expectedContent))) throw new Error(`Corrective rollback file changed: ${file.path}`);
         if (!unchanged) rollback.push(file);
       }
       for (const file of rollback.reverse()) {
@@ -997,8 +1033,7 @@ function writeCorrectiveBatch(root, staged) {
       }
       for (const directory of directories.reverse()) fs.rmdirSync(directory.path);
     } catch (rollbackError) {
-      const failure = new AggregateError([error, rollbackError],
-        `Corrective batch failed (${error.message}); bounded rollback also failed (${rollbackError.message}). Preserve remaining artifacts for explicit recovery.`);
+      const failure = new AggregateError([error, rollbackError], `Corrective batch failed (${error.message}); bounded rollback also failed (${rollbackError.message}). Preserve remaining artifacts for explicit recovery.`);
       failure.correctiveRollbackIncomplete = true;
       throw failure;
     }
@@ -1007,48 +1042,11 @@ function writeCorrectiveBatch(root, staged) {
 }
 
 function appendCorrectiveEvidence(root, spec, updated, createTasks) {
-  assertSafeWritePath(root, spec.filePath);
-  const temporary = `${spec.filePath}.tmp-${process.pid}`;
-  if (fs.existsSync(temporary)) throw new Error(`Corrective evidence temporary destination already exists: ${temporary}`);
-  const original = { identity: fs.lstatSync(spec.filePath), content: spec.content };
-  let temporaryIdentity;
-  try {
-    publishCorrectiveFile(spec.filePath, updated, (identity) => { temporaryIdentity = identity; }, original);
-    return createTasks ? createTasks() : undefined;
-  } catch (error) {
-    if (error.correctiveRollbackIncomplete) throw error;
-    try {
-      assertSafeWritePath(root, spec.filePath);
-      const current = fs.readFileSync(spec.filePath, 'utf8');
-      const stat = fs.lstatSync(spec.filePath);
-      const identity = current === spec.content ? original.identity : temporaryIdentity;
-      if (!identity || !stat.isFile() || stat.nlink !== 1
-        || stat.dev !== identity.dev || stat.ino !== identity.ino
-        || (current !== spec.content && current !== updated && current !== `${updated}\n`)) {
-        throw new Error('Spec changed during corrective evidence rollback');
-      }
-      if (fs.existsSync(temporary)) {
-        assertSafeWritePath(root, temporary);
-        const stat = fs.lstatSync(temporary);
-        const expected = updated.endsWith('\n') ? updated : `${updated}\n`;
-        if (!stat.isFile() || stat.nlink !== 1 || !temporaryIdentity
-          || stat.dev !== temporaryIdentity.dev || stat.ino !== temporaryIdentity.ino
-          || fs.readFileSync(temporary, 'utf8') !== expected) {
-          throw new Error('Corrective evidence temporary file changed during rollback');
-        }
-        fs.unlinkSync(temporary);
-      }
-      if (current !== spec.content) {
-        // Restore exact bytes, including a missing final newline.
-        fs.writeFileSync(temporary, spec.content, { flag: 'wx' });
-        fs.renameSync(temporary, spec.filePath);
-      }
-    } catch (rollbackError) {
-      throw new AggregateError([error, rollbackError],
-        `Corrective evidence failed (${error.message}); bounded rollback also failed (${rollbackError.message}). Preserve remaining evidence for explicit recovery.`);
-    }
-    throw error;
-  }
+  const proposed = Object.create(spec);
+  Object.defineProperty(proposed, 'content', { value: updated });
+  const correction = createTasks ? createTasks(proposed) : null;
+  writeCorrectiveBatch(root, [{ filePath: spec.filePath, content: updated, originalContent: spec.content }, ...(correction?.staged ?? [])]);
+  return correction?.result;
 }
 
 // The batch owns temporary cleanup. The shared atomic writer removes its
@@ -1772,7 +1770,8 @@ export function computeLandmarkDigest(root, parent, children, candidate = null) 
     if (result.status !== 0) throw new Error(`Cannot read committed content for ${parent.id} at ${candidate}: ${result.stderr?.trim() || result.error?.message || 'Git read failed'}`);
     return result.stdout;
   }
-  const landmarkContent = candidate ? committed(['show', `${candidate}:${relativeDir}/LANDMARK.md`]) : parent.content;
+  const expand = (text, file) => expandRecordText(text, file, { root, ...(candidate ? { readPart: part => committed(['show', `${candidate}:${path.relative(root, part).split(path.sep).join('/')}`]) } : {}) });
+  const landmarkContent = candidate ? expand(committed(['show', `${candidate}:${relativeDir}/LANDMARK.md`]), parent.filePath) : parent.content;
   addEntry('LANDMARK.md', stripVolatileLandmarkFields(stripEvidenceRows(landmarkContent)));
   let taskNames;
   if (candidate) {
@@ -1789,7 +1788,7 @@ export function computeLandmarkDigest(root, parent, children, candidate = null) 
     }
   }
   for (const name of taskNames.filter((name) => /^tasks\/(?:retired\/)?[^/]+\/TASK\.md$/.test(name)).sort()) {
-    const content = candidate ? committed(['show', `${candidate}:${relativeDir}/${name}`]) : fs.readFileSync(path.join(landmarkDir, name), 'utf8');
+    const content = expand(candidate ? committed(['show', `${candidate}:${relativeDir}/${name}`]) : fs.readFileSync(path.join(landmarkDir, name), 'utf8'), path.join(root, relativeDir, name));
     addEntry(name, stripReceiptSection(content));
   }
   if (candidate) {
@@ -1992,7 +1991,7 @@ export function recordLandmarkVerdict(rootDir, landmarkId, options = {}) {
     }
   }
   const correction = appendCorrectiveEvidence(root, parent, content,
-    result === 'fail' ? () => createCorrectiveTasks(root, parent.id, { candidate, findings }) : null);
+    result === 'fail' ? proposed => prepareCorrectiveTasks(root, parent.id, { candidate, findings }, proposed) : null);
   const correctiveTasks = correction?.created;
   const continuedTasks = correction?.continued;
 

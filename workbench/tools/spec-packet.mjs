@@ -1,4 +1,5 @@
 import path from 'node:path';
+import { lazyRecordContent, readRecordSection } from './record-parts.mjs';
 import { parseMarkdownTableRow } from './markdown-table.mjs';
 
 // The recorded baseline states an owning spec may carry in an optional
@@ -67,12 +68,13 @@ export function parseSpecPacket(content, filePath, root, options = {}) {
   // spec-workbench.mjs). The table's header cell wording is decorative and
   // varies by when the Spec was written; this scan never reads that header
   // text, only the `TK-###` row prefix, so any wording parses.
-  const rows = parseTaskRows(section(content, 'Vertical Implementation Slices'), id, options.recordBacked === true || planned);
-  return {
+  const rows = parseTaskRows(readRecordSection(content, 'Vertical Implementation Slices', filePath, root), id, options.recordBacked === true || planned);
+  return lazyRecordContent({
     root,
     filePath,
     relativePath: path.relative(root, filePath).split(path.sep).join('/'),
     content,
+    sourceContent: content,
     id,
     title: titleMatch[1].trim(),
     status: fields.Status,
@@ -85,7 +87,7 @@ export function parseSpecPacket(content, filePath, root, options = {}) {
     nextGate: fields['Next gate'] ?? null,
     baseline,
     rows
-  };
+  }, content, filePath, root);
 }
 
 function parseTaskRows(value, specId, recordBacked) {

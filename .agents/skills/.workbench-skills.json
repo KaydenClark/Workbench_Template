@@ -3,44 +3,44 @@
   "source": {
     "repository": "https://github.com/KaydenClark/LLM_Workbench.git",
     "release": "v3.2.2",
-    "commit": "45a857f25adadeb068e0f000c09dcb3addb36a90",
+    "commit": "94702faae1779eefe09e8336a1a0b0df62365c31",
     "dirty": false
   },
   "installedAt": "2026-10-19",
   "skills": {
     "adoption": "787b1eee9c6a77399f1dbfba95cae429ea0461aa815a84de0ca58e4293c9ccf0",
-    "checkpoint": "944f5ca061f055f96f80ab5da8ce1fd61b359842fecdd0fbc8658eb5a11650da",
+    "checkpoint": "d00a2885aea312b325457c5f435fb962b5146078c2d358a15a7fb4598d9f1484",
     "code-review": "402d14d1538475edb633b4c13808cbb5290963869251c7e452830cfb882e6006",
     "genesis": "beae6621c13b1048c65821948c6bd2c0f0194d656fdfa286d4e99da01f9c8504",
-    "grilling": "1762965557a8e64ae786aef41436a54436fe96ff79e697e9c0c90bf8fa1e17e9",
-    "implement": "3be6a9448c6299a410740620c9e15e31836ad063d9828e3a79b704dee8511efa",
-    "make-it-so": "3ddbeeddd3e730f210f5b529fbbcf4a5e9b9cf0317d0cf6b4bce77d2e86927f2",
-    "to-docs": "5e058c330236b78ec498d742d301f5a6b49ea2a7cc09376605f67dedd6f44bd3",
+    "grilling": "b7296cf4d83de91694fbaa66fe1aeb95dd729c5210e661fe10c4d8601b2fbd44",
+    "implement": "2f2aef03a6da3c70e7d70ee7cb3df34ad042c9f421240c7234fe1da3d0fe74bb",
+    "to-docs": "1d8a3f0dab547134b6f294ca2eef55abdf825b56c18d467e277d1b2742ff3d7c",
     "to-spec": "60011d959797e6b253a1dc660cdc8886f65289cea8be3c91cff8c0e9a18b0bfa",
     "to-tasks": "f3ec72f6bfd7efa641e32b0dd5ded265fdc960f83ad2b1ee7424764271df01e9",
     "tracer-bullet": "3e567ca9d9aaa70dc087b90822f82b9865a70a2a61a99ca95989049a103b9c3a",
-    "update-harness": "76b0b13bce406d0af6b7e4b3227305711c12ad97d068da21ea8345e9a4c05d5c",
-    "carry": "f09b4da88b6cd0ef9864f15d92cf133ddf92d8399f9df188751ceeae9eb5477a",
-    "notepad": "aa8d2d5b18d4a055d165ab3c27181803fd4d43798bc2d3016714aa69db9e7591",
+    "update-harness": "fd2545c610635501a50ef87819c25afc1917cc4765642fe8b5fad60c3e88c06d",
+    "carry": "0d998d1729d34866c94e0a87a4c19c7a7a3f620c1de4bad3defdabdfb1d850d8",
+    "notepad": "3866c4b6938d037c6cec07338ffad2d5d8653f57eda910345f849c495815d2ee",
     "jot": "dabfcbfb7fd7e15f085f08885801cf065644141bb329dee25576b2607d030f20",
-    "save": "dec8f4b3dc965a545c2bc0d24a3a867ba97308d81702700a2943f08d91012729",
-    "promote": "4176ca7971956ecc0424bc438961c2b492e112e0b33687df37ec539e231cd28f",
+    "save": "44067bb8dc5d74876f1ad307ae05c42fb3b813285efffec87ca1aed4b7c3e863",
+    "promote": "68e86be31a34df0bd05fa8ac23e7853c0bda88b6b831321cf7cd0179e6393750",
     "handoff": "6f2888e199d4eef9f602731bb6fa585de01958777883d45ddb67c593019ca73b",
     "grill-me": "bb5f651e307d8d33eed96386c54aebc43a586a9e8386f932c501c59003aca90e",
-    "workbench-runtime": "1ae7262322819417e51130f015f6542d26eb01c9abcd5afd51b8ae243c09f638",
-    "improve-harness": "749a372feb7ff4a348be7ad315153efdcb47f06245ae3e41d29ceac38fe8d34d",
-    "domain-modeling": "d4da3ef89a47ceb883c4a06fe6f51af148bb1fdb04fd078b5635e850c26ecfe0",
+    "workbench-runtime": "5ec1fcc26616f7723b14e80813820076e0eddd4f9b61ce188604d21f536cb974",
+    "improve-harness": "2309b938e6b2021d9cfb50808c7c06577f1f8e8b5fd39c15b616a3d3b47b825a",
+    "domain-modeling": "20ebef6ad34ae2f9e13cb3c2b7651e233f44b53f077b505cf2e51de47232e27e",
     "pr": "102fefd93cdf36ee98a19ae8ab27a29d4d8b40436299fa721866153199453917",
-    "writing-for-agents": "d2b4c5ad39deccafd01ee81ff621a0f55872571f1f7a3aecb6af1b0dc70bbc18",
+    "writing-for-agents": "30024f3d12b31037b973504ea3ed75c02aaa859ff7cb93b6ab25a788ee48f138",
     "retro": "eaf6be7b729b4a809cde880266258f2940859fe23b4ea96d68a26f53e30b6df3",
-    "director": "101b916adfcd4129403190bf6a19d33924a27e57c3dd740e53357c24b52cb0cb",
-    "dispatcher": "c2351afd6724d5ce2c083f34f1296f70d97b33835e2af0515aa9c27462f5a064",
+    "director": "4155246127314448d122fa2a36aefb992cd9c48312ce06a349fad0e9368653ed",
+    "dispatcher": "7aaf281678de7db201f5e5924229033fe1d7394fb822ed4daac6e99959b7b2f4",
     "spec-planner": "5cad336a4df9dd9e81355c5276ef105da4dd0a21ec13ac9436a56ff233cc1b7e",
     "spec-manager": "5f01ae0dd9c735fc3241c7cef84541d8e35412a74d4dad364011958c16b7ade6",
     "builder": "104b85c30f925361f759ae4c3564bafa8e9359f32419568df3888f750d3850e3",
     "auditor": "02dd725b36aba035eca8de04d762e2567e3d65c9c7ea1ac231608d2d477db323",
     "reviewer": "61ff51ffb042b0ed41afab7ad60b1ddde7a9de45a7eb8e795dd627477b9c3209",
-    "reconciler": "125ee82a1192ecafd10fff0643cded38e7d1b4644a37a8568a5fc86f2e3286ba"
+    "reconciler": "125ee82a1192ecafd10fff0643cded38e7d1b4644a37a8568a5fc86f2e3286ba",
+    "orchestrate": "ade4518dfe001ff1c4509615f3bc69166503c9f606a1e929a13449582e3fa02b"
   },
   "adapters": [
     ".agents/skills",
@@ -142,7 +142,63 @@
         "save",
         "handoff"
       ]
+    },
+    {
+      "path": "~/.workbench-skills-backup-dXySoA",
+      "skills": [
+        "checkpoint",
+        "grilling",
+        "implement",
+        "to-docs",
+        "update-harness",
+        "carry",
+        "notepad",
+        "save",
+        "promote",
+        "workbench-runtime",
+        "improve-harness",
+        "domain-modeling",
+        "writing-for-agents",
+        "director",
+        "dispatcher",
+        "make-it-so"
+      ],
+      "hashes": {
+        "checkpoint": "944f5ca061f055f96f80ab5da8ce1fd61b359842fecdd0fbc8658eb5a11650da",
+        "grilling": "1762965557a8e64ae786aef41436a54436fe96ff79e697e9c0c90bf8fa1e17e9",
+        "implement": "3be6a9448c6299a410740620c9e15e31836ad063d9828e3a79b704dee8511efa",
+        "to-docs": "5e058c330236b78ec498d742d301f5a6b49ea2a7cc09376605f67dedd6f44bd3",
+        "update-harness": "76b0b13bce406d0af6b7e4b3227305711c12ad97d068da21ea8345e9a4c05d5c",
+        "carry": "f09b4da88b6cd0ef9864f15d92cf133ddf92d8399f9df188751ceeae9eb5477a",
+        "notepad": "aa8d2d5b18d4a055d165ab3c27181803fd4d43798bc2d3016714aa69db9e7591",
+        "save": "dec8f4b3dc965a545c2bc0d24a3a867ba97308d81702700a2943f08d91012729",
+        "promote": "4176ca7971956ecc0424bc438961c2b492e112e0b33687df37ec539e231cd28f",
+        "workbench-runtime": "1ae7262322819417e51130f015f6542d26eb01c9abcd5afd51b8ae243c09f638",
+        "improve-harness": "749a372feb7ff4a348be7ad315153efdcb47f06245ae3e41d29ceac38fe8d34d",
+        "domain-modeling": "d4da3ef89a47ceb883c4a06fe6f51af148bb1fdb04fd078b5635e850c26ecfe0",
+        "writing-for-agents": "d2b4c5ad39deccafd01ee81ff621a0f55872571f1f7a3aecb6af1b0dc70bbc18",
+        "director": "101b916adfcd4129403190bf6a19d33924a27e57c3dd740e53357c24b52cb0cb",
+        "dispatcher": "c2351afd6724d5ce2c083f34f1296f70d97b33835e2af0515aa9c27462f5a064",
+        "make-it-so": "3ddbeeddd3e730f210f5b529fbbcf4a5e9b9cf0317d0cf6b4bce77d2e86927f2"
+      },
+      "added": [
+        "orchestrate"
+      ],
+      "retired": [
+        "make-it-so"
+      ]
+    },
+    {
+      "path": "~/.workbench-skills-backup-LVVgY6",
+      "skills": [
+        "improve-harness"
+      ],
+      "hashes": {
+        "improve-harness": "45a7102b602b96bd945c8767adac94da0570a96dadfef3992b52815d1a024753"
+      },
+      "added": [],
+      "retired": []
     }
   ],
-  "updatedAt": "2026-10-29"
+  "updatedAt": "2026-10-30"
 }

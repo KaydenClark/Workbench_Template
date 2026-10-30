@@ -16,6 +16,7 @@ import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { finding } from './diagnostics.mjs';
 import { allocateArtifactId, compareVisibleIds, visibleIdKey } from './visible-ids.mjs';
+import { artifactCharacterLimit, paginateGeneratedTable, writeGeneratedPages, generatedPageIssues } from './artifact-pagination.mjs';
 import { assertSafeReadPath, assertSafeWritePath, writeSafeFile, collectionPath, collectionRelative, findRoot, isMainModule, isSafeRelative, IGNORED_COLLECTIONS, laneRelative, liveRecordPath, markdownLinkTargets, readManifest } from './workbench-paths.mjs';
 
 export const STATUSES = Object.freeze(['proposed', 'accepted', 'superseded', 'deprecated', 'rejected']);
@@ -420,18 +421,10 @@ export function validateAdrs(root, options = {}) {
   for (const { number, names } of numbers.values()) {
     if (names.length > 1) findings.push(finding(code, `${spec.prefix} number ${number} is used by ${names.join(', ')}`, { number }));
   }
-  const registerPath = path.join(collectionPath(root, spec.collection), REGISTER_NAME);
   if (adrs.length > 0) {
-    const expected = renderRegister(adrs, { kind: spec.kind });
-    const actual = fs.existsSync(registerPath) ? fs.readFileSync(registerPath, 'utf8') : null;
-    if (actual === null || actual.replaceAll('\r\n', '\n') !== expected) {
-      findings.push(finding('stale-register', `${collectionRelative(root, spec.collection)}/${REGISTER_NAME} is stale; run adr register`));
+    for (const history of [false, true]) {
+      for (const issue of generatedPageIssues(root, registerPages(root, adrs, { history, kind: spec.kind }))) findings.push(finding('stale-register', `${issue}; run adr register`));
     }
-  }
-  const historyPath = path.join(collectionPath(root, spec.collection), HISTORY_NAME);
-  if (adrs.length > 0) {
-    const history = fs.existsSync(historyPath) ? fs.readFileSync(historyPath, 'utf8') : null;
-    if (history === null || history.replaceAll('\r\n', '\n') !== renderRegister(adrs, { history: true, kind: spec.kind })) findings.push(finding('stale-register', `${collectionRelative(root, spec.collection)}/${HISTORY_NAME} is stale; run adr register`));
   }
   return findings;
 }
@@ -487,6 +480,16 @@ export function renderRegister(adrs, { history = false, kind = 'adr' } = {}) {
   return `${lines.join('\n')}\n`;
 }
 
+function registerPages(root, adrs, { history = false, kind = 'adr' } = {}) {
+  const spec = recordKind(kind);
+  const relative = `${collectionRelative(root, spec.collection)}/${history ? HISTORY_NAME : REGISTER_NAME}`;
+  const source = renderRegister(adrs, { history, kind });
+  const tableStart = source.indexOf('\n|') + 1;
+  return paginateGeneratedTable(relative, source.slice(tableStart).trimEnd(), {
+    prefix: source.slice(0, tableStart), suffix: '\n', maxCharacters: artifactCharacterLimit(root, relative)
+  });
+}
+
 export function writeRegister(root, options = {}) {
   const spec = recordKind(options.kind);
   const registerPath = path.join(collectionPath(root, spec.collection), REGISTER_NAME);
@@ -494,9 +497,8 @@ export function writeRegister(root, options = {}) {
   assertSafeWritePath(root, registerPath);
   assertSafeWritePath(root, historyPath);
   const adrs = listAdrs(root, { kind: spec.kind });
-  const content = renderRegister(adrs, { kind: spec.kind });
-  writeSafeFile(root, registerPath, content);
-  writeSafeFile(root, historyPath, renderRegister(adrs, { history: true, kind: spec.kind }));
+  writeGeneratedPages(root, registerPages(root, adrs, { kind: spec.kind }));
+  writeGeneratedPages(root, registerPages(root, adrs, { history: true, kind: spec.kind }));
   return { registerPath, historyPath, count: adrs.length };
 }
 

@@ -41,6 +41,8 @@ Complete relevant work through required checks, review and authorized delivery. 
 
 ## Test And Build
 
+Run `node tools/check-artifact-budgets.mjs`; [character policy](workbench/docs/artifact-budgets.md).
+
 [Check policy](.agents/skills/implement/SKILL.md#engineering-and-verification).
 
 ```bash

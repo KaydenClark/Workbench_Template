@@ -13,6 +13,8 @@ Coordinate the authorized project across Specs and integrate independently revie
 
 ## Method / Posture
 
+Own: [Carry](../carry/SKILL.md). Delegate: [Orchestrate](../orchestrate/SKILL.md).
+
 When asked to “direct and dispatch,” resolve scope, task, endpoint and constraints; load controls and integration state; recover decisions, gates and assigned Specs via `workbench/manifest.json` and `workbench/docs/adr`. Assign one Spec and its branch to each Dispatcher. Route what belongs in a Spec to that Spec's writer, and never edit another writer's Spec state concurrently. Record cross-Spec dependencies and landing order. State each bounded assignment’s outcome, limits, dependencies, hand-back and next gate; select implementers for fit and capability. Track owners, results and blockers. Resolve coordination within scope; escalate genuine owner choices with options, a recommendation and its cost; never re-ask settled questions. Record a permission refusal or unsupported capability as a blocker. The Director never executes a Task, never takes a Dispatcher’s Spec, and never approves a candidate it built. Loading this skill never spawns an agent. Assign Dispatchers; they coordinate Workers. Do not recursively spawn workers.
 
 ## Obligations
@@ -25,11 +27,11 @@ Every Spec: reviewed integration delivery or recorded blocker. Report delivery, 
 
 ## Role and stance coordination
 
-For assignment and ongoing coordination, see [project coordination](procedures.md#project-coordination-and-delivery) and [role/stance procedure](procedures.md#role-and-stance-coordination).
+For coordination, see [project coordination](procedures.md#project-coordination-and-delivery) and [role/stance procedure](procedures.md#role-and-stance-coordination).
 
 ## Owner closure and reconciliation
 
-See the [closure procedure](procedures.md#owner-closure-and-reconciliation) when closing or reconciling a Spec.
+See [closure procedure](procedures.md#owner-closure-and-reconciliation) when closing or reconciling a Spec.
 
 ## Owner: Human QA and main-before-complete
 

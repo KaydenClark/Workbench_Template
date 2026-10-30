@@ -95,3 +95,16 @@ for (const destination of ['archive/SPEC.md', 'workbench/specs/S-001-demo/TASK.m
     const result = f.run(); assert.equal(result.status, 1); assert.match(result.stderr, /governed path/);
   });
 }
+
+// Linked storage must retain the same append-only contract as physical records.
+for (const tamper of [false, true]) test(`linked evidence history ${tamper ? 'rejects altered immutable pages' : 'preserves logical old rows'}`, async t => {
+  const { writeRecordText } = await import('../workbench/tools/record-parts.mjs');
+  const f = fixture(t);
+  const file = path.join(f.root, spec);
+  const content = evidence.replace('\n## Result', '| 2026-10-23 | linked proof |\n\n## Result');
+  const result = writeRecordText(file, content, { root: f.root, sections: ['Append-Only Evidence And Execution Log'], maxPageCharacters: 900 });
+  if (tamper) fs.appendFileSync(result.parts[0], 'altered');
+  f.commit();
+  const checked = f.run();
+  assert.equal(checked.status, tamper ? 1 : 0, checked.stderr);
+});
