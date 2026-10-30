@@ -409,3 +409,20 @@ Historical genesis and layout provenance are unchanged.
 The candidate was first installed from `8f08f11165c043a581c3c7130cb7c813eeec4483`
 and then reinstalled on the same branch from `413e7039` and `a58466ad`, which
 repair the producer defects those installs found (S-000E evidence log).
+
+## Active Version Development
+
+The owner approved consolidating current version work on `v3.2.2` on
+2026-10-30, conditional on restored CI availability. It starts at integration
+`cd6b113cdbe0607ba6b3beb9e7eee57c39e01e51`. Continue version updates on this
+shared feature branch, coordinating writers rather than creating a branch per
+small update. [Approval and scope](../wiki/context-version-branch-method.md)
+record the decision.
+
+The historical `version/*` replay branches and `v3.2.0` remain untouched.
+Unique unfinished and recovery branches are retained, not silently merged.
+The integration branch remains `integration`; `main` retains its delivery gates.
+Existing hosted verification runs on integration/main PRs and pushes, not
+ordinary `v3.2.2` pushes. Run the applicable local checks before publication
+and all required review and verification before integration. The branch is
+ongoing development, not an accepted or released v3.2.2 claim.

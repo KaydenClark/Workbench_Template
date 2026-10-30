@@ -81,6 +81,8 @@ more than its glossary entry.
 
 ## Routing
 
+- [Shared v3.2.2 branch](context-version-branch-method.md) - approved development routing and cleanup scope; [Version History](../docs/VERSION_HISTORY.md#active-version-development) distinguishes active development from frozen replay snapshots.
+
 | Question | Read first |
 |---|---|
 | What did the owner authorize for auto-merge? | [Auto-merge intent](context-auto-merge.md), then [the delivery procedure](../../RUNBOOK.md#ci-and-agent-review-auto-merge) |

@@ -24,7 +24,9 @@
 
 ## PR instructions
 
-- Branch from the current target using `codex/`, `claude/` or `backup/`. Never commit directly to `main` or `integration`; PRs default to `integration`. Follow the project's release instructions for exceptions; use [version-control procedures](.agents/skills/implement/SKILL.md#version-control-procedures).
+- Project-specific v3.2.2 route: develop version updates together on `v3.2.2`, based on `integration`, instead of creating a loose branch for each update. Coordinate writers and preserve unfinished work. This is an active feature branch, not a frozen `version/*` replay snapshot. Existing checks, review, integration PRs and main-promotion gates still apply; branch publication alone is not delivery. See [version development](workbench/docs/VERSION_HISTORY.md#active-version-development).
+
+- For work outside the v3.2.2 route, branch from the current target using `codex/`, `claude/` or `backup/`. Never commit directly to `main` or `integration`; PRs default to `integration`. Follow the project's release instructions for exceptions; use [version-control procedures](.agents/skills/implement/SKILL.md#version-control-procedures).
 - Keep each commit to one logical change with an imperative subject. Include the Worker's [merge-safety and completion answers](.agents/skills/implement/SKILL.md#4-review-at-the-relevant-boundary) in the PR.
 - Follow [checked delivery](RUNBOOK.md#ci-and-agent-review-auto-merge): Task PRs need self-check, merge answers and CI; assembled Specs need independent [code review](.agents/skills/code-review/SKILL.md). Ordinary work-branch pushes have no delivery gates. Never bypass an existing review hold.
 - When integration is authorized and its gates pass, merge, prove containment and clean up through [implement](.agents/skills/implement/SKILL.md#branch-completion). Only the owner promotes integration to `main` after required Task/Spec checks, reviews, verification and pre-PR QA; use a PR and prove containment. Never sweep unrelated or failed work into main.
