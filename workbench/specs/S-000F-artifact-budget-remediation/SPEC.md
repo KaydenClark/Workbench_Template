@@ -10,8 +10,8 @@
 **Blockers:** none
 **Confirmation:** [JOT-45742b87-a137-45d6-982f-577e08ed0cae](../../wiki/context-artifact-budgets.md#jot-45742b87-a137-45d6-982f-577e08ed0cae)
 **Execution approval:** [JOT-45742b87-a137-45d6-982f-577e08ed0cae](../../wiki/context-artifact-budgets.md#jot-45742b87-a137-45d6-982f-577e08ed0cae)
-**Latest event:** TK-000E claimed by codex-artifact-budget-consumer.
-**Next gate:** Close TK-000E with verification and documentation proof.
+**Latest event:** TK-000E closed with proof.
+**Next gate:** Confirm acceptance criteria and completion result.
 
 ## Outcome
 
@@ -73,7 +73,7 @@ Maintain this Spec, the context-artifact-budgets topic, affected control/context
 ## Append-Only Evidence And Execution Log
 
 <!-- workbench-record-section max=15000 -->
-- [Part 1](SPEC.md.part-append-only-evidence-and-execution-log-001.04d179f750131f4b95ba815a3a2080ef47d883683425768c2d064b5909726c4b.md)
+- [Part 1](SPEC.md.part-append-only-evidence-and-execution-log-001.5031da69909635024871436d3e739f4ceef0c5ffb67a525cf682c5b6a42fb708.md)
 <!-- /workbench-record-section -->
 
 ## Completion Result
