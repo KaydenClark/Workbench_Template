@@ -74,19 +74,11 @@ Attribution: [AI Coding Dictionary, Non-determinism](https://www.aihero.dev/ai-c
 
 ## Model provider
 
-Whatever runs a model to answer requests, remote or local. The harness asks a provider for each response instead of running the model itself. Rate limits, capacity and outages live there, along with pricing, cache discounts and the list of models that exist. A provider need not be the maker of the model.
-
-**In the Workbench.** The Workbench's existing names that say bare "provider" (the cross-provider tools, the "provider home") mean the agent family, Claude or Codex, not this; they stay as public names. New prose says harness or model provider instead of bare "provider".
-
-Attribution: [AI Coding Dictionary, Model provider](https://www.aihero.dev/ai-coding-dictionary/model-provider).
+Read [Model provider](ai-coding-reference--model-provider.md#model-provider) when working on this topic.
 
 ## Harness
 
-Everything around a model that makes it an agent: its tools, its system prompt, the way the context window is managed, permissions and hooks. It builds each request, executes the tool calls that the model requests, returns the results, keeps the session history, asks the user before risky actions and chooses when to compact. Claude Code, Codex CLI, Cursor and Claude.ai are harnesses.
-
-**In the Workbench.** The Workbench is not a harness: it is the agentic management system that a harness such as Claude Code or Codex loads, so its agents can align the owner's ideas and implement the owner's design concepts. `AGENTS.md`, permission settings and hooks are instructions to the harness. One model behaves differently under different harnesses (Claude.ai answers, Claude Code edits files), so when behavior changes the harness is often the variable. In the Workbench's words "host" means the harness where it names software (a Chat's host, a host adapter such as `CLAUDE.md`) and the machine where it names a machine (Host portability). Public names that carry the word, such as the `update-harness` skill, stay until they are renamed on their own.
-
-Attribution: [AI Coding Dictionary, Harness](https://www.aihero.dev/ai-coding-dictionary/harness).
+Read [Harness](ai-coding-reference--harness.md#harness) when working on this topic.
 
 ## Input tokens
 
@@ -162,11 +154,7 @@ Attribution: [AI Coding Dictionary, Context](https://www.aihero.dev/ai-coding-di
 
 ## Session
 
-A single bounded run of working with an agent. It starts empty, accumulates the messages, tool outputs and files opened along the way, and ends when it is cleared, closed, or summarized into a new one. What fills the context window is the session, and its history is the agent's working memory, lost when it ends; only files survive.
-
-**In the Workbench.** A Chat is the owner-visible working context in a host; a session is one run of the context window inside it. A Chat normally holds one session and may hold more when the harness compacts or clears within it, and a Task still maps to one Chat. Inference: this joins the two agreed definitions and is not a separate owner answer. "Session" in `AGENTS.md`'s Session Records And Checkpoints and Long Session Control sections, and the `sessions` support lane, use the word in this sense: the lane's records outlive any one session. Keeping to one task a session keeps what is loaded on topic.
-
-Attribution: [AI Coding Dictionary, Session](https://www.aihero.dev/ai-coding-dictionary/session).
+Read [Session](ai-coding-reference--session.md#session) when working on this topic.
 
 ## Smart zone
 

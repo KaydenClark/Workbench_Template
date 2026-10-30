@@ -1,0 +1,298 @@
+{
+  "schemaVersion": 1,
+  "baselineCommit": "cd6b113cdbe0607ba6b3beb9e7eee57c39e01e51",
+  "proofKind": "artifact-budget-preservation",
+  "ordinaryDocuments": [
+    {
+      "source": "workbench/docs/TEMPLATE_OPERATIONS.md",
+      "originalSHA256": "ba25fdca64472840ba6664961bb8e1691c328ba1516669058203aa9e5487fb95",
+      "fencedBlocks": 11,
+      "preservedDataRows": 20,
+      "linkedPages": [
+        "workbench/docs/TEMPLATE_OPERATIONS.md",
+        "workbench/docs/TEMPLATE_OPERATIONS--workbench-lifecycle-diagnostics-and-decision-records.md",
+        "workbench/docs/TEMPLATE_OPERATIONS--workbench-lifecycle-diagnostics-and-decision-records--json-notepads.md",
+        "workbench/docs/TEMPLATE_OPERATIONS--workbench-lifecycle-diagnostics-and-decision-records--optional-private-session-transport.md",
+        "workbench/docs/TEMPLATE_OPERATIONS--evidence-and-continuation-practices.md",
+        "workbench/docs/TEMPLATE_OPERATIONS--upgrading-the-harness.md",
+        "workbench/docs/TEMPLATE_OPERATIONS--evaluation-and-benchmarking.md",
+        "workbench/docs/TEMPLATE_OPERATIONS--ordinary-entry.md"
+      ]
+    },
+    {
+      "source": "workbench/docs/VERSION_HISTORY.md",
+      "originalSHA256": "4ee0c792d4c308b58b33e2e7a4defb56d6032c21b38f91e2f509dd0b36a016b1",
+      "fencedBlocks": 3,
+      "preservedDataRows": 11,
+      "linkedPages": [
+        "workbench/docs/VERSION_HISTORY.md",
+        "workbench/docs/VERSION_HISTORY--what-changed-at-each-step.md"
+      ]
+    },
+    {
+      "source": "workbench/wiki/ai-coding-reference.md",
+      "originalSHA256": "7e4a40acc33a76946adf428d40be90a6e808f8473030b0cd4053668511609e16",
+      "fencedBlocks": 0,
+      "preservedDataRows": 0,
+      "linkedPages": [
+        "workbench/wiki/ai-coding-reference.md",
+        "workbench/wiki/ai-coding-reference--harness.md",
+        "workbench/wiki/ai-coding-reference--session.md",
+        "workbench/wiki/ai-coding-reference--model-provider.md"
+      ]
+    },
+    {
+      "source": "workbench/wiki/workbench-capabilities.md",
+      "originalSHA256": "40190a6e29c6755eaaa91feecf90f3f28593d5fc65ac571f493416f7d450782a",
+      "fencedBlocks": 1,
+      "preservedDataRows": 166,
+      "linkedPages": [
+        "workbench/wiki/workbench-capabilities.md",
+        "workbench/wiki/workbench-capabilities--capability-operations-in-the-inspected-source.md",
+        "workbench/wiki/workbench-capabilities--capability-operations-in-the-inspected-source--setup-and-room-operation.md",
+        "workbench/wiki/workbench-capabilities--capability-operations-in-the-inspected-source--dashboard-and-optional-project-review-surface.md",
+        "workbench/wiki/workbench-capabilities--capability-operations-in-the-inspected-source--wiki-knowledge-and-continuity.md",
+        "workbench/wiki/workbench-capabilities--capability-operations-in-the-inspected-source--map-plan-and-execute.md",
+        "workbench/wiki/workbench-capabilities--capability-operations-in-the-inspected-source--review-approval-delivery-and-cleanup.md",
+        "workbench/wiki/workbench-capabilities--version-evidence.md",
+        "workbench/wiki/workbench-capabilities--version-evidence--retained-feature-captures.md",
+        "workbench/wiki/workbench-capabilities--version-evidence--retained-feature-captures.page-001.md",
+        "workbench/wiki/workbench-capabilities--version-evidence--retained-feature-captures.page-002.md",
+        "workbench/wiki/workbench-capabilities--reusable-skills.md",
+        "workbench/wiki/workbench-capabilities--reusable-skills--core-skills-carried-by-a-room.md",
+        "workbench/wiki/workbench-capabilities--reusable-skills--core-skills-carried-by-a-room.page-001.md",
+        "workbench/wiki/workbench-capabilities--producer-utilities-evaluation-and-release-proof.md",
+        "workbench/wiki/workbench-capabilities--producer-utilities-evaluation-and-release-proof.page-001.md"
+      ]
+    }
+  ],
+  "sectionDisclosure": [
+    {
+      "source": "workbench/docs/TEMPLATE_OPERATIONS--workbench-lifecycle-diagnostics-and-decision-records.md",
+      "originalSHA256": "e80f4d70d5eb1c7c41c2eae6b9a76d95b373ae024d56e40e73e110ac66ec1e83",
+      "originalCharacters": 25453,
+      "characters": 11070,
+      "sections": [
+        {
+          "heading": "JSON Notepads",
+          "sourceSectionSHA256": "ba2ef4275bfff0b4ba4ffb8f7b9272479b7fd5f479121cdf82a9209cd731dfd1",
+          "target": "workbench/docs/TEMPLATE_OPERATIONS--workbench-lifecycle-diagnostics-and-decision-records--json-notepads.md"
+        },
+        {
+          "heading": "Optional Private Session Transport",
+          "sourceSectionSHA256": "a339ff5686340fceb8c4e1cac079da9b4292e532f548db073e4cefe255079351",
+          "target": "workbench/docs/TEMPLATE_OPERATIONS--workbench-lifecycle-diagnostics-and-decision-records--optional-private-session-transport.md"
+        }
+      ]
+    },
+    {
+      "source": "workbench/docs/TEMPLATE_OPERATIONS.md",
+      "originalSHA256": "ba25fdca64472840ba6664961bb8e1691c328ba1516669058203aa9e5487fb95",
+      "originalCharacters": 56533,
+      "characters": 14836,
+      "sections": [
+        {
+          "heading": "Workbench Lifecycle, Diagnostics, And Decision Records",
+          "sourceSectionSHA256": "79c7ba5e1fa979a4fcb7278840c5f03bdfc5a25926a3843bb913a863104ed0de",
+          "target": "workbench/docs/TEMPLATE_OPERATIONS--workbench-lifecycle-diagnostics-and-decision-records.md"
+        },
+        {
+          "heading": "Evidence And Continuation Practices",
+          "sourceSectionSHA256": "4c4d3f5311bd0550ea47b7163ff8a655ed3835cfc39ed41ec5208ffdcae43451",
+          "target": "workbench/docs/TEMPLATE_OPERATIONS--evidence-and-continuation-practices.md"
+        },
+        {
+          "heading": "Upgrading The Harness",
+          "sourceSectionSHA256": "a65e439f6dd73b51e753709cab82ed71fcad95801c29020f3d286a638f418b0c",
+          "target": "workbench/docs/TEMPLATE_OPERATIONS--upgrading-the-harness.md"
+        },
+        {
+          "heading": "Evaluation And Benchmarking",
+          "sourceSectionSHA256": "4151d9e65fb48ee605af1169b2fcaacb1795d16c1a3b45562f7cc1d6d9f684ab",
+          "target": "workbench/docs/TEMPLATE_OPERATIONS--evaluation-and-benchmarking.md"
+        },
+        {
+          "heading": "Ordinary Entry",
+          "sourceSectionSHA256": "52456a6d837e24c256a3ce0911505f037c4244a41211c88dad93525c7c6495e6",
+          "target": "workbench/docs/TEMPLATE_OPERATIONS--ordinary-entry.md"
+        }
+      ]
+    },
+    {
+      "source": "workbench/docs/VERSION_HISTORY.md",
+      "originalSHA256": "4ee0c792d4c308b58b33e2e7a4defb56d6032c21b38f91e2f509dd0b36a016b1",
+      "originalCharacters": 22911,
+      "characters": 13330,
+      "sections": [
+        {
+          "heading": "What Changed At Each Step",
+          "sourceSectionSHA256": "24a5f6fd95110ba7c149f0cfa9d474c57be8efa33e74ca4c6013fe7576001774",
+          "target": "workbench/docs/VERSION_HISTORY--what-changed-at-each-step.md"
+        }
+      ]
+    },
+    {
+      "source": "workbench/wiki/ai-coding-reference.md",
+      "originalSHA256": "7e4a40acc33a76946adf428d40be90a6e808f8473030b0cd4053668511609e16",
+      "originalCharacters": 16978,
+      "characters": 14262,
+      "sections": [
+        {
+          "heading": "Harness",
+          "sourceSectionSHA256": "ccea610972af9474ecc8470da21b811c2daca2a9d33f4104b17e9a222300a4b2",
+          "target": "workbench/wiki/ai-coding-reference--harness.md"
+        },
+        {
+          "heading": "Session",
+          "sourceSectionSHA256": "b511cde6ec6c680abfef4fabb8c30caaf6f28865359c09f029365233c9c7ddf3",
+          "target": "workbench/wiki/ai-coding-reference--session.md"
+        },
+        {
+          "heading": "Model provider",
+          "sourceSectionSHA256": "295b61aa80ed7fa2d83f9038469a393daf66e7efcb4b683f7960239dbd1a7d10",
+          "target": "workbench/wiki/ai-coding-reference--model-provider.md"
+        }
+      ]
+    },
+    {
+      "source": "workbench/wiki/workbench-capabilities--capability-operations-in-the-inspected-source.md",
+      "originalSHA256": "06f75cb39d1d2c8fa7a8f6388efa601322e1933b82e0fef03cfbc53251b77d17",
+      "originalCharacters": 53771,
+      "characters": 8399,
+      "sections": [
+        {
+          "heading": "Setup and room operation",
+          "sourceSectionSHA256": "fb4c8bcd4a92307bf420b21019dcc7ea25ceebbb6c92c7b5a89a992a0d8c14e8",
+          "target": "workbench/wiki/workbench-capabilities--capability-operations-in-the-inspected-source--setup-and-room-operation.md"
+        },
+        {
+          "heading": "Dashboard and optional project review surface",
+          "sourceSectionSHA256": "a58d39e00fa791088f942e38b6a19a5750fa459e1b3a056bbbf6a9d4c4faf8aa",
+          "target": "workbench/wiki/workbench-capabilities--capability-operations-in-the-inspected-source--dashboard-and-optional-project-review-surface.md"
+        },
+        {
+          "heading": "Wiki knowledge and continuity",
+          "sourceSectionSHA256": "f77d00b590a4b877abafb52cf1b1f4ad9ee4fd96bc8c02e71af65455fc7c19eb",
+          "target": "workbench/wiki/workbench-capabilities--capability-operations-in-the-inspected-source--wiki-knowledge-and-continuity.md"
+        },
+        {
+          "heading": "Map, plan and execute",
+          "sourceSectionSHA256": "16ec2e4e2019cd3cee5b292840eb178e8ee98d144f3aea263686151f1f7030f0",
+          "target": "workbench/wiki/workbench-capabilities--capability-operations-in-the-inspected-source--map-plan-and-execute.md"
+        },
+        {
+          "heading": "Review, approval, delivery and cleanup",
+          "sourceSectionSHA256": "e623c8034cb130e24d3125beafe390e671c7142bb6ebdc38ac09c7a365bdaecf",
+          "target": "workbench/wiki/workbench-capabilities--capability-operations-in-the-inspected-source--review-approval-delivery-and-cleanup.md"
+        }
+      ]
+    },
+    {
+      "source": "workbench/wiki/workbench-capabilities--version-evidence.md",
+      "originalSHA256": "a3048b5bbb51973b8d2daf4249f105d2c2d5e5f4f4649316d43dcc429acda8e7",
+      "originalCharacters": 31014,
+      "characters": 3286,
+      "sections": [
+        {
+          "heading": "Retained Feature Captures",
+          "sourceSectionSHA256": "2e5d9fce140cbd052f74f8e2287ea3f9607d289c813cf1ea55987bed6451b2a0",
+          "target": "workbench/wiki/workbench-capabilities--version-evidence--retained-feature-captures.md"
+        }
+      ]
+    },
+    {
+      "source": "workbench/wiki/workbench-capabilities--reusable-skills.md",
+      "originalSHA256": "cdd5bda077fcc3c66ef197368b1e924f4abeb65152a7d0dd084c1da67a115bfc",
+      "originalCharacters": 24042,
+      "characters": 6853,
+      "sections": [
+        {
+          "heading": "Core skills carried by a room",
+          "sourceSectionSHA256": "3d063e5671c96c2d894d99adaa810772dd85e9ad4db4538247859a67ff871a54",
+          "target": "workbench/wiki/workbench-capabilities--reusable-skills--core-skills-carried-by-a-room.md"
+        }
+      ]
+    },
+    {
+      "source": "workbench/wiki/workbench-capabilities.md",
+      "originalSHA256": "40190a6e29c6755eaaa91feecf90f3f28593d5fc65ac571f493416f7d450782a",
+      "originalCharacters": 134524,
+      "characters": 12198,
+      "sections": [
+        {
+          "heading": "Capability operations in the inspected source",
+          "sourceSectionSHA256": "449bbaae3ab1c856196bdc57747f4b670db5ab324b41c92541ccff95e8015c58",
+          "target": "workbench/wiki/workbench-capabilities--capability-operations-in-the-inspected-source.md"
+        },
+        {
+          "heading": "Version Evidence",
+          "sourceSectionSHA256": "f72fe477398599dac09f1ae9781d903a39a0ecec6f421ae53e071f58837039dd",
+          "target": "workbench/wiki/workbench-capabilities--version-evidence.md"
+        },
+        {
+          "heading": "Reusable skills",
+          "sourceSectionSHA256": "efbacd8f4174d6fcbc44ada5938edd075a569eb62c6a5b6554dfd90318dc0937",
+          "target": "workbench/wiki/workbench-capabilities--reusable-skills.md"
+        },
+        {
+          "heading": "Producer utilities, evaluation and release proof",
+          "sourceSectionSHA256": "0cdd453714edfdb296990a43afe478fb53cd6eff3931fde6ebbb9d90c7149d8b",
+          "target": "workbench/wiki/workbench-capabilities--producer-utilities-evaluation-and-release-proof.md"
+        }
+      ]
+    }
+  ],
+  "tablePagination": [
+    {
+      "source": "workbench/wiki/workbench-capabilities--version-evidence--retained-feature-captures.md",
+      "pages": [
+        "workbench/wiki/workbench-capabilities--version-evidence--retained-feature-captures.md",
+        "workbench/wiki/workbench-capabilities--version-evidence--retained-feature-captures.page-001.md",
+        "workbench/wiki/workbench-capabilities--version-evidence--retained-feature-captures.page-002.md"
+      ],
+      "rows": 51
+    },
+    {
+      "source": "workbench/wiki/workbench-capabilities--reusable-skills--core-skills-carried-by-a-room.md",
+      "pages": [
+        "workbench/wiki/workbench-capabilities--reusable-skills--core-skills-carried-by-a-room.md",
+        "workbench/wiki/workbench-capabilities--reusable-skills--core-skills-carried-by-a-room.page-001.md"
+      ],
+      "rows": 33
+    },
+    {
+      "source": "workbench/wiki/workbench-capabilities--producer-utilities-evaluation-and-release-proof.md",
+      "pages": [
+        "workbench/wiki/workbench-capabilities--producer-utilities-evaluation-and-release-proof.md",
+        "workbench/wiki/workbench-capabilities--producer-utilities-evaluation-and-release-proof.page-001.md"
+      ],
+      "rows": 18
+    }
+  ],
+  "glossary": {
+    "originalSHA256": "bba36a16c83397a224f656044a41ea65da8904e481170131788946c06a8c7767",
+    "originalCharacters": 21342,
+    "characters": 12937,
+    "definitions": 119,
+    "sharedDefinitionsShortened": 112,
+    "expandedPages": [
+      "glossary-details-destination-and-direction.md",
+      "glossary-details-workflow-verbs.md",
+      "glossary-details-workbench-room-and-artifacts.md",
+      "glossary-details-specs-and-tasks.md",
+      "glossary-details-chats-and-roles.md",
+      "glossary-details-priority-and-value.md",
+      "glossary-details-feedback-disposition.md",
+      "glossary-details-workbench-meanings-of-ai-coding-terms.md",
+      "glossary-details-continuity-terms.md",
+      "glossary-details-stance-terms.md",
+      "glossary-details-governance-core.md",
+      "glossary-details-continuity-and-evidence-boundaries.md",
+      "glossary-details-project-terms.md"
+    ],
+    "allFullDefinitionsPreserved": true
+  },
+  "managedCarryStatus": "pending owner generation choice and checked source pin",
+  "publicationStatus": "local candidate; no checked integration landing claimed",
+  "historicalUnresolvedLinks": []
+}

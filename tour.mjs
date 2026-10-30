@@ -288,7 +288,7 @@ export const ROUTE = [
 
 export const ZONE_BLURBS = {
   'Root controls':
-    'Eight controls sit at the root, the same eight in every room. An agent reads these\n  on entry to know how to behave here. One other root Markdown file is not a control:\n  LEXICON.md is the archived v3.2.1 vocabulary kept as history. TASKBOARD is\n  the generated continuation view; its linked records own current work.',
+    'Eight controls sit at the root. An agent reads them on entry for behavior,\n  direction and routes. LEXICON.md is archived v3.2.1 vocabulary.\n  ARCHITECTURE--codemap.md, ARCHITECTURE--ownership.md, ARCHITECTURE--routes.md\n  and ARCHITECTURE--invariants-and-boundaries.md are supporting Architecture\n  references linked from its short primary; they add no root controls or authority.\n  TASKBOARD is the generated continuation view; its records own current work.',
   'The support root':
     'Everything the harness manages lives under `workbench/`, plus the skills lane at\n  `.agents/skills`, declared by a manifest rather than assumed by path. This is what\n  makes a room portable and upgradable.',
   'The product':
