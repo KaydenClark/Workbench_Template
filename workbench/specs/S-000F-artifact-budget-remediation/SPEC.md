@@ -1,15 +1,15 @@
 # S-000F - Artifact Budget Remediation
 
 **Spec ID:** S-000F
-**Status:** planned
+**Status:** active
 **Priority:** 2
 **Owner:** codex-artifact-budget-consumer
 **Stance:** Builder
 **Updated:** 2026-10-29
 **Catalog description:** Keep this room's agent artifacts within approved character budgets while preserving meaning, evidence and operations.
 **Blockers:** none
-**Confirmation:** [JOT-e2492c29-7b98-4258-8e17-fd5ae3598bec](../../wiki/context-artifact-budgets.md#jot-e2492c29-7b98-4258-8e17-fd5ae3598bec)
-**Execution approval:** [JOT-e2492c29-7b98-4258-8e17-fd5ae3598bec](../../wiki/context-artifact-budgets.md#jot-e2492c29-7b98-4258-8e17-fd5ae3598bec)
+**Confirmation:** [JOT-45742b87-a137-45d6-982f-577e08ed0cae](../../wiki/context-artifact-budgets.md#jot-45742b87-a137-45d6-982f-577e08ed0cae)
+**Execution approval:** [JOT-45742b87-a137-45d6-982f-577e08ed0cae](../../wiki/context-artifact-budgets.md#jot-45742b87-a137-45d6-982f-577e08ed0cae)
 **Latest event:** Local pruning and component verification pass; three acceptance checks are achieved. A bounded current-run Task now carries final verification and integration preparation; exact review and landing remain.
 **Next gate:** Independent exact-candidate review, required CI and checked integration after source containment; owner acceptance and historical Audit limits remain separate.
 
