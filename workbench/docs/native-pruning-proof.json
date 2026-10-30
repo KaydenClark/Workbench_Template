@@ -67,5 +67,6 @@
   "sourceCommit": "073acbfecbd340e005c758e49baad11a68990144",
   "baselineCommit": "2e62f19a2f30dd47909132d01ea4f4b51f85cc19",
   "limits": "Root controls3000; named records and SKILL.md8000; unlisted Markdown15000; SKILL target900 advisory",
-  "ownerRecordChanges": "S-000G/S-000F and context-artifact-budgets contain authorized continuation updates after lossless disclosure."
+  "ownerRecordChanges": "S-000G/S-000F and context-artifact-budgets contain authorized continuation updates after lossless disclosure.",
+  "comparisonSource": "94702faae1779eefe09e8336a1a0b0df62365c31"
 }

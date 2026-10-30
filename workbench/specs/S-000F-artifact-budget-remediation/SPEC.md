@@ -8,10 +8,10 @@
 **Updated:** 2026-10-29
 **Catalog description:** Keep this room's agent artifacts within approved character budgets while preserving meaning, evidence and operations.
 **Blockers:** Source integration containment, exact-candidate independent review and required CI remain.
-**Confirmation:** [JOT-fb753870-3ec6-4c1d-aa25-a4834d13bb86](../../wiki/context-artifact-budgets.md#jot-fb753870-3ec6-4c1d-aa25-a4834d13bb86)
-**Execution approval:** [JOT-fb753870-3ec6-4c1d-aa25-a4834d13bb86](../../wiki/context-artifact-budgets.md#jot-fb753870-3ec6-4c1d-aa25-a4834d13bb86)
-**Latest event:** Recovered authorized pruning; supported tools and skills components installed from producer 073acbfecbd340e005c758e49baad11a68990144; all scoped artifacts fit.
-**Next gate:** Finish exact-candidate verification, independent review and checked integration; retain owner acceptance and historical Audit limits.
+**Confirmation:** [JOT-e2492c29-7b98-4258-8e17-fd5ae3598bec](../../wiki/context-artifact-budgets.md#jot-e2492c29-7b98-4258-8e17-fd5ae3598bec)
+**Execution approval:** [JOT-e2492c29-7b98-4258-8e17-fd5ae3598bec](../../wiki/context-artifact-budgets.md#jot-e2492c29-7b98-4258-8e17-fd5ae3598bec)
+**Latest event:** Final source94702faae1779eefe09e8336a1a0b0df62365c31 verified; supported refresh changes only improve-harness. Runtime receipt remains073acbfe because all runtime bytes are unchanged.
+**Next gate:** Independent exact-candidate review, required CI and checked integration after source containment; owner acceptance and historical Audit limits remain separate.
 
 ## Outcome
 
@@ -72,12 +72,9 @@ Maintain this Spec, the context-artifact-budgets topic, affected control/context
 
 ## Append-Only Evidence And Execution Log
 
-| Date | Task | Event | Verification | Docs | Remaining gap |
-|---|---|---|---|---|---|
-| 2026-10-29 | preparation | Existing owner authority recovered; isolated integration-based branch created and bounded inventory inspected. | AGENTS, BLUEPRINT and ARCHITECTURE are within their limits, with local design/ownership/delivery detail linked from their owners. The optional tour now explicitly describes Architecture companions as non-control references; its existing 26 tests pass. Managed files/receipts remain unchanged. | Local controls, linked detail and this scoped owner. | Managed scope/source pin, remaining pruning, native checks, review, CI and integration remain. |
-| 2026-10-29 | independent pruning | Condensed root controls and disclosed reference responsibilities and full glossary definitions. | 40/40 app tests; 15 fenced blocks, 197 Markdown rows and 119 full definitions preserved; three paginated tables retain 102 ordered rows. | Linked preservation proof, controls, glossary and reference owners. | 14 oversized Specs/managed skills, four old Wiki stamps, native carry, review and checked integration remain. |
-
-| 2026-10-30 | authorized recovery | Reused valid pruning; installed supported tools+skills components from producer073acbfecbd340e005c758e49baad11a68990144 without layout or root-control replacement. | Corrected policy plus budget boundary tests pass; all scoped artifacts fit. Native disclosure preserves logical record bodies and historical evidence; final full checks remain. | Policy, CI, context, component receipts, native disclosure proof and this owner. | Source containment, final review/CI and checked integration remain; main and historical verdicts unchanged. |
+<!-- workbench-record-section max=15000 -->
+- [Part 1](SPEC.md.part-append-only-evidence-and-execution-log-001.04d179f750131f4b95ba815a3a2080ef47d883683425768c2d064b5909726c4b.md)
+<!-- /workbench-record-section -->
 
 ## Completion Result
 

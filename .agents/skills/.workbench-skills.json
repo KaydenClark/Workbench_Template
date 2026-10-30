@@ -3,7 +3,7 @@
   "source": {
     "repository": "https://github.com/KaydenClark/LLM_Workbench.git",
     "release": "v3.2.2",
-    "commit": "073acbfecbd340e005c758e49baad11a68990144",
+    "commit": "94702faae1779eefe09e8336a1a0b0df62365c31",
     "dirty": false
   },
   "installedAt": "2026-10-19",
@@ -27,7 +27,7 @@
     "handoff": "6f2888e199d4eef9f602731bb6fa585de01958777883d45ddb67c593019ca73b",
     "grill-me": "bb5f651e307d8d33eed96386c54aebc43a586a9e8386f932c501c59003aca90e",
     "workbench-runtime": "5ec1fcc26616f7723b14e80813820076e0eddd4f9b61ce188604d21f536cb974",
-    "improve-harness": "45a7102b602b96bd945c8767adac94da0570a96dadfef3992b52815d1a024753",
+    "improve-harness": "2309b938e6b2021d9cfb50808c7c06577f1f8e8b5fd39c15b616a3d3b47b825a",
     "domain-modeling": "20ebef6ad34ae2f9e13cb3c2b7651e233f44b53f077b505cf2e51de47232e27e",
     "pr": "102fefd93cdf36ee98a19ae8ab27a29d4d8b40436299fa721866153199453917",
     "writing-for-agents": "30024f3d12b31037b973504ea3ed75c02aaa859ff7cb93b6ab25a788ee48f138",
@@ -187,6 +187,17 @@
       "retired": [
         "make-it-so"
       ]
+    },
+    {
+      "path": "~/.workbench-skills-backup-LVVgY6",
+      "skills": [
+        "improve-harness"
+      ],
+      "hashes": {
+        "improve-harness": "45a7102b602b96bd945c8767adac94da0570a96dadfef3992b52815d1a024753"
+      },
+      "added": [],
+      "retired": []
     }
   ],
   "updatedAt": "2026-10-30"

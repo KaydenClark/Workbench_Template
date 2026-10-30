@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "073acbfecbd340e005c758e49baad11a68990144",
+  "sourceCommit": "94702faae1779eefe09e8336a1a0b0df62365c31",
   "consumerBaseline": "2e62f19a2f30dd47909132d01ea4f4b51f85cc19",
   "scope": "Supported managed tools and skills components only; existing room identity, layout and product controls retained. No whole upgrade acceptance or main promotion.",
   "sourcePolicySHA256": "96ba4a7eb4c048fe96e9783f3f8f039b05ad54b05001db3965301e8a8bddb7c8",
@@ -64,5 +64,17 @@
     "wiki": "four preexisting v3.2.1 stamp attention findings"
   },
   "localBackupHome": "/private/tmp/artifact-budget-consumer-backups-20261030",
-  "publication": "local candidate; review, hosted CI and integration remain"
+  "publication": "final local candidate; independent review, hosted CI and source containment remain",
+  "comparisonSource": "94702faae1779eefe09e8336a1a0b0df62365c31",
+  "componentSourceCommits": {
+    "runtime": "073acbfecbd340e005c758e49baad11a68990144",
+    "skills": "94702faae1779eefe09e8336a1a0b0df62365c31"
+  },
+  "finalRefresh": {
+    "changedSkills": [
+      "improve-harness"
+    ],
+    "runtimeStatus": "current; unchanged bytes retain original truthful receipt",
+    "sourceMatch": "both components verified against final source bytes"
+  }
 }

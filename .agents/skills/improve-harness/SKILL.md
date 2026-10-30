@@ -8,9 +8,9 @@ description: Improve one harnessed job in a room through one loop - baseline, ea
 Improve one observed job through baseline, earliest gap, smallest owning intervention, native verification, fresh rerun, then retain/revise/remove. Hold model, agent and job constraints fixed; preserve failed evidence and record results in feedback. Static checks do not prove agent behavior or reliability. Broader changes require their own authority.
 
 
-## Purpose
+## Overview
 
-Read [Purpose](SKILL--improvement-loop.md#purpose) when working on this topic.
+Read [Overview](SKILL--improvement-loop.md#overview) when working on this topic.
 
 ## Purpose
 
