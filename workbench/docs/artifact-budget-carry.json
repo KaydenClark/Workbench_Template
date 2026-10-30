@@ -64,7 +64,7 @@
     "wiki": "four preexisting v3.2.1 stamp attention findings"
   },
   "localBackupHome": "/private/tmp/artifact-budget-consumer-backups-20261030",
-  "publication": "Reviewed code landing verified; this one records-only continuation awaits checked publication.",
+  "publication": "Reviewed code and the existing continuation are published in integration; required checks and containment are verified. Owner Human QA remains separate.",
   "comparisonSource": "94702faae1779eefe09e8336a1a0b0df62365c31",
   "componentSourceCommits": {
     "runtime": "073acbfecbd340e005c758e49baad11a68990144",
