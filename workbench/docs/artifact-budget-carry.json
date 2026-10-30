@@ -64,7 +64,7 @@
     "wiki": "four preexisting v3.2.1 stamp attention findings"
   },
   "localBackupHome": "/private/tmp/artifact-budget-consumer-backups-20261030",
-  "publication": "final local candidate; independent review, hosted CI and source containment remain",
+  "publication": "Reviewed code landing verified; this one records-only continuation awaits checked publication.",
   "comparisonSource": "94702faae1779eefe09e8336a1a0b0df62365c31",
   "componentSourceCommits": {
     "runtime": "073acbfecbd340e005c758e49baad11a68990144",
@@ -76,5 +76,22 @@
     ],
     "runtimeStatus": "current; unchanged bytes retain original truthful receipt",
     "sourceMatch": "both components verified against final source bytes"
-  }
+  },
+  "landing": {
+    "candidate": "469393d4f5d7c98042d52abb2b3ac0b8d9e7648f",
+    "integration": "47131f7a2ce8dff38c7df4ccfb1a2b9a3a40ad17",
+    "codePR": 29,
+    "mergeStateCIRun": "41031337238",
+    "mergeStateCI": "passed",
+    "mergeTreeEqualsReviewedCandidate": true
+  },
+  "producerContainment": {
+    "integration": "b4b0744f5f71dc286d8388466660ee01903652c6",
+    "containsInstalledRuntime": "073acbfecbd340e005c758e49baad11a68990144",
+    "containsInstalledSkills": "94702faae1779eefe09e8336a1a0b0df62365c31",
+    "sourcePRFullRun": "41030032093",
+    "sourcePRFullChecks": 132
+  },
+  "versionBoundary": "Runtime073 and skills947 remain the installed source identities. Newer upstream R3/source integration is containment evidence, not a claim that its newer generation was adopted. No managed component or receipt changed in this closeout.",
+  "ownerAcceptance": "Spec active; finishing Task done; delivery acceptance achieved; owner Human QA and main/release remain separate and unrecorded."
 }
