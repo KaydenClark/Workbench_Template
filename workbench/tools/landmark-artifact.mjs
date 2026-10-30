@@ -13,6 +13,7 @@
 // direct Task records' readability to doctor's findings; the lifecycle
 // commands that work on those Tasks live in spec-workbench.mjs.
 import fs from 'node:fs';
+import { lazyRecordContent, readRecordSection, withRecordProperties } from './record-parts.mjs';
 import path from 'node:path';
 import { collectionPath, collectionRelative, findRoot, isMainModule } from './workbench-paths.mjs';
 import { finding } from './diagnostics.mjs';
@@ -74,6 +75,7 @@ function parseLinks(body) {
 }
 
 export function parseLandmarkArtifact(content, filePath, root) {
+  const readSection = name => readRecordSection(content, name, filePath, root);
   const relativePath = path.relative(root, filePath).split(path.sep).join('/');
   const fields = {};
   for (const match of content.matchAll(/^\*\*([^*]+):\*\*\s*(.+)$/gm)) fields[match[1].trim()] = match[2].trim();
@@ -87,15 +89,16 @@ export function parseLandmarkArtifact(content, filePath, root) {
   if (!Number.isInteger(priority) || priority < 0) throw new Error(`${id} has Priority ${fields.Priority}; it must be a nonnegative integer`);
   const blockers = parseBlockers(fields.Blockers, id);
   for (const heading of REQUIRED_LANDMARK_SECTIONS) {
-    if (section(content, heading) === null) throw new Error(`${id} is missing the ${heading} section`);
+    if (!new RegExp('^## ' + escapeRegExp(heading) + '[ \\t]*$', 'm').test(content)) throw new Error(`${id} is missing the ${heading} section`);
   }
-  const successChecks = parseChecks(section(content, 'What Success Looks Like'));
+  const successChecks = parseChecks(readSection('What Success Looks Like'));
   if (successChecks.length === 0) throw new Error(`${id} has no reached check (a \`- [ ]\` item) in What Success Looks Like`);
-  return {
+  return lazyRecordContent({
     root,
     filePath,
     relativePath,
     content,
+    sourceContent: content,
     id,
     title: titleMatch[1].trim(),
     status: fields.Status,
@@ -107,10 +110,10 @@ export function parseLandmarkArtifact(content, filePath, root) {
     latestEvent: fields['Latest event'],
     nextGate: fields['Next gate'],
     successChecks,
-    decisionRecords: parseLinks(section(content, 'Decision Records')),
-    childSpecs: parseLinks(section(content, 'Child Specs')),
-    directTasks: parseLinks(section(content, 'Direct Tasks'))
-  };
+    decisionRecords: parseLinks(readSection('Decision Records')),
+    childSpecs: parseLinks(readSection('Child Specs')),
+    directTasks: parseLinks(readSection('Direct Tasks'))
+  }, content, filePath, root);
 }
 
 // The artifact paths under one folder: each immediate subdirectory holding a
@@ -163,7 +166,7 @@ export function landmarkSpecHomes(root) {
 function readArtifact(root, { filePath, prefix, lifecycleFolder }) {
   const content = fs.readFileSync(filePath, 'utf8');
   const landmark = parseLandmarkArtifact(content, filePath, path.resolve(root));
-  return { ...landmark, landmarksPrefix: prefix, lifecycleFolder };
+  return withRecordProperties(landmark, { landmarksPrefix: prefix, lifecycleFolder });
 }
 
 // The active roster: top-level folders of the collection. A malformed

@@ -5,6 +5,7 @@
 // no secret-like material, a one-line summary beside each routed page. Staleness and
 // a missing summary are attention, never blocking.
 import fs from 'node:fs';
+import { readRecordText, writeRecordText, isRecordPartPath, verifiedRecordPart, recordPartPaths } from './record-parts.mjs';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { finding } from './diagnostics.mjs';
@@ -271,7 +272,7 @@ function roomGlossary(root, options) {
   }
   const file = identity.path;
   try {
-    const content = options.contentOverrides?.get(file) ?? fs.readFileSync(file, 'utf8');
+    const content = options.contentOverrides?.get(file) ?? readRecordText(file, root);
     const parsed = parseGlossary(content, GLOSSARY_FILE);
     return { terms: new Set(parsed.entries.map(entry => entry.term)), findings: [] };
   } catch (error) {
@@ -351,8 +352,12 @@ export function validateWiki(root, options = {}) {
   const basenames = new Map();
   const glossaryTerms = () => glossary.terms;
   for (const file of walkMarkdown(wikiRoot)) {
+    if (isRecordPartPath(file)) {
+      try { verifiedRecordPart(file, root); } catch (error) { findings.push(finding('invalid-note', error.message)); }
+      continue;
+    }
     const relative = path.relative(root, file).split(path.sep).join('/');
-    const content = options.contentOverrides?.get(file) ?? fs.readFileSync(file, 'utf8');
+    const content = options.contentOverrides?.get(file) ?? readRecordText(file, root);
     const inArchive = file.startsWith(archive + path.sep);
     const basename = path.basename(file, '.md');
     basenames.set(basename, [...(basenames.get(basename) ?? []), relative]);
@@ -452,12 +457,13 @@ export function normalizeWiki(root, options = {}) {
   const archive = path.join(root, collectionRelative(root, 'archive'));
   const changed = [];
   for (const file of walkMarkdown(wikiRoot)) {
+    if (isRecordPartPath(file)) { verifiedRecordPart(file, root); continue; }
     if (file.startsWith(archive + path.sep)) continue;
     const relative = path.relative(root, file).split(path.sep).join('/');
-    const content = fs.readFileSync(file, 'utf8');
+    const content = readRecordText(file, root);
     const result = insertFrontmatterKeys(content, noteFields(root, file, relative, date), relative);
     if (result.inserted.length === 0) continue;
-    writeSafeFile(root, file, result.content);
+    writeRecordText(file, result.content, { root, writePrimary: (file, text) => writeSafeFile(root, file, text) });
     changed.push({ note: relative, inserted: result.inserted });
   }
   return { changed };
@@ -547,7 +553,8 @@ export function moveNote(root, options = {}) {
   if (wikiRelativePath === 'MEMORY.md' || wikiContractFiles.includes(wikiRelativePath) || path.basename(source) === 'README.md') {
     throw new Error(`${note} is a router or contract file; router and contract files do not move`);
   }
-  const content = fs.readFileSync(source, 'utf8');
+  const sourceText = fs.readFileSync(source, 'utf8');
+  const content = readRecordText(source, root);
   const { data } = parseFrontmatter(content);
   if (!data) throw new Error(`${note} has no frontmatter`);
   const type = retype ?? data.type;
@@ -564,7 +571,7 @@ export function moveNote(root, options = {}) {
   const destination = path.join(destinationDir, `${newBase}.md`);
   if (destination === source) throw new Error(`${note} already lives in ${to} under that name; nothing to move`);
   if (fs.existsSync(destination)) throw new Error(`${relative(destination)} already exists`);
-  const wikiFiles = walkMarkdown(wikiRoot).filter((file) => file !== source);
+  const wikiFiles = walkMarkdown(wikiRoot).filter((file) => file !== source && !isRecordPartPath(file));
   const clash = wikiFiles.filter((file) => path.basename(file, '.md') === newBase);
   if (clash.length > 0) throw new Error(`note basename ${newBase} is not unique: ${clash.map(relative).join(', ')}; basenames are unique across the wiki`);
   if (newBase !== oldBase) {
@@ -595,13 +602,16 @@ export function moveNote(root, options = {}) {
   writes.set(destination, moved);
   const incoming = new Map([[source, destination]]);
   for (const file of moveNoteReferenceFiles(root)) {
-    if (file === source) continue;
-    const original = fs.readFileSync(file, 'utf8');
+    if (file === source || isRecordPartPath(file)) continue;
+    const original = readRecordText(file, root);
     const rewritten = planReferenceRewrite(root, file, original, path.dirname(file), path.dirname(file), incoming, totals);
     if (rewritten !== null) writes.set(file, rewritten);
   }
   assertSafeWritePath(root, destination);
-  for (const file of writes.keys()) if (file !== destination) assertSafeWritePath(root, file);
+  for (const [file, text] of writes) {
+    if (file !== destination) assertSafeWritePath(root, file);
+    writeRecordText(file, text, { root, dryRun: true, ...(file === destination ? { sourceFile: source, sourceText } : {}) });
+  }
 
   const tracked = spawnSync('git', ['-C', root, 'ls-files', '--error-unmatch', '--', relative(source)], { encoding: 'utf8' }).status === 0;
   const report = { from: relative(source), to: relative(destination), type, retyped, dryRun, usesGit: tracked, referencesRewritten: totals.referencesRewritten, historicalReferencesLeft: totals.historicalReferencesLeft };
@@ -613,10 +623,16 @@ export function moveNote(root, options = {}) {
   } else {
     fs.renameSync(source, destination);
   }
-  for (const [file, text] of writes) writeSafeFile(root, file, text);
+  const stage = new Set(writes.keys());
+  for (const [file, text] of writes) {
+    const previous = file === destination ? recordPartPaths(sourceText, source) : recordPartPaths(fs.readFileSync(file, 'utf8'), file);
+    const result = writeRecordText(file, text, { root, ...(file === destination ? { sourceFile: source, sourceText } : {}), writePrimary: (target, body) => writeSafeFile(root, target, body) });
+    for (const part of result.parts) stage.add(part);
+    for (const part of previous) if (spawnSync('git', ['-C', root, 'ls-files', '--error-unmatch', '--', relative(part)], { encoding: 'utf8' }).status === 0) stage.add(part);
+  }
   // Stage exactly what this move changed so the candidate reads as one rename
   // with its link repairs; unrelated work is never swept in.
-  if (tracked) spawnSync('git', ['-C', root, 'add', '--', ...[...writes.keys()].map(relative)], { encoding: 'utf8' });
+  if (tracked) spawnSync('git', ['-C', root, 'add', '--', ...[...stage].map(relative)], { encoding: 'utf8' });
   return report;
 }
 

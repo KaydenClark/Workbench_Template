@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "sourceCommit": "073acbfecbd340e005c758e49baad11a68990144",
+  "consumerBaseline": "2e62f19a2f30dd47909132d01ea4f4b51f85cc19",
+  "scope": "Supported managed tools and skills components only; existing room identity, layout and product controls retained. No whole upgrade acceptance or main promotion.",
+  "sourcePolicySHA256": "96ba4a7eb4c048fe96e9783f3f8f039b05ad54b05001db3965301e8a8bddb7c8",
+  "components": {
+    "runtime": {
+      "status": "updated",
+      "changed": [
+        "adr.mjs",
+        "landmark-artifact.mjs",
+        "lexicon-retirement-data.mjs",
+        "jot.mjs",
+        "spec-packet.mjs",
+        "record-parts.mjs",
+        "artifact-pagination.mjs",
+        "artifact-budgets.mjs",
+        "spec-report.mjs",
+        "spec-workbench.mjs",
+        "task-packet.mjs",
+        "task-receipt.mjs",
+        "task-record.mjs",
+        "wiki.mjs",
+        "workbench-layout.mjs"
+      ],
+      "retired": [],
+      "backup": "/private/tmp/artifact-budget-consumer-backups-20261030/.workbench-tools-backup-wII5OO"
+    },
+    "skills": {
+      "status": "updated",
+      "changed": [
+        "checkpoint",
+        "grilling",
+        "implement",
+        "orchestrate",
+        "to-docs",
+        "update-harness",
+        "carry",
+        "notepad",
+        "save",
+        "promote",
+        "workbench-runtime",
+        "improve-harness",
+        "domain-modeling",
+        "writing-for-agents",
+        "director",
+        "dispatcher"
+      ],
+      "retired": [
+        "make-it-so"
+      ],
+      "backup": "/private/tmp/artifact-budget-consumer-backups-20261030/.workbench-skills-backup-dXySoA"
+    }
+  },
+  "verification": {
+    "budget": "zero oversized artifacts",
+    "nativeDisclosures": 6,
+    "sourceComponentVerification": "tools and skills valid at exact source pin",
+    "doctor": "no global blocker; preexisting unrelated slice dependencies/attention retained",
+    "tourTests": "26/26",
+    "historyTests": "16/16",
+    "layout": "valid",
+    "wiki": "four preexisting v3.2.1 stamp attention findings"
+  },
+  "localBackupHome": "/private/tmp/artifact-budget-consumer-backups-20261030",
+  "publication": "local candidate; review, hosted CI and integration remain"
+}

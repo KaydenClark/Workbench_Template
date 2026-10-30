@@ -29,6 +29,7 @@
 // this reader introduces no other prefix.
 
 import fs from 'node:fs';
+import { lazyRecordContent } from './record-parts.mjs';
 import path from 'node:path';
 import { compareVisibleIds, visibleIdKey, visibleIdParts } from './visible-ids.mjs';
 import { parseCapabilityList } from './optional-capabilities.mjs';
@@ -96,7 +97,7 @@ const LANDMARK_ID_PATTERN = /^LMK-[0-9A-Za-z]{3,}$/;
 export function parseTaskRecord(content, filePath, root) {
   const label = filePath ? path.relative(root ?? path.dirname(filePath), filePath) : '<in-memory Task record>';
   const fields = {};
-  for (const match of content.matchAll(/^\*\*([^*]+):\*\*\s*(.+)$/gm)) {
+  for (const match of content.matchAll(/^\*\*([^*]+):\*\*[ \t]*(.+)$/gm)) {
     const key = match[1].trim();
     // A repeated field silently last-won before this check: once TK-006
     // appends Receipt rows into the body, a second `**Status:**` line must
@@ -149,11 +150,12 @@ export function parseTaskRecord(content, filePath, root) {
     if (!claimedBy.includes(value)) throw new Error(`${id} Current claimant ${value} is absent from Claimed by history`);
     currentClaimant = value;
   }
-  return {
+  return lazyRecordContent({
     root,
     filePath,
     relativePath: filePath && root ? path.relative(root, filePath).split(path.sep).join('/') : null,
     content,
+    sourceContent: content,
     id,
     // S-01W TK-002O: the spelling this record carried before `widen-id`
     // widened it, or null for a record that never widened.
@@ -185,7 +187,7 @@ export function parseTaskRecord(content, filePath, root) {
     // Current identity is explicit: a unique participation list cannot say
     // who returned after A/B/A. Null preserves an unmigrated legacy record.
     currentClaimant
-  };
+  }, content, filePath, root);
 }
 
 // S-003Z TK-008H run 2: the claimant record. `claim` writes the claiming

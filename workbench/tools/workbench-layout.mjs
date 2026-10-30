@@ -74,7 +74,7 @@ export const coordinationSkills = ['director', 'dispatcher', 'spec-planner', 'sp
 // coordination entries, so every coordination and stance slice stays exact.
 // S-002U TK-007V adds `pr`, the owner-required PR body-authoring entry, after
 // `improve-harness` and ahead of the coordination entries.
-export const coreSkills = [...currentCoreSkills, 'carry', 'notepad', 'jot', 'save', 'promote', 'handoff', 'grill-me', 'workbench-runtime', 'improve-harness', 'domain-modeling', 'pr', 'writing-for-agents', 'retro', ...coordinationSkills, ...stanceSkills];
+export const coreSkills = [...currentCoreSkills.map((name) => name === 'make-it-so' ? 'orchestrate' : name), 'carry', 'notepad', 'jot', 'save', 'promote', 'handoff', 'grill-me', 'workbench-runtime', 'improve-harness', 'domain-modeling', 'pr', 'writing-for-agents', 'retro', ...coordinationSkills, ...stanceSkills];
 // The prior28 cohort: rooms built from integration before `pr` joined the
 // required Core carry this exact lane policy under v3.2.1. Keep it readable so
 // layout migration reaches the explicit skills update instead of rejecting its
@@ -175,6 +175,8 @@ export const LINE_ENDING_POLICY = [
   // S-006I TK-00BQ: the skills lane moved to .agents/skills with its receipt.
   '/.agents/skills/** text=auto eol=lf',
   ...controls.map((control) => `/${control} text=auto eol=lf`),
+  '# Content-hashed historical parts retain their exact original line endings.',
+  '*.md.part-* -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol',
   '# <<< LLM Workbench line endings',
   ''
 ].join('\n');
@@ -246,6 +248,253 @@ export const seededLaneDocuments = [
     lane: 'sessions', name: `notepads/templates/${name}`, template: `sessions/notepads/templates/${name}`
   }))
 ];
+// Closed distribution map for supporting text installed with a normal control
+// or Wiki article. Never follow arbitrary links to choose copy destinations.
+export const seededCompanionDocuments = [
+  {
+    "relative": "workbench/docs/template-reference/ARCHITECTURE--invariants-and-boundaries.md",
+    "template": "docs/template-reference/ARCHITECTURE--invariants-and-boundaries.md",
+    "owner": "ARCHITECTURE.md"
+  },
+  {
+    "relative": "workbench/docs/template-reference/ARCHITECTURE--ownership.md",
+    "template": "docs/template-reference/ARCHITECTURE--ownership.md",
+    "owner": "ARCHITECTURE.md"
+  },
+  {
+    "relative": "workbench/docs/template-reference/ARCHITECTURE--routes.md",
+    "template": "docs/template-reference/ARCHITECTURE--routes.md",
+    "owner": "ARCHITECTURE.md"
+  },
+  {
+    "relative": "workbench/wiki/ai-coding-reference--harness.md",
+    "template": "wiki/ai-coding-reference--harness.md",
+    "owner": "workbench/wiki/ai-coding-reference.md"
+  },
+  {
+    "relative": "workbench/wiki/ai-coding-reference--model-provider.md",
+    "template": "wiki/ai-coding-reference--model-provider.md",
+    "owner": "workbench/wiki/ai-coding-reference.md"
+  },
+  {
+    "relative": "workbench/wiki/ai-coding-reference--session.md",
+    "template": "wiki/ai-coding-reference--session.md",
+    "owner": "workbench/wiki/ai-coding-reference.md"
+  },
+  {
+    "relative": "workbench/wiki/glossary-details-chats-and-roles.md",
+    "template": "wiki/glossary-details-chats-and-roles.md",
+    "owner": "workbench/wiki/glossary-details-index.md"
+  },
+  {
+    "relative": "workbench/wiki/glossary-details-continuity-and-evidence-boundaries.md",
+    "template": "wiki/glossary-details-continuity-and-evidence-boundaries.md",
+    "owner": "workbench/wiki/glossary-details-index.md"
+  },
+  {
+    "relative": "workbench/wiki/glossary-details-continuity-terms.md",
+    "template": "wiki/glossary-details-continuity-terms.md",
+    "owner": "workbench/wiki/glossary-details-index.md"
+  },
+  {
+    "relative": "workbench/wiki/glossary-details-destination-and-direction.md",
+    "template": "wiki/glossary-details-destination-and-direction.md",
+    "owner": "workbench/wiki/glossary-details-index.md"
+  },
+  {
+    "relative": "workbench/wiki/glossary-details-feedback-disposition.md",
+    "template": "wiki/glossary-details-feedback-disposition.md",
+    "owner": "workbench/wiki/glossary-details-index.md"
+  },
+  {
+    "relative": "workbench/wiki/glossary-details-governance-core.md",
+    "template": "wiki/glossary-details-governance-core.md",
+    "owner": "workbench/wiki/glossary-details-index.md"
+  },
+  {
+    "relative": "workbench/wiki/glossary-details-index.md",
+    "template": "wiki/glossary-details-index.md",
+    "owner": "GLOSSARY.md"
+  },
+  {
+    "relative": "workbench/wiki/glossary-details-priority-and-value.md",
+    "template": "wiki/glossary-details-priority-and-value.md",
+    "owner": "workbench/wiki/glossary-details-index.md"
+  },
+  {
+    "relative": "workbench/wiki/glossary-details-project-terms.md",
+    "template": "wiki/glossary-details-project-terms.md",
+    "owner": "workbench/wiki/glossary-details-index.md"
+  },
+  {
+    "relative": "workbench/wiki/glossary-details-specs-and-tasks.md",
+    "template": "wiki/glossary-details-specs-and-tasks.md",
+    "owner": "workbench/wiki/glossary-details-index.md"
+  },
+  {
+    "relative": "workbench/wiki/glossary-details-stance-terms.md",
+    "template": "wiki/glossary-details-stance-terms.md",
+    "owner": "workbench/wiki/glossary-details-index.md"
+  },
+  {
+    "relative": "workbench/wiki/glossary-details-workbench-meanings-of-ai-coding-terms.md",
+    "template": "wiki/glossary-details-workbench-meanings-of-ai-coding-terms.md",
+    "owner": "workbench/wiki/glossary-details-index.md"
+  },
+  {
+    "relative": "workbench/wiki/glossary-details-workbench-room-and-artifacts.md",
+    "template": "wiki/glossary-details-workbench-room-and-artifacts.md",
+    "owner": "workbench/wiki/glossary-details-index.md"
+  },
+  {
+    "relative": "workbench/wiki/glossary-details-workflow-verbs.md",
+    "template": "wiki/glossary-details-workflow-verbs.md",
+    "owner": "workbench/wiki/glossary-details-index.md"
+  },
+  {
+    "relative": "workbench/wiki/workbench-capabilities--capability-operations-in-the-inspected-source--dashboard-and-optional-project-review-surface.md",
+    "template": "wiki/workbench-capabilities--capability-operations-in-the-inspected-source--dashboard-and-optional-project-review-surface.md",
+    "owner": "workbench/wiki/workbench-capabilities--capability-operations-in-the-inspected-source.md"
+  },
+  {
+    "relative": "workbench/wiki/workbench-capabilities--capability-operations-in-the-inspected-source--map-plan-and-execute.md",
+    "template": "wiki/workbench-capabilities--capability-operations-in-the-inspected-source--map-plan-and-execute.md",
+    "owner": "workbench/wiki/workbench-capabilities--capability-operations-in-the-inspected-source.md"
+  },
+  {
+    "relative": "workbench/wiki/workbench-capabilities--capability-operations-in-the-inspected-source--review-approval-delivery-and-cleanup.md",
+    "template": "wiki/workbench-capabilities--capability-operations-in-the-inspected-source--review-approval-delivery-and-cleanup.md",
+    "owner": "workbench/wiki/workbench-capabilities--capability-operations-in-the-inspected-source.md"
+  },
+  {
+    "relative": "workbench/wiki/workbench-capabilities--capability-operations-in-the-inspected-source--setup-and-room-operation.md",
+    "template": "wiki/workbench-capabilities--capability-operations-in-the-inspected-source--setup-and-room-operation.md",
+    "owner": "workbench/wiki/workbench-capabilities--capability-operations-in-the-inspected-source.md"
+  },
+  {
+    "relative": "workbench/wiki/workbench-capabilities--capability-operations-in-the-inspected-source--wiki-knowledge-and-continuity.md",
+    "template": "wiki/workbench-capabilities--capability-operations-in-the-inspected-source--wiki-knowledge-and-continuity.md",
+    "owner": "workbench/wiki/workbench-capabilities--capability-operations-in-the-inspected-source.md"
+  },
+  {
+    "relative": "workbench/wiki/workbench-capabilities--capability-operations-in-the-inspected-source.md",
+    "template": "wiki/workbench-capabilities--capability-operations-in-the-inspected-source.md",
+    "owner": "workbench/wiki/workbench-capabilities.md"
+  },
+  {
+    "relative": "workbench/wiki/workbench-capabilities--producer-utilities-evaluation-and-release-proof.md",
+    "template": "wiki/workbench-capabilities--producer-utilities-evaluation-and-release-proof.md",
+    "owner": "workbench/wiki/workbench-capabilities.md"
+  },
+  {
+    "relative": "workbench/wiki/workbench-capabilities--producer-utilities-evaluation-and-release-proof.page-001.md",
+    "template": "wiki/workbench-capabilities--producer-utilities-evaluation-and-release-proof.page-001.md",
+    "owner": "workbench/wiki/workbench-capabilities--producer-utilities-evaluation-and-release-proof.md"
+  },
+  {
+    "relative": "workbench/wiki/workbench-capabilities--reusable-skills--core-skills-carried-by-a-room.md",
+    "template": "wiki/workbench-capabilities--reusable-skills--core-skills-carried-by-a-room.md",
+    "owner": "workbench/wiki/workbench-capabilities--reusable-skills.md"
+  },
+  {
+    "relative": "workbench/wiki/workbench-capabilities--reusable-skills--core-skills-carried-by-a-room.page-001.md",
+    "template": "wiki/workbench-capabilities--reusable-skills--core-skills-carried-by-a-room.page-001.md",
+    "owner": "workbench/wiki/workbench-capabilities--reusable-skills--core-skills-carried-by-a-room.md"
+  },
+  {
+    "relative": "workbench/wiki/workbench-capabilities--reusable-skills.md",
+    "template": "wiki/workbench-capabilities--reusable-skills.md",
+    "owner": "workbench/wiki/workbench-capabilities.md"
+  },
+  {
+    "relative": "workbench/wiki/workbench-capabilities--version-evidence--retained-feature-captures.md",
+    "template": "wiki/workbench-capabilities--version-evidence--retained-feature-captures.md",
+    "owner": "workbench/wiki/workbench-capabilities--version-evidence.md"
+  },
+  {
+    "relative": "workbench/wiki/workbench-capabilities--version-evidence--retained-feature-captures.page-001.md",
+    "template": "wiki/workbench-capabilities--version-evidence--retained-feature-captures.page-001.md",
+    "owner": "workbench/wiki/workbench-capabilities--version-evidence--retained-feature-captures.md"
+  },
+  {
+    "relative": "workbench/wiki/workbench-capabilities--version-evidence--retained-feature-captures.page-002.md",
+    "template": "wiki/workbench-capabilities--version-evidence--retained-feature-captures.page-002.md",
+    "owner": "workbench/wiki/workbench-capabilities--version-evidence--retained-feature-captures.page-001.md"
+  },
+  {
+    "relative": "workbench/wiki/workbench-capabilities--version-evidence.md",
+    "template": "wiki/workbench-capabilities--version-evidence.md",
+    "owner": "workbench/wiki/workbench-capabilities.md"
+  },
+  {
+    "relative": "workbench/artifact-budgets.json",
+    "template": "artifact-budgets.json"
+  }
+];
+
+function seedDocumentDefinitions(project, options = {}) {
+  const laneDocuments = seededLaneDocuments.filter(document => !options.companionsOnly && (!options.setupOnly || ['sessions', 'docs'].includes(document.lane)))
+    .map(document => ({ ...document, relative: `${lanes[document.lane]}/${document.name}` }));
+  const selected = new Map();
+  const templates = templateRoot();
+  let changed;
+  do {
+    changed = false;
+    for (const document of seededCompanionDocuments) {
+      if (selected.has(document.relative)) continue;
+      if (options.companionRoots && !options.companionRoots.includes(document.owner) && !selected.has(document.owner)) continue;
+      if (!document.owner) { selected.set(document.relative, document); changed = true; continue; }
+      const owner = path.join(project, document.owner);
+      assertSafeReadPath(project, owner);
+      const parent = selected.get(document.owner);
+      const entry = lstatOrNull(owner);
+      if (!entry && !parent && controls.includes(document.owner)) { selected.set(document.relative, document); changed = true; continue; }
+      if (!entry && !parent) continue;
+      const ownerSource = entry ? owner : path.join(templates, parent.template);
+      if (entry && !entry.isFile()) throw new Error(`${document.owner} must be an ordinary companion owner`);
+      if (entry && !publicLandingPaths(project, [document.owner]).includes(document.owner)) continue;
+      const linked = companionLinkTargets(fs.readFileSync(ownerSource, 'utf8')).some(target => path.resolve(path.dirname(owner), target) === path.resolve(project, document.relative));
+      if (linked) { selected.set(document.relative, document); changed = true; }
+    }
+  } while (changed);
+  const companions = [...selected.values()];
+  return [...laneDocuments, ...companions];
+}
+
+// A rendered owner link activates only its exact registered continuation.
+// Frontmatter, fenced examples and inline-code examples establish no route.
+function companionProse(content) {
+  let fence = null;
+  const rendered = String(content).replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n/, '').split(/\r?\n/).filter(line => {
+    const marker = /^ {0,3}(`{3,}|~{3,})(.*)$/.exec(line);
+    if (fence) { if (marker && marker[1][0] === fence[0] && marker[1].length >= fence.length && !marker[2].trim()) fence = null; return false; }
+    if (marker) { fence = marker[1]; return false; }
+    return true;
+  }).join('\n');
+  return rendered.replace(/<!--[\s\S]*?(?:-->|$)/g, '').split('\n').filter(line => !/^(?: {4}| {0,3}\t)/.test(line)).join('\n');
+}
+
+function companionLinkTargets(content) {
+  const rendered = companionProse(content).replace(/(`+)(.*?)\1(?!`)/g, match => ' '.repeat(match.length))
+    .replace(/(\\+)\[/g, (whole, slashes) => slashes.length % 2 ? slashes + ' ' : whole);
+  return markdownLinkTargets(rendered);
+}
+
+function companionChildren(owner, text, wikiLane) {
+  const local = file => file?.startsWith(`${lanes.wiki}/`) ? `${wikiLane}/${file.slice(lanes.wiki.length + 1)}` : file;
+  const linked = new Set(companionLinkTargets(text).map(target => path.posix.normalize(path.posix.join(path.posix.dirname(owner), target))));
+  return seededCompanionDocuments.filter(document => local(document.owner) === owner && linked.has(local(document.relative))).map(document => local(document.relative));
+}
+
+function ownerFamily(room, owner) {
+  const pending = [owner], seen = new Set(), result = [];
+  while (pending.length) {
+    const file = pending.shift(); if (seen.has(file) || !room.files.has(file)) continue;
+    seen.add(file); result.push([file, room.files.get(file)]);
+    pending.push(...companionChildren(file, room.files.get(file), room.wikiLane));
+  }
+  return result;
+}
 // The preserved collection shapes derive from the pre-feature set, never the
 // live one, so appending `features` cannot redefine what an older room held.
 const notepadCollections = Object.fromEntries(Object.entries(PRE_FEATURE_COLLECTIONS).filter(([name]) => name !== 'recovery'));
@@ -1389,7 +1638,18 @@ function roomLandingText(project, wikiLane) {
     if (!ordinary(relative)) continue;
     try { files.set(relative, fs.readFileSync(path.join(project, relative), 'utf8')); } catch { /* unreadable is not evidence */ }
   }
-  const wiki = [...files].filter(([file]) => !vocabularyControls.includes(file));
+  // Registered architecture continuations live in docs, outside the Wiki.
+  // Admit them only through their public owner, before opening any contents.
+  let added;
+  do {
+    added = false;
+    const children = [...new Set([...files].flatMap(([owner, text]) => companionChildren(owner, text, wikiLane)))].filter(file => !files.has(file) && ordinary(file));
+    for (const relative of publicLandingPaths(project, children)) {
+      if (!ordinary(relative)) continue;
+      try { files.set(relative, fs.readFileSync(path.join(project, relative), 'utf8')); added = true; } catch { /* unreadable is not evidence */ }
+    }
+  } while (added);
+  const wiki = [...files].filter(([file]) => file.startsWith(`${wikiLane}/`));
   // No aggregate corpus: every landing check names the file it reads, so a
   // claim lands only in its designated owner (PR431 comment 4312977577).
   return { project, wikiLane, glossary: files.get('GLOSSARY.md') ?? '', wiki, files };
@@ -1404,15 +1664,30 @@ function roomLandingText(project, wikiLane) {
 // lines must then land in the room like its own.
 function genericHomesMissing(templates, wikiLane, publicRoom) {
   const homes = [...vocabularyControls.map(name => [name, name]), ...wikiVocabularyFiles.map(name => [`wiki/${name}`, `${wikiLane}/${name}`])];
+  const local = file => file?.startsWith(`${lanes.wiki}/`) ? `${wikiLane}/${file.slice(lanes.wiki.length + 1)}` : file;
+  const sources = new Map(seededCompanionDocuments.map(document => [local(document.relative), document.template]));
   const missing = [];
   for (const [source, destination] of homes) {
     const template = path.join(templates, source);
     if (!lstatOrNull(template)?.isFile()) continue;
-    const required = fs.readFileSync(template, 'utf8').split(/\r?\n/).map(normalizeLandingText)
-      .filter(line => !landingExempt(line) && !templatePlaceholders.some(token => line.includes(token)));
-    const text = publicRoom.files.get(destination);
-    const room = text === undefined ? null : new Set(text.split(/\r?\n/).map(normalizeLandingText));
-    if (!room || required.some(line => !room.has(line))) missing.push(destination);
+    const pending = [[source, destination]], seen = new Set(); let absent = false;
+    while (pending.length && !absent) {
+      const [relativeSource, target] = pending.shift(); if (seen.has(target)) continue; seen.add(target);
+      const file = path.join(templates, relativeSource);
+      try { assertSafeReadPath(path.dirname(templates), file); } catch { absent = true; break; }
+      if (!lstatOrNull(file)?.isFile()) { absent = true; break; }
+      const expected = fs.readFileSync(file, 'utf8');
+      const required = expected.split(/\r?\n/).map(normalizeLandingText).filter(line => !landingExempt(line) && !templatePlaceholders.some(token => line.includes(token)));
+      const text = publicRoom.files.get(target);
+      const actual = text === undefined ? null : new Set(text.split(/\r?\n/).map(normalizeLandingText));
+      if (!actual || required.some(line => !actual.has(line))) { absent = true; break; }
+      const reachable = new Set(ownerFamily(publicRoom, destination).map(([name]) => name));
+      for (const child of companionChildren(target, expected, wikiLane)) {
+        if (!reachable.has(child)) { absent = true; break; }
+        pending.push([sources.get(child), child]);
+      }
+    }
+    if (absent) missing.push(destination);
   }
   return missing;
 }
@@ -1459,12 +1734,32 @@ function stripMarkup(text, directory = '') {
 
 // Evidence is scoped to the named entry and its linked explanation. A
 // definition repeated under a different term cannot replace this meaning.
-function glossaryBlock(name, room) {
-  const entries = [...room.glossary.matchAll(/^\*\*([^*]+)\*\*:\s*$/gm)];
+function glossaryBlockFromText(name, text) {
+  const entries = [...text.matchAll(/^\*\*([^*]+)\*\*:\s*$/gm)];
   const matches = entries.filter(entry => entry[1].trim().toLowerCase() === name.trim().toLowerCase());
   if (matches.length !== 1) return null;
   const entry = matches[0], next = entries[entries.indexOf(entry) + 1];
-  return room.glossary.slice(entry.index, next?.index ?? room.glossary.length).split(/^#{1,6} /m)[0];
+  return text.slice(entry.index, next?.index ?? text.length).split(/^#{1,6} /m)[0];
+}
+
+function glossaryBlock(name, room) {
+  return glossaryBlockFromText(name, room.glossary);
+}
+
+function definitionHomes(name, room) {
+  // A continuation cannot invent a canonical term missing from its root.
+  if (!glossaryBlock(name, room)) return [];
+  return ownerFamily(room, 'GLOSSARY.md').flatMap(([file, text]) => {
+    const prose = file === 'GLOSSARY.md' ? text : companionProse(text);
+    const block = glossaryBlockFromText(name, prose);
+    if (block) return [[file, block, 'entry']];
+    if (file === 'GLOSSARY.md') return [];
+    const headings = [...prose.matchAll(/^## (.+)$/gm)];
+    const matches = headings.filter(heading => stripMarkup(heading[1]).toLowerCase() === stripMarkup(name).toLowerCase());
+    if (matches.length !== 1) return [];
+    const heading = matches[0], next = headings[headings.indexOf(heading) + 1];
+    return [[file, prose.slice(heading.index + heading[0].length, next?.index ?? prose.length), 'section']];
+  });
 }
 
 // A term article declares its term in frontmatter, read by the same parser
@@ -1488,7 +1783,7 @@ function termWikiText(name, room, onlyPath = null) {
     const source = path.join(room.project, file);
     if (!markdownLinkTargets(text).some(target => linkResolvesToRootControl(room.project, source, target, 'GLOSSARY.md'))) return [];
     const declared = declaredGlossaryTerm(text);
-    const resolved = resolveClaimLinks(text, path.posix.dirname(file));
+    const resolved = ownerFamily(room, file).map(([part, body]) => resolveClaimLinks(body, path.posix.dirname(part))).join('\n\n');
     if (declared?.toLowerCase() === key) return [resolved];
     if (!isGroupedVocabularyArticle(file, room.wikiLane)) return [];
     const sections = [...resolved.matchAll(/^#{1,6} (.+)$/gm)];
@@ -1535,7 +1830,7 @@ function roomRoutes(room) {
 function standaloneLanded(normalized, owner, room) {
   const { routed, declared } = roomRoutes(room);
   const homes = [];
-  const control = name => { const text = room.files.get(name); if (text !== undefined) homes.push([text, '']); };
+  const control = name => { homes.push(...ownerFamily(room, name).map(([file, text]) => [text, path.posix.dirname(file)])); };
   const pages = files => { for (const [file, text] of room.wiki) if (files.has(file)) homes.push([text, path.posix.dirname(file)]); };
   if (owner === 'architecture') control('ARCHITECTURE.md');
   else if (owner === 'glossary') { control('GLOSSARY.md'); pages(declared); }
@@ -1555,7 +1850,7 @@ function termRowLanded(normalized, room) {
   const definition = stripMarkup(cells[1]);
   const distinction = stripMarkup(cells[2] ?? '');
   const explanation = termWikiText(name, room);
-  return !!definition && (completeClaim(block, definition) || completeClaim(explanation, definition)) && (!distinction || completeClaim(explanation, distinction));
+  return !!definition && (definitionHomes(name, room).some(([file, text]) => completeClaim(text, definition, { textDir: path.posix.dirname(file) })) || completeClaim(explanation, definition)) && (!distinction || completeClaim(explanation, distinction));
 }
 
 function mappedLineLanded(record, room, wikiLane) {
@@ -1568,16 +1863,15 @@ function mappedLineLanded(record, room, wikiLane) {
   const local = relative => relative?.startsWith('wiki/') ? `${wikiLane}/${relative.slice(5)}` : relative;
   const target = local(home);
   const name = landedText?.match(/^\*\*([^*]+)\*\*:/)?.[1];
-  const content = name ? glossaryBlock(name, room) : room.files.get(target);
   // The census text is written as it appears in its home, so both sides
   // resolve their links from that home's directory.
-  const inHome = file => ({ textDir: path.posix.dirname(file), expectedDir: path.posix.dirname(file) });
-  if (!content || !completeClaim(content, landedText, name ? {} : inHome(target))) return false;
+  const homes = name ? definitionHomes(name, room) : ownerFamily(room, target);
+  if (!homes.some(([file, content, format]) => completeClaim(content, format === 'section' ? landedText.replace(/^\*\*[^*]+\*\*:\s*/, '') : landedText, { textDir: path.posix.dirname(file), expectedDir: path.posix.dirname(target) }))) return false;
   if (!explanationText) return true;
   // A term's explanation text is written as it appears in its article, so it
   // resolves from that article's directory; the article text is already root-resolved.
   if (name) return completeClaim(termWikiText(name, room, local(explanationHome)), explanationText, { expectedDir: path.posix.dirname(local(explanationHome)) });
-  return completeClaim(room.files.get(local(explanationHome)) ?? '', explanationText, inHome(local(explanationHome)));
+  return ownerFamily(room, local(explanationHome)).some(([file, content]) => completeClaim(content, explanationText, { textDir: path.posix.dirname(file), expectedDir: path.posix.dirname(local(explanationHome)) }));
 }
 
 export function lexiconLanding(project, options = {}) {
@@ -1739,6 +2033,14 @@ export function retireLexicon(project, options = {}) {
   // before any landing text is read; its bytes are never evidence.
   const successorRefused = nonCanonicalControlResult(project, vocabularyControls, { installed, articles });
   if (successorRefused) return successorRefused;
+  // The current vocabulary owners disclose some of their required content.
+  // Install exactly those registered continuations before checking a landing;
+  // unrelated seed documents and project-filled controls remain untouched.
+  const companionOptions = { ...options, '--version': options['--version'] ?? manifest?.workbenchVersion, '--name': values['[PROJECT_NAME]'], '--date': values['[YYYY-MM-DD]'], companionsOnly: true, companionRoots: [...vocabularyControls, ...wikiVocabularyFiles.map(name => `${lanes.wiki}/${name}`)] };
+  const companionFailure = preflightSeedDocuments(project, companionOptions);
+  if (companionFailure) return unsafeLayoutResult(companionFailure.error.message, { installed, articles });
+  const companions = writeSeedDocuments(project, companionOptions);
+  if (companions.status !== 'seeded') return unsafeLayoutResult(companions.error?.message ?? 'vocabulary continuations could not be seeded', { installed, articles });
   const wikiLane = manifest?.lanes?.wiki ?? lanes.wiki;
   const room = roomLandingText(project, wikiLane);
   const { unlanded, genericHomesMissing: missingHomes } = lexiconLandingInRoom(project, templates, manifest, room);
@@ -1851,11 +2153,11 @@ function preflightSeedDocuments(project, options = {}) {
   if (!templates) return fail('invalid-source-identity', 'A clean Workbench release checkout is required to seed documents.');
   try {
     assertSafeWritePath(project, path.join(project, SEED_RECORD));
-    for (const document of seededLaneDocuments.filter(document => !options.setupOnly || ['sessions', 'docs'].includes(document.lane))) {
+    for (const document of seedDocumentDefinitions(project, options)) {
       const source = path.join(templates, document.template);
       assertSafeReadPath(path.dirname(templates), source);
       if (!lstatOrNull(source)?.isFile()) return fail('invalid-source-identity', `Missing ordinary seed source: ${document.template}`);
-      const destination = path.join(project, lanes[document.lane], document.name);
+      const destination = path.join(project, document.relative);
       assertSafeReadPath(project, destination);
       assertSafeWritePath(project, destination);
     }
@@ -1876,19 +2178,29 @@ function writeSeedDocuments(project, options) {
   const documents = { ...record.documents };
   const written = [];
   const retained = [];
-  for (const document of seededLaneDocuments.filter(document => !options.setupOnly || ['sessions', 'docs'].includes(document.lane))) {
-    const relative = `${lanes[document.lane]}/${document.name}`;
+  for (const document of seedDocumentDefinitions(project, options)) {
+    const relative = document.relative;
     const destination = path.join(root, relative);
     const source = path.join(templates, document.template);
     if (!lstatOrNull(source)) { retained.push({ document: relative, reason: `the release carries no ${document.template}` }); continue; }
-    const bytes = fs.readFileSync(source);
+    const templateBytes = fs.readFileSync(source);
+    const sourceHash = digest(templateBytes);
+    const previous = documents[relative];
+    const renderedWiki = document.template.startsWith('wiki/');
+    const templateValues = renderedWiki ? {
+      '[HARNESS_VERSION]': String(release).replace(/^v/, ''),
+      '[PROJECT_NAME]': options['--name'] ?? previous?.templateValues?.['[PROJECT_NAME]'] ?? path.basename(root),
+      '[YYYY-MM-DD]': options['--date'] ?? (previous?.sourceHash === sourceHash ? previous.templateValues?.['[YYYY-MM-DD]'] : null) ?? new Date().toISOString().slice(0, 10)
+    } : null;
+    const bytes = renderedWiki ? Buffer.from(fillTemplate(templateBytes.toString('utf8'), templateValues)) : templateBytes;
     const contentHash = digest(bytes);
+    const generation = { release, contentHash, ...(renderedWiki ? { sourceHash, templateValues } : {}) };
     const entry = lstatOrNull(destination);
     if (entry && (entry.isSymbolicLink() || !entry.isFile())) { retained.push({ document: relative, reason: 'the installed path is not an ordinary file' }); continue; }
     if (!entry) {
       fs.mkdirSync(path.dirname(destination), { recursive: true });
       writeSafeFile(root, destination, bytes);
-      documents[relative] = { release, contentHash };
+      documents[relative] = generation;
       written.push({ document: relative, action: 'seeded' });
       continue;
     }
@@ -1896,13 +2208,13 @@ function writeSeedDocuments(project, options) {
     if (installed === contentHash) {
       // Byte equality with the release copy is evidence of the generation, so a
       // hand-copied document a room already carries can be recorded truthfully.
-      documents[relative] = { release, contentHash };
+      documents[relative] = generation;
       written.push({ document: relative, action: 'recorded' });
       continue;
     }
-    if (documents[relative]?.contentHash === installed) {
+    if (documents[relative]?.contentHash === installed || (renderedWiki && sourceHash === installed)) {
       writeSafeFile(root, destination, bytes);
-      documents[relative] = { release, contentHash };
+      documents[relative] = generation;
       written.push({ document: relative, action: 'refreshed' });
       continue;
     }
@@ -2600,6 +2912,9 @@ export const RUNTIME_TOOLS = Object.freeze([
   'sessions.mjs',
   'session-transport.mjs',
   'spec-packet.mjs',
+  'record-parts.mjs',
+  'artifact-pagination.mjs',
+  'artifact-budgets.mjs',
   'spec-report.mjs',
   'spec-workbench.mjs',
   'task-packet.mjs',

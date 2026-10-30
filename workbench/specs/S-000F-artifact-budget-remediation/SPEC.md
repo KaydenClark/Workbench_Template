@@ -7,15 +7,15 @@
 **Stance:** Builder
 **Updated:** 2026-10-29
 **Catalog description:** Keep this room's agent artifacts within approved character budgets while preserving meaning, evidence and operations.
-**Blockers:** The owner choice between current managed-generation carry and bounded compatibility backports is pending; source verification and immutable carry identity also remain.
+**Blockers:** Source integration containment, exact-candidate independent review and required CI remain.
 **Confirmation:** [JOT-fb753870-3ec6-4c1d-aa25-a4834d13bb86](../../wiki/context-artifact-budgets.md#jot-fb753870-3ec6-4c1d-aa25-a4834d13bb86)
 **Execution approval:** [JOT-fb753870-3ec6-4c1d-aa25-a4834d13bb86](../../wiki/context-artifact-budgets.md#jot-fb753870-3ec6-4c1d-aa25-a4834d13bb86)
-**Latest event:** Independent preservation and local-control work progressed under the approved scope; managed update remains pending its specific dependency.
-**Next gate:** Resolve the managed-generation choice, pin verified source, then apply the supported update and finish bounded pruning/checks.
+**Latest event:** Recovered authorized pruning; supported tools and skills components installed from producer 073acbfecbd340e005c758e49baad11a68990144; all scoped artifacts fit.
+**Next gate:** Finish exact-candidate verification, independent review and checked integration; retain owner acceptance and historical Audit limits.
 
 ## Outcome
 
-All in-scope Markdown meets the approved policy: bounded root filenames allow 3,000 Unicode code points, Spec/Task/Landmark filenames 8,000, and other Markdown 15,000, with normalized line endings. Numeric policy remains owned by workbench/artifact-budgets.json once installed. Required meaning, evidence, constraints, links and continuation remain usable through checked integration.
+All in-scope Markdown meets the approved policy: bounded root filenames allow 3,000 Unicode code points, Spec/Task/Landmark and SKILL.md filenames 8,000, and unlisted Markdown 15,000, with normalized line endings. Numeric policy is owned by workbench/artifact-budgets.json. SKILL.md targets900 characters; the target is advisory. Required meaning, evidence, constraints, links and continuation remain usable through checked integration.
 
 ## Why It Matters
 
@@ -23,11 +23,11 @@ The owner requests concise, reviewable agent artifacts using writing-for-agents,
 
 ## Current Verified State
 
-Baseline: 22 oversized artifacts among 112 Markdown files. Current scoped scan: 14 remain among 160 physical Markdown files: six Spec records and eight managed skill files, awaiting selected native support carry.
+Baseline: 22 oversized artifacts among 112 Markdown files. Current scoped scan: the final-budget scan now passes with no oversized artifacts after six native Spec disclosures and the supported component carry.
 
 Root controls and ordinary references now fit their limits. Four source documents disclose 22 companion responsibilities; three table leaves paginate 102 rows without changing their order. Across the complete ordinary sources, 15 fenced blocks and 197 Markdown data rows are retained. All 119 canonical terms remain, with full original definitions in linked topic pages. See the [preservation proof](../../docs/artifact-pruning-proof.json).
 
-The app suite passes 40/40. Wiki validation retains four pre-existing stale-version stamps, pending the native update; it has no new note errors. Managed files/receipts remain unchanged.
+The app suite passes 40/40. Wiki validation retains four pre-existing stale-version stamps, pending the native update; it has no new note errors. Earlier statements that managed files and receipts were unchanged describe the prior checkpoint; the current component carry is recorded below.
 
 ## Desired Behavior
 
@@ -38,7 +38,7 @@ The app suite passes 40/40. Wiki validation retains four pre-existing stale-vers
 
 ## Decisions And Contracts
 
-Owner confirmation/approval covers the LLM, Audit and example Workbenches through checked integration. It excludes main, releases, trials and changed historical outcomes. The additional managed-generation choice remains unresolved and blocks only that dependent update.
+Owner confirmation/approval covers the LLM, Audit and example Workbenches through checked integration. It excludes main, releases, trials and changed historical outcomes. The latest explicit recovery authorization supersedes the old pending-authority statement. A measured standard tools+skills component update was selected under that scope; no whole-room upgrade acceptance is inferred.
 
 Keep this public reference free of private reports and raw observed-room evidence. Preserve its room identity, intentional local differences, original evidence history and owner-only main gate. No whole-upgrade or release acceptance follows from this remediation.
 
@@ -48,11 +48,11 @@ Other projects, paid model runs, new audit attempts, main/release promotion, sil
 
 ## Dependencies And Blockers
 
-Managed support requires the owner's resolved carry scope and a pinned, checked source. Independent local pruning and preservation checks continue. Existing review holds and owner acceptance remain with their original owners.
+Necessary managed support is installed from pinned producer073acbfecbd340e005c758e49baad11a68990144 through existing explicit-update tools, with backups and truthful receipts. Source integration containment and final candidate checks remain. Existing review holds and owner acceptance remain with their original owners.
 
 ## Vertical Implementation Slices
 
-Prepare the smallest native Task packet after the carry payload is fixed. Existing source assignment S-006P/TK-00C8 coordinates this room; this Spec owns its local requirements, progress and delivery proof.
+Source assignment S-006P/TK-00C8 coordinates this bounded consumer carry. This Spec owns local requirements, progress and delivery proof. No unrelated Tasks or whole harness upgrade acceptance are implied.
 
 ## Acceptance Criteria
 
@@ -77,6 +77,8 @@ Maintain this Spec, the context-artifact-budgets topic, affected control/context
 | 2026-10-29 | preparation | Existing owner authority recovered; isolated integration-based branch created and bounded inventory inspected. | AGENTS, BLUEPRINT and ARCHITECTURE are within their limits, with local design/ownership/delivery detail linked from their owners. The optional tour now explicitly describes Architecture companions as non-control references; its existing 26 tests pass. Managed files/receipts remain unchanged. | Local controls, linked detail and this scoped owner. | Managed scope/source pin, remaining pruning, native checks, review, CI and integration remain. |
 | 2026-10-29 | independent pruning | Condensed root controls and disclosed reference responsibilities and full glossary definitions. | 40/40 app tests; 15 fenced blocks, 197 Markdown rows and 119 full definitions preserved; three paginated tables retain 102 ordered rows. | Linked preservation proof, controls, glossary and reference owners. | 14 oversized Specs/managed skills, four old Wiki stamps, native carry, review and checked integration remain. |
 
+| 2026-10-30 | authorized recovery | Reused valid pruning; installed supported tools+skills components from producer073acbfecbd340e005c758e49baad11a68990144 without layout or root-control replacement. | Corrected policy plus budget boundary tests pass; all scoped artifacts fit. Native disclosure preserves logical record bodies and historical evidence; final full checks remain. | Policy, CI, context, component receipts, native disclosure proof and this owner. | Source containment, final review/CI and checked integration remain; main and historical verdicts unchanged. |
+
 ## Completion Result
 
-Partial local work only. No managed installation, publication, integration delivery, release or owner acceptance is claimed.
+Local managed components and lossless pruning are prepared; independent review, hosted CI and checked integration remain. No release, whole-room upgrade or owner acceptance is claimed.

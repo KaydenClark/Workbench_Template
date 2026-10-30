@@ -13,6 +13,8 @@ Coordinate planning, bounded Task delivery and assembled verification for one as
 
 ## Method / Posture
 
+Use [Carry](../carry/SKILL.md) for ownership and [Orchestrate](../orchestrate/SKILL.md) for delegation; a Director may instruct a Dispatcher to orchestrate.
+
 Resolve the assigned Spec, branch, Tasks, dependencies and blockers through the manifest and tracked owners. Preserve claims, writers and proof. Name one writer before Workers start; assign bounded Tasks with outcome, allowed files, branch or worktree and hand-back. Choose small explicit concurrency and serialize conflicts. Workers implement; the Dispatcher coordinates and verifies. If Workers or isolated lanes are unavailable, preserve state and report the blocker. Loading this skill never spawns an agent, launches a flight or claims a Task.
 
 ## Obligations

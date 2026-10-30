@@ -32,6 +32,7 @@
 
 import crypto from 'node:crypto';
 import fs from 'node:fs';
+import { readRecordText, writeRecordText } from './record-parts.mjs';
 import { spawnSync } from 'node:child_process';
 
 const RECEIPT_HEADING = '## Receipt';
@@ -135,7 +136,7 @@ export function appendReceiptRowToContent(content, fields, label = '<Task record
 // ---- file and Git seam ----
 
 export function readReceiptFromFile(taskFilePath) {
-  const content = fs.readFileSync(taskFilePath, 'utf8');
+  const content = readRecordText(taskFilePath);
   return readReceipt(content, taskFilePath);
 }
 
@@ -150,7 +151,7 @@ export function readReceiptFromFile(taskFilePath) {
 export function appendReceiptRow(taskFilePath, { repoRoot, testsRun, docsTouched, remainingGap }) {
   if (!repoRoot) throw new Error('appendReceiptRow requires repoRoot: the working tree Git facts are read from');
   const git = readGitFacts(repoRoot);
-  const content = fs.readFileSync(taskFilePath, 'utf8');
+  const content = readRecordText(taskFilePath);
   const updated = appendReceiptRowToContent(content, {
     branch: git.branch,
     headSha: git.headSha,
@@ -160,7 +161,9 @@ export function appendReceiptRow(taskFilePath, { repoRoot, testsRun, docsTouched
     docsTouched,
     remainingGap
   }, taskFilePath);
-  atomicWrite(taskFilePath, updated);
+  // Git facts may come from another checkout; page paths stay beside the
+  // explicitly supplied Task file, as this API has always allowed.
+  writeRecordText(taskFilePath, updated);
   // Validate by reading back what actually landed on disk, not the in-memory
   // string computed above: the write is atomic, but the row this call reports
   // as appended is only trustworthy once it has been read back and passed

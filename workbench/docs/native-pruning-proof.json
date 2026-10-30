@@ -1,0 +1,71 @@
+{
+  "schemaVersion": 1,
+  "kind": "lossless-native-record-disclosure",
+  "results": [
+    {
+      "file": "workbench/specs/S-000E-v3-2-2-harness-upgrade/SPEC.md",
+      "beforeCharacters": 29510,
+      "afterCharacters": 7392,
+      "logicalSHA256": "b6440c4eb50ca0d708a2bef2e81e0982fa489d9223a3c19ecfbd8c98d22a6d3e",
+      "parts": [
+        "workbench/specs/S-000E-v3-2-2-harness-upgrade/SPEC.md.part-desired-behavior-001.b65d5c1427256b35ff2c20811666dba6ee069d12b1241a456b881dcc36724639.md",
+        "workbench/specs/S-000E-v3-2-2-harness-upgrade/SPEC.md.part-decisions-and-contracts-001.389f193e0aad23be5ad09660a0cd686858c55e98eba73ba36cbb00c43fb3370a.md",
+        "workbench/specs/S-000E-v3-2-2-harness-upgrade/SPEC.md.part-upgrade-proof-and-deliberate-differences-001.81e47a601737e86867727aebaf63b980c353ee420f1cd44638d0638070833264.md",
+        "workbench/specs/S-000E-v3-2-2-harness-upgrade/SPEC.md.part-append-only-evidence-and-execution-log-001.db8ec57ed19fbc6d031053b1d2edb2c229a59f9e5e20a7bd12fae03992e4c1ef.md"
+      ]
+    },
+    {
+      "file": "workbench/specs/S-001-self-explaining-room/SPEC.md",
+      "beforeCharacters": 15017,
+      "afterCharacters": 7629,
+      "logicalSHA256": "ae6ecf54660154bfacb1277bd1a16cabde6abe38d51ac52b8c5df6a443205c13",
+      "parts": [
+        "workbench/specs/S-001-self-explaining-room/SPEC.md.part-current-verified-state-001.24c0848bb037e3c164f96d089812bb363a29a6b6b2148531277d3761275e5fd6.md",
+        "workbench/specs/S-001-self-explaining-room/SPEC.md.part-vertical-implementation-slices-001.c5badb1b08a56f4718da990cf839bdbf39b4f8e420abcb5b9b1a7a9bb0d0dc11.md",
+        "workbench/specs/S-001-self-explaining-room/SPEC.md.part-append-only-evidence-and-execution-log-001.420fc9d62a310e0b34530c682ca90899eab167980f650d3f3ad265d47bba1455.md",
+        "workbench/specs/S-001-self-explaining-room/SPEC.md.part-remaining-limitations-or-follow-up-specs-001.36c5112abc85f0a8d6d6c4cd38b26a5b48819c3e3f882429b295fa6e3b15abff.md"
+      ]
+    },
+    {
+      "file": "workbench/specs/S-002-version-history-replay/SPEC.md",
+      "beforeCharacters": 9192,
+      "afterCharacters": 7961,
+      "logicalSHA256": "1770df4c81d24351005706068beb4b6ef360a75e53f013ded90508a459222392",
+      "parts": [
+        "workbench/specs/S-002-version-history-replay/SPEC.md.part-append-only-evidence-and-execution-log-001.b120653f3ff8f32ae24853b58443bc6cfcffee274e01f1df935b33260a9e96d8.md"
+      ]
+    },
+    {
+      "file": "workbench/specs/S-003-v3-2-0-upgrade-and-project-validation/SPEC.md",
+      "beforeCharacters": 12494,
+      "afterCharacters": 7409,
+      "logicalSHA256": "32ac4322050f5de321590a9cd240069865b08226fcb27f8de3a987c790323e71",
+      "parts": [
+        "workbench/specs/S-003-v3-2-0-upgrade-and-project-validation/SPEC.md.part-vertical-implementation-slices-001.0c7b41c48d299ee9fc80c8611a8796045c8e018b89260b5836b2f77da7ae6f12.md",
+        "workbench/specs/S-003-v3-2-0-upgrade-and-project-validation/SPEC.md.part-append-only-evidence-and-execution-log-001.0daa9c34ca6009c51a656af17eb2a5d56ac6996f52ccdd2936d8cd6689c3d11a.md"
+      ]
+    },
+    {
+      "file": "workbench/specs/S-00A-workbench-template-reformation/SPEC.md",
+      "beforeCharacters": 9073,
+      "afterCharacters": 7305,
+      "logicalSHA256": "9499fcf3b4ae9bcf3a7897c585e81db88e53ec78e7684890d38030138859dd2c",
+      "parts": [
+        "workbench/specs/S-00A-workbench-template-reformation/SPEC.md.part-append-only-evidence-and-execution-log-001.673c34ad2a6a2110d04fabd57c41c181628766ae319b63dccb0069b350557f86.md"
+      ]
+    },
+    {
+      "file": "workbench/specs/S-00B-v3-2-1-harness-upgrade/SPEC.md",
+      "beforeCharacters": 10094,
+      "afterCharacters": 7856,
+      "logicalSHA256": "32dcacbf950adfb0864e2c49ede54986ba02dd80a8c0523c19c39f28eec4e7d9",
+      "parts": [
+        "workbench/specs/S-00B-v3-2-1-harness-upgrade/SPEC.md.part-upgrade-proof-and-deliberate-differences-001.09ddc17ffdeea1a11eb47d8f17d370a969539428eab236948e4589aebe8365bb.md"
+      ]
+    }
+  ],
+  "sourceCommit": "073acbfecbd340e005c758e49baad11a68990144",
+  "baselineCommit": "2e62f19a2f30dd47909132d01ea4f4b51f85cc19",
+  "limits": "Root controls3000; named records and SKILL.md8000; unlisted Markdown15000; SKILL target900 advisory",
+  "ownerRecordChanges": "S-000G/S-000F and context-artifact-budgets contain authorized continuation updates after lossless disclosure."
+}

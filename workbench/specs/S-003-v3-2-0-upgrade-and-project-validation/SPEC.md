@@ -77,49 +77,17 @@ Example mechanical success never waives that release gate.
 
 ## Vertical Implementation Slices
 
-| Ticket | Slice | Status | Blockers | Proof |
-|---|---|---|---|---|
-| TK-001 | Preserve refreshed baseline and pin the tested v3.2.0 source | done | none | Refreshed Example baseline12 tests and layout pass; upstream563a6e6 full42/42 and independent PASS, merged PR80 integrationc6e476c exact reviewed tree |
-| TK-002 | Upgrade managed installation and reconcile the tour and controls | done | TK-001 | New tour/route regressions RED then15GREEN; exact15 runtime hashes and20 isolated core markers match563a6e6; syntax/layout/doctor pass; AGENTS fidelity zero dropped/changed |
-| TK-003 | Generate and customize a useful independent project with saved-note continuation | done | TK-002 | New b17 v3.2 Genesis readiness80af beforeclaim;15RED16GREEN; native context recovered correction and saved note6to8; parent16 tests/source preservation and local remote36abf1c confirmed |
-| TK-004 | Review merge and read back actual Example integration | done | TK-003 | 8c97556 final exact-head review PASS; PR3 merged as integrationc848ca8; remote containment zero tree delta; fresh integration clone passed17 tests twice, syntax, layout and doctor |
-
-### TK-001 - Source and baseline
-
+<!-- workbench-record-section max=15000 -->
 **Stance:** Builder
-
-Run full Example tests/layout/doctor and baseline guardrail. Record exact source
-preflight and upstream required-suite/review evidence before closing this slice.
-No dirty/uncommitted/symlinked source can count as the pinned release.
-
-### TK-002 - Installed behavior
-
 **Stance:** Builder
-
-Use explicit upgrade with backup and rollback; reconcile product-specific controls
-and real tour via red/green tests. Verify source/manifest/receipt/tool and core
-skill identities, version match, control fidelity and all room checks.
-
-### TK-003 - Useful fresh project
-
 **Stance:** Builder
-
-Use an isolated home and fresh pinned sources. Demonstrate a small concrete CLI
-project generated through supported Genesis, not a hand-copied tree. Create and
-run a useful function and regression test, save a finding/correction/next action,
-and have a fresh context resume it. Prove new identity, no copied live state,
-no runtime paths into developer source, and independently repeat from clone.
-Name host/model/OS, command, output, exact commits and saved boundary. A single
-trial proves this workflow only, not generalized model reliability.
-
-### TK-004 - Integration proof
-
 **Stance:** Builder
-
-Separate-context review checks exact candidate and consequential claims. Repair
-in scope, rerun affected/full checks, re-review changed candidate. PR and merge
-only after PASS. Verify actual remote integration contains reviewed candidate
-and test resulting checkout; preserve branch and send receipts to upstream S-050.
+<a id="tk-001---source-and-baseline"></a> [TK-001 - Source and baseline](SPEC.md.part-vertical-implementation-slices-001.0c7b41c48d299ee9fc80c8611a8796045c8e018b89260b5836b2f77da7ae6f12.md#tk-001---source-and-baseline)
+<a id="tk-002---installed-behavior"></a> [TK-002 - Installed behavior](SPEC.md.part-vertical-implementation-slices-001.0c7b41c48d299ee9fc80c8611a8796045c8e018b89260b5836b2f77da7ae6f12.md#tk-002---installed-behavior)
+<a id="tk-003---useful-fresh-project"></a> [TK-003 - Useful fresh project](SPEC.md.part-vertical-implementation-slices-001.0c7b41c48d299ee9fc80c8611a8796045c8e018b89260b5836b2f77da7ae6f12.md#tk-003---useful-fresh-project)
+<a id="tk-004---integration-proof"></a> [TK-004 - Integration proof](SPEC.md.part-vertical-implementation-slices-001.0c7b41c48d299ee9fc80c8611a8796045c8e018b89260b5836b2f77da7ae6f12.md#tk-004---integration-proof)
+- [Part 1](SPEC.md.part-vertical-implementation-slices-001.0c7b41c48d299ee9fc80c8611a8796045c8e018b89260b5836b2f77da7ae6f12.md)
+<!-- /workbench-record-section -->
 
 ## Acceptance Criteria
 
@@ -148,16 +116,9 @@ VERSION_HISTORY.md and S-002 historical result. Generic material stays upstream.
 
 ## Append-Only Evidence And Execution Log
 
-| Date | Ticket | Event | Verification | Docs | Remaining gap |
-|---|---|---|---|---|---|
-| 2026-09-08 | spec | Refreshed Example before planning; exact branch created from integration | Clean main/integration fast-forwarded to fetched tips; 12 tour tests pass; doctor zero blockers and 32 informational findings | This spec records endpoint and preserved replay work | Final upstream candidate, upgrade and complete acceptance pending |
-| 2026-09-08 | TK-001 | Ticket closed | Refreshed Example baseline12 tests and layout pass; upstream563a6e6 full42/42 and independent PASS, merged PR80 integrationc6e476c exact reviewed tree | Pinned source final v3.2.0; original Example main/integration and version history retained | Explicit upgrade, useful project continuation and Example reviewed integration |
-| 2026-09-08 | TK-002 | Ticket closed | New tour/route regressions RED then15GREEN; exact15 runtime hashes and20 isolated core markers match563a6e6; syntax/layout/doctor pass; AGENTS fidelity zero dropped/changed | Root controls, Wiki, tour and current-version history appendix reconciled; original genesis provenance and historical replay retained; installation-result.json | Fresh generation receipt/native continuation and independent Example integration |
-| 2026-09-08 | TK-003 | Ticket closed | New b17 v3.2 Genesis readiness80af beforeclaim;15RED16GREEN; native context recovered correction and saved note6to8; parent16 tests/source preservation and local remote36abf1c confirmed | fresh-project-result.json names exact sources, evidence levels, every observed failed batch and correction; no cross-device or reliability inference | Independent immutable Example review, integration and actual merged readback |
-| 2026-09-08 | TK-004 | Separate-context review rejected 39c6f203998d442b2fdc1411c9969b71a6dd642c because Blueprint still claimed the repository was the only state with nothing to seed, migrate or back up | Existing15 checks and generated-project evidence passed, but the stale cross-cutting claim contradicted v3.2 support state. New assertion reproduced RED; Blueprint now distinguishes no application data from tracked and ignored Workbench support state and all16 tests plus syntax/layout/doctor are GREEN | BLUEPRINT data/storage invariant corrected and guarded by the tour suite | Push repaired candidate and obtain a fresh exact-head review before PR and integration |
-| 2026-09-08 | TK-004 | Reconciled Example from the upstream precursor merged by PR80 to the final reviewed corrective source 16c8278 merged by PR81 | Upstream diff changes no managed runtime or skill bytes, so the installed 563a6e6 receipt remains truthful and all recorded hashes match final source; release verifier reports no update available. Configured-host guidance regression demonstrated RED, final template wording applied, and all17 tests plus syntax/layout/doctor are GREEN | RUNBOOK now requires expected sourceCommit/sourceRepository and clean producer inputs; installation-result.json preserves the failed precursor and names final source/integration | Commit, push and fresh independent review of the complete Example head before integration |
-| 2026-09-08 | TK-004 | Ticket closed | 8c97556 final exact-head review PASS; PR3 merged as integrationc848ca8; remote containment zero tree delta; fresh integration clone passed17 tests twice, syntax, layout and doctor | BLUEPRINT and RUNBOOK corrected; installation-result.json names final upstream16c8278/PR81 and preserves the failed precursor and installed-receipt provenance | none within Example; upstream S052 retains external Mac/Windows Claude/Codex private-transport evidence |
-| 2026-09-08 | spec | Spec completed | Acceptance gates satisfied | Documentation impact recorded above | none |
+<!-- workbench-record-section max=15000 -->
+- [Part 1](SPEC.md.part-append-only-evidence-and-execution-log-001.0daa9c34ca6009c51a656af17eb2a5d56ac6996f52ccdd2936d8cd6689c3d11a.md)
+<!-- /workbench-record-section -->
 
 ## Completion Result
 

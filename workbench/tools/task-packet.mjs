@@ -24,6 +24,7 @@
 // not add it.
 
 import fs from 'node:fs';
+import { readRecordText } from './record-parts.mjs';
 import path from 'node:path';
 import { readTaskRecord } from './task-record.mjs';
 import { lanePath } from './workbench-paths.mjs';
@@ -89,7 +90,7 @@ function resolveSpecAcceptance(root, reference, taskId) {
   if (!specPath) {
     throw new Error(`${taskId} Packet is missing its required destination member: no SPEC.md exists for ${specId}; a corrective Task after retirement must use a wiki-claim destination instead`);
   }
-  const content = fs.readFileSync(specPath, 'utf8');
+  const content = readRecordText(specPath, root);
   const text = section(content, heading);
   if (!text) {
     throw new Error(`${taskId} Packet is missing its required destination member: ${relative(root, specPath)} has no "${heading}" section`);
@@ -140,7 +141,7 @@ function resolveCitedPaths(root, record, destination) {
 }
 
 function citedPathsFromTestingSeams(root, destination, taskId) {
-  const content = fs.readFileSync(path.resolve(root, destination.specPath), 'utf8');
+  const content = readRecordText(path.resolve(root, destination.specPath), root);
   const seams = section(content, 'Testing Seams');
   if (!seams) {
     throw new Error(`${taskId} Packet is missing its required cited-paths member: ${destination.specPath} has no "Testing Seams" section`);
@@ -167,7 +168,7 @@ function resolveContract(root, taskId) {
   if (!fs.existsSync(contractPath)) {
     throw new Error(`${taskId} Packet is missing its required Contract member: no AGENTS.md at ${root}`);
   }
-  return { path: 'AGENTS.md', text: fs.readFileSync(contractPath, 'utf8') };
+  return { path: 'AGENTS.md', text: readRecordText(contractPath, root) };
 }
 
 // An optional member enters as working context only: a caller must never be
