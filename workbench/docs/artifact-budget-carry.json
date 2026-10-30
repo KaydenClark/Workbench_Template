@@ -90,8 +90,17 @@
     "containsInstalledRuntime": "073acbfecbd340e005c758e49baad11a68990144",
     "containsInstalledSkills": "94702faae1779eefe09e8336a1a0b0df62365c31",
     "sourcePRFullRun": "41030032093",
-    "sourcePRFullChecks": 132
+    "sourcePRFullChecks": 132,
+    "sourceMergePushRun": "41031058643",
+    "sourceMergePushChecks": 132,
+    "sourceMergePushOutcome": "passed"
   },
   "versionBoundary": "Runtime073 and skills947 remain the installed source identities. Newer upstream R3/source integration is containment evidence, not a claim that its newer generation was adopted. No managed component or receipt changed in this closeout.",
-  "ownerAcceptance": "Spec active; finishing Task done; delivery acceptance achieved; owner Human QA and main/release remain separate and unrecorded."
+  "ownerAcceptance": "Spec active; finishing Task done; delivery acceptance achieved; owner Human QA and main/release remain separate and unrecorded.",
+  "mainObserved": {
+    "sha": "25e51bc17bf34e6022a45452d509839b6a2cfac3",
+    "method": "git ls-remote origin refs/heads/main",
+    "matchesUnchangedBaseline": true,
+    "noMainPromotionPerformed": true
+  }
 }
