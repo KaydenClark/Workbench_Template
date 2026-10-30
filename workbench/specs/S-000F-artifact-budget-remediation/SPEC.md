@@ -11,7 +11,7 @@
 **Confirmation:** [JOT-45742b87-a137-45d6-982f-577e08ed0cae](../../wiki/context-artifact-budgets.md#jot-45742b87-a137-45d6-982f-577e08ed0cae)
 **Execution approval:** [JOT-45742b87-a137-45d6-982f-577e08ed0cae](../../wiki/context-artifact-budgets.md#jot-45742b87-a137-45d6-982f-577e08ed0cae)
 **Latest event:** TK-000E closed with proof.
-**Next gate:** Confirm acceptance criteria and completion result.
+**Next gate:** Independent exact-candidate review and required CI; prove producer containment, merge the reviewed candidate into integration, then record landing. Owner QA remains separate.
 
 ## Outcome
 
