@@ -7,10 +7,10 @@
 **Stance:** Builder
 **Updated:** 2026-10-29
 **Catalog description:** Keep this room's agent artifacts within approved character budgets while preserving meaning, evidence and operations.
-**Blockers:** Source integration containment, exact-candidate independent review and required CI remain.
+**Blockers:** none
 **Confirmation:** [JOT-e2492c29-7b98-4258-8e17-fd5ae3598bec](../../wiki/context-artifact-budgets.md#jot-e2492c29-7b98-4258-8e17-fd5ae3598bec)
 **Execution approval:** [JOT-e2492c29-7b98-4258-8e17-fd5ae3598bec](../../wiki/context-artifact-budgets.md#jot-e2492c29-7b98-4258-8e17-fd5ae3598bec)
-**Latest event:** Final source94702faae1779eefe09e8336a1a0b0df62365c31 verified; supported refresh changes only improve-harness. Runtime receipt remains073acbfe because all runtime bytes are unchanged.
+**Latest event:** Local pruning and component verification pass; three acceptance checks are achieved. A bounded current-run Task now carries final verification and integration preparation; exact review and landing remain.
 **Next gate:** Independent exact-candidate review, required CI and checked integration after source containment; owner acceptance and historical Audit limits remain separate.
 
 ## Outcome
@@ -52,13 +52,13 @@ Necessary managed support is installed from pinned producer073acbfecbd340e005c75
 
 ## Vertical Implementation Slices
 
-Source assignment S-006P/TK-00C8 coordinates this bounded consumer carry. This Spec owns local requirements, progress and delivery proof. No unrelated Tasks or whole harness upgrade acceptance are implied.
+Source assignment S-006P/TK-00C8 coordinates the cross-room carry. TK-000E owns this current finishing run: verify the recovered candidate and prepare its checked-integration hand-back. It does not retroactively claim earlier pruning or grant whole harness upgrade acceptance.
 
 ## Acceptance Criteria
 
-- [ ] All in-scope Markdown, linked detail and generated pages pass the unchanged policy.
-- [ ] Required meaning, original evidence, receipt identity and frozen outcomes remain checkable.
-- [ ] Supported installed readers/writers, lifecycle/digest behavior, links and regenerated views pass relevant checks.
+- [x] All in-scope Markdown, linked detail and generated pages pass the unchanged policy.
+- [x] Required meaning, original evidence, receipt identity and frozen outcomes remain checkable.
+- [x] Supported installed readers/writers, lifecycle/digest behavior, links and regenerated views pass relevant checks.
 - [ ] Full room verification and independent assembled review pass at the immutable candidate, with remaining limits stated.
 - [ ] Checked integration delivery, fresh containment and updated continuation are proven; main remains untouched.
 
